@@ -3,6 +3,7 @@ CREATE DATABASE IF NOT EXISTS db_hgc;
 USE db_hgc;
 
 CREATE TABLE tb_roles(
+  
 );
 
 CREATE TABLE tb_usuarios(
@@ -20,13 +21,17 @@ CREATE TABLE tb_usuarios(
   FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
   ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE TABLE tb_clientes(
+
+CREATE TABLE tb_clientes_pedidos(
   id_cliente INT UNSIGNED auto_increment, 
+  
 );
 
 CREATE TABLE tb_tipo_productos(
   id_tipo_producto INT UNSIGNED auto_increment,
+  
 );
+
 CREATE TABLE tb_productos(
   id_producto INT UNSIGNED auto_increment,
   id_tipo_producto INT UNSIGNED ,/*LLAVE FORANEA*/
@@ -40,6 +45,7 @@ CREATE TABLE tb_menus(
   id_menu INT UNSIGNED,
   fecha TIMESTAMP
 );
+
 CREATE TABLE tb_menu_productos(
     id_menu INT UNSIGNED,
     id_producto INT UNSIGNED,
@@ -52,6 +58,7 @@ CREATE TABLE tb_pedidos(
     id_pedido INT UNSIGNED
     id_cliente INT UNSIGNED
 );
+
 CREATE TABLE tb_detalle_pedidos(
     id_pedido INT,
     id_producto INT,
