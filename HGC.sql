@@ -5,7 +5,6 @@ USE db_hgc;
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED auto_increment,
   descripcion_rol VARCHAR(100) NOT NULL,
-  
   estado_rol BOOLEAN DEFAULT TRUE
 );
 
@@ -16,7 +15,7 @@ CREATE TABLE tb_usuarios(
   clave_usuario VARCHAR(255) NOT NULL,
   nombre_usuario VARCHAR(255) NOT NULL,
   apellido_usuario VARCHAR(255) NOT NULL,
-  email_usuario VARCHAR(100) NOT NULL,
+  email_usuario VARCHAR(255) NOT NULL,
   pin_usuario VARCHAR(6) NOT NULL,
   estado_usuario BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_usuario),
@@ -27,36 +26,32 @@ CREATE TABLE tb_usuarios(
 
 CREATE TABLE tb_clientes(
   id_cliente INT UNSIGNED auto_increment,
-  id_rol UNSIGNED,
-  alias_usuario VARCHAR(30) UNIQUE NOT NULL,
-  clave_usuario VARCHAR(255) NOT NULL,
-  nombre_usuario VARCHAR(255) NOT NULL,
-  apellido_usuario VARCHAR(255) NOT NULL,
-  email_usuario VARCHAR(100) NOT NULL,
-  pin_usuario VARCHAR(6) NOT NULL,
-  estado_usuario BOOLEAN DEFAULT TRUE,
+  alias_cliente VARCHAR(30) UNIQUE NOT NULL,
+  clave_cliente VARCHAR(255) NOT NULL,
+  telefono_cliente VARCHAR(255) NOT NULL,
+  nombre_cliente VARCHAR(255) NOT NULL,
+  apellido_cliente VARCHAR(255) NOT NULL,
+  email_cliente VARCHAR(255) NOT NULL,
+  pin_cliente VARCHAR(6) NOT NULL,
+  estado_cliente BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE tb_clientes_pedidos(
-  id_cliente INT UNSIGNED auto_increment, 
-  
+
+CREATE TABLE tb_tipo_items(
+  id_tipo_item INT UNSIGNED auto_increment,
+  descripcion_item VARCHAR(255) NOT NULL
+  estado_item BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE tb_tipo_productos(
-  id_tipo_producto INT UNSIGNED auto_increment,
-  
-);
-
-CREATE TABLE tb_productos(
+CREATE TABLE tb_items(
   id_producto INT UNSIGNED auto_increment,
-  id_tipo_producto INT UNSIGNED ,/*LLAVE FORANEA*/
-  nombre VARCHAR(255) NOT NULL,
-    descripcion TEXT,
-    precio DECIMAL(10, 2) NOT NULL,
-    stock INT NOT NULL
+  id_tipo_items INT UNSIGNED ,/*LLAVE FORANEA*/
+  nombre_item VARCHAR(255) NOT NULL,
+  descripcion_item TEXT,
+  precio_item DECIMAL(10, 2) NOT NULL
 );
 
-CREATE TABLE tb_menus(
+CREATE TABLE tb_combo(
   id_menu INT UNSIGNED,
   fecha TIMESTAMP
 );
