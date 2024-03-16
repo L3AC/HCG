@@ -2,13 +2,8 @@ DROP DATABASE db_hgc;
 CREATE DATABASE IF NOT EXISTS db_hgc;
 USE db_hgc;
 
-CREATE TABLE tb_roles(
-  
-);
-
-CREATE TABLE tb_usuarios(
-  id_usuario INT UNSIGNED auto_increment,
-  id_rol INT UNSIGNED NOT NULL,
+CREATE TABLE tb_administradores(
+  id_administrador INT UNSIGNED auto_increment,
   alias_usuario VARCHAR(30) UNIQUE NOT NULL,
   clave_usuario VARCHAR(255) NOT NULL,
   nombre_usuario VARCHAR(255) NOT NULL,
