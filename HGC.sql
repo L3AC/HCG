@@ -33,40 +33,68 @@ CREATE TABLE tb_clientes(
   apellido_cliente VARCHAR(255) NOT NULL,
   email_cliente VARCHAR(255) NOT NULL,
   pin_cliente VARCHAR(6) NOT NULL,
-  estado_cliente BOOLEAN DEFAULT TRUE
+  estado_cliente BOOLEAN DEFAULT TRUE,
+  PRIMARY KEY (id_cliente)
 );
 
 
 CREATE TABLE tb_tipo_items(
   id_tipo_item INT UNSIGNED auto_increment,
   descripcion_item VARCHAR(255) NOT NULL
-  estado_item BOOLEAN DEFAULT TRUE
+  estado_item BOOLEAN DEFAULT TRUE,
+  PRIMARY KEY (id_tipo_item)
 );
 
 CREATE TABLE tb_items(
-  id_producto INT UNSIGNED auto_increment,
-  id_tipo_items INT UNSIGNED ,/*LLAVE FORANEA*/
+  id_item INT UNSIGNED auto_increment,
+  id_tipo_item INT UNSIGNED ,/*BEBIDA, PLATO, SNACK,*/
   nombre_item VARCHAR(255) NOT NULL,
-  descripcion_item TEXT,
-  precio_item DECIMAL(10, 2) NOT NULL
+  descripcion_item VARCHAR(255)  NOT NULL,
+  precio_item DECIMAL(10, 2) NOT NULL,
+  estado_item BOOLEAN DEFAULT TRUE,
+  PRIMARY KEY (id_item)
 );
 
-CREATE TABLE tb_combo(
-  id_menu INT UNSIGNED,
-  fecha TIMESTAMP
+CREATE TABLE tb_horarios(
+  id_horario INT UNSIGNED auto_increment,
+  descripcion_horario VARCHAR(255) NOT NULL,
+  estado_horario INT UNSIGNED  NOT NULL
 );
 
-CREATE TABLE tb_menu_productos(
-    id_menu INT UNSIGNED,
-    id_producto INT UNSIGNED,
-    PRIMARY KEY (id_menu, id_producto),
-    FOREIGN KEY (id_menu) REFERENCES tb_menus(id),
-    FOREIGN KEY (id_producto) REFERENCES tb_productos(id)
+CREATE TABLE tb_combos(
+  id_combo INT UNSIGNED auto_increment,
+  descripcion_combo VARCHAR(255) NOT NULL,
+  precio_combo DECIMAL(10, 2) NOT NULL,
+  lunes_combo BOOLEAN NOT NULL,
+  martes_combo BOOLEAN NOT NULL,
+  miercoles_combo BOOLEAN NOT NULL,
+  jueves_combo BOOLEAN NOT NULL,
+  viernes_combo BOOLEAN NOT NULL,
+  sabado_combo BOOLEAN NOT NULL,
+  domingo_combo BOOLEAN NOT NULL
+  PRIMARY KEY (id_combo)
+);
+
+CREATE TABLE tb_horarios_combos(
+  id_horario_combo INT UNSIGNED auto_increment,
+  id_horario INT UNSIGNED  NOT NULL,/*DESAYUNO, ALMUERZO, CENA,TIPICO*/
+  id_combo INT UNSIGNED  NOT NULL,
+  PRIMARY KEY (id_horario_combo)
+);
+
+CREATE TABLE tb_items_combos(
+  id_item_combo INT UNSIGNED auto_increment,
+  id_item INT UNSIGNED  NOT NULL,/*DESAYUNO, ALMUERZO, CENA,TIPICO*/
+  id_combo INT UNSIGNED  NOT NULL,
+  PRIMARY KEY (id_item_combo)
 );
 
 CREATE TABLE tb_pedidos(
-    id_pedido INT UNSIGNED
-    id_cliente INT UNSIGNED
+    id_pedido INT UNSIGNED NOT NULL,
+    id_cliente INT UNSIGNED  NOT NULL,
+    fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    estado_pedido enum('Pendiente','Entregado')
+    PRIMARY KEY (id_pedido)
 );
 
 CREATE TABLE tb_detalle_pedidos(
