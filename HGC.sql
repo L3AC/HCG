@@ -5,12 +5,13 @@ USE db_hgc;
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED auto_increment,
   descripcion_rol VARCHAR(100) NOT NULL,
-  estado_rol BOOLEAN DEFAULT TRUE
+  estado_rol BOOLEAN DEFAULT TRUE,
+  PRIMARY KEY (id_rol)
 );
 
 CREATE TABLE tb_usuarios(
   id_usuario INT UNSIGNED auto_increment,
-  id_rol UNSIGNED,
+  id_rol INT UNSIGNED,
   alias_usuario VARCHAR(30) UNIQUE NOT NULL,
   clave_usuario VARCHAR(255) NOT NULL,
   nombre_usuario VARCHAR(255) NOT NULL,
@@ -38,70 +39,77 @@ CREATE TABLE tb_clientes(
 );
 
 
-CREATE TABLE tb_tipo_items(
-  id_tipo_item INT UNSIGNED auto_increment,
-  descripcion_item VARCHAR(255) NOT NULL
-  estado_item BOOLEAN DEFAULT TRUE,
-  PRIMARY KEY (id_tipo_item)
+CREATE TABLE tb_tipo_productos(
+  id_tipo_producto INT UNSIGNED auto_increment,
+  descripcion_tipo_producto VARCHAR(255) NOT NULL,
+  estado_tipo_producto BOOLEAN DEFAULT TRUE,
+  PRIMARY KEY (id_tipo_producto)
 );
 
 CREATE TABLE tb_items(
   id_item INT UNSIGNED auto_increment,
-  id_tipo_item INT UNSIGNED ,/*BEBIDA, PLATO, SNACK,*/
+  #id_tipo_item INT UNSIGNED ,/*BEBIDA, PLATO, SNACK,*/
   nombre_item VARCHAR(255) NOT NULL,
   descripcion_item VARCHAR(255)  NOT NULL,
   precio_item DECIMAL(10, 2) NOT NULL,
   estado_item BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_item)
+  /*CONSTRAINT fk_item_tipo 
+  FOREIGN KEY(id_tipo_item) REFERENCES tb_tipo_items(id_tipo_item)*/
 );
 
-CREATE TABLE tb_horarios(
-  id_horario INT UNSIGNED auto_increment,
-  descripcion_horario VARCHAR(255) NOT NULL,
-  estado_horario INT UNSIGNED  NOT NULL
+/*D = Desayuno, A = Almuerzo, C = Cena, T = Tipico,TD = Todo el dia
+  D-A = Desayuno y Almuerzo, D-C = Desayuno y Cena, A-C = Almuerzo y Cena
+  T-D = Tipico y Desayuno , T-A = Tipico y Almuerzo T-C = Tipico y Cena
+*/
+CREATE TABLE tb_productos(
+  id_producto INT UNSIGNED auto_increment,
+  id_tipo_producto INT UNSIGNED,
+  descripcion_producto VARCHAR(255) NOT NULL,
+  horario_producto ENUM('D','A','C','T','TD','D-A','D-C','A-C','T-D','TA','T-C') NOT NULL,
+  precio_producto DECIMAL(10, 2) NOT NULL,
+  lunes_producto BOOLEAN NOT NULL,
+  martes_producto BOOLEAN NOT NULL,
+  miercoles_producto BOOLEAN NOT NULL,
+  jueves_producto BOOLEAN NOT NULL,
+  viernes_producto BOOLEAN NOT NULL,
+  sabado_producto BOOLEAN NOT NULL,
+  domingo_producto BOOLEAN NOT NULL,
+  PRIMARY KEY (id_producto),
+  CONSTRAINT fk_tipo_producto
+  FOREIGN KEY(id_tipo_producto) REFERENCES tb_tipo_productos(id_tipo_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE tb_combos(
-  id_combo INT UNSIGNED auto_increment,
-  descripcion_combo VARCHAR(255) NOT NULL,
-  precio_combo DECIMAL(10, 2) NOT NULL,
-  lunes_combo BOOLEAN NOT NULL,
-  martes_combo BOOLEAN NOT NULL,
-  miercoles_combo BOOLEAN NOT NULL,
-  jueves_combo BOOLEAN NOT NULL,
-  viernes_combo BOOLEAN NOT NULL,
-  sabado_combo BOOLEAN NOT NULL,
-  domingo_combo BOOLEAN NOT NULL
-  PRIMARY KEY (id_combo)
-);
 
-CREATE TABLE tb_horarios_combos(
-  id_horario_combo INT UNSIGNED auto_increment,
-  id_horario INT UNSIGNED  NOT NULL,/*DESAYUNO, ALMUERZO, CENA,TIPICO*/
-  id_combo INT UNSIGNED  NOT NULL,
-  PRIMARY KEY (id_horario_combo)
-);
-
-CREATE TABLE tb_items_combos(
-  id_item_combo INT UNSIGNED auto_increment,
-  id_item INT UNSIGNED  NOT NULL,/*DESAYUNO, ALMUERZO, CENA,TIPICO*/
-  id_combo INT UNSIGNED  NOT NULL,
-  PRIMARY KEY (id_item_combo)
+CREATE TABLE tb_detalle_productos(
+  id_detalle_producto INT UNSIGNED auto_increment,
+  id_item INT UNSIGNED  NOT NULL,
+  id_producto INT UNSIGNED  NOT NULL, /*TRAE EL ID DEL producto*/
+  PRIMARY KEY (id_detalle_producto),
+  CONSTRAINT fk_item_producto_item /*LLAVE FORANEA*/
+  FOREIGN KEY(id_item) REFERENCES tb_items(id_item)
+  ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_item_producto_producto /*LLAVE FORANEA*/
+  FOREIGN KEY(id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE tb_pedidos(
     id_pedido INT UNSIGNED NOT NULL,
     id_cliente INT UNSIGNED  NOT NULL,
     fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    estado_pedido enum('Pendiente','Entregado')
-    PRIMARY KEY (id_pedido)
+    estado_pedido enum('Pendiente','Entregado') NOT NULL,
+    PRIMARY KEY (id_pedido),
+    CONSTRAINT fk_pedido_cliente 
+    FOREIGN KEY(id_cliente) REFERENCES tb_clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE tb_detalle_pedidos(
-    id_pedido INT,
-    id_producto INT,
-    cantidad INT,
-    PRIMARY KEY (id_pedido, id_producto),
-    FOREIGN KEY (id_pedido) REFERENCES Pedidos(id),
-    FOREIGN KEY (id_producto) REFERENCES Productos(id)
+CREATE TABLE tb_detalle_pedidos (
+  id_detalle_pedido INT UNSIGNED AUTO_INCREMENT,
+  id_pedido INT UNSIGNED NOT NULL,
+  id_producto INT UNSIGNED NOT NULL,
+  cantidad INT UNSIGNED NOT NULL,
+  PRIMARY KEY (id_detalle_pedido),
+  FOREIGN KEY (id_pedido) REFERENCES tb_pedidos(id_pedido) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
