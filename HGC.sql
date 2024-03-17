@@ -45,8 +45,6 @@ CREATE TABLE tb_items(
   id_item INT UNSIGNED auto_increment,
   id_tipo_item INT UNSIGNED ,/*BEBIDA, PLATO, SNACK,*/
   nombre_item VARCHAR(255) NOT NULL,
-  descripcion_item VARCHAR(255)  NOT NULL,
-  precio_item DECIMAL(10, 2) NOT NULL,
   estado_item BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_item),
   CONSTRAINT fk_item_tipo 
