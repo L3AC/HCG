@@ -30,9 +30,9 @@ CREATE TABLE tb_clientes(
   telefono_cliente VARCHAR(255) NOT NULL,
   nombre_cliente VARCHAR(255) NOT NULL,
   apellido_cliente VARCHAR(255) NOT NULL,
-  email_cliente VARCHAR(255) NOT NULL,
   PRIMARY KEY (id_cliente)
 );
+
 /*ESTO VA A SERVIR PARA INGRESAR POR EJEMPLO, CATEGORIA DE BEBIDAS, SNACKS, POSTRE, PORCION DE UN PLATILLO*/
 CREATE TABLE tb_tipo_items(
   id_tipo_item INT UNSIGNED auto_increment,
@@ -50,17 +50,6 @@ CREATE TABLE tb_items(
   CONSTRAINT fk_item_tipo 
   FOREIGN KEY(id_tipo_item) REFERENCES tb_tipo_items(id_tipo_item)
 );
-/*ESTO VA A SERVIR PARA AGREGAR EL TIPO DE PRODUCTO QUE VA A SER POR EJEMPLO
-SI ES UN COMBO(plato de gallina, combo hamburguesa que lleva soda, papas,hamburguesa ),
-SI ES UN PRODUCTO COMPLEMENTARIO(solo soda, solo una botella de agua, etc)
-SI ES UN TIPICO
-CREATE TABLE tb_tipo_productos(
-  id_tipo_producto INT UNSIGNED auto_increment,
-  descripcion_tipo_producto VARCHAR(255) NOT NULL,
-  estado_tipo_producto BOOLEAN DEFAULT TRUE,
-  PRIMARY KEY (id_tipo_producto)
-);*/
-
 
 /*D = Desayuno, A = Almuerzo, C = Cena, T = Tipico,TD = Todo el dia
   D-A = Desayuno y Almuerzo, D-C = Desayuno y Cena, A-C = Almuerzo y Cena
@@ -79,10 +68,7 @@ CREATE TABLE tb_productos(
   viernes_producto BOOLEAN NOT NULL,
   sabado_producto BOOLEAN NOT NULL,
   domingo_producto BOOLEAN NOT NULL,
-  PRIMARY KEY (id_producto)/*,
-  CONSTRAINT fk_tipo_producto
-  FOREIGN KEY(id_tipo_producto) REFERENCES tb_tipo_productos(id_tipo_producto) 
-  ON DELETE CASCADE ON UPDATE CASCADE*/
+  PRIMARY KEY (id_producto)
 );
 
 
@@ -99,13 +85,6 @@ CREATE TABLE tb_detalle_productos(
   FOREIGN KEY(id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE tb_clientes(
-  id_cliente INT UNSIGNED auto_increment,
-  telefono_cliente VARCHAR(255) NOT NULL,
-  nombre_cliente VARCHAR(255) NOT NULL,
-  apellido_cliente VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id_cliente)
-);
 
 CREATE TABLE tb_pedidos(
     id_pedido INT UNSIGNED NOT NULL,
