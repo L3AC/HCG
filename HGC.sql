@@ -7,7 +7,6 @@ CREATE TABLE tb_roles(
   descripcion_rol VARCHAR(100) NOT NULL,
   estado_rol BOOLEAN DEFAULT TRUE,
   clientes_opc BOOLEAN NOT NULL,
-  clientes_opc BOOLEAN NOT NULL,
   items_opc BOOLEAN NOT NULL,
   productos_opc BOOLEAN NOT NULL,
   pedidos_opc BOOLEAN NOT NULL,
