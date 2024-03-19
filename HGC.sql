@@ -6,6 +6,12 @@ CREATE TABLE tb_roles(
   id_rol INT UNSIGNED auto_increment,
   descripcion_rol VARCHAR(100) NOT NULL,
   estado_rol BOOLEAN DEFAULT TRUE,
+  clientes_opc BOOLEAN NOT NULL,
+  clientes_opc BOOLEAN NOT NULL,
+  items_opc BOOLEAN NOT NULL,
+  productos_opc BOOLEAN NOT NULL,
+  pedidos_opc BOOLEAN NOT NULL,
+  usuarios_opc BOOLEAN NOT NULL,
   PRIMARY KEY (id_rol)
 );
 
