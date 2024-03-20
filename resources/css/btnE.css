@@ -1,0 +1,131 @@
+
+
+.btn1 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 75px;
+    height: 40px;
+    border: none;
+    padding: 0px 20px;
+    background-color: transparent transparent transparent;
+    color: transparent transparent transparent;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0px rgb(0, 0, 0);
+  }
+  
+  .svg {
+    width: 13px;
+    position: absolute;
+    right: 0;
+    margin-right: 5px;
+    fill: rgb(0, 0, 0);
+  }
+  
+  .btn1:hover {
+    color:rgb(148, 147, 147);
+  }
+  
+  .btn1:hover svg {
+    right: 43%;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  
+  .btn1:active {
+    transform: translate(3px, 3px);
+    transition-duration: 0.3s;
+    box-shadow: 2px 2px 0px rgb(0, 0, 0);
+  }
+  
+
+
+  .btn2 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 40px;
+    border: none;
+    padding: 0px 20px;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0px rgb(177, 177, 177);
+  }
+  
+  .svg {
+    width: 13px;
+    position: absolute;
+    right: 0;
+    margin-right: 5px;
+    fill: rgb(0, 0, 0);
+  }
+  
+  .btn2:hover {
+    color:rgb(148, 147, 147);
+  }
+  
+  .btn2:hover svg {
+    right: 43%;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  
+  .btn2:active {
+    transform: translate(3px, 3px);
+    transition-duration: 0.3s;
+    box-shadow: 2px 2px 0px rgb(0, 0, 0);
+  }
+  
+
+  .btn3 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 40px;
+    height: 40px;
+    border: none;
+    padding: 0px 20px;
+    background-color: transparent transparent transparent;
+    color: transparent transparent transparent;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0px rgb(0, 0, 0);
+  }
+  
+  .svg {
+    width: 13px;
+    position: absolute;
+    right: 0;
+    margin-right: 5px;
+    fill: rgb(0, 0, 0);
+  }
+  
+  .btn3:hover {
+    color:rgb(148, 147, 147);
+  }
+  
+  .btn3:hover svg {
+    right: 43%;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  
+  .btn3:active {
+    transform: translate(3px, 3px);
+    transition-duration: 0.3s;
+    box-shadow: 2px 2px 0px rgb(0, 0, 0);
+  }
+  

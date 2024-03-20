@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!-- Declaración del idioma para el documento -->
+<html lang="es">
+
+<head>
+    <!-- Título del documento -->
+    <title></title>
+    <!-- Metadatos de la página web -->
+    <meta charset="utf-8">
+    <meta name="author" content=" ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
+    <!-- Llamada al icono de la página web -->
+    <link type="image/png" rel="icon" href="../../resources/img/icon.png">
+    <link href="../../resources/css/nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/css/estado.css">
+    <!-- Llamada a las hojas de estilos del framework e iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+</head>
+
+<body>
+
+    <!-- Contenido principal del documento -->
+    <main>
+        <!-- Título del contenido principal -->
+        <h3 id="mainTitle"></h3>
+
+        <!-- Fila que contiene el formulario de búsqueda y botones -->
+        <div class="row">
+            <!-- Formulario de búsqueda -->
+            <form class="col-sm-12 col-md-12" id="searchForm">
+                <div class="row">
+                    <div class="col-lg-3 col-md-5 col-sm-6 mx-auto">
+                        <!-- Campo de búsqueda -->
+                        <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar" required>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+        <!-- Tabla con registros -->
+        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+            <!-- Tabla para mostrar los registros existentes -->
+            <table class="table table-hover">
+                <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+                <thead>
+                    <tr>
+                        <td colspan="6" id="rowsFound"></td>
+                    </tr>
+                    <tr>
+                        <th>CLIENTE</th>
+                        <th>MODELO</th>
+                        <th>PUNTUACION</th>
+                        <th>VISIBILIDAD</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- Componente Modal para guardar un registro -->
+        <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- Título del modal -->
+                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <!-- Botón de cierre del modal -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Formulario para crear o actualizar un registro -->
+                    <form id="saveForm">
+                        <div class="modal-body row g-4">
+                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                            <input type="hidden" id="idComentario" name="idComentario">
+
+                            <!-- Campos del formulario -->
+                            <div class="col-sm-12 col-md-12">
+                                <label for="clienteComentario" class="form-label">Cliente</label>
+                                <input id="clienteComentario" type="text" name="clienteComentario" class="form-control">
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <label for="contenidoComentario" class="form-label">Contenido</label>
+                                <textarea id="contenidoComentario" name="contenidoComentario" class="form-control"
+                                    rows="6"></textarea>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="puntuacionComentario" class="form-label">Puntuacion</label>
+                                <input id="puntuacionComentario" type="text" name="puntuacionComentario"
+                                    class="form-control">
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="fechaComentario" class="form-label">Fecha</label>
+                                <input id="fechaComentario" type="text" name="fechaComentario" class="form-control">
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="modeloComentario" class="form-label">Modelo</label>
+                                <input id="modeloComentario" type="text" name="modeloComentario" class="form-control">
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="">Visible</p>
+                                        <input type="checkbox" name="estadoComentario" id="estadoComentario"
+                                            class="switch-button__checkbox form-control">
+                                        <label for="estadoComentario" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Pie del modal con botón de guardar -->
+                        <div class="modal-footer border-0">
+                            <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal secundario para otro formulario -->
+        <div class="modal fade" id="savetreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- Título del modal secundario -->
+                        <h1 class="modal-title fs-5" id="tremodalTitle"></h1>
+                        <!-- Botón de cierre del modal secundario -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            onclick="subclose()"></button>
+                    </div>
+                    <!-- Formulario para crear o actualizar un registro en el modal secundario -->
+                    <form id="savetreForm">
+                        <div class="modal-body row g-3">
+                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                            <input type="hidden" id="idModeloTalla" name="idModeloTalla">
+
+                            <!-- Campos del formulario en el modal secundario -->
+                            <div class="col-sm-12 col-md-6">
+                                <label for="precioModeloTalla" class="form-label">Precio (US$)</label>
+                                <input id="precioModeloTalla" type="number" name="precioModeloTalla" min="0.01"
+                                    step="0.01" class="form-control" required>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="existenciasProducto" class="form-label">Stock</label>
+                                <input id="stockModeloTalla" type="number" name="stockModeloTalla" min="1" step="1"
+                                    class="form-control" required>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="tallaModeloTalla" class="form-label">Talla</label>
+                                <select id="tallaModeloTalla" name="tallaModeloTalla" class="form-select"
+                                    required></select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- Botón para guardar el formulario en el modal secundario -->
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- Llamada al framework y librería de mensajes -->
+    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <!-- Llamada al controlador general de la aplicación -->
+    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <!-- Llamada al controlador del sitio privado -->
+    <script type="text/javascript" src="../../controllers/utils/admin.js"></script>
+    <!-- Llamada al controlador de la página web -->
+    <script type="text/javascript" src="../../controllers/admin/7comentarios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

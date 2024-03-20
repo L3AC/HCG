@@ -1,0 +1,29 @@
+.contenedor-botones {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .boton-numero {
+    width: 70px; 
+    height: 70px; 
+    margin: 5px; 
+    border-radius: 10px; 
+    border: 1px solid #000; 
+    background-color: #fff;
+    cursor: pointer;
+    position: relative; 
+    padding: 0; 
+    overflow: hidden;  
+  }
+  .boton-numero:hover {
+    background-color: #f2f2f2;
+  }
+  .boton-numero:active {
+    background-color: #ddd;
+  }
+  .precio {
+    position: absolute;
+    bottom: 5px; 
+    width: 100%;
+    text-align: center;
+    margin: 0;
+  }

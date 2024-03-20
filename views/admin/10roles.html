@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!-- Declaración del idioma para el documento -->
+<html lang="es">
+
+<head>
+    <!-- Título del documento -->
+    <title></title>
+    <!-- Metadatos de la página web -->
+    <meta charset="utf-8">
+    <meta name="author" content=" ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
+    <!-- Llamada al icono de la página web -->
+    <link type="image/png" rel="icon" href="../../resources/img/icon.png">
+    <link href="../../resources/css/nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/css/estado.css">
+    <!-- Llamada a las hojas de estilos del framework e iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+</head>
+
+<body>
+
+    <main>
+        <!-- Título del contenido principal -->
+        <h3 id="mainTitle"></h3>
+        <!-- Fila que contiene el formulario de búsqueda y botones -->
+        <div class="row">
+            <!-- Formulario de búsqueda -->
+            <form class="col-sm-12 col-md-12" id="searchForm">
+                <div class="row">
+                    <div class="col-lg-3 col-md-5 col-sm-6 mx-auto">
+                        <!-- Campo de búsqueda -->
+                        <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar" required>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+        <!-- Botones de la parte derecha -->
+        <div class="col-sm-12 col-md-12 d-flex justify-content-end pb-3 pt-3">
+            <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
+            <button type="button" class="btn btn-primary" onclick="openCreate()">
+                <i class="bi bi-plus-square-fill"></i>
+            </button>
+        </div>
+
+        <!-- HACE QUE LA TABLA SEA SCROLEABLE -->
+        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+            <!-- Tabla para mostrar los registros existentes -->
+            <table class="table table-hover">
+                <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+                <thead>
+                    <tr>
+                        <td colspan="6" id="rowsFound"></td>
+                    </tr>
+                    <tr>
+                        <th>NOMBRE</th>
+                        <th>ESTADO</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        <!-- Componente Modal para guardar un registro -->
+
+        <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5"  id="modalTitle"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Formulario para crear o actualizar un registro -->
+                    <form id="saveForm">
+                        <div class="modal-body row gx-5">
+                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                            <input type="hidden" id="idRol" name="idRol">
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <!--Nombre del rol-->
+                                    <label for="nombreRol" class="form-label">Nombre Rol</label>
+                                    <input id="nombreRol" type="text" name="nombreRol" class="form-control" required>
+                                </div>
+                            </div>
+                            <!--Estado del rol-->
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="">Estado Rol</p>
+                                        <input type="checkbox" name="estadoRol" id="estadoRol" class="switch-button__checkbox form-control">
+                                        <label for="estadoRol" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Opciones que tendra el rol-->
+                            <div class="col-6">
+                                <div class="p-3 my-auto">
+                                    <div class="switch-button ">
+                                        <p id="">Opcion Marcas</p>
+                                        <input type="checkbox" name="estadoMarca" id="estadoMarca" class="switch-button__checkbox form-control">
+                                        <label for="estadoMarca" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="">Opcion Modelos</p>
+                                        <input type="checkbox" name="estadoModelo" id="estadoModelo" class="switch-button__checkbox form-control">
+                                        <label for="estadoModelo" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="">Opcion Tallas</p>
+                                        <input type="checkbox" name="estadoTalla" id="estadoTalla" class="switch-button__checkbox form-control">
+                                        <label for="estadoTalla" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="">Opcion Pedidos</p>
+                                        <input type="checkbox" name="estadoPedido" id="estadoPedido" class="switch-button__checkbox form-control">
+                                        <label for="estadoPedido" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="">Opcion Tipo Noticias</p>
+                                        <input type="checkbox" name="estadoTipoNoticia" id="estadoTipoNoticia" class="switch-button__checkbox form-control">
+                                        <label for="estadoTipoNoticia" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="">Opcion Noticias</p>
+                                        <input type="checkbox" name="estadoNoticia" id="estadoNoticia" class="switch-button__checkbox form-control">
+                                        <label for="estadoNoticia" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="">Opcion Comentarios</p>
+                                        <input type="checkbox" name="estadoComentario" id="estadoComentario" class="switch-button__checkbox form-control">
+                                        <label for="estadoComentario" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="">Opcion Clientes</p>
+                                        <input type="checkbox" name="estadoCliente" id="estadoCliente" class="switch-button__checkbox form-control">
+                                        <label for="estadoCliente" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="">Opcion Usuarios</p>
+                                        <input type="checkbox" name="estadoUsuario" id="estadoUsuario" class="switch-button__checkbox form-control">
+                                        <label for="estadoUsuario" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- Llamada al framework y librería de mensajes -->
+    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <!-- Llamada al controlador general de la aplicación -->
+    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <!-- Llamada al controlador del sitio privado -->
+    <script type="text/javascript" src="../../controllers/utils/admin.js"></script>
+    <!-- Llamada al controlador de la página web -->
+    <script type="text/javascript" src="../../controllers/admin/10roles.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

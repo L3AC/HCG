@@ -1,0 +1,36 @@
+
+  
+  .input {
+    width: 600px;
+    height: 40px;
+    padding: 10px;
+    transition: .2s linear;
+    border: 2.5px solid black;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .input:focus {
+    outline: none;
+    border: 0.5px solid black;
+    box-shadow: -5px -5px 0px black;
+  }
+
+  @media (max-width: 1250px) {
+    .input {
+      width: 400px; /* Cambia el ancho a 100% de la pantalla */
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .input {
+      width: 200px; /* Cambia el ancho a 100% de la pantalla */
+    }
+  }
+
+  @media (max-width: 250px) {
+    .input {
+      width: 100px; /* Cambia el ancho a 100% de la pantalla */
+    }
+  }

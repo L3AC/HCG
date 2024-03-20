@@ -1,0 +1,54 @@
+:root {
+    --color-green: #00a878;
+    --color-red: #f40000;
+    --color-button: #fdffff;
+    --color-black: #000;
+  }
+  
+  /* Este es el contenedor del switch */
+  .col-6 .p-3 .switch-button {
+    display: inline-block;
+  }
+  
+  /* Este es el checkbox oculto que guarda el estado del switch */
+  .col-6 .p-3 .switch-button .switch-button__checkbox {
+    display: none;
+  }
+  
+  /* Este es el label que da la forma y el estilo al switch */
+  .col-6 .p-3 .switch-button .switch-button__label {
+    background-color: var(--color-red); /* Color de fondo cuando está apagado */
+    width:3.5rem; /* Ancho del switch */
+    height: 1.5rem; /* Alto del switch */
+    border-radius: 7rem; /* Borde redondeado del switch */
+    display: inline-block;
+    position: relative;
+  }
+  
+  /* Este es el pseudo-elemento before que crea el círculo blanco dentro del switch */
+  .col-6 .p-3 .switch-button .switch-button__label:before {
+    transition: .2s; /* Transición suave al cambiar de estado */
+    display: block;
+    position: absolute;
+    width: 1.5rem; /* Ancho del círculo */
+    height: 1.5rem; /* Alto del círculo */
+    background-color: var(--color-button); /* Color de fondo del círculo */
+    content: ''; /* Contenido vacío del pseudo-elemento */
+    border-radius: 50%; /* Borde redondeado del círculo */
+    box-shadow: inset 0px 0px 0px 1px var(--color-black); /* Sombra interior del círculo */
+  }
+  
+  /* Esta es la pseudo-clase que se aplica cuando el checkbox está marcado */
+  .col-6 .p-3 .switch-button .switch-button__checkbox:checked + .switch-button__label {
+    background-color: var(--color-green); /* Color de fondo cuando está encendido */
+  }
+  
+  /* Esta es la pseudo-clase que se aplica al pseudo-elemento before cuando el checkbox está marcado */
+  .col-6 .p-3 .switch-button .switch-button__checkbox:checked + .switch-button__label:before {
+    transform: translateX(2rem); /* Mueve el círculo a la derecha */
+  }
+
+  .loco{
+    margin-bottom: 14px;
+    text-align: start;
+  }

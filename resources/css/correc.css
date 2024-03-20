@@ -1,0 +1,20 @@
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  #contenido {
+    min-height: 100%;
+    /* Ajuste para el pie de página */
+    padding-bottom: 60px; /* Altura de tu pie de página */
+    box-sizing: border-box;
+  }
+  
+  #pie-de-pagina {
+    height: 60px; /* Altura de tu pie de página */
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+  

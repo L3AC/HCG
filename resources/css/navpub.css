@@ -1,0 +1,23 @@
+body {
+    font-family: 'Quicksand', sans-serif;font-optical-sizing: auto;font-style: normal;
+} 
+#linea {
+    min-height: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #ccc; /* Línea fina debajo del texto */
+    margin-bottom: 10px; /* Pequeña separación */
+}
+
+#Bue{
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    color: #5978bc;
+}
+
+#foot{
+    background-color: #CCC8AA;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}

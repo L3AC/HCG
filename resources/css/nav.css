@@ -1,0 +1,106 @@
+.navbar{
+    background-color: #CCC8AA; height: 90px;
+}
+
+.contenedor {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-left: none;
+    border-right: none;
+    margin-bottom: 10px;
+  }
+  
+  .offcanvas-body a {
+    text-decoration: none;
+    color: rgb(37, 37, 37);
+    font-size: 20px;
+  }
+  
+  .offcanvas-body i + a {
+    margin-left: 10px;
+  }
+
+/*.li{
+    background-color: #F1EFEF;
+  }*/
+  .list-group.list-group-flush li {
+    background-color: #F1EFEF; /* Cambia el color de fondo según tus necesidades */
+  }
+
+  #io{
+    margin-top: 20px;
+    margin-right: 20px;
+  }
+
+  #T1{
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+  }
+
+  #linea {
+    min-height: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #ccc; /* Línea fina debajo del texto */
+    margin-bottom: 10px; /* Pequeña separación */
+}
+
+#Bue{
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    color: #5978bc;
+}
+
+#foot{
+    background-color: #CCC8AA;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+ /*
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 1px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  max-width: 1000px; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  border-radius: 50px;
+}*/
+/* Botón de Cerrar */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover, .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#imgAdv{
+  align-self: center;
+}
+
+#ModT, #Txt{
+  text-align: center;
+}
+/* Estas son las variables de los colores que vamos a usar */

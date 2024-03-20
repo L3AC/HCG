@@ -1,0 +1,22 @@
+.input {
+    width: 400px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid #323232;
+    background-color: #fff;
+    box-shadow: 4px 4px #323232;
+    font-size: 15px;
+    color: #323232;
+    padding: 5px 10px;
+    outline: none;
+    font-family: "Quicksand", sans-serif;
+  }
+  
+  .input::placeholder {
+    color: #666;
+    opacity: 0.8;
+  }
+  
+  .input:focus {
+    border: 2px solid #2d8cf0;
+  }
