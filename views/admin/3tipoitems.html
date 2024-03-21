@@ -35,8 +35,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-5 col-sm-6 mx-auto">
                         <!-- Campo de búsqueda -->
-                        <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar"
-                            required>
+                        <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar" required>
                     </div>
 
                 </div>
@@ -86,28 +85,24 @@
                     <form id="saveForm">
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                            <input type="hidden" id="idTipoNoticia" name="idTipoNoticia">
-
+                            <input type="hidden" id="idTipoItem" name="idTipoItem">
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
-                                <label for="nombreTipoNoticia" class="form-label">Nombre</label>
-                                <input id="nombreTipoNoticia" type="text" name="nombreTipoNoticia" class="form-control"
-                                    required>
+                                <label for="nombreTipoItem" class="form-label">Nombre</label>
+                                <input id="nombreTipoItem" type="number" name="nombreTipoItem" class="form-control" required>
                             </div>
                             <div class="col-6">
                                 <div class="p-3">
-                                    <!-- Interruptor para el estado del registro -->
                                     <div class="switch-button">
-                                        <p id="">Estado</p>
-                                        <input type="checkbox" name="estadoTipoNoticia" id="estadoTipoNoticia"
+                                        <p id="" style="margin-bottom: 1px;">Estado</p>
+                                        <input type="checkbox" name="estadoTipoItem" id="estadoTipoItem"
                                             class="switch-button__checkbox form-control">
-                                        <label for="estadoTipoNoticia" id="swa" class="switch-button__label"></label>
+                                        <label for="estadoTipoItem" id="swa" class="switch-button__label"></label>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Pie del modal con botón de guardar -->
+                        <!-- Pie del modal con el botón de guardar -->
                         <div class="modal-footer border-0">
                             <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
                         </div>
@@ -127,7 +122,7 @@
     <!-- Llamada al controlador del sitio privado -->
     <script type="text/javascript" src="../../controllers/utils/admin.js"></script>
     <!-- Llamada al controlador de la página web -->
-    <script type="text/javascript" src="../../controllers/admin/5tiponoticias.js"></script>
+    <script type="text/javascript" src="../../controllers/admin/3Tipoitems.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>

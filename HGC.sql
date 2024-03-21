@@ -6,12 +6,13 @@ CREATE TABLE tb_roles(
   id_rol INT UNSIGNED /*auto_increment*/,
   descripcion_rol VARCHAR(100) NOT NULL,
   estado_rol BOOLEAN DEFAULT TRUE,
+  productos_opc BOOLEAN NOT NULL,
   pedidos_opc BOOLEAN NOT NULL,
   tipo_items_opc BOOLEAN NOT NULL,
   items_opc BOOLEAN NOT NULL,
-  productos_opc BOOLEAN NOT NULL,
   clientes_opc BOOLEAN NOT NULL,
   usuarios_opc BOOLEAN NOT NULL,
+  roles_opc BOOLEAN NOT NULL,
   PRIMARY KEY (id_rol)
 );
 
@@ -67,6 +68,7 @@ CREATE TABLE tb_productos(
   descripcion_producto VARCHAR(255) NOT NULL,
   horario_producto ENUM('D','A','C','T','TD','D-A','D-C','A-C','T-D','TA','T-C') NOT NULL,
   precio_producto DECIMAL(10, 2) NOT NULL,
+  imagen_producto TEXT,
   estado_producto BOOLEAN NOT NULL,
   lunes_producto BOOLEAN NOT NULL,
   martes_producto BOOLEAN NOT NULL,
