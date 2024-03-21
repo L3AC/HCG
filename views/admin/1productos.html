@@ -34,7 +34,8 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-5 col-sm-6 mx-auto">
                         <!-- Campo de búsqueda -->
-                        <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar" required>
+                        <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar"
+                            required>
                     </div>
 
                 </div>
@@ -92,29 +93,43 @@
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
                                 <label for="nombreProducto" class="form-label">Nombre</label>
-                                <input id="nombreProducto" type="text" name="nombreProducto" class="form-control" required>
+                                <input id="nombreProducto" type="text" name="nombreProducto" class="form-control"
+                                    required>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="marcaProducto" class="form-label">Marca</label>
-                                <select id="marcaProducto" name="marcaProducto" class="form-select" required>
+                                <label for="tipoProducto" class="form-label">Marca</label>
+                                <select id="tipoProducto" name="tipoProducto" class="form-select" required>
+                                    <option value="Conjunto">Conjunto</option>
+                                    <option value="Complementario">Complementario</option>
                                 </select>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="imagenProducto" class="form-label">Imagén</label>
+                                <label for="imagenProducto" class="form-label">Imagen</label>
                                 <input id="imagenProducto" type="file" name="imagenProducto" class="form-control"
                                     accept=".png, .jpg">
                                 <div class="row justify-content-center px-3 mb-3" id="imgPre"></div>
                             </div>
-                            <div class="col-6">
-                                <div class="p-3">
-                                    <!-- Interruptor para el estado del registro -->
-                                    <div class="switch-button">
-                                        <p id="">Estado</p>
-                                        <input type="checkbox" name="estadoProducto" id="estadoProducto"
-                                            class="switch-button__checkbox form-control">
-                                        <label for="estadoProducto" id="swa" class="switch-button__label"></label>
-                                    </div>
-                                </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label class="container">
+                                    <input checked="checked" type="checkbox">
+                                    <div class="checkmark"></div>
+                                </label>
+                                <label class="container">
+                                    <input checked="checked" type="checkbox">
+                                    <div class="checkmark"></div>
+                                </label>
+                                <label class="container">
+                                    <input checked="checked" type="checkbox">
+                                    <div class="checkmark"></div>
+                                </label>
+                                <label class="container">
+                                    <input checked="checked" type="checkbox">
+                                    <div class="checkmark"></div>
+                                </label>
+                                <label class="container">
+                                    <input checked="checked" type="checkbox">
+                                    <div class="checkmark"></div>
+                                </label>
                             </div>
 
                             <!-- Pie del modal con el botón de guardar -->
