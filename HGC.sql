@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS db_hgc;
 USE db_hgc;
 
 CREATE TABLE tb_roles(
-  id_rol INT UNSIGNED auto_increment,
+  id_rol INT UNSIGNED /*auto_increment*/,
   descripcion_rol VARCHAR(100) NOT NULL,
   estado_rol BOOLEAN DEFAULT TRUE,
   pedidos_opc BOOLEAN NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE tb_roles(
 );
 
 CREATE TABLE tb_usuarios(
-  id_usuario INT UNSIGNED auto_increment,
+  id_usuario INT UNSIGNED /*auto_increment*/,
   id_rol INT UNSIGNED,
   alias_usuario VARCHAR(30) UNIQUE NOT NULL,
   clave_usuario VARCHAR(255) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE tb_usuarios(
 );
 
 CREATE TABLE tb_clientes(
-  id_cliente INT UNSIGNED auto_increment,
+  id_cliente INT UNSIGNED /*auto_increment*/,
   telefono_cliente VARCHAR(255) NOT NULL,
   nombre_cliente VARCHAR(255) NOT NULL,
   apellido_cliente VARCHAR(255) NOT NULL,
@@ -41,14 +41,14 @@ CREATE TABLE tb_clientes(
 
 /*ESTO VA A SERVIR PARA INGRESAR POR EJEMPLO, CATEGORIA DE BEBIDAS, SNACKS, POSTRE, PORCION DE UN PLATILLO*/
 CREATE TABLE tb_tipo_items(
-  id_tipo_item INT UNSIGNED auto_increment,
+  id_tipo_item INT UNSIGNED /*auto_increment*/,
   descripcion_tipo_item VARCHAR(255) NOT NULL,
   estado_tipo_item BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_tipo_item)
 );
 
 CREATE TABLE tb_items(
-  id_item INT UNSIGNED auto_increment,
+  id_item INT UNSIGNED /*auto_increment*/,
   id_tipo_item INT UNSIGNED ,/*BEBIDA, PLATO, SNACK,*/
   nombre_item VARCHAR(255) NOT NULL,
   estado_item BOOLEAN DEFAULT TRUE,
@@ -62,7 +62,7 @@ CREATE TABLE tb_items(
   T-D = Tipico y Desayuno , T-A = Tipico y Almuerzo T-C = Tipico y Cena
 */
 CREATE TABLE tb_productos(
-  id_producto INT UNSIGNED auto_increment,
+  id_producto INT UNSIGNED /*auto_increment*/,
   tipo_producto ENUM('Conjunto','Complementario') NOT NULL,
   descripcion_producto VARCHAR(255) NOT NULL,
   horario_producto ENUM('D','A','C','T','TD','D-A','D-C','A-C','T-D','TA','T-C') NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE tb_productos(
 
 
 CREATE TABLE tb_detalle_productos(
-  id_detalle_producto INT UNSIGNED auto_increment,
+  id_detalle_producto INT UNSIGNED /*auto_increment*/,
   id_item INT UNSIGNED  NOT NULL,
   id_producto INT UNSIGNED  NOT NULL, /*TRAE EL ID DEL producto*/
   cantidad_item INT UNSIGNED NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE tb_pedidos(
 );
 
 CREATE TABLE tb_detalle_pedidos (
-  id_detalle_pedido INT UNSIGNED AUTO_INCREMENT,
+  id_detalle_pedido INT UNSIGNED /*auto_increment*/,
   id_pedido INT UNSIGNED NOT NULL,
   id_producto INT UNSIGNED NOT NULL,
   cantidad_pedido INT UNSIGNED NOT NULL,
