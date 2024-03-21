@@ -60,8 +60,9 @@
                     </tr>
                     <tr>
                         <th>IMAGEN</th>
-                        <th>NOMBRE</th>
-                        <th>MARCA</th>
+                        <th>DESCRIPCION</th>
+                        <th>HORARIO</th>
+                        <th>PRECIO</th>
                         <th>ESTADO</th>
                         <th>ACCIONES</th>
                     </tr>
@@ -86,21 +87,21 @@
                     <form id="saveForm">
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                            <input type="hidden" id="idModelo" name="idModelo">
+                            <input type="hidden" id="idProducto" name="idProducto">
 
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
-                                <label for="nombreModelo" class="form-label">Nombre</label>
-                                <input id="nombreModelo" type="text" name="nombreModelo" class="form-control" required>
+                                <label for="nombreProducto" class="form-label">Nombre</label>
+                                <input id="nombreProducto" type="text" name="nombreProducto" class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="marcaModelo" class="form-label">Marca</label>
-                                <select id="marcaModelo" name="marcaModelo" class="form-select" required>
+                                <label for="marcaProducto" class="form-label">Marca</label>
+                                <select id="marcaProducto" name="marcaProducto" class="form-select" required>
                                 </select>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="imagenModelo" class="form-label">Imagén</label>
-                                <input id="imagenModelo" type="file" name="imagenModelo" class="form-control"
+                                <label for="imagenProducto" class="form-label">Imagén</label>
+                                <input id="imagenProducto" type="file" name="imagenProducto" class="form-control"
                                     accept=".png, .jpg">
                                 <div class="row justify-content-center px-3 mb-3" id="imgPre"></div>
                             </div>
@@ -109,9 +110,9 @@
                                     <!-- Interruptor para el estado del registro -->
                                     <div class="switch-button">
                                         <p id="">Estado</p>
-                                        <input type="checkbox" name="estadoModelo" id="estadoModelo"
+                                        <input type="checkbox" name="estadoProducto" id="estadoProducto"
                                             class="switch-button__checkbox form-control">
-                                        <label for="estadoModelo" id="swa" class="switch-button__label"></label>
+                                        <label for="estadoProducto" id="swa" class="switch-button__label"></label>
                                     </div>
                                 </div>
                             </div>
@@ -121,9 +122,9 @@
                                 <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
                             </div>
 
-                            <!-- Subtabla para modelos tallas -->
+                            <!-- Subtabla para Productos tallas -->
                             <div id="subtable">
-                                <!-- TABLA DE MODELO TALLAS-->
+                                <!-- TABLA DE Producto TALLAS-->
                                 <div class="modal-header border-0">
                                     <h1 class="modal-title fs-5" id="submodalTitle"></h1>
                                 </div>
@@ -172,7 +173,7 @@
             </div>
         </div>
 
-        <!-- Modal para guardar un registro en la subtabla de modelos tallas -->
+        <!-- Modal para guardar un registro en la subtabla de Productos tallas -->
         <div class="modal fade" id="savetreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -182,24 +183,24 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                             onclick="subclose()"></button>
                     </div>
-                    <!-- Formulario para crear o actualizar un registro en la subtabla de modelos tallas -->
+                    <!-- Formulario para crear o actualizar un registro en la subtabla de Productos tallas -->
                     <form id="savetreForm">
                         <div class="modal-body row g-3 ">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                            <input type="hidden" id="idModeloTalla" name="idModeloTalla">
+                            <input type="hidden" id="idProductoTalla" name="idProductoTalla">
                             <div class="col-sm-12 col-md-6">
-                                <label for="precioModeloTalla" class="form-label">Precio (US$)</label>
-                                <input id="precioModeloTalla" type="number" name="precioModeloTalla" min="0.01"
+                                <label for="precioProductoTalla" class="form-label">Precio (US$)</label>
+                                <input id="precioProductoTalla" type="number" name="precioProductoTalla" min="0.01"
                                     step="0.01" class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="stockModeloTalla" class="form-label">Stock</label>
-                                <input id="stockModeloTalla" type="number" name="stockModeloTalla" min="1" step="1"
+                                <label for="stockProductoTalla" class="form-label">Stock</label>
+                                <input id="stockProductoTalla" type="number" name="stockProductoTalla" min="1" step="1"
                                     class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6" id="selectTalla">
-                                <label for="tallaModeloTalla" class="form-label">Talla</label>
-                                <select id="tallaModeloTalla" name="tallaModeloTalla" class="form-select" required>
+                                <label for="tallaProductoTalla" class="form-label">Talla</label>
+                                <select id="tallaProductoTalla" name="tallaProductoTalla" class="form-select" required>
                                 </select>
                             </div>
                         </div>
@@ -223,7 +224,7 @@
     <!-- Llamada al controlador del sitio privado -->
     <script type="text/javascript" src="../../controllers/utils/admin.js"></script>
     <!-- Llamada al controlador de la página web -->
-    <script type="text/javascript" src="../../controllers/admin/2modelos.js"></script>
+    <script type="text/javascript" src="../../controllers/admin/2Productos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
