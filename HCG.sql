@@ -59,7 +59,6 @@ CREATE TABLE tb_items(
   CONSTRAINT fk_item_tipo 
   FOREIGN KEY(id_tipo_item) REFERENCES tb_tipo_items(id_tipo_item)
 );
-
 /*D = Desayuno, A = Almuerzo, C = Cena, T = Tipico,TD = Todo el dia
   D-A = Desayuno y Almuerzo, D-C = Desayuno y Cena, A-C = Almuerzo y Cena
   T-D = Tipico y Desayuno , T-A = Tipico y Almuerzo T-C = Tipico y Cena
@@ -70,7 +69,7 @@ CREATE TABLE tb_productos(
   descripcion_producto VARCHAR(255) NOT NULL,
   horario_producto ENUM('D','A','C','T','TD','D-A','D-C','A-C','T-D','TA','T-C') NOT NULL,
   precio_producto DECIMAL(10, 2) NOT NULL,
-  imagen_producto TEXT,
+  imagen_producto LONGTEXT,
   estado_producto BOOLEAN NOT NULL,
   lunes_producto BOOLEAN NOT NULL,
   martes_producto BOOLEAN NOT NULL,
@@ -151,3 +150,15 @@ DELIMITER ;
 INSERT INTO tb_roles (id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, tipo_items_opc, items_opc, clientes_opc, usuarios_opc, roles_opc)
 VALUES ((SELECT get_next_id('tb_roles')), 'Aministrador', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE);
 
+INSERT INTO tb_tipo_items(id_tipo_item,descripcion_tipo_item,estado_tipo_item) 
+VALUES((SELECT get_next_id("tb_tipo_items")),"Bebida",true),
+((SELECT get_next_id("tb_tipo_items")),"Snack",true),
+((SELECT get_next_id("tb_tipo_items")),"Postre",true),
+((SELECT get_next_id("tb_tipo_items")),"Porción de plato",true);
+
+INSERT INTO tb_items(id_item,id_tipo_item,nombre_item,estado_item) 
+VALUES((SELECT get_next_id("tb_items")),1,"Lata Coca Cola 550ml",true),
+((SELECT get_next_id("tb_items")),1,"Lata Coca Cola 550ml",true),
+((SELECT get_next_id("tb_items")),2,"Nachos Diana",true),
+((SELECT get_next_id("tb_items")),3,"Budín",true),
+((SELECT get_next_id("tb_items")),4,"Porción de arroz",true);

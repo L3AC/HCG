@@ -25,7 +25,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoModelo');
-IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
+    IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
     IMAGEN_PRE = document.getElementById('imgPre');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
