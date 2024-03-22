@@ -139,9 +139,10 @@ class AdministradorHandler
     {
         //echo $this->clave.' ';
         $this->idRol = ($this->idRol === null) ? 1 : $this->idRol;
-        $sql = 'INSERT INTO tb_usuarios(id_rol,alias_usuario, clave_usuario,nombre_usuario, 
+        $sql = '
+        INSERT INTO tb_usuarios(id_usuario,id_rol,alias_usuario, clave_usuario,nombre_usuario, 
         apellido_usuario,email_usuario,pin_usuario,estado_usuario)
-                VALUES(?, ?, ?, ?, ?,?,?,true)';
+        VALUES((SELECT get_next_id("tb_usuarios")),?, ?, ?, ?, ?,?,?,true)';
         $params = array($this->idRol, $this->alias, $this->clave, $this->nombre, 
         $this->apellido, $this->correo, $this->generarPin());
         return Database::executeRow($sql, $params);
@@ -149,8 +150,8 @@ class AdministradorHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
-        FROM sec_usuarios';
+        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, alias_usuario
+        FROM tb_usuarios';
         return Database::getRows($sql);
     }
     public function readAllA()

@@ -120,12 +120,12 @@ const loadTemplate = async () => {
     <nav class="navbar fixed-bottom" id="foot">
         <div class="container-fluid">
             <div>
-                <h6>YNWA</h6>
+                <h6>HCG</h6>
                 <p><i class="bi bi-c-square"></i>2024 Todos los derechos reservados</p>
             </div>
             <div>
                 <h6>Contáctanos</h6>
-                <p><i class="bi bi-envelope"></i> YNWA@gmail.com</p>
+                <p><i class="bi bi-envelope"></i> HCG@gmail.com</p>
             </div>
         </div>
     </nav>

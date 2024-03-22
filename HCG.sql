@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS db_hgc;
-CREATE DATABASE IF NOT EXISTS db_hgc;
-USE db_hgc;
+DROP DATABASE IF EXISTS db_hcg;
+CREATE DATABASE IF NOT EXISTS db_hcg;
+USE db_hcg;
 
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED /*auto_increment*/,
@@ -15,6 +15,7 @@ CREATE TABLE tb_roles(
   roles_opc BOOLEAN NOT NULL,
   PRIMARY KEY (id_rol)
 );
+
 
 CREATE TABLE tb_usuarios(
   id_usuario INT UNSIGNED /*auto_increment*/,
@@ -31,6 +32,7 @@ CREATE TABLE tb_usuarios(
   FOREIGN KEY(id_rol) REFERENCES tb_roles(id_rol)
   ON DELETE CASCADE ON UPDATE CASCADE
 );
+        
 
 CREATE TABLE tb_clientes(
   id_cliente INT UNSIGNED /*auto_increment*/,
@@ -116,7 +118,9 @@ CREATE TABLE tb_detalle_pedidos (
 );
 
 DELIMITER //
-CREATE PROCEDURE next_id(IN table_name VARCHAR(255))
+
+CREATE FUNCTION get_next_id(table_name VARCHAR(255))
+RETURNS INT UNSIGNED
 BEGIN
     DECLARE next_id INT UNSIGNED;
     
@@ -139,7 +143,11 @@ BEGIN
             SELECT IFNULL(MAX(id_pedido), 0) + 1 INTO next_id FROM tb_pedidos;
     END CASE;
     
-    SELECT next_id;
+    RETURN next_id;
 END //
+
 DELIMITER ;
+
+INSERT INTO tb_roles (id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, tipo_items_opc, items_opc, clientes_opc, usuarios_opc, roles_opc)
+VALUES ((SELECT get_next_id('tb_roles')), 'Aministrador', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE);
 
