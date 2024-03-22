@@ -1,4 +1,4 @@
-DROP DATABASE db_hgc;
+DROP DATABASE IF EXISTS db_hgc;
 CREATE DATABASE IF NOT EXISTS db_hgc;
 USE db_hgc;
 
@@ -114,4 +114,32 @@ CREATE TABLE tb_detalle_pedidos (
   FOREIGN KEY (id_pedido) REFERENCES tb_pedidos(id_pedido) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+DELIMITER //
+CREATE PROCEDURE next_id(IN table_name VARCHAR(255))
+BEGIN
+    DECLARE next_id INT UNSIGNED;
+    
+    CASE table_name
+        WHEN 'tb_roles' THEN
+            SELECT IFNULL(MAX(id_rol), 0) + 1 INTO next_id FROM tb_roles;
+        WHEN 'tb_usuarios' THEN
+            SELECT IFNULL(MAX(id_usuario), 0) + 1 INTO next_id FROM tb_usuarios;
+        WHEN 'tb_clientes' THEN
+            SELECT IFNULL(MAX(id_cliente), 0) + 1 INTO next_id FROM tb_clientes;
+        WHEN 'tb_tipo_items' THEN
+            SELECT IFNULL(MAX(id_tipo_item), 0) + 1 INTO next_id FROM tb_tipo_items;
+        WHEN 'tb_items' THEN
+            SELECT IFNULL(MAX(id_item), 0) + 1 INTO next_id FROM tb_items;
+        WHEN 'tb_productos' THEN
+            SELECT IFNULL(MAX(id_producto), 0) + 1 INTO next_id FROM tb_productos;
+        WHEN 'tb_detalle_productos' THEN
+            SELECT IFNULL(MAX(id_detalle_producto), 0) + 1 INTO next_id FROM tb_detalle_productos;
+        WHEN 'tb_pedidos' THEN
+            SELECT IFNULL(MAX(id_pedido), 0) + 1 INTO next_id FROM tb_pedidos;
+    END CASE;
+    
+    SELECT next_id;
+END //
+DELIMITER ;
 

@@ -4,7 +4,7 @@
 */
 
 // Constante para completar la ruta de la API.
-const USER_API = 'services/admin/9usuarios.php';
+const USER_API = 'services/admin/6usuarios.php';
 // Constante para establecer el elemento del contenido principal.
 const MAIN = document.querySelector('main');
 

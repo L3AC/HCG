@@ -36,28 +36,24 @@ class AdministradorHandler
     }
     public function checkUser($username, $password)
     {
-        $sql = 'SELECT id_usuario ,id_rol, usuario_usuario, clave_usuario,descripcion_opc, 
-        estado_opc, marcas_opc, modelos_opc,tallas_opc, pedidos_opc, 
-        tipo_noticias_opc, noticias_opc,comentarios_opc, clientes_opc, usuarios_opc, roles_opc
-        FROM sec_usuarios
-        INNER JOIN sec_roles using(id_rol)
-        WHERE  usuario_usuario = ?';
+        $sql = 'SELECT id_usuario ,id_rol, alias_usuario, clave_usuario,descripcion_opc, 
+        estado_opc, pedidos_opc, tipo_items_opc,items_opc, clientes_opc, 
+        usuarios_opc, roles_opc
+        FROM tb_usuarios
+        INNER JOIN tb_roles using(id_rol)
+        WHERE  estado_usuario=true AND alias_usuario = ?';
         //echo($username);
         $params = array($username);
         $data = Database::getRow($sql, $params);
         //echo $data['clave'];
         if (password_verify($password, $data['clave_usuario'])) {
             $_SESSION['idUsuario'] = $data['id_usuario'];
-            $_SESSION['usuarion'] = $data['usuario_usuario'];
+            $_SESSION['alias'] = $data['alias_usuario'];
             $_SESSION['idRol'] = $data['id_rol'];
-            $_SESSION['marcas_opc'] = $data['marcas_opc'];
-            $_SESSION['modelos_opc'] = $data['modelos_opc'];
-            $_SESSION['tallas_opc']         =$data['tallas_opc'];
             $_SESSION['pedidos_opc']       = $data['pedidos_opc'];
-            $_SESSION['tipo_noticias_opc'] = $data['tipo_noticias_opc'];
-            $_SESSION['noticias_opc']      = $data['noticias_opc'];
-            $_SESSION['comentarios_opc']   = $data['comentarios_opc'];
-            $_SESSION['clientes_opc']      = $data['clientes_opc'];
+            $_SESSION['tipo_items_opc'] = $data['tipo_items_opc'];
+            $_SESSION['items_opc']      = $data['noticias_opc'];
+            $_SESSION['clientes_opc']   = $data['clientes_opc'];
             $_SESSION['usuarios_opc']     =  $data['usuarios_opc'];
             $_SESSION['roles_opc']          =$data['roles_opc'];
 
@@ -71,7 +67,7 @@ class AdministradorHandler
     public function checkPassword($password)
     {
         $sql = 'SELECT clave_usuario
-                FROM sec_usuarios
+                FROM tb_usuarios
                 WHERE id_usuario = ?';
         $params = array($_SESSION['idUsuario']);
         $data = Database::getRow($sql, $params);
@@ -94,8 +90,8 @@ class AdministradorHandler
 
     public function readProfile()
     {
-        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
-                FROM sec_usuarios
+        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, alias_usuario
+                FROM tb_usuarios
                 WHERE id_usuario = ?';
         $params = array($_SESSION['idUsuario']);
         return Database::getRow($sql, $params);
@@ -143,10 +139,11 @@ class AdministradorHandler
     {
         //echo $this->clave.' ';
         $this->idRol = ($this->idRol === null) ? 1 : $this->idRol;
-        $sql = 'INSERT INTO sec_usuarios(id_rol,usuario_usuario, clave_usuario,nombre_usuario, 
+        $sql = 'INSERT INTO tb_usuarios(id_rol,alias_usuario, clave_usuario,nombre_usuario, 
         apellido_usuario,email_usuario,pin_usuario,estado_usuario)
                 VALUES(?, ?, ?, ?, ?,?,?,true)';
-        $params = array($this->idRol, $this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
+        $params = array($this->idRol, $this->alias, $this->clave, $this->nombre, 
+        $this->apellido, $this->correo, $this->generarPin());
         return Database::executeRow($sql, $params);
     }
 
