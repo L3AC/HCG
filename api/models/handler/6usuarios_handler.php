@@ -53,7 +53,7 @@ class AdministradorHandler
             $_SESSION['productos_opc']       = $data['productos_opc'];
             $_SESSION['pedidos_opc']       = $data['pedidos_opc'];
             $_SESSION['tipo_items_opc'] = $data['tipo_items_opc'];
-            $_SESSION['items_opc']      = $data['noticias_opc'];
+            $_SESSION['items_opc']      = $data['items_opc'];
             $_SESSION['clientes_opc']   = $data['clientes_opc'];
             $_SESSION['usuarios_opc']   =  $data['usuarios_opc'];
             $_SESSION['roles_opc']      =$data['roles_opc'];

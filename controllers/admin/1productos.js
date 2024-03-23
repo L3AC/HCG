@@ -1,8 +1,7 @@
 // Constantes para completar las rutas de la API.
-const PRODUCTO_API = 'services/admin/2modelos.php',
-    MARCA_API = 'services/admin/1marcas.php',
-    TALLA_API = 'services/admin/3tallas.php',
-    MODELOTALLAS_API = 'services/admin/11modelotallas.php';
+const PRODUCTO_API = 'services/admin/1productos.php',
+    MARCA_API = 'services/admin/4items.php',
+    MODELOTALLAS_API = 'services/admin/8detalleproductos.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm'),
     SEARCHSUB_FORM = document.getElementById('searchsubForm');
