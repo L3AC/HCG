@@ -50,10 +50,11 @@ CREATE TABLE tb_tipo_items(
   PRIMARY KEY (id_tipo_item)
 );
 
+
 CREATE TABLE tb_items(
   id_item INT UNSIGNED /*auto_increment*/,
   id_tipo_item INT UNSIGNED ,/*BEBIDA, PLATO, SNACK,*/
-  nombre_item VARCHAR(255) NOT NULL,
+  descripcion_item VARCHAR(255) NOT NULL,
   estado_item BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_item),
   CONSTRAINT fk_item_tipo 
@@ -156,9 +157,15 @@ VALUES((SELECT get_next_id("tb_tipo_items")),"Bebida",true),
 ((SELECT get_next_id("tb_tipo_items")),"Postre",true),
 ((SELECT get_next_id("tb_tipo_items")),"Porción de plato",true);
 
-INSERT INTO tb_items(id_item,id_tipo_item,nombre_item,estado_item) 
+
+INSERT INTO tb_items(id_item,id_tipo_item,descripcion_item,estado_item) 
 VALUES((SELECT get_next_id("tb_items")),1,"Lata Coca Cola 550ml",true),
-((SELECT get_next_id("tb_items")),1,"Lata Coca Cola 550ml",true),
 ((SELECT get_next_id("tb_items")),2,"Nachos Diana",true),
 ((SELECT get_next_id("tb_items")),3,"Budín",true),
 ((SELECT get_next_id("tb_items")),4,"Porción de arroz",true);
+
+
+SELECT id_item, descripcion_tipo_item,descripcion_item, estado_item
+        FROM tb_items
+        INNER JOIN tb_tipo_items USING(id_tipo_item)
+        ORDER BY CAST(descripcion_tipo_item AS UNSIGNED)

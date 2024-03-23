@@ -45,6 +45,14 @@ if (isset($_GET['action'])) {
                     $result['error'] = ' No se encontraron registros';
                 }
                 break;
+            case 'readAllActive':
+                    if ($result['dataset'] = $producto->readAllActive()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                    } else {
+                        $result['error'] = ' No se encontraron registros';
+                    }
+                break;
             case 'readOne':
                 //echo $_POST['idTalla'];
                 if (!$producto->setId($_POST['idTalla'])) {

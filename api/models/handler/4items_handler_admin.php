@@ -52,6 +52,14 @@ class ItemHandler
         ORDER BY CAST(descripcion_talla AS UNSIGNED)';
         return Database::getRows($sql);
     }
+    public function readAllActive()
+    {
+        $sql = 'SELECT id_item, descripcion_tipo_item,descripcion_item, estado_item
+        FROM tb_items
+        INNER JOIN tb_tipo_items USING(id_tipo_item)
+        ORDER BY CAST(descripcion_tipo_item AS UNSIGNED)';
+        return Database::getRows($sql);
+    }
 
     public function readOne()
     {

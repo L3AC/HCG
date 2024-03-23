@@ -1,7 +1,7 @@
 // Constantes para completar las rutas de la API.
 const PRODUCTO_API = 'services/admin/1productos.php',
-    MARCA_API = 'services/admin/4items.php',
-    MODELOTALLAS_API = 'services/admin/8detalleproductos.php';
+    ITEM_API = 'services/admin/4items.php',
+    DETALLEPRODUCTO_API = 'services/admin/8detalleproductos.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm'),
     SEARCHSUB_FORM = document.getElementById('searchsubForm');
@@ -135,14 +135,11 @@ const openCreate = () => {
     SAVE_MODAL.show();
     IMAGEN_PRE.innerHTML = '';
     MODAL_TITLE.textContent = 'Crear registro';
-    SUBTABLE.hidden = true;
-
     // Se prepara el formulario.
     SAVE_FORM.reset();
-    //EXISTENCIAS_PRODUCTO.disabled = false;
-    fillSelect(MARCA_API, 'readAll', 'marcaModelo');
+    fillsubTable(SEARCHSUB_FORM);
 }
-
+/*
 IMAGEN_PRODUCTO.addEventListener('change', function (event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -161,13 +158,13 @@ IMAGEN_PRODUCTO.addEventListener('change', function (event) {
 
 // Agregar un evento click a la imagen para aplicar un zoom
 IMAGEN_PRE.addEventListener('click', function () {
-    IMAGEN_PRE.style.transform = 'scale(3)'; /* Escala de 1.5 (ampliar al 150% del tamaño original) al hacer clic en la imagen */
+    IMAGEN_PRE.style.transform = 'scale(3)'; 
     event.stopPropagation(); 
 });
 
 document.addEventListener('click', function() {
-    IMAGEN_PRE.style.transform = 'scale(1)'; /* Restablecer el tamaño original de la imagen */
-});
+    IMAGEN_PRE.style.transform = 'scale(1)'; 
+});*/
 
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.
@@ -246,9 +243,9 @@ const fillsubTable = async (form = null) => {
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
-    // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(MODELOTALLAS_API, action, form);
+    (form) ? action = 'searchRows' : action = 'readAllActive';
+    // Petición para obtener los resistros disponibles.
+    const DATA = await fetchData(ITEM_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
@@ -256,16 +253,12 @@ const fillsubTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             SUBTABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.talla}</td>
-                    <td>${row.stock_modelo_talla}</td>
-                    <td>$ ${row.precio_modelo_talla}</td>
+                    <td>${row.descripcion_item}</td>
+                    <td>${row.descripcion_tipo_item}</td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="opensubUpdate(${row.id_modelo_talla})">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" onclick="opensubDelete(${row.id_modelo_talla})">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
+                    <button type="button" class="btn btn-primary" onclick="selectItem(${row.id_item})">
+                    <i class="bi bi-plus-square-fill"></i>
+                </button>
                     </td>
                 </tr>
             `;
@@ -276,6 +269,16 @@ const fillsubTable = async (form = null) => {
         //sweetAlert(4, DATA.error, true);
     }
 }
+const selectItem = async (itemId) => {
+    const selectedItem = document.querySelector(`#subtableBody tr[data-id="${itemId}"]`);
+    selectedItem.remove(); // Eliminar el item de la lista de items disponibles
+
+    const selectedItemsList = document.getElementById("selectedItemsList");
+    const li = document.createElement("li");
+    li.textContent = selectedItem.querySelector("td:first-child").textContent;
+    selectedItemsList.appendChild(li);
+}
+
 const subclose = () => {
     SAVE_MODAL.show();
 }
