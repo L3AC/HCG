@@ -4,7 +4,7 @@ require_once('../../helpers/database.php');
 /*
 *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
 */
-class ModeloHandler
+class ProductoHandler
 {
     /*
     *   Declaración de atributos para el manejo de datos.
@@ -73,6 +73,7 @@ class ModeloHandler
         $sql = 'SELECT id_modelo, descripcion_modelo, foto_modelo, estado_modelo, descripcion_marca AS marca
         FROM prc_modelos
         INNER JOIN ctg_marcas USING(id_marca)
+        WHERE estado_marca=true AND estado_modelo=true
         ORDER BY id_modelo DESC
         LIMIT 8';
         return Database::getRows($sql);
