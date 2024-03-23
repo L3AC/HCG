@@ -54,16 +54,13 @@ const loadTemplate = async () => {
                 <div class="offcanvas-body">
                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item" id="po"><a href="index.html">Inicio</a></li>
-                                        <li class="list-group-item" id="marca"><a href="1marcas.html">Marcas</a></li>
-                                        <li class="list-group-item" id="modelo"><a href="2modelos.html">Modelos</a></li>
-                                        <li class="list-group-item" id="talla"><a href="3tallas.html">Tallas</a></li>
-                                        <li class="list-group-item" id="pedido"><a href="4pedidos.html">Pedidos</a></li>
-                                        <li class="list-group-item" id="tipon"><a href="5tiponoticia.html">Tipo Noticias</a></li>
-                                        <li class="list-group-item" id="noticia"><a href="6noticias.html">Noticias</a></li>
-                                        <li class="list-group-item" id="comentario"><a href="7comentarios.html">Comentarios</a></li>
-                                        <li class="list-group-item" id="cliente"><a href="8clientes.html">Clientes</a></li>
-                                        <li class="list-group-item" id="usuario"><a href="9usuarios.html">Usuarios</a></li>
-                                        <li class="list-group-item" id="rol"><a href="10roles.html">Roles</a></li>
+                                        <li class="list-group-item" id="producto"><a href="1productos.html">Productos</a></li>
+                                        <li class="list-group-item" id="pedido"><a href="2pedidos.html">Pedidos</a></li>
+                                        <li class="list-group-item" id="tipoitem"><a href="3tipoitems.html">Tipo Items</a></li>
+                                        <li class="list-group-item" id="item"><a href="4items.html">Items</a></li>
+                                        <li class="list-group-item" id="cliente"><a href="5clientes.html">Clientes</a></li>
+                                        <li class="list-group-item" id="usuario"><a href="6usuarios.html">Usuarios</a></li>
+                                        <li class="list-group-item" id="rol"><a href="7roles.html">Roles</a></li>
                       </ul>
                 </div>
             </div>
@@ -71,46 +68,34 @@ const loadTemplate = async () => {
     </nav>
 </header>
             `);
-            const opc1 = document.getElementById('marca');
-            const opc2 = document.getElementById('modelo');
-            const opc3 = document.getElementById('talla');
-            const opc4 = document.getElementById('pedido');
-            const opc5 = document.getElementById('tipon');
-            const opc6 = document.getElementById('noticia');
-            const opc7 = document.getElementById('comentario');
-            const opc8 = document.getElementById('cliente');
-            const opc9 = document.getElementById('usuario');
-            const opc10 = document.getElementById('rol');
+            const opc1 = document.getElementById('producto');
+            const opc2 = document.getElementById('pedido');
+            const opc3 = document.getElementById('tipoitem');
+            const opc4 = document.getElementById('item');
+            const opc5 = document.getElementById('cliente');
+            const opc6 = document.getElementById('usuario');
+            const opc7 = document.getElementById('rol');
 
-            if (DATA.marcas_opc != 1) {
+            if (DATA.productos_opc != 1) {
                 opc1.style.display = "none";
             }
-            if (DATA.modelos_opc != 1) {
+            if (DATA.pedidos_opc != 1) {
                 opc2.style.display = "none";
             }
-            if (DATA.tallas_opc != 1) {
+            if (DATA.tipo_items_opc != 1) {
                 opc3.style.display = "none";
             }
-            if (DATA.pedidos_opc != 1) {
+            if (DATA.items_opc != 1) {
                 opc4.style.display = "none";
             }
-            if (DATA.tipo_noticias_opc != 1) {
+            if (DATA.clientes_opc != 1) {
                 opc5.style.display = "none";
             }
-            if (DATA.noticias_opc != 1) {
+            if (DATA.usuarios_opc != 1) {
                 opc6.style.display = "none";
             }
-            if (DATA.comentarios_opc != 1) {
-                opc7.style.display = "none";
-            }
-            if (DATA.clientes_opc != 1) {
-                opc8.style.display = "none";
-            }
-            if (DATA.usuarios_opc != 1) {
-                opc9.style.display = "none";
-            }
             if (DATA.roles_opc != 1) {
-                opc10.style.display = "none";
+                opc7.style.display = "none";
             }
 
 

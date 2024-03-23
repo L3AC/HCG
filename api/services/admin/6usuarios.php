@@ -107,18 +107,15 @@ if (isset($_GET['action'])) {
             case 'getUser':
                 if (isset($_SESSION['alias'])) {
                     $result['status'] = 1;
-                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['alias'];
                     $result['idrol'] = $_SESSION['idRol'];
-                    $result['marcas_opc'] = $_SESSION['marcas_opc'];
-                    $result['modelos_opc'] = $_SESSION['modelos_opc'];
-                    $result['tallas_opc'] = $_SESSION['tallas_opc'];
+                    $result['productos_opc'] = $_SESSION['productos_opc'];
                     $result['pedidos_opc'] = $_SESSION['pedidos_opc'];
-                    $result['tipo_noticias_opc'] = $_SESSION['tipo_noticias_opc'];
-                    $result['noticias_opc'] = $_SESSION['noticias_opc'];
-                    $result['comentarios_opc']   = $_SESSION['comentarios_opc'];
-                    $result['clientes_opc']      = $_SESSION['clientes_opc'];
-                    $result['usuarios_opc']      = $_SESSION['usuarios_opc'];
-                    $result['roles_opc']         = $_SESSION['roles_opc'];
+                    $result['tipo_items_opc'] = $_SESSION['tipo_items_opc'];
+                    $result['items_opc'] = $_SESSION['items_opc'];
+                    $result['clientes_opc'] = $_SESSION['clientes_opc'];
+                    $result['usuarios_opc'] = $_SESSION['usuarios_opc'];
+                    $result['roles_opc'] = $_SESSION['roles_opc'];
                 } else {
                     $result['error'] = 'Alias de administrador indefinido';
                 }

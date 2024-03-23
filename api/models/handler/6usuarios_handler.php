@@ -36,12 +36,12 @@ class AdministradorHandler
     }
     public function checkUser($username, $password)
     {
-        $sql = 'SELECT id_usuario ,id_rol, alias_usuario, clave_usuario,descripcion_opc, 
-        estado_opc, pedidos_opc, tipo_items_opc,items_opc, clientes_opc, 
-        usuarios_opc, roles_opc
+        $sql = 'SELECT id_usuario ,id_rol, alias_usuario, clave_usuario, 
+        estado_rol, productos_opc,pedidos_opc, tipo_items_opc,items_opc,
+        clientes_opc, usuarios_opc, roles_opc
         FROM tb_usuarios
         INNER JOIN tb_roles using(id_rol)
-        WHERE  estado_usuario=true AND alias_usuario = ?';
+        WHERE  estado_usuario=true AND alias_usuario = ? AND estado_rol=true';
         //echo($username);
         $params = array($username);
         $data = Database::getRow($sql, $params);
@@ -50,12 +50,13 @@ class AdministradorHandler
             $_SESSION['idUsuario'] = $data['id_usuario'];
             $_SESSION['alias'] = $data['alias_usuario'];
             $_SESSION['idRol'] = $data['id_rol'];
+            $_SESSION['productos_opc']       = $data['productos_opc'];
             $_SESSION['pedidos_opc']       = $data['pedidos_opc'];
             $_SESSION['tipo_items_opc'] = $data['tipo_items_opc'];
             $_SESSION['items_opc']      = $data['noticias_opc'];
             $_SESSION['clientes_opc']   = $data['clientes_opc'];
-            $_SESSION['usuarios_opc']     =  $data['usuarios_opc'];
-            $_SESSION['roles_opc']          =$data['roles_opc'];
+            $_SESSION['usuarios_opc']   =  $data['usuarios_opc'];
+            $_SESSION['roles_opc']      =$data['roles_opc'];
 
             //echo ($_SESSION['usuario']).' 1';
             return true;
@@ -150,7 +151,8 @@ class AdministradorHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, alias_usuario
+        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario,
+        email_usuario, alias_usuario
         FROM tb_usuarios';
         return Database::getRows($sql);
     }
