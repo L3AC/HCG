@@ -24,7 +24,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoModelo');
-    IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
+IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
     IMAGEN_PRE = document.getElementById('imgPre');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
@@ -175,7 +175,7 @@ const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
     FORM.append('idModelo', id);
-    
+
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(PRODUCTO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -251,17 +251,18 @@ const fillsubTable = async (form = null) => {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
-            SUBTABLE_BODY.innerHTML += `
-                <tr>
-                    <td>${row.descripcion_item}</td>
-                    <td>${row.descripcion_tipo_item}</td>
-                    <td>
+            const item = document.createElement("tr");
+            item.setAttribute('data-id', row.id_item); // Añadimos el atributo data-id
+            item.innerHTML = `
+                <td>${row.descripcion_item}</td>
+                <td>${row.descripcion_tipo_item}</td>
+                <td>
                     <button type="button" class="btn btn-primary" onclick="selectItem(${row.id_item})">
-                    <i class="bi bi-plus-square-fill"></i>
-                </button>
-                    </td>
-                </tr>
+                        <i class="bi bi-plus-square-fill"></i>
+                    </button>
+                </td>
             `;
+            SUBTABLE_BODY.appendChild(item);
         });
         // Se muestra un mensaje de acuerdo con el resultado.
         SUBROWS_FOUND.textContent = DATA.message;
@@ -269,15 +270,70 @@ const fillsubTable = async (form = null) => {
         //sweetAlert(4, DATA.error, true);
     }
 }
-const selectItem = async (itemId) => {
-    const selectedItem = document.querySelector(`#subtableBody tr[data-id="${itemId}"]`);
-    selectedItem.remove(); // Eliminar el item de la lista de items disponibles
+// Función para seleccionar un item y moverlo a la lista de elementos seleccionados.
+// Función para seleccionar un item y moverlo a la lista de elementos seleccionados.
+// Función para seleccionar un item y moverlo a la lista de elementos seleccionados.
+const selectItem = (id_item) => {
+    // Buscamos el elemento en la tabla.
+    const itemRow = document.querySelector(`#subtableBody tr[data-id="${id_item}"]`);
+    if (itemRow) {
+        // Verificamos si el item ya fue seleccionado.
+        const selectedItem = selectedItemsList.querySelector(`li[data-id="${id_item}"]`);
+        if (selectedItem) {
+            // Si ya fue seleccionado, incrementamos la cantidad.
+            const quantitySpan = selectedItem.querySelector('.quantity');
+            let quantity = parseInt(quantitySpan.textContent);
+            quantity++;
+            quantitySpan.textContent = quantity;
+        } else {
+            // Si no ha sido seleccionado, creamos un nuevo item en la lista de elementos seleccionados.
+            const clonedItem = itemRow.cloneNode(true);
+            const addButton = document.createElement('button');
+            addButton.type = 'button';
+            addButton.className = 'btn btn-success';
+            addButton.textContent = '+';
+            addButton.addEventListener('click', () => {
+                const quantitySpan = clonedItem.querySelector('.quantity');
+                let quantity = parseInt(quantitySpan.textContent);
+                quantity++;
+                quantitySpan.textContent = quantity;
+            });
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'btn btn-danger';
+            removeButton.textContent = '-';
+            removeButton.addEventListener('click', () => {
+                const quantitySpan = clonedItem.querySelector('.quantity');
+                let quantity = parseInt(quantitySpan.textContent);
+                if (quantity > 1) {
+                    quantity--;
+                    quantitySpan.textContent = quantity;
+                }
+            });
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'btn btn-danger';
+            deleteButton.textContent = 'Eliminar';
+            deleteButton.addEventListener('click', () => {
+                selectedItemsList.removeChild(clonedItem);
+                itemRow.style.display = 'table-row';
+            });
+            const quantitySpan = document.createElement('span');
+            quantitySpan.className = 'quantity';
+            quantitySpan.textContent = '1';
+            clonedItem.querySelector('td:last-child').innerHTML = '';
+            clonedItem.querySelector('td:last-child').appendChild(addButton);
+            clonedItem.querySelector('td:last-child').appendChild(quantitySpan);
+            clonedItem.querySelector('td:last-child').appendChild(removeButton);
+            clonedItem.querySelector('td:last-child').appendChild(deleteButton);
+            clonedItem.setAttribute('data-id', id_item);
+            selectedItemsList.appendChild(clonedItem);
+            itemRow.style.display = 'none';
+        }
+    }
+};
 
-    const selectedItemsList = document.getElementById("selectedItemsList");
-    const li = document.createElement("li");
-    li.textContent = selectedItem.querySelector("td:first-child").textContent;
-    selectedItemsList.appendChild(li);
-}
+
 
 const subclose = () => {
     SAVE_MODAL.show();
