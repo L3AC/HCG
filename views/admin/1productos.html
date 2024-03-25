@@ -246,7 +246,7 @@
         </div>
 
         <!-- Componente Modal para actualizar un registro -->
-        <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        <div class="modal fade" id="saveModalU" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
@@ -257,7 +257,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para crear o actualizar un registro -->
-                    <form id="saveForm">
+                    <form id="saveFormU">
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idProductoU" name="idProducto">
@@ -354,7 +354,7 @@
                             </div>
 
                             <!-- Subtabla para Productos tallas -->
-                            <div id="subtable" class="col-sm-12 col-md-6" >
+                            <div id="subtableU" class="col-sm-12 col-md-6" >
                                 <div class="modal-header">
                                     <!-- Título del modal -->
                                     <h1 class="modal-title fs-5" >Items</h1>
@@ -377,7 +377,7 @@
 
                                 <!-- Tabla para mostrar los registros en la subtabla -->
                                 <div class="mt-4 table-responsive border-0" style="max-height: 200px; overflow-y: auto;">
-                                    <table id="subheaderT" class="table table-hover">
+                                    <table id="subheaderTU" class="table table-hover">
                                         <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
                                         <thead>
                                             <tr>

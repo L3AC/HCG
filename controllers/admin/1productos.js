@@ -12,7 +12,7 @@ const SUBTABLE_HEAD = document.getElementById('subheaderT'),
     TABLE_BODY = document.getElementById('tableBody'),
     ROWS_FOUND = document.getElementById('rowsFound'),
     SUBROWS_FOUND = document.getElementById('subrowsFound'),
-    
+
     SUBTABLE_HEADU = document.getElementById('subheaderTU'),
     SUBTABLEU = document.getElementById('subtableU'),
     SUBTABLE_BODYU = document.getElementById('subtableBodyU'),
@@ -30,20 +30,22 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
 
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-    ID_PRODUCTO = document.getElementById('idModelo'),
-    NOMBRE_PRODUCTO = document.getElementById('nombreModelo'),
+    ID_PRODUCTO = document.getElementById('idProducto'),
+    NOMBRE_PRODUCTO = document.getElementById('nombreProducto'),
+    TIPO_PRODUCTO = document.getElementById('tipoProducto'),
     DESCRIPCION_PRODUCTO = document.getElementById('descripcionProducto'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
-    ESTADO_PRODUCTO = document.getElementById('estadoModelo');
-    IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
+    ESTADO_PRODUCTO = document.getElementById('estadoProducto');
+    IMAGEN_PRODUCTO = document.getElementById('imagenProducto'),
     IMAGEN_PRE = document.getElementById('imgPre');
 
 
 //CONSTANTES PARA EL FORMULARIO DE ACTUALIZAR
 const SAVE_FORMU = document.getElementById('saveFormU'),
-    ID_PRODUCTOU = document.getElementById('idModeloU'),
-    NOMBRE_PRODUCTOU = document.getElementById('nombreModeloU'),
+    ID_PRODUCTOU = document.getElementById('idProductoU'),
+    NOMBRE_PRODUCTOU = document.getElementById('nombreProductoU'),
+    TIPO_PRODUCTOU = document.getElementById('tipoProductoU'),
     DESCRIPCION_PRODUCTOU = document.getElementById('descripcionProductoU'),
     PRECIO_PRODUCTOU = document.getElementById('precioProductoU'),
     EXISTENCIAS_PRODUCTOU = document.getElementById('existenciasProductoU'),
@@ -52,13 +54,13 @@ const SAVE_FORMU = document.getElementById('saveFormU'),
     IMAGEN_PREU = document.getElementById('imgPreU');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
-const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
+/*const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
     TREMODAL_TITLE = document.getElementById('tremodalTitle');
 const SAVE_TREFORM = document.getElementById('savetreForm'),
     SELECTALLA = document.getElementById('selectTalla'),
     ID_MODELOTALLA = document.getElementById('idModeloTalla'),
     PRECIO_MODELOTALLA = document.getElementById('precioModeloTalla'),
-    STOCK_MODELOTALLA = document.getElementById('stockModeloTalla');
+    STOCK_MODELOTALLA = document.getElementById('stockModeloTalla');*/
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -121,21 +123,22 @@ const fillTable = async (form = null) => {
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            console.log(DATA.dataset);
             // Se establece un icono para el estado del producto.
-            (row.estado_modelo) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            (row.estado_producto) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td><img src="${SERVER_URL}images/modelos/${row.foto_modelo}" height="50"></td>
-                    <td>${row.descripcion_modelo}</td>
-                    <td>${row.marca}</td>
+                    <td><img src="${row.imagen_producto}" height="50"></td>
+                    <td>${row.descripcion_producto}</td>
+                    <td>${row.horario_producto}</td>
+                    <td>${row.precio_producto}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_modelo})">
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_producto})">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_modelo})">
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_producto})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
@@ -212,7 +215,16 @@ const openUpdate = async (id) => {
         const ROW = DATA.dataset;
         ID_PRODUCTOU.value = ROW.id_producto;
         NOMBRE_PRODUCTOU.value = ROW.descripcion_producto;
-        ESTADO_PRODUCTOU.checked = ROW.estado_modelo;
+        for (var i = 0; i < TIPO_PRODUCTOU.options.length; i++) {
+            // Si el valor de la opción es igual al valor que quieres seleccionar
+            if (TIPO_PRODUCTOU.options[i].value === ROW.estado_producto) {
+                // Seleccionar la opción
+                TIPO_PRODUCTOU.selectedIndex = i;
+                break; // Salir del bucle una vez seleccionada la opción
+            }
+        }
+        //ESTADO_PRODUCTOU.checked = ROW.estado_modelo;
+        
         IMAGEN_PREU.style.maxWidth = '300px';
         IMAGEN_PREU.style.maxHeight = 'auto';
         IMAGEN_PREU.style.margin = '20px auto';
@@ -226,7 +238,7 @@ const openUpdate = async (id) => {
             `<img src="${SERVER_URL}images/modelos/${ROW.foto_modelo}">` // Backticks para img variable
         );*/
 
-        fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
+        //fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
         fillsubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);

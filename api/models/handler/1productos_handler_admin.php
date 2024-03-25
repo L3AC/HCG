@@ -62,10 +62,10 @@ class ProductoHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
-        FROM prc_modelos
-        INNER JOIN ctg_marcas  USING(id_marca)
-        ORDER BY descripcion_modelo';
+        $sql = 'SELECT id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
+        imagen_producto,estado_producto
+        FROM tb_productos 
+        ORDER BY id_producto DESC';
         return Database::getRows($sql);
     }
     public function readDesc()
@@ -95,14 +95,14 @@ class ProductoHandler
 
     public function readOne()
     {
-        $sql = 'SELECT mo.id_modelo,mo.id_marca, mo.descripcion_modelo,
-        mo.foto_modelo,mo.estado_modelo, ma.descripcion_marca marca
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        WHERE mo.id_modelo=? ';
+        $sql = 'SELECT id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
+        imagen_producto,estado_producto
+        FROM tb_productos
+        WHERE id_producto=? 
+        ORDER BY id_producto DESC';
         $params = array($this->id);
         $data = Database::getRow($sql, $params);
-        $_SESSION['idmod'] = $data['id_modelo'];
+        $_SESSION['idprod'] = $data['id_producto'];
         return $data;
     }
 
