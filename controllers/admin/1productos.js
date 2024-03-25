@@ -11,11 +11,23 @@ const SUBTABLE_HEAD = document.getElementById('subheaderT'),
     SUBTABLE_BODY = document.getElementById('subtableBody'),
     TABLE_BODY = document.getElementById('tableBody'),
     ROWS_FOUND = document.getElementById('rowsFound'),
-    SUBROWS_FOUND = document.getElementById('subrowsFound');
+    SUBROWS_FOUND = document.getElementById('subrowsFound'),
+    
+    SUBTABLE_HEADU = document.getElementById('subheaderTU'),
+    SUBTABLEU = document.getElementById('subtableU'),
+    SUBTABLE_BODYU = document.getElementById('subtableBodyU'),
+    TABLE_BODYU = document.getElementById('tableBodyU'),
+    ROWS_FOUNDU = document.getElementById('rowsFoundU'),
+    SUBROWS_FOUNDU = document.getElementById('subrowsFoundU');
+
 // Constantes para establecer los elementos del componente Modal.
 const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle'),
-    SUBMODAL_TITLE = document.getElementById('submodalTitle');
+    SUBMODAL_TITLE = document.getElementById('submodalTitle'),
+    SAVE_MODALU = new bootstrap.Modal('#saveModalU'),
+    MODAL_TITLEU = document.getElementById('modalTitleU'),
+    SUBMODAL_TITLEU = document.getElementById('submodalTitleU');
+
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
     ID_PRODUCTO = document.getElementById('idModelo'),
@@ -24,8 +36,20 @@ const SAVE_FORM = document.getElementById('saveForm'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoModelo');
-IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
+    IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
     IMAGEN_PRE = document.getElementById('imgPre');
+
+
+//CONSTANTES PARA EL FORMULARIO DE ACTUALIZAR
+const SAVE_FORMU = document.getElementById('saveFormU'),
+    ID_PRODUCTOU = document.getElementById('idModeloU'),
+    NOMBRE_PRODUCTOU = document.getElementById('nombreModeloU'),
+    DESCRIPCION_PRODUCTOU = document.getElementById('descripcionProductoU'),
+    PRECIO_PRODUCTOU = document.getElementById('precioProductoU'),
+    EXISTENCIAS_PRODUCTOU = document.getElementById('existenciasProductoU'),
+    ESTADO_PRODUCTOU = document.getElementById('estadoModeloU');
+    IMAGEN_PRODUCTOU = document.getElementById('imagenModeloU'),
+    IMAGEN_PREU = document.getElementById('imgPreU');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
 const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
@@ -174,32 +198,33 @@ document.addEventListener('click', function() {
 const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    FORM.append('idModelo', id);
+    FORM.append('idProducto', id);
 
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(PRODUCTO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
-        SAVE_MODAL.show();
-        SUBTABLE.hidden = false;
-        MODAL_TITLE.textContent = 'Actualizar registro';
-        SUBMODAL_TITLE.textContent = 'Tallas del modelo';
+        SAVE_MODALU.show();
         // Se prepara el formulario.
-        SAVE_FORM.reset();
+        SAVE_FORMU.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_PRODUCTO.value = ROW.id_modelo;
-        NOMBRE_PRODUCTO.value = ROW.descripcion_modelo;
-        ESTADO_PRODUCTO.checked = ROW.estado_modelo;
-        IMAGEN_PRE.style.maxWidth = '300px';
-        IMAGEN_PRE.style.maxHeight = 'auto';
-        IMAGEN_PRE.style.margin = '20px auto';
-        IMAGEN_PRE.innerHTML = '';
-        IMAGEN_PRE.insertAdjacentHTML(
+        ID_PRODUCTOU.value = ROW.id_producto;
+        NOMBRE_PRODUCTOU.value = ROW.descripcion_producto;
+        ESTADO_PRODUCTOU.checked = ROW.estado_modelo;
+        IMAGEN_PREU.style.maxWidth = '300px';
+        IMAGEN_PREU.style.maxHeight = 'auto';
+        IMAGEN_PREU.style.margin = '20px auto';
+        IMAGEN_PREU.innerHTML = '';
+        IMAGEN_PREU.insertAdjacentHTML(
+            "beforeend",
+            `<img src="${ROW.imagen_producto}">` // Backticks para img variable
+        );
+        /*IMAGEN_PRE.insertAdjacentHTML(
             "beforeend",
             `<img src="${SERVER_URL}images/modelos/${ROW.foto_modelo}">` // Backticks para img variable
-        );
+        );*/
 
         fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
         fillsubTable(SEARCHSUB_FORM);
@@ -270,8 +295,7 @@ const fillsubTable = async (form = null) => {
         //sweetAlert(4, DATA.error, true);
     }
 }
-// Función para seleccionar un item y moverlo a la lista de elementos seleccionados.
-// Función para seleccionar un item y moverlo a la lista de elementos seleccionados.
+let selectedItems = [];
 // Función para seleccionar un item y moverlo a la lista de elementos seleccionados.
 const selectItem = (id_item) => {
     // Buscamos el elemento en la tabla.
@@ -281,33 +305,19 @@ const selectItem = (id_item) => {
         const selectedItem = selectedItemsList.querySelector(`li[data-id="${id_item}"]`);
         if (selectedItem) {
             // Si ya fue seleccionado, incrementamos la cantidad.
-            const quantitySpan = selectedItem.querySelector('.quantity');
-            let quantity = parseInt(quantitySpan.textContent);
-            quantity++;
-            quantitySpan.textContent = quantity;
+            const quantityInput = selectedItem.querySelector('.quantity');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
         } else {
             // Si no ha sido seleccionado, creamos un nuevo item en la lista de elementos seleccionados.
             const clonedItem = itemRow.cloneNode(true);
-            const addButton = document.createElement('button');
-            addButton.type = 'button';
-            addButton.className = 'btn btn-success';
-            addButton.textContent = '+';
-            addButton.addEventListener('click', () => {
-                const quantitySpan = clonedItem.querySelector('.quantity');
-                let quantity = parseInt(quantitySpan.textContent);
-                quantity++;
-                quantitySpan.textContent = quantity;
-            });
-            const removeButton = document.createElement('button');
-            removeButton.type = 'button';
-            removeButton.className = 'btn btn-danger';
-            removeButton.textContent = '-';
-            removeButton.addEventListener('click', () => {
-                const quantitySpan = clonedItem.querySelector('.quantity');
-                let quantity = parseInt(quantitySpan.textContent);
-                if (quantity > 1) {
-                    quantity--;
-                    quantitySpan.textContent = quantity;
+            const quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.className = 'quantity';
+            quantityInput.value = '1';
+            quantityInput.min = '1'; // Establecemos el mínimo valor permitido
+            quantityInput.addEventListener('input', () => {
+                if (parseInt(quantityInput.value) <= 0) {
+                    quantityInput.value = '1';
                 }
             });
             const deleteButton = document.createElement('button');
@@ -317,18 +327,17 @@ const selectItem = (id_item) => {
             deleteButton.addEventListener('click', () => {
                 selectedItemsList.removeChild(clonedItem);
                 itemRow.style.display = 'table-row';
+                // Remover el item de la lista temporal
+                selectedItems = selectedItems.filter(item => item.id !== id_item);
             });
-            const quantitySpan = document.createElement('span');
-            quantitySpan.className = 'quantity';
-            quantitySpan.textContent = '1';
             clonedItem.querySelector('td:last-child').innerHTML = '';
-            clonedItem.querySelector('td:last-child').appendChild(addButton);
-            clonedItem.querySelector('td:last-child').appendChild(quantitySpan);
-            clonedItem.querySelector('td:last-child').appendChild(removeButton);
+            clonedItem.querySelector('td:last-child').appendChild(quantityInput);
             clonedItem.querySelector('td:last-child').appendChild(deleteButton);
             clonedItem.setAttribute('data-id', id_item);
             selectedItemsList.appendChild(clonedItem);
             itemRow.style.display = 'none';
+            // Agregar el item a la lista temporal
+            selectedItems.push({ id: id_item, quantity: 1 });
         }
     }
 };

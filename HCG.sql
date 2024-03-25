@@ -117,6 +117,7 @@ CREATE TABLE tb_detalle_pedidos (
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
 DELIMITER //
 
 CREATE FUNCTION get_next_id(table_name VARCHAR(255))
@@ -164,8 +165,14 @@ VALUES((SELECT get_next_id("tb_items")),1,"Lata Coca Cola 550ml",true),
 ((SELECT get_next_id("tb_items")),3,"Budín",true),
 ((SELECT get_next_id("tb_items")),4,"Porción de arroz",true);
 
+INSERT INTO tb_productos (id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
+imagen_producto,estado_producto,lunes_producto,martes_producto,miercoles_producto,jueves_producto,
+viernes_producto,sabado_producto,domingo_producto) 
+VALUES((SELECT get_next_id("tb_productos")),"Conjunto","Nachos Preparados","A",2,
+"https://mojo.generalmills.com/api/public/content/MJYMoQ0lUkezBkK5ql2cSg_gmi_hi_res_jpeg.jpeg?
+v=c5e8a159&t=16e3ce250f244648bef28c5949fb99ff",true,true,true,true,true,true,true,true);
 
-SELECT id_item, descripcion_tipo_item,descripcion_item, estado_item
-        FROM tb_items
-        INNER JOIN tb_tipo_items USING(id_tipo_item)
-        ORDER BY CAST(descripcion_tipo_item AS UNSIGNED)
+INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantidad_item) 
+VALUES((SELECT get_next_id("tb_detalle_productos")),1,1,1),
+((SELECT get_next_id("tb_detalle_productos")),2,1,1);
+
