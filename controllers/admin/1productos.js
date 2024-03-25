@@ -49,8 +49,8 @@ const SAVE_FORMU = document.getElementById('saveFormU'),
     DESCRIPCION_PRODUCTOU = document.getElementById('descripcionProductoU'),
     PRECIO_PRODUCTOU = document.getElementById('precioProductoU'),
     EXISTENCIAS_PRODUCTOU = document.getElementById('existenciasProductoU'),
-    ESTADO_PRODUCTOU = document.getElementById('estadoModeloU');
-    IMAGEN_PRODUCTOU = document.getElementById('imagenModeloU'),
+    ESTADO_PRODUCTOU = document.getElementById('estadoProductoU');
+    IMAGEN_PRODUCTOU = document.getElementById('imagenProductoU'),
     IMAGEN_PREU = document.getElementById('imgPreU');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
@@ -217,14 +217,14 @@ const openUpdate = async (id) => {
         NOMBRE_PRODUCTOU.value = ROW.descripcion_producto;
         for (var i = 0; i < TIPO_PRODUCTOU.options.length; i++) {
             // Si el valor de la opción es igual al valor que quieres seleccionar
-            if (TIPO_PRODUCTOU.options[i].value === ROW.estado_producto) {
+            if (TIPO_PRODUCTOU.options[i].value === ROW.tipo_producto) {
                 // Seleccionar la opción
                 TIPO_PRODUCTOU.selectedIndex = i;
                 break; // Salir del bucle una vez seleccionada la opción
             }
         }
-        //ESTADO_PRODUCTOU.checked = ROW.estado_modelo;
-        
+        IMAGEN_PRODUCTOU.value = ROW.imagen_producto;
+
         IMAGEN_PREU.style.maxWidth = '300px';
         IMAGEN_PREU.style.maxHeight = 'auto';
         IMAGEN_PREU.style.margin = '20px auto';
@@ -232,18 +232,15 @@ const openUpdate = async (id) => {
         IMAGEN_PREU.insertAdjacentHTML(
             "beforeend",
             `<img src="${ROW.imagen_producto}">` // Backticks para img variable
-        );
-        /*IMAGEN_PRE.insertAdjacentHTML(
-            "beforeend",
-            `<img src="${SERVER_URL}images/modelos/${ROW.foto_modelo}">` // Backticks para img variable
-        );*/
+        );        
+        ESTADO_PRODUCTOU.checked = ROW.estado_producto;
 
-        //fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
         fillsubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);
     }
 }
+
 /*
 *   Función asíncrona para eliminar un registro.
 *   Parámetros: id (identificador del registro seleccionado).
@@ -442,3 +439,29 @@ const openReport = () => {
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }
+IMAGEN_PRODUCTOU.addEventListener('input', function() {
+    const existingImage = IMAGEN_PREU.querySelector('img');
+    if (existingImage) {
+      existingImage.src = this.value;
+    } else {
+      const newImage = document.createElement('img');
+      newImage.src = this.value;
+      newImage.style.maxWidth = '300px';
+      newImage.style.maxHeight = 'auto';
+      newImage.style.margin = '20px auto';
+      IMAGEN_PREU.appendChild(newImage);
+    }
+  });
+IMAGEN_PRODUCTO.addEventListener('input', function() {
+    const existingImage = IMAGEN_PRE.querySelector('img');
+    if (existingImage) {
+      existingImage.src = this.value;
+    } else {
+      const newImage = document.createElement('img');
+      newImage.src = this.value;
+      newImage.style.maxWidth = '300px';
+      newImage.style.maxHeight = 'auto';
+      newImage.style.margin = '20px auto';
+      IMAGEN_PRE.appendChild(newImage);
+    }
+  });

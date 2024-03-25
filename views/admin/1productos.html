@@ -276,12 +276,28 @@
                                 </select>
                             </div>
                             <div class="col-12">
-                                <label for="imagenProductoU" class="form-label">Imagen</label>
-                                <input id="imagenProductoU" type="text" name="imagenProductoU" class="form-control"
-                                    >
-                                <div class="row justify-content-center px-3 mb-3" id="imgPreU"></div>
+                                <label for="imagenProductoU" class="form-label">Link de la imagen</label>
+                                <textarea id="imagenProductoU" type="text" name="imagenProductoU"
+                                 class="form-control" rows="3"></textarea>
+                                
                             </div>
-
+                            <div class="col-sm-12 col-md-6">
+                                <div class="row justify-content-center px-3 mb-1" id="imgPreU"></div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <!-- Interruptor para el estado del registro -->
+                                    <div class="switch-button">
+                                        <p id="">Estado</p>
+                                        <input type="checkbox" name="estadoProductoU" id="estadoProductoU"
+                                            class="switch-button__checkbox form-control">
+                                        <label for="estadoProductoU" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer border-0 border-bottom">
+                                <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
+                            </div>
                             <!--
                             <div class="d-flex flex-row col-12">
                                 <div class="col">
@@ -349,9 +365,7 @@
                                 </div>
                             </div>-->
                             <!-- Pie del modal con el botón de guardar -->
-                            <div class="modal-footer border-0 border-bottom">
-                                <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
-                            </div>
+                            
 
                             <!-- Subtabla para Productos tallas -->
                             <div id="subtableU" class="col-sm-12 col-md-6" >
