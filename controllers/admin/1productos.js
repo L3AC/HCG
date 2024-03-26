@@ -128,27 +128,44 @@ const fillTable = async (form = null) => {
             
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-                <div class="card">
+                <div class="cardv col-lg-3 col-md-3 col-md-10" style="margin-bottom: 20px; margin-right: 60px;">
                     <div class="image_container">
                         <img src="${row.imagen_producto}" alt="" class="image">
                     </div>
-                    <div class="title">
-                        <span>${row.descripcion_producto}</span>
-                    </div>
-                    <div class="size">
-                        <span>Horario: ${row.horario_producto}</span><br>
-                        <p>Estado:<i class="${icon}"></i></p>
-                    </div>
-                    <div class="action">
-                        <div class="price">
-                            <span>$${row.precio_producto}</span>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="title">
+                                <span class="titulo">${row.descripcion_producto}</span>
+                            </div>
                         </div>
-                        <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_producto})">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                        <button type="button" class="btnAgregar" onclick="openDelete(${row.id_producto})">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="size">
+                                <span class="Horario">Horario: ${row.horario_producto}</span><br>
+                                <p class="Esta">Estado:<i class="${icon}"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="action">
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="price">
+                                <span>$${row.precio_producto}</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_producto})">
+                                <i class="bi bi-pencil-fill"></i>
+                            </button>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <button type="button" class="btnAgregar" onclick="openDelete(${row.id_producto})">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </div>
+                        </div>
                     </div>
                 </div>
             `;
