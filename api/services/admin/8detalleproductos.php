@@ -24,20 +24,16 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setNombre($_POST['nombreModelo']) or
-                    !$producto->setDescripcion($_POST['descripcionModelo']) or
-                    !$producto->setCategoria($_POST['marcaModelo']) or
-                    !$producto->setEstado(isset($_POST['estadoModelo']) ? "A" : "I") or
-                    !$producto->setImagen($_FILES['imagenModelo'])
-                ) {
+                    !$producto->setIdItem($_POST['idItem'])or 
+                    !$producto->setIdProducto($_POST['idProducto'])or 
+                    !$producto->setCantidad($_POST['cantidad']))
+                 {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto creado correctamente';
-                    // Se asigna el estado del archivo después de insertar.
-                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenProducto'], $producto::RUTA_IMAGEN);
+                    $result['message'] = 'Registro creado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear el producto';
+                    $result['error'] = 'Ocurrió un problema al crear el registro';
                 }
                 break;
             /*case 'readAll':

@@ -59,10 +59,10 @@ class DetalleProductoData extends DetalleProductoHandler
         }
     }
 
-    public function setExistencias($value)
+    public function setCantidad($value)
     {
         if (Validator::validateNaturalNumber($value)) {
-            $this->existencias = $value;
+            $this->cantidad = $value;
             return true;
         } else {
             $this->data_error = 'El valor de las existencias debe ser numérico entero';

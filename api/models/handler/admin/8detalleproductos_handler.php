@@ -15,7 +15,7 @@ class DetalleProductoHandler
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
-    protected $existencias = null;
+    protected $cantidad = null;
     protected $imagen = null;
     protected $categoria = null;
     protected $estado = null;
@@ -44,9 +44,9 @@ class DetalleProductoHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO prc_modelo_tallas(id_talla, id_modelo, stock_modelo_talla, precio_modelo_talla)
-                VALUES(?, ?, ?, ?)';
-        $params = array($this->idItem, $this->idProducto, $this->existencias, $this->precio);
+        $sql = 'INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantidad_item) 
+            VALUES((SELECT get_next_id("tb_detalle_productos")),?,?,?)';
+        $params = array($this->idItem, $this->idProducto, $this->cantidad);
         return Database::executeRow($sql, $params);
     }
 

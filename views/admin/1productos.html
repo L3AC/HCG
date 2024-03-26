@@ -452,6 +452,36 @@
             </div>
         </div>
 
+        <!-- Modal para guardar un registro en la subtabla de modelos tallas -->
+        <div class="modal fade" id="savetreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="tremodalTitle"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            onclick="subclose()"></button>
+                    </div>
+                    <!-- Formulario para crear o actualizar un registro en la subtabla de modelos tallas -->
+                    <form id="savetreForm">
+                        <div class="modal-body row g-3 ">
+                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                            <input type="hidden" id="idDetalleProducto" name="idDetalleProducto">
+                            <div class="col-sm-12 col-md-6">
+                                <label for="cantidadItem" class="form-label">Cantidad</label>
+                                <input id="cantidadItem" type="number" name="cantidadItem" min="1" step="1"
+                                    class="form-control" required>
+                            </div>
+                        </div>
+                        <!-- Pie del modal con el botón de guardar -->
+                        <div class="modal-footer border-0">
+                            <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
 
     </main>
 
