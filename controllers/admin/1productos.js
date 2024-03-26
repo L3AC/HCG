@@ -20,7 +20,7 @@ const SUBTABLE_HEAD = document.getElementById('subheaderT'),
     ROWS_FOUNDU = document.getElementById('rowsFoundU'),
     SUBROWS_FOUNDU = document.getElementById('subrowsFoundU');
 
-// Constantes para establecer los elementos del componente Modal.
+// Constantes para establecer los elementos  del componente Modal.
 const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle'),
     SUBMODAL_TITLE = document.getElementById('submodalTitle'),
@@ -129,21 +129,29 @@ const fillTable = async (form = null) => {
             
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-                <tr>
-                    <td><img src="${row.imagen_producto}" height="50"></td>
-                    <td>${row.descripcion_producto}</td>
-                    <td>${row.horario_producto}</td>
-                    <td>${row.precio_producto}</td>
-                    <td><i class="${icon}"></i></td>
-                    <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_producto})">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_producto})">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-                    </td>
-                </tr>
+                <div class="card">
+    <div class="image_container">
+      <img src="${row.imagen_producto}" alt="" class="image">
+    </div>
+    <div class="title">
+      <span>${row.descripcion_producto}</span>
+    </div>
+    <div class="size">
+      <span>Horario: ${row.horario_producto}</span><br>
+      <p>Estado:<i class="${icon}"></i></p>
+    </div>
+    <div class="action">
+      <div class="price">
+        <span>$${row.precio_producto}</span>
+      </div>
+      <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_producto})">
+        <i class="bi bi-pencil-fill"></i>
+    </button>
+    <button type="button" class="btnAgregar" onclick="openDelete(${row.id_producto})">
+        <i class="bi bi-trash-fill"></i>
+    </button>
+    </div>
+  </div>
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.
