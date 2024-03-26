@@ -19,7 +19,6 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
-                    
                 }
                 break;
             case 'createRow':
@@ -27,7 +26,7 @@ if (isset($_GET['action'])) {
                 if (
                     !$producto->setNombre($_POST['nombreModelo']) or
                     !$producto->setCategoria($_POST['marcaModelo']) or
-                    !$producto->setEstado(isset($_POST['estadoModelo'])? 1 : 0) or
+                    !$producto->setEstado(isset($_POST['estadoModelo']) ? 1 : 0) or
                     !$producto->setImagen($_FILES['imagenModelo'])
                 ) {
                     $result['error'] = $producto->getDataError();
@@ -49,15 +48,16 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readsubAll':
-                    if (!$producto->setId($_SESSION['idmod'])) {
-                        $result['error'] = $producto->getDataError();
-                    } elseif ($result['dataset'] = $producto->readsubAll()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-                    } else {
-                        $result['error'] = 'Tallas no registradas';
-                    }
-                    break;
+                if (!$producto->setId($_SESSION['idmod'])) {
+                    $result['error'] = $producto->getDataError();
+                } elseif ($result['dataset'] = $producto->readsubAll()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'Tallas no registradas';
+                }
+                break;
+            
             case 'readOne':
                 if (!$producto->setId($_POST['idPedido'])) {
                     $result['error'] = $producto->getDataError();
@@ -67,7 +67,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Producto inexistente';
                 }
                 break;
-                
+
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (

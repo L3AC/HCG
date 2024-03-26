@@ -1,13 +1,13 @@
 <?php
 // Se incluye la clase del modelo.
-require_once('../../models/data/11modelotallas_data.php');
+require_once('../../models/data/admin/8detalleproductos_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     session_start();
     // Se instancia la clase correspondiente.
-    $producto = new ModeloTallaData;
+    $producto = new DetalleProductoData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'fileStatus' => null);
     // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
@@ -19,7 +19,6 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
-                    
                 }
                 break;
             case 'createRow':
@@ -41,7 +40,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al crear el producto';
                 }
                 break;
-            case 'readAll':
+            /*case 'readAll':
                 if (!$producto->setIdModelo($_SESSION['idmod'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($result['dataset'] = $producto->readAll()) {
@@ -49,6 +48,16 @@ if (isset($_GET['action'])) {
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
                     $result['error'] = ' No se encontraron registros';
+                }
+                break;*/
+            case 'readByProducto':
+                if (!$producto->setIdProducto($_POST['idProducto'])) {
+                    $result['error'] = $producto->getDataError();
+                } elseif ($result['dataset'] = $producto->readByProducto()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'Tallas no registradas';
                 }
                 break;
             case 'readOne':

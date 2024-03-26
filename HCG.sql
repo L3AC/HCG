@@ -104,6 +104,13 @@ CREATE TABLE tb_detalle_productos(
   CONSTRAINT fk_item_producto_producto /*LLAVE FORANEA*/
   FOREIGN KEY(id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
+SELECT id_detalle_producto,id_item,id_producto,cantidad_item,
+id_item, descripcion_tipo_item,descripcion_item, estado_item
+FROM tb_detalle_productos
+INNER JOIN tb_tipo_items USING(id_tipo_item)
+INNER JOIN tb_items USING(id_item)
+INNER JOIN tb_productos USING(id_producto)
+WHERE id_producto=1
 
 
 CREATE TABLE tb_pedidos(
@@ -125,7 +132,6 @@ CREATE TABLE tb_detalle_pedidos (
   FOREIGN KEY (id_pedido) REFERENCES tb_pedidos(id_pedido) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 
 DELIMITER //
 
@@ -186,14 +192,17 @@ INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantida
 VALUES((SELECT get_next_id("tb_detalle_productos")),1,1,1),
 ((SELECT get_next_id("tb_detalle_productos")),2,1,1);
 
+
+
 SELECT id_item, descripcion_tipo_item,descripcion_item, estado_item 
-FROM tb_items 
-INNER JOIN tb_tipo_items USING(id_tipo_item)
-WHERE id_item NOT IN (
-    SELECT id_item
-    FROM tb_detalle_productos
-    WHERE id_producto = 1
-) 
-AND estado_item=true and estado_tipo_item=true
-ORDER BY CAST(descripcion_tipo_item AS UNSIGNED);
+        FROM tb_items 
+        INNER JOIN tb_tipo_items USING(id_tipo_item)
+        WHERE id_item NOT IN (
+            SELECT id_item
+            FROM tb_detalle_productos
+            WHERE id_producto = 1
+        ) 
+        AND estado_item=true and estado_tipo_item=true 
+        AND descripcion_item like '%%'
+        ORDER BY CAST(descripcion_tipo_item AS UNSIGNED);
         

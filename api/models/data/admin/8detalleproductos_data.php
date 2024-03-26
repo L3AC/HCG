@@ -2,11 +2,12 @@
 // Se incluye la clase para validar los datos de entrada.
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/11modelotallas_handler.php');
+require_once('../../handler/admin/8detalleproductos_handler.php');
+
 /*
  *	Clase para manejar el encapsulamiento de los datos de la tabla PRODUCTO.
  */
-class ModeloTallaData extends ModeloTallaHandler
+class DetalleProductoData extends DetalleProductoHandler
 {
     /*
      *  Atributos adicionales.
@@ -27,20 +28,20 @@ class ModeloTallaData extends ModeloTallaHandler
             return false;
         }
     }
-    public function setIdModelo($value)
+    public function setIdProducto($value)
     {
         if (Validator::validateNaturalNumber($value)) {
-            $this->idModelo = $value;
+            $this->idProducto= $value;
             return true;
         } else {
             $this->data_error = 'El identificador del modelo es incorrecto';
             return false;
         }
     }
-    public function setIdTalla($value)
+    public function setIdItem($value)
     {
         if (Validator::validateNaturalNumber($value)) {
-            $this->idTalla = $value;
+            $this->idItem = $value;
             return true;
         } else {
             $this->data_error = 'El identificador es incorrecto';

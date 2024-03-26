@@ -4,14 +4,14 @@ require_once('../../helpers/database.php');
 /*
 *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
 */
-class ModeloTallaHandler
+class DetalleProductoHandler
 {
     /*
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
-    protected $idModelo = null;
-    protected $idTalla = null;
+    protected $idItem = null;
+    protected $idProducto = null;
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -38,7 +38,7 @@ class ModeloTallaHandler
         WHERE t.descripcion LIKE ? AND mt.id_modelo=?
         ORDER BY t.descripcion';
 
-        $params = array($value,$this->idModelo);
+        $params = array($value,$this->idProducto);
         return Database::getRows($sql, $params);
     }
 
@@ -46,7 +46,7 @@ class ModeloTallaHandler
     {
         $sql = 'INSERT INTO prc_modelo_tallas(id_talla, id_modelo, stock_modelo_talla, precio_modelo_talla)
                 VALUES(?, ?, ?, ?)';
-        $params = array($this->idTalla, $this->idModelo, $this->existencias, $this->precio);
+        $params = array($this->idItem, $this->idProducto, $this->existencias, $this->precio);
         return Database::executeRow($sql, $params);
     }
 
@@ -59,7 +59,7 @@ class ModeloTallaHandler
         INNER JOIN prc_modelos m USING(id_modelo)
         WHERE mt.id_modelo = ?
         ORDER BY t.descripcion_talla';
-        $params = array($this->idModelo); 
+        $params = array($this->idProducto); 
         return Database::getRows($sql, $params);
     }
     public function readAllActive()
@@ -71,7 +71,20 @@ class ModeloTallaHandler
         INNER JOIN prc_modelos USING(id_modelo)
         WHERE estado_talla=true AND id_modelo = ? AND stock_modelo_talla>0
         ORDER BY descripcion_talla';
-        $params = array($this->idModelo); 
+        $params = array($this->idProducto); 
+        return Database::getRows($sql, $params);
+    }
+    public function readByProducto()
+    {
+        $sql = 'SELECT id_detalle_producto,id_item,id_producto,cantidad_item,
+        id_item, descripcion_tipo_item,descripcion_item, estado_item
+        FROM tb_detalle_productos
+        INNER JOIN tb_items USING(id_item)
+        INNER JOIN tb_tipo_items USING(id_tipo_item)
+        INNER JOIN tb_productos USING(id_producto)
+        WHERE id_producto=?
+        ORDER BY CAST(descripcion_tipo_item AS UNSIGNED);';
+        $params = array($this->idProducto); 
         return Database::getRows($sql, $params);
     }
 
