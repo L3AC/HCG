@@ -399,13 +399,17 @@ const fillsubTableU = async (busqueda,idProducto) => {
         DATA2.dataset.forEach(row => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             const item = document.createElement("tr");
-            item.setAttribute('data-id', row.id_item); // Añadimos el atributo data-id
+            item.setAttribute('data-id', row.id_detalle_producto); // Añadimos el atributo data-id
             item.innerHTML = `
                 <td>${row.descripcion_item}</td>
                 <td>${row.descripcion_tipo_item}</td>
+                <td>${row.cantidad_item}</td>
                 <td>
-                    <button type="button" class="btn btn-primary" onclick="selectItem(${row.id_item})">
-                        <i class="bi bi-plus-square-fill"></i>
+                    <button type="button" class="btn btn-info" onclick="opensubUpdate(${row.id_detalle_producto})">
+                        <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="opensubDelete(${row.id_detalle_producto})">
+                        <i class="bi bi-trash-fill"></i>
                     </button>
                 </td>
             `;
@@ -501,14 +505,14 @@ const opensubUpdate = async (id) => {
 */
 const opensubDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Desea inactivar el producto de forma permanente?');
+    const RESPONSE = await confirmAction('¿Desea inactivar el item?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
         const FORM = new FormData();
-        FORM.append('idModelo', id);
+        FORM.append('idDetalleProducto', id);
         // Petición para eliminar el registro seleccionado.
-        const DATA = await fetchData(PRODUCTO_API, 'deleteRow', FORM);
+        const DATA = await fetchData(DETALLEPRODUCTO_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se muestra un mensaje de éxito.
