@@ -53,6 +53,16 @@ if (isset($_GET['action'])) {
                         $result['error'] = ' No se encontraron registros';
                     }
                 break;
+            case 'readAllNot':
+                    //echo $_POST['idTalla'];
+                    if (!$producto->setIdProducto($_POST['idProducto'])) {
+                        $result['error'] = $producto->getDataError();
+                    } elseif ($result['dataset'] = $producto->readAllNot($_POST['busqueda'])) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['error'] = 'Registros inexistentes';
+                    }
+                    break;
             case 'readOne':
                 //echo $_POST['idTalla'];
                 if (!$producto->setId($_POST['idTalla'])) {

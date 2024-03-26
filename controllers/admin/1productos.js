@@ -52,6 +52,7 @@ const SAVE_FORMU = document.getElementById('saveFormU'),
     ESTADO_PRODUCTOU = document.getElementById('estadoProductoU');
     IMAGEN_PRODUCTOU = document.getElementById('imagenProductoU'),
     IMAGEN_PREU = document.getElementById('imgPreU');
+    SELECTED_ITEMU = document.getElementById('selectedItemsListU');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
 /*const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Gestionar modelos';
+    MAIN_TITLE.textContent = 'Gestionar productos';
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
 });
@@ -193,53 +194,7 @@ document.addEventListener('click', function() {
     IMAGEN_PRE.style.transform = 'scale(1)'; 
 });*/
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
-const openUpdate = async (id) => {
-    // Se define un objeto con los datos del registro seleccionado.
-    const FORM = new FormData();
-    FORM.append('idProducto', id);
 
-    // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(PRODUCTO_API, 'readOne', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        // Se muestra la caja de diálogo con su título.
-        SAVE_MODALU.show();
-        // Se prepara el formulario.
-        SAVE_FORMU.reset();
-        // Se inicializan los campos con los datos.
-        const ROW = DATA.dataset;
-        ID_PRODUCTOU.value = ROW.id_producto;
-        NOMBRE_PRODUCTOU.value = ROW.descripcion_producto;
-        for (var i = 0; i < TIPO_PRODUCTOU.options.length; i++) {
-            // Si el valor de la opción es igual al valor que quieres seleccionar
-            if (TIPO_PRODUCTOU.options[i].value === ROW.tipo_producto) {
-                // Seleccionar la opción
-                TIPO_PRODUCTOU.selectedIndex = i;
-                break; // Salir del bucle una vez seleccionada la opción
-            }
-        }
-        IMAGEN_PRODUCTOU.value = ROW.imagen_producto;
-
-        IMAGEN_PREU.style.maxWidth = '300px';
-        IMAGEN_PREU.style.maxHeight = 'auto';
-        IMAGEN_PREU.style.margin = '20px auto';
-        IMAGEN_PREU.innerHTML = '';
-        IMAGEN_PREU.insertAdjacentHTML(
-            "beforeend",
-            `<img src="${ROW.imagen_producto}">` // Backticks para img variable
-        );        
-        ESTADO_PRODUCTOU.checked = ROW.estado_producto;
-
-        fillsubTable(SEARCHSUB_FORM);
-    } else {
-        sweetAlert(2, DATA.error, false);
-    }
-}
 
 /*
 *   Función asíncrona para eliminar un registro.
@@ -352,23 +307,163 @@ const selectItem = (id_item) => {
 };
 
 
-
 const subclose = () => {
     SAVE_MODAL.show();
 }
 
-const opensubCreate = () => {
-    SAVE_MODAL.hide();
-    SAVE_TREMODAL.show();
-    SELECTALLA.hidden = false;
-    //SAVE_MODAL.hidden = false;
-    TREMODAL_TITLE.textContent = 'Agregar talla';
-    // Se prepara el formulario.
-    SAVE_TREFORM.reset();
-    //EXISTENCIAS_PRODUCTO.disabled = false;
-    fillSelect(TALLA_API, 'readAll', 'tallaModeloTalla');
-}
+/*
+*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openUpdate = async (id) => {
+    // Se define un objeto con los datos del registro seleccionado.
+    const FORM = new FormData();
+    FORM.append('idProducto', id);
 
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(PRODUCTO_API, 'readOne', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se muestra la caja de diálogo con su título.
+        SAVE_MODALU.show();
+        // Se prepara el formulario.
+        SAVE_FORMU.reset();
+        // Se inicializan los campos con los datos.
+        const ROW = DATA.dataset;
+        ID_PRODUCTOU.value = ROW.id_producto;
+        NOMBRE_PRODUCTOU.value = ROW.descripcion_producto;
+        for (var i = 0; i < TIPO_PRODUCTOU.options.length; i++) {
+            // Si el valor de la opción es igual al valor que quieres seleccionar
+            if (TIPO_PRODUCTOU.options[i].value === ROW.tipo_producto) {
+                // Seleccionar la opción
+                TIPO_PRODUCTOU.selectedIndex = i;
+                break; // Salir del bucle una vez seleccionada la opción
+            }
+        }
+        IMAGEN_PRODUCTOU.value = ROW.imagen_producto;
+
+        IMAGEN_PREU.style.maxWidth = '300px';
+        IMAGEN_PREU.style.maxHeight = 'auto';
+        IMAGEN_PREU.style.margin = '20px auto';
+        IMAGEN_PREU.innerHTML = '';
+        IMAGEN_PREU.insertAdjacentHTML(
+            "beforeend",
+            `<img src="${ROW.imagen_producto}">` // Backticks para img variable
+        );        
+        ESTADO_PRODUCTOU.checked = ROW.estado_producto;
+
+        fillsubTableU('',ROW.id_producto);
+    } else {
+        //sweetAlert(2, DATA.error, false);
+    }
+}
+const fillsubTableU = async (busqueda,idProducto) => {
+    // Se inicializa el contenido de la tabla.
+    SUBROWS_FOUNDU.textContent = '';
+    SUBTABLE_BODYU.innerHTML = '';
+    const FORM = new FormData();
+    FORM.append('busqueda', busqueda);
+    FORM.append('idProducto', idProducto);
+
+    // Petición para obtener los resistros disponibles.
+    const DATA = await fetchData(ITEM_API, 'readAllNot', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+            const item = document.createElement("tr");
+            item.setAttribute('data-id', row.id_item); // Añadimos el atributo data-id
+            item.innerHTML = `
+                <td>${row.descripcion_item}</td>
+                <td>${row.descripcion_tipo_item}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" onclick="selectItem(${row.id_item})">
+                        <i class="bi bi-plus-square-fill"></i>
+                    </button>
+                </td>
+            `;
+            SUBTABLE_BODYU.appendChild(item);
+        });
+        // Se muestra un mensaje de acuerdo con el resultado.
+        SUBROWS_FOUNDU.textContent = DATA.message;
+    } else {
+        //sweetAlert(4, DATA.error, true);
+    }
+    const FORM2 = new FormData();
+    FORM2.append('busqueda', busqueda);
+    FORM2.append('idProducto', idProducto);
+    const DATA2 = await fetchData(DETALLEPRODUCTO_API, 'readAllNot', FORM2);
+    if (DATA2.status) {
+        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
+        DATA2.dataset.forEach(row => {
+            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+            const item = document.createElement("tr");
+            item.setAttribute('data-id', row.id_item); // Añadimos el atributo data-id
+            item.innerHTML = `
+                <td>${row.descripcion_item}</td>
+                <td>${row.descripcion_tipo_item}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" onclick="selectItem(${row.id_item})">
+                        <i class="bi bi-plus-square-fill"></i>
+                    </button>
+                </td>
+            `;
+            SELECTED_ITEMU.appendChild(item);
+        });
+    } else {
+        //sweetAlert(4, DATA.error, true);
+    }
+
+
+
+}
+const selectItemU = (item) => {
+    const id_item = item.id_item;
+    // Buscamos el elemento en la tabla.
+    const itemRow = document.querySelector(`#subtableBodyU tr[data-id="${id_item}"]`);
+    if (itemRow) {
+        // Verificamos si el item ya fue seleccionado.
+        const selectedItem = selectedItemsList.querySelector(`tr[data-id="${id_item}"]`);
+        if (selectedItem) {
+            // Si ya fue seleccionado, incrementamos la cantidad.
+            const quantityInput = selectedItem.querySelector('.quantity');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        } else {
+            // Si no ha sido seleccionado, creamos un nuevo item en la lista de elementos seleccionados.
+            const clonedItem = itemRow.cloneNode(true);
+            const quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.className = 'quantity';
+            quantityInput.value = '1';
+            quantityInput.min = '1'; // Establecemos el mínimo valor permitido
+            quantityInput.addEventListener('input', () => {
+                if (parseInt(quantityInput.value) <= 0) {
+                    quantityInput.value = '1';
+                }
+            });
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'btn btn-danger';
+            deleteButton.textContent = 'Eliminar';
+            deleteButton.addEventListener('click', () => {
+                selectedItemsList.removeChild(clonedItem);
+                itemRow.style.display = 'table-row';
+                // Remover el item de la lista temporal
+                selectedItems = selectedItems.filter(item => item.id !== id_item);
+            });
+            clonedItem.querySelector('td:last-child').innerHTML = '';
+            clonedItem.querySelector('td:last-child').appendChild(quantityInput);
+            clonedItem.querySelector('td:last-child').appendChild(deleteButton);
+            clonedItem.setAttribute('data-id', id_item);
+            selectedItemsList.appendChild(clonedItem);
+            itemRow.style.display = 'none';
+            // Agregar el item a la lista temporal
+            selectedItems.push({ id: id_item, quantity: 1 });
+        }
+    }
+};
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.
 *   Parámetros: id (identificador del registro seleccionado).

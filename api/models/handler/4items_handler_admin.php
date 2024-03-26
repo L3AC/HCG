@@ -10,6 +10,7 @@ class ItemHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $idProducto = null;
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -57,8 +58,26 @@ class ItemHandler
         $sql = 'SELECT id_item, descripcion_tipo_item,descripcion_item, estado_item
         FROM tb_items
         INNER JOIN tb_tipo_items USING(id_tipo_item)
+        WHERE estado_item=true and estado_tipo_item=true
         ORDER BY CAST(descripcion_tipo_item AS UNSIGNED)';
         return Database::getRows($sql);
+    }
+    public function readAllNot($value)
+    {
+        $value = ($value === '') ? '%%' : '%' . $value . '%';
+        $sql = 'SELECT id_item, descripcion_tipo_item,descripcion_item, estado_item 
+        FROM tb_items 
+        INNER JOIN tb_tipo_items USING(id_tipo_item)
+        WHERE id_item NOT IN (
+            SELECT id_item
+            FROM tb_detalle_productos
+            WHERE id_producto = ?
+        ) 
+        AND estado_item=true and estado_tipo_item=true 
+        AND descripcion_item like ?
+        ORDER BY CAST(descripcion_tipo_item AS UNSIGNED);';
+        $params = array($this->idProducto,$value);
+        return Database::getRows($sql, $params);
     }
 
     public function readOne()
