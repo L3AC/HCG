@@ -130,28 +130,28 @@ const fillTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <div class="card">
-    <div class="image_container">
-      <img src="${row.imagen_producto}" alt="" class="image">
-    </div>
-    <div class="title">
-      <span>${row.descripcion_producto}</span>
-    </div>
-    <div class="size">
-      <span>Horario: ${row.horario_producto}</span><br>
-      <p>Estado:<i class="${icon}"></i></p>
-    </div>
-    <div class="action">
-      <div class="price">
-        <span>$${row.precio_producto}</span>
-      </div>
-      <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_producto})">
-        <i class="bi bi-pencil-fill"></i>
-    </button>
-    <button type="button" class="btnAgregar" onclick="openDelete(${row.id_producto})">
-        <i class="bi bi-trash-fill"></i>
-    </button>
-    </div>
-  </div>
+                    <div class="image_container">
+                        <img src="${row.imagen_producto}" alt="" class="image">
+                    </div>
+                    <div class="title">
+                        <span>${row.descripcion_producto}</span>
+                    </div>
+                    <div class="size">
+                        <span>Horario: ${row.horario_producto}</span><br>
+                        <p>Estado:<i class="${icon}"></i></p>
+                    </div>
+                    <div class="action">
+                        <div class="price">
+                            <span>$${row.precio_producto}</span>
+                        </div>
+                        <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_producto})">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button type="button" class="btnAgregar" onclick="openDelete(${row.id_producto})">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </div>
+                </div>
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.
@@ -175,32 +175,6 @@ const openCreate = () => {
     SAVE_FORM.reset();
     fillsubTable(SEARCHSUB_FORM);
 }
-/*
-IMAGEN_PRODUCTO.addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        imgPre.innerHTML = '';
-        imgPre.appendChild(img);
-        // Establecer los estilos CSS de la imagen
-        img.style.maxWidth = '300px';
-        img.style.maxHeight = 'auto';
-        img.style.margin = '20px auto';
-    };
-    reader.readAsDataURL(file);
-});
-
-// Agregar un evento click a la imagen para aplicar un zoom
-IMAGEN_PRE.addEventListener('click', function () {
-    IMAGEN_PRE.style.transform = 'scale(3)'; 
-    event.stopPropagation(); 
-});
-
-document.addEventListener('click', function() {
-    IMAGEN_PRE.style.transform = 'scale(1)'; 
-});*/
 
 
 
@@ -314,7 +288,6 @@ const selectItem = (id_item) => {
     }
 };
 
-
 const subclose = () => {
     SAVE_MODAL.show();
 }
@@ -399,6 +372,8 @@ const fillsubTableU = async (busqueda,idProducto) => {
     } else {
         //sweetAlert(4, DATA.error, true);
     }
+    //CARGAR LA LISTA DE LOS ITEMS DEL PRODUCTO QUE ESTAN EN LA BASE
+    SELECTED_ITEMU.innerHTML = '';
     const FORM2 = new FormData();
     FORM2.append('idProducto', idProducto);
     const DATA2 = await fetchData(DETALLEPRODUCTO_API, 'readByProducto', FORM2);
@@ -413,10 +388,12 @@ const fillsubTableU = async (busqueda,idProducto) => {
                 <td>${row.descripcion_tipo_item}</td>
                 <td>${row.cantidad_item}</td>
                 <td>
-                    <button type="button" class="btn btn-info" onclick="opensubUpdate(${row.id_detalle_producto})">
+                    <button type="button" class="btn btn-info" 
+                    onclick="opensubUpdate(${row.id_detalle_producto},${row.id_producto})">
                         <i class="bi bi-pencil-fill"></i>
                     </button>
-                    <button type="button" class="btn btn-danger" onclick="opensubDelete(${row.id_detalle_producto})">
+                    <button type="button" class="btn btn-danger" 
+                    onclick="opensubDelete(${row.id_detalle_producto},${row.id_producto})">
                         <i class="bi bi-trash-fill"></i>
                     </button>
                 </td>
@@ -426,55 +403,8 @@ const fillsubTableU = async (busqueda,idProducto) => {
     } else {
         //sweetAlert(4, DATA.error, true);
     }
-
-
-
 }
-const selectItemU = (item) => {
-    const id_item = item.id_item;
-    // Buscamos el elemento en la tabla.
-    const itemRow = document.querySelector(`#subtableBodyU tr[data-id="${id_item}"]`);
-    if (itemRow) {
-        // Verificamos si el item ya fue seleccionado.
-        const selectedItem = selectedItemsList.querySelector(`tr[data-id="${id_item}"]`);
-        if (selectedItem) {
-            // Si ya fue seleccionado, incrementamos la cantidad.
-            const quantityInput = selectedItem.querySelector('.quantity');
-            quantityInput.value = parseInt(quantityInput.value) + 1;
-        } else {
-            // Si no ha sido seleccionado, creamos un nuevo item en la lista de elementos seleccionados.
-            const clonedItem = itemRow.cloneNode(true);
-            const quantityInput = document.createElement('input');
-            quantityInput.type = 'number';
-            quantityInput.className = 'quantity';
-            quantityInput.value = '1';
-            quantityInput.min = '1'; // Establecemos el mínimo valor permitido
-            quantityInput.addEventListener('input', () => {
-                if (parseInt(quantityInput.value) <= 0) {
-                    quantityInput.value = '1';
-                }
-            });
-            const deleteButton = document.createElement('button');
-            deleteButton.type = 'button';
-            deleteButton.className = 'btn btn-danger';
-            deleteButton.textContent = 'Eliminar';
-            deleteButton.addEventListener('click', () => {
-                selectedItemsList.removeChild(clonedItem);
-                itemRow.style.display = 'table-row';
-                // Remover el item de la lista temporal
-                selectedItems = selectedItems.filter(item => item.id !== id_item);
-            });
-            clonedItem.querySelector('td:last-child').innerHTML = '';
-            clonedItem.querySelector('td:last-child').appendChild(quantityInput);
-            clonedItem.querySelector('td:last-child').appendChild(deleteButton);
-            clonedItem.setAttribute('data-id', id_item);
-            selectedItemsList.appendChild(clonedItem);
-            itemRow.style.display = 'none';
-            // Agregar el item a la lista temporal
-            selectedItems.push({ id: id_item, quantity: 1 });
-        }
-    }
-};
+
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.
 *   Parámetros: id (identificador del registro seleccionado).
@@ -485,9 +415,9 @@ const opensubUpdate = async (id) => {
     SAVE_MODAL.hide();
     SELECTALLA.hidden = true;
     const FORM = new FormData();
-    FORM.append('idModeloTalla', id);
+    FORM.append('idDetalleProducto', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
+    const DATA = await fetchData(DETALLEPRODUCTO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
@@ -511,22 +441,25 @@ const opensubUpdate = async (id) => {
 *   Parámetros: id (identificador del registro seleccionado).
 *   Retorno: ninguno.
 */
-const opensubDelete = async (id) => {
+const opensubDelete = async (idDetalle,idProducto) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el item?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
         const FORM = new FormData();
-        FORM.append('idDetalleProducto', id);
+        FORM.append('idDetalleProducto', idDetalle);
         // Petición para eliminar el registro seleccionado.
         const DATA = await fetchData(DETALLEPRODUCTO_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
-            // Se muestra un mensaje de éxito.
-            await sweetAlert(1, DATA.message, true);
-            // Se carga nuevamente la tabla para visualizar los cambios.
-            fillTable();
+            const selectedItemsList = document.getElementById('selectedItemsListU');
+            const itemToDelete = selectedItemsList.querySelector(`tr[data-id="${idDetalle}"]`);
+            if (itemToDelete) {
+                selectedItemsList.removeChild(itemToDelete);
+            }
+            // Refrescar la tabla de los items no seleccionados
+            fillsubTableU('',idProducto);
         } else {
             sweetAlert(2, DATA.error, false);
         }
@@ -571,3 +504,12 @@ IMAGEN_PRODUCTO.addEventListener('input', function() {
       IMAGEN_PRE.appendChild(newImage);
     }
   });
+// Agregar un evento click a la imagen para aplicar un zoom
+/*IMAGEN_PREU.addEventListener('click', function () {
+    IMAGEN_PRE.style.transform = 'scale(3)'; 
+    event.stopPropagation(); 
+});
+
+document.addEventListener('click', function() {
+    IMAGEN_PREU.style.transform = 'scale(1)'; 
+});*/
