@@ -2,11 +2,12 @@
 // Se incluye la clase para validar los datos de entrada.
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/1productos_handler_admin.php');
+require_once('../../handler/admin/8detalleproductos_handler.php');
+
 /*
  *	Clase para manejar el encapsulamiento de los datos de la tabla PRODUCTO.
  */
-class ProductoData extends ProductoHandler
+class DetalleProductoData extends DetalleProductoHandler
 {
     /*
      *  Atributos adicionales.
@@ -21,19 +22,57 @@ class ProductoData extends ProductoHandler
     {
         if (Validator::validateNaturalNumber($value)) {
             $this->id = $value;
+            return true; 
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
+    public function setIdProducto($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->idProducto= $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador del modelo es incorrecto';
+            return false;
+        }
+    }
+    public function setIdItem($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->idItem = $value;
             return true;
         } else {
             $this->data_error = 'El identificador es incorrecto';
             return false;
         }
     }
+    public function setPrecio($value)
+    {
+        if (Validator::validateMoney($value)) {
+            $this->precio = $value;
+            return true;
+        } else {
+            $this->data_error = 'El precio debe ser un valor numérico';
+            return false;
+        }
+    }
 
-    /*
- * Establece el nombre del modelo.
- */
+    public function setExistencias($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->existencias = $value;
+            return true;
+        } else {
+            $this->data_error = 'El valor de las existencias debe ser numérico entero';
+            return false;
+        }
+    }
+
+
     public function setNombre($value, $min = 2, $max = 50)
     {
-        // Validación del nombre.
         if (!Validator::validateAlphanumeric($value)) {
             $this->data_error = 'El nombre debe ser un valor alfanumérico';
             return false;
@@ -46,12 +85,8 @@ class ProductoData extends ProductoHandler
         }
     }
 
-    /*
- * Establece la descripción del modelo.
- */
     public function setDescripcion($value, $min = 2, $max = 250)
     {
-        // Validación de la descripción.
         if (!Validator::validateString($value)) {
             $this->data_error = 'La descripción contiene caracteres prohibidos';
             return false;
@@ -64,42 +99,9 @@ class ProductoData extends ProductoHandler
         }
     }
 
-    /*
- * Establece el precio del modelo.
- */
-    public function setPrecio($value)
-    {
-        // Validación del precio.
-        if (Validator::validateMoney($value)) {
-            $this->precio = $value;
-            return true;
-        } else {
-            $this->data_error = 'El precio debe ser un valor numérico';
-            return false;
-        }
-    }
 
-    /*
- * Establece las existencias del modelo.
- */
-    public function setExistencias($value)
-    {
-        // Validación de las existencias.
-        if (Validator::validateNaturalNumber($value)) {
-            $this->existencias = $value;
-            return true;
-        } else {
-            $this->data_error = 'El valor de las existencias debe ser numérico entero';
-            return false;
-        }
-    }
-
-    /*
- * Establece la imagen del modelo.
- */
     public function setImagen($file, $filename = null)
     {
-        // Validación de la imagen.
         if (Validator::validateImageFile($file, 500, 500)) {
             $this->imagen = Validator::getFileName();
             return true;
@@ -114,12 +116,8 @@ class ProductoData extends ProductoHandler
         }
     }
 
-    /*
- * Establece la categoría del modelo.
- */
     public function setCategoria($value)
     {
-        // Validación del identificador de la categoría.
         if (Validator::validateNaturalNumber($value)) {
             $this->categoria = $value;
             return true;
@@ -129,12 +127,8 @@ class ProductoData extends ProductoHandler
         }
     }
 
-    /*
- * Establece el estado del modelo.
- */
     public function setEstado($value)
     {
-        // Validación del estado.
         if (Validator::validateBoolean($value)) {
             $this->estado = $value;
             return true;
@@ -144,12 +138,8 @@ class ProductoData extends ProductoHandler
         }
     }
 
-    /*
- * Establece el nombre de archivo.
- */
     public function setFilename()
     {
-        // Obtiene el nombre de archivo desde la lectura.
         if ($data = $this->readFilename()) {
             $this->filename = $data['imagen_producto'];
             return true;

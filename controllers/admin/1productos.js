@@ -392,9 +392,8 @@ const fillsubTableU = async (busqueda,idProducto) => {
         //sweetAlert(4, DATA.error, true);
     }
     const FORM2 = new FormData();
-    FORM2.append('busqueda', busqueda);
     FORM2.append('idProducto', idProducto);
-    const DATA2 = await fetchData(DETALLEPRODUCTO_API, 'readAllNot', FORM2);
+    const DATA2 = await fetchData(DETALLEPRODUCTO_API, 'readByProducto', FORM2);
     if (DATA2.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA2.dataset.forEach(row => {
