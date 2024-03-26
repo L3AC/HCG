@@ -1,5 +1,6 @@
+
 .navbar{
-    background-color: #CCC8AA; height: 90px;
+    background-color: #5D2C0C; height: 90px;
 }
 
 .contenedor {
@@ -52,7 +53,7 @@
 }
 
 #foot{
-    background-color: #CCC8AA;
+    background-color: #5D2C0C;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
 }

@@ -33,12 +33,12 @@ const loadTemplate = async () => {
     <nav class="navbar">
         <div class="container-fluid">
             <a class=" " href="#">
-                <img src="../../resources/img/logo.png" alt="Bootstrap" width="70" height="80" type="button"
+                <img src="../../resources/img/home.png" alt="Bootstrap" width="50" height="50" type="button"
                     data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
             </a>
             <div class="d-flex position-absolute top-0 end-0 me-3 mt-2" >
                 <a href="../../views/admin/profile.html" style="margin-right: 10px; margin-top: 10px;">
-                    <img src="../../resources/img/Perfilito.png" width="40" height="40">
+                    <img src="../../resources/img/user.png" width="40" height="40">
                 </a>
                 <a href="#" onclick="logOut()" style="margin-top: 10px;">
                     <img src="../../resources/img/logout.png" width="40" height="40">
