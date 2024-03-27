@@ -45,6 +45,23 @@ class ProductoData extends ProductoHandler
             return false;
         }
     }
+    public function setTipoProducto($value)
+    {
+        $this->tipoproducto = $value;
+        return true;
+    }
+
+    public function setHorario($value)
+    {
+        $this->horario = $value;
+        return true;
+    }
+
+    public function setURL($value)
+    {
+        $this->url = $value;
+        return true;
+    }
 
     /*
  * Establece la descripción del modelo.
@@ -137,6 +154,83 @@ class ProductoData extends ProductoHandler
         // Validación del estado.
         if (Validator::validateBoolean($value)) {
             $this->estado = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setLunes($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->lunes = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setMartes($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->martes = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setMiercoles($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->miercoles = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setJueves($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->jueves = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setViernes($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->viernes = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setSabado($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->sabado = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setDomingo($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->domingo = $value;
             return true;
         } else {
             $this->data_error = 'Estado incorrecto';

@@ -33,9 +33,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     ID_PRODUCTO = document.getElementById('idProducto'),
     NOMBRE_PRODUCTO = document.getElementById('nombreProducto'),
     TIPO_PRODUCTO = document.getElementById('tipoProducto'),
-    DESCRIPCION_PRODUCTO = document.getElementById('descripcionProducto'),
-    PRECIO_PRODUCTO = document.getElementById('precioProducto'),
-    EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
+    HORARIO_PRODUCTO = document.getElementById('horarioProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoProducto');
     IMAGEN_PRODUCTO = document.getElementById('imagenProducto'),
     IMAGEN_PRE = document.getElementById('imgPre'),
@@ -95,20 +93,42 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     // Se verifica la acción a realizar.
-    (ID_PRODUCTO.value) ? action = 'updateRow' : action = 'createRow';
+    //(ID_PRODUCTO.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
     // Petición para guardar los datos del formulario.
-    const DATA = await fetchData(PRODUCTO_API, action, FORM);
+    const DATA = await fetchData(PRODUCTO_API, 'createRow', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se cierra la caja de diálogo.
         SAVE_MODAL.hide();
         // Se muestra un mensaje de éxito.
         sweetAlert(1, DATA.message, true);
-        ID_PRODUCTO.value = null;
-        // Se carga nuevamente la tabla para visualizar los cambios.
+
         fillTable();
+        const FORM2 = new FormData(SAVE_FORM);
+        // Petición para guardar los datos del formulario.
+        const DATA = await fetchData(PRODUCTO_API, 'createRow', FORM2);
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA.status) {
+            // Se cierra la caja de diálogo.
+            SAVE_MODAL.hide();
+            // Se muestra un mensaje de éxito.
+            sweetAlert(1, DATA.message, true);
+            
+            fillTable();
+
+            if (selectedItems.length === 0) {
+                return;
+            }
+        
+            // Recorre los elementos seleccionados
+            for (const item of selectedItems) {
+                
+            }
+        } else {
+            sweetAlert(2, DATA.error, false);
+        }
     } else {
         sweetAlert(2, DATA.error, false);
     }

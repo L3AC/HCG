@@ -27,20 +27,24 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
+                    !$producto->setTipoProducto($_POST['tipoProducto']) or
                     !$producto->setNombre($_POST['nombreProducto']) or
-                    !$producto->setDescripcion($_POST['descripcionProducto']) or
-                    !$producto->setPrecio($_POST['precioProducto']) or
-                    !$producto->setExistencias($_POST['existenciasProducto']) or
-                    !$producto->setCategoria($_POST['categoriaProducto']) or
+                    !$producto->setHorario($_POST['horarioProducto']) or
+                    !$producto->setPrecio($_POST['descripcionProducto']) or
+                    !$producto->setURL($_POST['imagenProducto']) or
                     !$producto->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) or
-                    !$producto->setImagen($_FILES['imagenProducto'])
+                    !$producto->setLunes(isset($_POST['lunesER']) ? 1 : 0) or
+                    !$producto->setMartes(isset($_POST['martesER']) ? 1 : 0) or
+                    !$producto->setMiercoles(isset($_POST['miercolesER']) ? 1 : 0) or
+                    !$producto->setJueves(isset($_POST['juevesER']) ? 1 : 0) or
+                    !$producto->setViernes(isset($_POST['viernesER']) ? 1 : 0) or
+                    !$producto->setSabado(isset($_POST['sabadoER']) ? 1 : 0) or
+                    !$producto->setDomingo(isset($_POST['domingoER']) ? 1 : 0) 
                 ) {
                     $result['error'] = $producto->getDataError();
-                } elseif ($producto->createRow()) {
+                } elseif ($result['dataset'] = $producto->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Producto creado correctamente';
-                    // Se asigna el estado del archivo después de insertar.
-                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenProducto'], $producto::RUTA_IMAGEN);
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear el producto';
                 }

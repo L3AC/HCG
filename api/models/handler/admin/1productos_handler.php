@@ -11,12 +11,18 @@ class ProductoHandler
     */
     protected $id = null;
     protected $nombre = null;
-    protected $descripcion = null;
+    protected $url = null;
+    protected $tipoproducto = null;
+    protected $horario = null;
     protected $precio = null;
-    protected $existencias = null;
-    protected $imagen = null;
-    protected $categoria = null;
     protected $estado = null;
+    protected $lunes = null;
+    protected $martes = null;
+    protected $miercoles = null;
+    protected $jueves = null;
+    protected $viernes = null;
+    protected $sabado = null;
+    protected $domingo = null;
 
     // Constante para establecer la ruta de las imágenes.
     const RUTA_IMAGEN = '../../images/modelos/';
@@ -48,16 +54,23 @@ class ProductoHandler
         ORDER BY descripcion_modelo';
 
         $params = array($value);
-    return Database::getRows($sql, $params);
+        return Database::getRows($sql, $params);
     }
 
 
     public function createRow()
     {
-        $sql = 'INSERT INTO prc_modelos(descripcion_modelo, id_marca, foto_modelo, estado_modelo)
-                VALUES(?, ?, ?, ?)';
-        $params = array($this->descripcion, $this->id, $this->imagen, $this->estado);
-        return Database::executeRow($sql, $params);
+        $sql = '
+        INSERT INTO tb_productos (id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
+        imagen_producto,estado_producto,lunes_producto,martes_producto,miercoles_producto,jueves_producto,
+        viernes_producto,sabado_producto,domingo_producto) 
+        VALUES((SELECT get_next_id("tb_productos")),?,?,?,?,?,?,?,?,?,?,?,?,?);
+        (SELECT get_next_id("tb_productos"));';
+
+        $params = array($this->tipoproducto, $this->nombre, $this->horario, $this->precio
+        , $this->url, $this->estado, $this->lunes, $this->martes, $this->miercoles, $this->jueves
+        , $this->viernes, $this->sabado, $this->domingo);
+        return Database::getRows($sql, $params);
     }
 
     public function readAll()
