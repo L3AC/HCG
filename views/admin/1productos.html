@@ -66,10 +66,10 @@
             </button>
         </div>
 
-            <div colspan="6" id="rowsFound" style="color: white;"></div>
+        <div colspan="6" id="rowsFound" style="color: white;"></div>
 
-            <!-- Cuerpo de la tabla para mostrar un registro por fila -->
-            <div id="tableBody" class="row"></div>
+        <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+        <div id="tableBody" class="row"></div>
 
         <!-- Componente Modal para guardar un registro -->
         <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -89,7 +89,7 @@
                                 <h5>Días disponibles</h5>
                             </div>
                             <div class="d-flex flex-row flex-wrap justify-content-center">
-                                
+
                                 <div class="col-4 col-md-4 col-lg-1 mb-3">
                                     <div class="d-flex flex-column align-items-center">
                                         <span>L</span>
@@ -188,7 +188,7 @@
                                 </div>
                             </div>
                             <!-- Subtabla para Productos tallas -->
-                            <div id="subtable" class="col-sm-12 col-md-6">
+                            <div id="subtable" class="col-sm-12 col-md-5">
                                 <div class="modal-header">
                                     <!-- Título del modal -->
                                     <h1 class="modal-title fs-5">Items</h1>
@@ -216,7 +216,7 @@
                                         <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
                                         <thead>
                                             <tr>
-                                                <td colspan="6" id="subrowsFound"></td>
+                                                <td colspan="3" id="subrowsFound"></td>
                                             </tr>
                                             <tr>
                                                 <th>ITEM</th>
@@ -230,17 +230,29 @@
                                 </div>
 
                             </div>
-                            <div class="col-sm-12 col-md-6">
+                            <div id="tableSelectedR" class="col-sm-12 col-md-7">
                                 <div class="modal-header">
                                     <!-- Título del modal -->
                                     <h1 class="modal-title fs-5">Items seleccionados</h1>
                                 </div>
-                                <ul id="selectedItemsList">
-                                    <!-- Aquí se mostrarán los items seleccionados -->
-                                </ul>
+                                <!-- Tabla para mostrar los registros en la subtabla -->
+                                <div class="mt-4 table-responsive border-0"
+                                    style="max-height: 200px; overflow-y: auto;">
+                                    <table id="subheaderT" class="table table-hover">
+                                        <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+                                        <thead>
+                                            <tr>
+                                                <th>ITEM</th>
+                                                <th>TIPO</th>
+                                                <th>#</th>
+                                                <th>ACCIONES</th>
+                                            </tr>
+                                        </thead>
+                                        <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+                                        <tbody id="selectedItemsList"></tbody>
+                                    </table>
+                                </div>
                             </div>
-
-
 
                             <!-- Pie del modal con el botón de guardar -->
                             <div class="modal-footer border-0 border-bottom">
@@ -275,7 +287,7 @@
                                 <h5>Días disponibles</h5>
                             </div>
                             <div class="d-flex flex-row flex-wrap justify-content-center">
-                                
+
                                 <div class="col-4 col-md-4 col-lg-1 mb-3">
                                     <div class="d-flex flex-column align-items-center">
                                         <span>L</span>
@@ -340,7 +352,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
                                 <label for="nombreProductoU" class="form-label">Nombre</label>
@@ -376,7 +388,7 @@
                             <div class="modal-footer border-0 border-bottom">
                                 <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
                             </div>
-                            
+
                             <!-- Pie del modal con el botón de guardar -->
 
 
@@ -426,6 +438,10 @@
 
 
                             <div id="tableSelected" class="col-sm-12 col-md-7">
+                                <div class="modal-header">
+                                    <!-- Título del modal -->
+                                    <h1 class="modal-title fs-5">Items seleccionados</h1>
+                                </div>
                                 <!-- Tabla para mostrar los registros en la subtabla -->
                                 <div class="mt-4 table-responsive border-0"
                                     style="max-height: 200px; overflow-y: auto;">

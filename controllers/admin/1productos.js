@@ -12,7 +12,7 @@ const SUBTABLE_HEAD = document.getElementById('subheaderT'),
     TABLE_BODY = document.getElementById('tableBody'),
     ROWS_FOUND = document.getElementById('rowsFound'),
     SUBROWS_FOUND = document.getElementById('subrowsFound'),
-
+    SELECTED_ITEM = document.getElementById('selectedItemsList'),
     SUBTABLE_HEADU = document.getElementById('subheaderTU'),
     SUBTABLEU = document.getElementById('subtableU'),
     SUBTABLE_BODYU = document.getElementById('subtableBodyU'),
@@ -136,7 +136,7 @@ const fillTable = async (form = null) => {
             
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-                <div class="cardv col-lg-3 col-md-3 col-md-10" style="margin-bottom: 20px; margin-right: 60px;">
+                <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 20px; margin-right: 60px;">
                     <div class="image_container">
                         <img src="${row.imagen_producto}" alt="" class="image">
                     </div>
@@ -233,14 +233,18 @@ const openDelete = async (id) => {
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
 *   Retorno: ninguno.
 */
+let DATA;
+
 const fillsubTable = async (form = null) => {
     // Se inicializa el contenido de la tabla.
+    DATA=null;
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
+    SELECTED_ITEM.innerHTML = '';
     // Se verifica la acción a realizar.
     (form) ? action = 'searchRows' : action = 'readAllActive';
     // Petición para obtener los resistros disponibles.
-    const DATA = await fetchData(ITEM_API, action, form);
+    DATA = await fetchData(ITEM_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
@@ -257,6 +261,7 @@ const fillsubTable = async (form = null) => {
                     </button>
                 </td>
             `;
+            console.log(item);
             SUBTABLE_BODY.appendChild(item);
         });
         // Se muestra un mensaje de acuerdo con el resultado.
@@ -265,14 +270,70 @@ const fillsubTable = async (form = null) => {
         //sweetAlert(4, DATA.error, true);
     }
 }
+
 let selectedItems = [];
+
+const selectItem = (id) => {
+    // Buscar el item seleccionado en los datos obtenidos
+    const selectedItem = DATA.dataset.find(item => item.id_item === id);
+
+    // Verificar si el item ya está seleccionado
+    if (!selectedItems.find(item => item.id_item === id)) {
+        // Agregar el item seleccionado al array de items seleccionados
+        selectedItems.push({ ...selectedItem, cantidad: 1 });
+
+        // Actualizar la tabla de items seleccionados
+        updateSelectedItemsTable();
+
+        // Eliminar la fila correspondiente de la primera tabla
+        const rowToRemove = document.querySelector(`#subtableBody tr[data-id="${id}"]`);
+        if (rowToRemove) {
+            rowToRemove.remove();
+        }
+    }
+};
+
+const updateSelectedItemsTable = () => {
+    const tableBody = document.getElementById('selectedItemsList');
+    tableBody.innerHTML = '';
+
+    selectedItems.forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${item.descripcion_item}</td>
+            <td>${item.descripcion_tipo_item}</td>
+            <td><input type="number" value="${item.cantidad}" onchange="updateQuantity(${item.id_item}, this.value)"</td>
+            <td>
+                <button type="button" class="btn btn-danger" onclick="removeItem(${item.id_item})">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+};
+
+const updateQuantity = (id, quantity) => {
+    const index = selectedItems.findIndex(item => item.id_item === id);
+    if (index !== -1) {
+        selectedItems[index].cantidad = parseInt(quantity);
+    }
+};
+
+const removeItem = (id) => {
+    selectedItems = selectedItems.filter(item => item.id_item !== id);
+    updateSelectedItemsTable();
+};
+/*let selectedItems = [];
 // Función para seleccionar un item y moverlo a la lista de elementos seleccionados.
 const selectItem = (id_item) => {
     // Buscamos el elemento en la tabla.
     const itemRow = document.querySelector(`#subtableBody tr[data-id="${id_item}"]`);
+
     if (itemRow) {
         // Verificamos si el item ya fue seleccionado.
-        const selectedItem = selectedItemsList.querySelector(`li[data-id="${id_item}"]`);
+        const selectedItem = document.querySelector(`#selectedItemsList [data-id="${id_item}"]`);
+        console.log('selectedItem:', selectedItem); 
         if (selectedItem) {
             // Si ya fue seleccionado, incrementamos la cantidad.
             const quantityInput = selectedItem.querySelector('.quantity');
@@ -282,7 +343,7 @@ const selectItem = (id_item) => {
             const clonedItem = itemRow.cloneNode(true);
             const quantityInput = document.createElement('input');
             quantityInput.type = 'number';
-            quantityInput.className = 'quantity';
+            quantityInput.className = 'quantity form-control';
             quantityInput.value = '1';
             quantityInput.min = '1'; // Establecemos el mínimo valor permitido
             quantityInput.addEventListener('input', () => {
@@ -295,22 +356,27 @@ const selectItem = (id_item) => {
             deleteButton.className = 'btn btn-danger';
             deleteButton.textContent = 'Eliminar';
             deleteButton.addEventListener('click', () => {
-                selectedItemsList.removeChild(clonedItem);
-                itemRow.style.display = 'table-row';
-                // Remover el item de la lista temporal
-                selectedItems = selectedItems.filter(item => item.id !== id_item);
+                //if (selectedItem) {
+                    selectedItem.remove(); // Usa remove() en lugar de parentNode.removeChild(selectedItem)
+                    itemRow.style.display = 'table-row';
+                    // Remover el item de la lista temporal
+                    selectedItems = selectedItems.filter(item => item.id !== id_item);
+                //}
             });
-            clonedItem.querySelector('td:last-child').innerHTML = '';
-            clonedItem.querySelector('td:last-child').appendChild(quantityInput);
-            clonedItem.querySelector('td:last-child').appendChild(deleteButton);
+            const actionsCell = clonedItem.querySelector('td:last-child');
+            actionsCell.innerHTML = '';
+            actionsCell.appendChild(quantityInput);
+            actionsCell.appendChild(deleteButton);
             clonedItem.setAttribute('data-id', id_item);
-            selectedItemsList.appendChild(clonedItem);
+            document.querySelector('#selectedItemsList').appendChild(clonedItem);
             itemRow.style.display = 'none';
             // Agregar el item a la lista temporal
             selectedItems.push({ id: id_item, quantity: 1 });
         }
     }
-};
+};*/
+
+
 
 const subclose = () => {
     SAVE_MODALU.show();
