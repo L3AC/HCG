@@ -44,9 +44,18 @@ class DetalleProductoHandler
 
     public function createRow()
     {
+        //echo $this->idItem.' '.$this->idProducto.' '.$this->cantidad;
         $sql = 'INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantidad_item) 
             VALUES((SELECT get_next_id("tb_detalle_productos")),?,?,?)';
         $params = array($this->idItem, $this->idProducto, $this->cantidad);
+        return Database::executeRow($sql, $params);
+    }
+    public function updateRow()
+    {
+        $sql = 'UPDATE tb_detalle_productos 
+                SET cantidad_item = ?
+                WHERE id_detalle_producto = ?';
+        $params = array($this->cantidad,$this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -106,14 +115,6 @@ class DetalleProductoHandler
         return Database::getRow($sql, $params);
     }
 
-    public function updateRow()
-    {
-        $sql = 'UPDATE prc_modelo 
-                SET foto = ?, descripcion = ?,estado = ?, id_marca = ?
-                WHERE id_modelo = ?';
-        $params = array($this->imagen, $this->nombre,$this->estado, $this->categoria, $this->id);
-        return Database::executeRow($sql, $params);
-    }
 
     public function deleteRow()
     {

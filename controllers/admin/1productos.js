@@ -376,7 +376,8 @@ const fillsubTableU = async (busqueda,idProducto) => {
                 <td>${row.descripcion_item}</td>
                 <td>${row.descripcion_tipo_item}</td>
                 <td>
-                    <button type="button" class="btn btn-primary" onclick="opensubCreate(${row.id_item})">
+                    <button type="button" class="btn btn-primary" 
+                    onclick="opensubCreate(${row.id_item},${idProducto})">
                         <i class="bi bi-plus-square-fill"></i>
                     </button>
                 </td>
@@ -420,15 +421,40 @@ const fillsubTableU = async (busqueda,idProducto) => {
         //sweetAlert(4, DATA.error, true);
     }
 }
+// Método del evento para cuando se envía el formulario de guardar.
+SAVE_TREFORM.addEventListener('submit', async (event) => {
+    // Se evita recargar la página web después de enviar el formulario.
+    //event.preventDefault();
+    // Se verifica la acción a realizar.
+    console.log(ID_DETALLEPRODUCTO.value);
+    (ID_DETALLEPRODUCTO.value) ? action = 'updateRow' : action = 'createRow';
+    // Constante tipo objeto con los datos del formulario.
+    const FORM = new FormData(SAVE_TREFORM);
+    // Petición para guardar los datos del formulario.
+    const DATA = await fetchData(DETALLEPRODUCTO_API, action, FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se cierra la caja de diálogo.
+        SAVE_TREMODAL.hide();
+        // Se muestra un mensaje de éxito.
+        sweetAlert(1, DATA.message, true);
+        ID_DETALLEPRODUCTO.value = null;
+        // Se carga nuevamente la tabla para visualizar los cambios.
+        fillsubTable('',ID_PRODUCTO.value);
+    } else {
+        sweetAlert(2, DATA.error, false);
+    }
+});
 /*MODAL DE AGREGAR ITEM*/ 
 const opensubCreate = (idItem,idProducto) => {
     SAVE_MODALU.hide();
-    SAVE_TREMODALU.show();
+    ID_ITEM.value = idItem;
+    ID_PRODUCTO.value = idProducto;
+    SAVE_TREMODAL.show();
     //SAVE_MODAL.hidden = false;
     TREMODAL_TITLE.textContent = 'Agregar item';
     // Se prepara el formulario.
     SAVE_TREFORM.reset();
-
 }
 
 /*

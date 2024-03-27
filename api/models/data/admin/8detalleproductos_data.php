@@ -65,7 +65,7 @@ class DetalleProductoData extends DetalleProductoHandler
             $this->cantidad = $value;
             return true;
         } else {
-            $this->data_error = 'El valor de las existencias debe ser numérico entero';
+            $this->data_error = 'El valor debe ser numérico entero';
             return false;
         }
     }
