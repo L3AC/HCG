@@ -206,7 +206,7 @@ const openDelete = async (id) => {
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
         const FORM = new FormData();
-        FORM.append('idModelo', id);
+        FORM.append('idProducto', id);
         // Petición para eliminar el registro seleccionado.
         const DATA = await fetchData(PRODUCTO_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
