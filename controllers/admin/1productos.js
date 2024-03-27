@@ -38,7 +38,11 @@ const SAVE_FORM = document.getElementById('saveForm'),
     EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoProducto');
     IMAGEN_PRODUCTO = document.getElementById('imagenProducto'),
-    IMAGEN_PRE = document.getElementById('imgPre');
+    IMAGEN_PRE = document.getElementById('imgPre'),
+    LUNES_ER=document.getElementById('lunesER'),MARTES_ER=document.getElementById('martesER'),
+    MIERCOLES_ER=document.getElementById('miercolesER'),JUEVES_ER=document.getElementById('juevesER'),
+    VIERNES_ER=document.getElementById('viernesER'),SABADO_ER=document.getElementById('sabadoER'),
+    DOMINGO_ER=document.getElementById('domingoER');
 
 
 //CONSTANTES PARA EL FORMULARIO DE ACTUALIZAR
@@ -52,7 +56,11 @@ const SAVE_FORMU = document.getElementById('saveFormU'),
     ESTADO_PRODUCTOU = document.getElementById('estadoProductoU');
     IMAGEN_PRODUCTOU = document.getElementById('imagenProductoU'),
     IMAGEN_PREU = document.getElementById('imgPreU');
-    SELECTED_ITEMU = document.getElementById('selectedItemsListU');
+    SELECTED_ITEMU = document.getElementById('selectedItemsListU'),
+    LUNES_EU=document.getElementById('lunesEU'),MARTES_EU=document.getElementById('martesEU'),
+    MIERCOLES_EU=document.getElementById('miercolesEU'),JUEVES_EU=document.getElementById('juevesEU'),
+    VIERNES_EU=document.getElementById('viernesEU'),SABADO_EU=document.getElementById('sabadoEU'),
+    DOMINGO_EU=document.getElementById('domingoEU');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
 const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),

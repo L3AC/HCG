@@ -85,7 +85,75 @@
                     <!-- Formulario para crear o actualizar un registro -->
                     <form id="saveForm">
                         <div class="modal-body row g-3">
-
+                            <div class="col-12 d-flex justify-content-center">
+                                <h5>Días disponibles</h5>
+                            </div>
+                            <div class="d-flex flex-row flex-wrap justify-content-center">
+                                
+                                <div class="col-4 col-md-4 col-lg-1 mb-3">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>L</span>
+                                        <label class="checkbox-container">
+                                            <input id="lunesER" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3 ">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>M</span>
+                                        <label class="checkbox-container">
+                                            <input id="martesER" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3 ">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>X</span>
+                                        <label class="checkbox-container">
+                                            <input id="miercolesER" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3 ">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>J</span>
+                                        <label class="checkbox-container">
+                                            <input id="juevesER" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3 ">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>V</span>
+                                        <label class="checkbox-container">
+                                            <input id="viernesER" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3">
+                                    <div class="d-flex flex-column align-items-center ">
+                                        <span>S</span>
+                                        <label class="checkbox-container">
+                                            <input id="sabadoER" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3 ">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>D</span>
+                                        <label class="checkbox-container">
+                                            <input id="domingoER" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
                                 <label for="nombreProducto" class="form-label">Nombre</label>
@@ -119,75 +187,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!--
-                            <div class="d-flex flex-row col-12">
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Lunes</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Martes</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Miércoles</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Jueves</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Viernes</span>
-                                        <label class="container">
-                                            <input checked="checked" type="checkbox">
-                                            <div class="checkmark"></div>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Sábado</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Domingo</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>-->
-
-
                             <!-- Subtabla para Productos tallas -->
                             <div id="subtable" class="col-sm-12 col-md-6">
                                 <div class="modal-header">
@@ -272,6 +271,76 @@
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idProductoU" name="idProducto">
 
+                            <div class="col-12 d-flex justify-content-center">
+                                <h5>Días disponibles</h5>
+                            </div>
+                            <div class="d-flex flex-row flex-wrap justify-content-center">
+                                
+                                <div class="col-4 col-md-4 col-lg-1 mb-3">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>L</span>
+                                        <label class="checkbox-container">
+                                            <input id="lunesEU" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3 ">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>M</span>
+                                        <label class="checkbox-container">
+                                            <input id="martesEU" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3 ">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>X</span>
+                                        <label class="checkbox-container">
+                                            <input id="miercolesEU" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3 ">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>J</span>
+                                        <label class="checkbox-container">
+                                            <input id="juevesEU" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3 ">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>V</span>
+                                        <label class="checkbox-container">
+                                            <input id="viernesEU" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3">
+                                    <div class="d-flex flex-column align-items-center ">
+                                        <span>S</span>
+                                        <label class="checkbox-container">
+                                            <input id="sabadoEU" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-1 mb-3 ">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span>D</span>
+                                        <label class="checkbox-container">
+                                            <input id="domingoEU" class="custom-checkbox" checked="" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
                                 <label for="nombreProductoU" class="form-label">Nombre</label>
@@ -307,72 +376,7 @@
                             <div class="modal-footer border-0 border-bottom">
                                 <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
                             </div>
-                            <!--
-                            <div class="d-flex flex-row col-12">
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Lunes</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Martes</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Miércoles</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Jueves</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Viernes</span>
-                                        <label class="container">
-                                            <input checked="checked" type="checkbox">
-                                            <div class="checkmark"></div>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Sábado</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span>Domingo</span>
-                                        <label class="checkbox-container">
-                                            <input class="custom-checkbox" checked="" type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>-->
+                            
                             <!-- Pie del modal con el botón de guardar -->
 
 
