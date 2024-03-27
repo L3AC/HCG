@@ -336,8 +336,17 @@ const openUpdate = async (id) => {
         SAVE_FORMU.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
+
         ID_PRODUCTOU.value = ROW.id_producto;
         NOMBRE_PRODUCTOU.value = ROW.descripcion_producto;
+        LUNES_EU.checked = ROW.lunes_producto;
+        MARTES_EU.checked = ROW.martes_producto;
+        MIERCOLES_EU.checked = ROW.miercoles_producto;
+        JUEVES_EU.checked = ROW.jueves_producto;
+        VIERNES_EU.checked = ROW.viernes_producto;
+        SABADO_EU.checked = ROW.sabado_producto;
+        DOMINGO_EU.checked = ROW.domingo_producto;
+
         for (var i = 0; i < TIPO_PRODUCTOU.options.length; i++) {
             // Si el valor de la opción es igual al valor que quieres seleccionar
             if (TIPO_PRODUCTOU.options[i].value === ROW.tipo_producto) {

@@ -96,7 +96,8 @@ class ProductoHandler
     public function readOne()
     {
         $sql = 'SELECT id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
-        imagen_producto,estado_producto
+        imagen_producto,estado_producto,lunes_producto,martes_producto,miercoles_producto,jueves_producto,
+        viernes_producto,sabado_producto,domingo_producto
         FROM tb_productos
         WHERE id_producto=? 
         ORDER BY id_producto DESC';

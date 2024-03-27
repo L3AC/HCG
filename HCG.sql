@@ -135,7 +135,6 @@ CREATE TABLE tb_detalle_pedidos (
 );
 
 DELIMITER //
-
 CREATE FUNCTION get_next_id(table_name VARCHAR(255))
 RETURNS INT UNSIGNED
 BEGIN
@@ -162,7 +161,6 @@ BEGIN
     
     RETURN next_id;
 END //
-
 DELIMITER ;
 
 INSERT INTO tb_roles (id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, tipo_items_opc, items_opc, clientes_opc, usuarios_opc, roles_opc)
@@ -189,21 +187,11 @@ VALUES((SELECT get_next_id("tb_productos")),"Conjunto","Nachos Preparados","Almu
 v=c5e8a159&t=16e3ce250f244648bef28c5949fb99ff",true,true,true,true,true,true,true,true);
 
 
+
 INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantidad_item) 
 VALUES((SELECT get_next_id("tb_detalle_productos")),1,1,1),
 ((SELECT get_next_id("tb_detalle_productos")),2,1,1);
 
 
 
-SELECT id_item, descripcion_tipo_item,descripcion_item, estado_item 
-        FROM tb_items 
-        INNER JOIN tb_tipo_items USING(id_tipo_item)
-        WHERE id_item NOT IN (
-            SELECT id_item
-            FROM tb_detalle_productos
-            WHERE id_producto = 1
-        ) 
-        AND estado_item=true and estado_tipo_item=true 
-        AND descripcion_item like '%%'
-        ORDER BY CAST(descripcion_tipo_item AS UNSIGNED);
         
