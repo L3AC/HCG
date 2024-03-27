@@ -234,13 +234,18 @@ const openDelete = async (id) => {
 *   Retorno: ninguno.
 */
 let DATA;
+let selectedItems = [];
 
 const fillsubTable = async (form = null) => {
-    // Se inicializa el contenido de la tabla.
-    DATA=null;
+    // Limpiar tablas y reiniciar variables
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
     SELECTED_ITEM.innerHTML = '';
+    selectedItems = [];
+
+    // Se inicializa el contenido de la tabla.
+    DATA = undefined;
+    
     // Se verifica la acción a realizar.
     (form) ? action = 'searchRows' : action = 'readAllActive';
     // Petición para obtener los resistros disponibles.
@@ -261,7 +266,6 @@ const fillsubTable = async (form = null) => {
                     </button>
                 </td>
             `;
-            console.log(item);
             SUBTABLE_BODY.appendChild(item);
         });
         // Se muestra un mensaje de acuerdo con el resultado.
@@ -269,29 +273,33 @@ const fillsubTable = async (form = null) => {
     } else {
         //sweetAlert(4, DATA.error, true);
     }
-}
+};
 
-let selectedItems = [];
 
 const selectItem = (id) => {
     // Buscar el item seleccionado en los datos obtenidos
     const selectedItem = DATA.dataset.find(item => item.id_item === id);
 
     // Verificar si el item ya está seleccionado
-    if (!selectedItems.find(item => item.id_item === id)) {
-        // Agregar el item seleccionado al array de items seleccionados
+    const existingItemIndex = selectedItems.findIndex(item => item.id_item === id);
+    if (existingItemIndex !== -1) {
+        // Si el item ya está seleccionado, actualizar la cantidad
+        selectedItems[existingItemIndex].cantidad++;
+    } else {
+        // Si el item no está seleccionado, agregarlo a la lista de items seleccionados
         selectedItems.push({ ...selectedItem, cantidad: 1 });
+    }
 
-        // Actualizar la tabla de items seleccionados
-        updateSelectedItemsTable();
+    // Actualizar la tabla de items seleccionados
+    updateSelectedItemsTable();
 
-        // Eliminar la fila correspondiente de la primera tabla
-        const rowToRemove = document.querySelector(`#subtableBody tr[data-id="${id}"]`);
-        if (rowToRemove) {
-            rowToRemove.remove();
-        }
+    // Eliminar la fila correspondiente de la primera tabla
+    const rowToRemove = document.querySelector(`#subtableBody tr[data-id="${id}"]`);
+    if (rowToRemove) {
+        rowToRemove.remove();
     }
 };
+
 
 const updateSelectedItemsTable = () => {
     const tableBody = document.getElementById('selectedItemsList');
@@ -302,7 +310,9 @@ const updateSelectedItemsTable = () => {
         row.innerHTML = `
             <td>${item.descripcion_item}</td>
             <td>${item.descripcion_tipo_item}</td>
-            <td><input type="number" value="${item.cantidad}" onchange="updateQuantity(${item.id_item}, this.value)"</td>
+            <td><input type="number" min="1" step="1" 
+            style="width: 30px;" value="${item.cantidad}"
+             onchange="updateQuantity(${item.id_item}, this.value)"</td>
             <td>
                 <button type="button" class="btn btn-danger" onclick="removeItem(${item.id_item})">
                     <i class="bi bi-trash"></i>
@@ -324,57 +334,6 @@ const removeItem = (id) => {
     selectedItems = selectedItems.filter(item => item.id_item !== id);
     updateSelectedItemsTable();
 };
-/*let selectedItems = [];
-// Función para seleccionar un item y moverlo a la lista de elementos seleccionados.
-const selectItem = (id_item) => {
-    // Buscamos el elemento en la tabla.
-    const itemRow = document.querySelector(`#subtableBody tr[data-id="${id_item}"]`);
-
-    if (itemRow) {
-        // Verificamos si el item ya fue seleccionado.
-        const selectedItem = document.querySelector(`#selectedItemsList [data-id="${id_item}"]`);
-        console.log('selectedItem:', selectedItem); 
-        if (selectedItem) {
-            // Si ya fue seleccionado, incrementamos la cantidad.
-            const quantityInput = selectedItem.querySelector('.quantity');
-            quantityInput.value = parseInt(quantityInput.value) + 1;
-        } else {
-            // Si no ha sido seleccionado, creamos un nuevo item en la lista de elementos seleccionados.
-            const clonedItem = itemRow.cloneNode(true);
-            const quantityInput = document.createElement('input');
-            quantityInput.type = 'number';
-            quantityInput.className = 'quantity form-control';
-            quantityInput.value = '1';
-            quantityInput.min = '1'; // Establecemos el mínimo valor permitido
-            quantityInput.addEventListener('input', () => {
-                if (parseInt(quantityInput.value) <= 0) {
-                    quantityInput.value = '1';
-                }
-            });
-            const deleteButton = document.createElement('button');
-            deleteButton.type = 'button';
-            deleteButton.className = 'btn btn-danger';
-            deleteButton.textContent = 'Eliminar';
-            deleteButton.addEventListener('click', () => {
-                //if (selectedItem) {
-                    selectedItem.remove(); // Usa remove() en lugar de parentNode.removeChild(selectedItem)
-                    itemRow.style.display = 'table-row';
-                    // Remover el item de la lista temporal
-                    selectedItems = selectedItems.filter(item => item.id !== id_item);
-                //}
-            });
-            const actionsCell = clonedItem.querySelector('td:last-child');
-            actionsCell.innerHTML = '';
-            actionsCell.appendChild(quantityInput);
-            actionsCell.appendChild(deleteButton);
-            clonedItem.setAttribute('data-id', id_item);
-            document.querySelector('#selectedItemsList').appendChild(clonedItem);
-            itemRow.style.display = 'none';
-            // Agregar el item a la lista temporal
-            selectedItems.push({ id: id_item, quantity: 1 });
-        }
-    }
-};*/
 
 
 
@@ -508,8 +467,6 @@ const fillsubTableU = async (busqueda,idProducto) => {
 SAVE_TREFORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    // Se verifica la acción a realizar.
-    console.log(ID_DETALLEPRODUCTO.value);
     (ID_DETALLEPRODUCTO.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_TREFORM);
