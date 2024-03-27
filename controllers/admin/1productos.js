@@ -424,7 +424,7 @@ const fillsubTableU = async (busqueda,idProducto) => {
 // Método del evento para cuando se envía el formulario de guardar.
 SAVE_TREFORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
-    //event.preventDefault();
+    event.preventDefault();
     // Se verifica la acción a realizar.
     console.log(ID_DETALLEPRODUCTO.value);
     (ID_DETALLEPRODUCTO.value) ? action = 'updateRow' : action = 'createRow';
@@ -439,8 +439,9 @@ SAVE_TREFORM.addEventListener('submit', async (event) => {
         // Se muestra un mensaje de éxito.
         sweetAlert(1, DATA.message, true);
         ID_DETALLEPRODUCTO.value = null;
+        SAVE_MODALU.show();
         // Se carga nuevamente la tabla para visualizar los cambios.
-        fillsubTable('',ID_PRODUCTO.value);
+        fillsubTableU('',ID_PRODUCTO.value);
     } else {
         sweetAlert(2, DATA.error, false);
     }

@@ -107,10 +107,11 @@ CREATE TABLE tb_detalle_productos(
 SELECT id_detalle_producto,id_item,id_producto,cantidad_item,
 id_item, descripcion_tipo_item,descripcion_item, estado_item
 FROM tb_detalle_productos
-INNER JOIN tb_tipo_items USING(id_tipo_item)
 INNER JOIN tb_items USING(id_item)
+INNER JOIN tb_tipo_items USING(id_tipo_item)
 INNER JOIN tb_productos USING(id_producto)
 WHERE id_producto=1
+ORDER BY CAST(descripcion_tipo_item AS UNSIGNED);
 
 
 CREATE TABLE tb_pedidos(
