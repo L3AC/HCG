@@ -27,10 +27,10 @@ class TipoItemHandler
     public function searchRows()
     {
         $value = '%' . Validator::getSearchValue() . '%';
-        $sql = 'SELECT id_marca, descripcion_marca, estado_marca
-                FROM ctg_marcas
-                WHERE descripcion_marca LIKE ? 
-                ORDER BY descripcion_marca';
+        $sql = 'SELECT id_tipo_item, descripcion_tipo_item, estado_tipo_item
+                FROM tb_tipo_items
+                WHERE descripcion_tipo_item LIKE ? 
+                ORDER BY descripcion_tipo_item';
         $params = array($value);
         return Database::getRows($sql, $params);
     }
@@ -52,16 +52,16 @@ class TipoItemHandler
     }
     public function readAllActive()
     {
-        $sql = 'SELECT id_marca, descripcion_marca,estado_marca
-                FROM ctg_marcas where estado_marca=true' ;
+        $sql = 'SELECT id_tipo_item, descripcion_tipo_item,estado_tipo_item
+                FROM tb_tipo_items where estado_tipo_item=true' ;
         return Database::getRows($sql);
     }
 
     public function readOne()
     {
-        $sql = 'SELECT id_marca, descripcion_marca,estado_marca
-                FROM ctg_marcas
-                WHERE id_marca = ?';
+        $sql = 'SELECT id_tipo_item, descripcion_tipo_item,estado_tipo_item
+                FROM tb_tipo_items
+                WHERE id_tipo_item = ?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
@@ -79,7 +79,7 @@ class TipoItemHandler
     {
         $sql = 'UPDATE tb_tipo_items
                 SET descripcion_tipo_item = ?, estado_tipo_item = ?
-                WHERE id_tipo_item = ?';
+                WHERE id_tipo_items = ?';
         $params = array( $this->nombre, $this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
@@ -87,7 +87,7 @@ class TipoItemHandler
     public function deleteRow()
     {
         $sql = 'DELETE FROM tb_tipo_items 
-                WHERE id_tipo_item = ?';
+                WHERE id_tipo_items = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
