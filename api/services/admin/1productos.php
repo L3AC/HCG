@@ -26,7 +26,7 @@ if (isset($_GET['action'])) {
                 break;*/
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
-                echo isset($_POST['lunesER']);
+                
                 if (
                     !$producto->setTipoProducto($_POST['tipoProducto']) or
                     !$producto->setNombre($_POST['nombreProducto']) or
