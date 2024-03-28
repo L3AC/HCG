@@ -108,15 +108,18 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         // Recorre los elementos seleccionados
         for (const item of selectedItems) {
             const FORM2 = new FormData();
-            console.log( item.id_item, item.cantidad);
+            
             FORM2.append('idItem', item.id_item);
             FORM2.append('cantidadItem', item.cantidad);
+
             // Petición para guardar los datos del formulario.
-            const DATA2 = await fetchData(DETALLEPRODUCTO_API, action, FORM2);
+            const DATA2 = await fetchData(DETALLEPRODUCTO_API, 'createRow', FORM2);
             // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
             if (DATA2.status) {
+                console.log( item.id_item, item.cantidad);
                 sweetAlert(1, DATA2.message, true);
             } else {
+                console.log( "que");
                 sweetAlert(2, DATA2.error, false);
             }
         }
@@ -329,7 +332,7 @@ const updateSelectedItemsTable = () => {
             <td>${item.descripcion_item}</td>
             <td>${item.descripcion_tipo_item}</td>
             <td><input type="number" min="1" step="1" 
-            style="width: 30px;" value="${item.cantidad}"
+            style="width: 40px;" value="${item.cantidad}"
              onchange="updateQuantity(${item.id_item}, this.value)"</td>
             <td>
                 <button type="button" class="btn btn-danger" onclick="removeItem(${item.id_item})">
@@ -349,8 +352,29 @@ const updateQuantity = (id, quantity) => {
 };
 
 const removeItem = (id) => {
-    selectedItems = selectedItems.filter(item => item.id_item !== id);
-    updateSelectedItemsTable();
+    // Buscar el item en la lista de seleccionados
+    const index = selectedItems.findIndex(item => item.id_item === id);
+    if (index !== -1) {
+        // Guardar una referencia al item a eliminar
+        const removedItem = selectedItems.splice(index, 1)[0];
+        
+        // Actualizar la tabla de items seleccionados
+        updateSelectedItemsTable();
+
+        // Crear una fila para el item eliminado y agregarla a la tabla de items disponibles
+        const item = document.createElement("tr");
+        item.setAttribute('data-id', removedItem.id_item); // Añadimos el atributo data-id
+        item.innerHTML = `
+            <td>${removedItem.descripcion_item}</td>
+            <td>${removedItem.descripcion_tipo_item}</td>
+            <td>
+                <button type="button" class="btn btn-primary" onclick="selectItem(${removedItem.id_item})">
+                    <i class="bi bi-plus-square-fill"></i>
+                </button>
+            </td>
+        `;
+        SUBTABLE_BODY.appendChild(item);
+    }
 };
 
 

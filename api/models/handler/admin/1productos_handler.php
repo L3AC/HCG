@@ -60,7 +60,6 @@ class ProductoHandler
 
     public function createRow()
     {
-        echo $this->lunes;
         $sql = '
         INSERT INTO tb_productos (id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
         imagen_producto,estado_producto,lunes_producto,martes_producto,miercoles_producto,jueves_producto,

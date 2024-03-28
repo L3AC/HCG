@@ -25,7 +25,6 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$producto->setIdItem($_POST['idItem'])or 
-                    !$producto->setIdProducto($_POST['idProducto'])or 
                     !$producto->setCantidad($_POST['cantidadItem']))
                  {
                     $result['error'] = $producto->getDataError();

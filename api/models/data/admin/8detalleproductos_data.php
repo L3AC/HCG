@@ -34,7 +34,7 @@ class DetalleProductoData extends DetalleProductoHandler
             $this->idProducto= $value;
             return true;
         } else {
-            $this->data_error = 'El identificador del modelo es incorrecto';
+            $this->data_error = 'El identificador es incorrecto';
             return false;
         }
     }
