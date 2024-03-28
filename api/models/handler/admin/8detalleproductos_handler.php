@@ -46,8 +46,9 @@ class DetalleProductoHandler
     {
         //echo $this->idItem.' '.$this->idProducto.' '.$this->cantidad;
         $sql = 'INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantidad_item) 
-            VALUES((SELECT get_next_id("tb_detalle_productos")),?,?,?)';
-        $params = array($this->idItem, $this->idProducto, $this->cantidad);
+            VALUES((SELECT get_next_id("tb_detalle_productos")),?,
+            (SELECT MAX(id_producto) AS id_producto FROM tb_productos),?)';
+        $params = array($this->idItem, $this->cantidad);
         return Database::executeRow($sql, $params);
     }
     public function updateRow()

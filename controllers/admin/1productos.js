@@ -35,12 +35,12 @@ const SAVE_FORM = document.getElementById('saveForm'),
     TIPO_PRODUCTO = document.getElementById('tipoProducto'),
     HORARIO_PRODUCTO = document.getElementById('horarioProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoProducto');
-    IMAGEN_PRODUCTO = document.getElementById('imagenProducto'),
+IMAGEN_PRODUCTO = document.getElementById('imagenProducto'),
     IMAGEN_PRE = document.getElementById('imgPre'),
-    LUNES_ER=document.getElementById('lunesER'),MARTES_ER=document.getElementById('martesER'),
-    MIERCOLES_ER=document.getElementById('miercolesER'),JUEVES_ER=document.getElementById('juevesER'),
-    VIERNES_ER=document.getElementById('viernesER'),SABADO_ER=document.getElementById('sabadoER'),
-    DOMINGO_ER=document.getElementById('domingoER');
+    LUNES_ER = document.getElementById('lunesER'), MARTES_ER = document.getElementById('martesER'),
+    MIERCOLES_ER = document.getElementById('miercolesER'), JUEVES_ER = document.getElementById('juevesER'),
+    VIERNES_ER = document.getElementById('viernesER'), SABADO_ER = document.getElementById('sabadoER'),
+    DOMINGO_ER = document.getElementById('domingoER');
 
 
 //CONSTANTES PARA EL FORMULARIO DE ACTUALIZAR
@@ -52,13 +52,13 @@ const SAVE_FORMU = document.getElementById('saveFormU'),
     PRECIO_PRODUCTOU = document.getElementById('precioProductoU'),
     EXISTENCIAS_PRODUCTOU = document.getElementById('existenciasProductoU'),
     ESTADO_PRODUCTOU = document.getElementById('estadoProductoU');
-    IMAGEN_PRODUCTOU = document.getElementById('imagenProductoU'),
+IMAGEN_PRODUCTOU = document.getElementById('imagenProductoU'),
     IMAGEN_PREU = document.getElementById('imgPreU');
-    SELECTED_ITEMU = document.getElementById('selectedItemsListU'),
-    LUNES_EU=document.getElementById('lunesEU'),MARTES_EU=document.getElementById('martesEU'),
-    MIERCOLES_EU=document.getElementById('miercolesEU'),JUEVES_EU=document.getElementById('juevesEU'),
-    VIERNES_EU=document.getElementById('viernesEU'),SABADO_EU=document.getElementById('sabadoEU'),
-    DOMINGO_EU=document.getElementById('domingoEU');
+SELECTED_ITEMU = document.getElementById('selectedItemsListU'),
+    LUNES_EU = document.getElementById('lunesEU'), MARTES_EU = document.getElementById('martesEU'),
+    MIERCOLES_EU = document.getElementById('miercolesEU'), JUEVES_EU = document.getElementById('juevesEU'),
+    VIERNES_EU = document.getElementById('viernesEU'), SABADO_EU = document.getElementById('sabadoEU'),
+    DOMINGO_EU = document.getElementById('domingoEU');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
 const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
@@ -100,35 +100,33 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     const DATA = await fetchData(PRODUCTO_API, 'createRow', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
+
+        if (selectedItems.length === 0) {
+            return;
+        }
+
+        // Recorre los elementos seleccionados
+        for (const item of selectedItems) {
+            const FORM2 = new FormData();
+            console.log( item.id_item, item.cantidad);
+            FORM2.append('idItem', item.id_item);
+            FORM2.append('cantidadItem', item.cantidad);
+            // Petición para guardar los datos del formulario.
+            const DATA2 = await fetchData(DETALLEPRODUCTO_API, action, FORM2);
+            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+            if (DATA2.status) {
+                sweetAlert(1, DATA2.message, true);
+            } else {
+                sweetAlert(2, DATA2.error, false);
+            }
+        }
+
         // Se cierra la caja de diálogo.
         SAVE_MODAL.hide();
         // Se muestra un mensaje de éxito.
         sweetAlert(1, DATA.message, true);
-
         fillTable();
-        const FORM2 = new FormData(SAVE_FORM);
-        // Petición para guardar los datos del formulario.
-        const DATA = await fetchData(PRODUCTO_API, 'createRow', FORM2);
-        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-        if (DATA.status) {
-            // Se cierra la caja de diálogo.
-            SAVE_MODAL.hide();
-            // Se muestra un mensaje de éxito.
-            sweetAlert(1, DATA.message, true);
-            
-            fillTable();
 
-            if (selectedItems.length === 0) {
-                return;
-            }
-        
-            // Recorre los elementos seleccionados
-            for (const item of selectedItems) {
-                
-            }
-        } else {
-            sweetAlert(2, DATA.error, false);
-        }
     } else {
         sweetAlert(2, DATA.error, false);
     }
@@ -153,7 +151,7 @@ const fillTable = async (form = null) => {
         DATA.dataset.forEach(row => {
             // Se establece un icono para el estado del producto.
             (row.estado_producto) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
-            
+
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 20px; margin-right: 60px;">
@@ -265,7 +263,7 @@ const fillsubTable = async (form = null) => {
 
     // Se inicializa el contenido de la tabla.
     DATA = undefined;
-    
+
     // Se verifica la acción a realizar.
     (form) ? action = 'searchRows' : action = 'readAllActive';
     // Petición para obtener los resistros disponibles.
@@ -409,15 +407,15 @@ const openUpdate = async (id) => {
         IMAGEN_PREU.insertAdjacentHTML(
             "beforeend",
             `<img src="${ROW.imagen_producto}">` // Backticks para img variable
-        );        
+        );
         ESTADO_PRODUCTOU.checked = ROW.estado_producto;
 
-        fillsubTableU('',ROW.id_producto);
+        fillsubTableU('', ROW.id_producto);
     } else {
         //sweetAlert(2, DATA.error, false);
     }
 }
-const fillsubTableU = async (busqueda,idProducto) => {
+const fillsubTableU = async (busqueda, idProducto) => {
     // Se inicializa el contenido de la tabla.
     SUBROWS_FOUNDU.textContent = '';
     SUBTABLE_BODYU.innerHTML = '';
@@ -501,13 +499,13 @@ SAVE_TREFORM.addEventListener('submit', async (event) => {
         ID_DETALLEPRODUCTO.value = null;
         SAVE_MODALU.show();
         // Se carga nuevamente la tabla para visualizar los cambios.
-        fillsubTableU('',ID_PRODUCTO.value);
+        fillsubTableU('', ID_PRODUCTO.value);
     } else {
         sweetAlert(2, DATA.error, false);
     }
 });
-/*MODAL DE AGREGAR ITEM*/ 
-const opensubCreate = (idItem,idProducto) => {
+/*MODAL DE AGREGAR ITEM*/
+const opensubCreate = (idItem, idProducto) => {
     SAVE_MODALU.hide();
     ID_ITEM.value = idItem;
     ID_PRODUCTO.value = idProducto;
@@ -523,7 +521,7 @@ const opensubCreate = (idItem,idProducto) => {
 *   Parámetros: id (identificador del registro seleccionado).
 *   Retorno: ninguno.
 */
-const opensubUpdate = async (idDetalle,idProducto) => {
+const opensubUpdate = async (idDetalle, idProducto) => {
     // Se define un objeto con los datos del registro seleccionado.
     SAVE_MODALU.hide();
     const FORM = new FormData();
@@ -551,7 +549,7 @@ const opensubUpdate = async (idDetalle,idProducto) => {
 *   Parámetros: id (identificador del registro seleccionado).
 *   Retorno: ninguno.
 */
-const opensubDelete = async (idDetalle,idProducto) => {
+const opensubDelete = async (idDetalle, idProducto) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el item?');
     // Se verifica la respuesta del mensaje.
@@ -569,7 +567,7 @@ const opensubDelete = async (idDetalle,idProducto) => {
                 selectedItemsList.removeChild(itemToDelete);
             }
             // Refrescar la tabla de los items no seleccionados
-            fillsubTableU('',idProducto);
+            fillsubTableU('', idProducto);
         } else {
             sweetAlert(2, DATA.error, false);
         }
@@ -588,32 +586,32 @@ const openReport = () => {
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }
-IMAGEN_PRODUCTOU.addEventListener('input', function() {
+IMAGEN_PRODUCTOU.addEventListener('input', function () {
     const existingImage = IMAGEN_PREU.querySelector('img');
     if (existingImage) {
-      existingImage.src = this.value;
+        existingImage.src = this.value;
     } else {
-      const newImage = document.createElement('img');
-      newImage.src = this.value;
-      newImage.style.maxWidth = '300px';
-      newImage.style.maxHeight = 'auto';
-      newImage.style.margin = '20px auto';
-      IMAGEN_PREU.appendChild(newImage);
+        const newImage = document.createElement('img');
+        newImage.src = this.value;
+        newImage.style.maxWidth = '300px';
+        newImage.style.maxHeight = 'auto';
+        newImage.style.margin = '20px auto';
+        IMAGEN_PREU.appendChild(newImage);
     }
-  });
-IMAGEN_PRODUCTO.addEventListener('input', function() {
+});
+IMAGEN_PRODUCTO.addEventListener('input', function () {
     const existingImage = IMAGEN_PRE.querySelector('img');
     if (existingImage) {
-      existingImage.src = this.value;
+        existingImage.src = this.value;
     } else {
-      const newImage = document.createElement('img');
-      newImage.src = this.value;
-      newImage.style.maxWidth = '300px';
-      newImage.style.maxHeight = 'auto';
-      newImage.style.margin = '20px auto';
-      IMAGEN_PRE.appendChild(newImage);
+        const newImage = document.createElement('img');
+        newImage.src = this.value;
+        newImage.style.maxWidth = '300px';
+        newImage.style.maxHeight = 'auto';
+        newImage.style.margin = '20px auto';
+        IMAGEN_PRE.appendChild(newImage);
     }
-  });
+});
 // Agregar un evento click a la imagen para aplicar un zoom
 /*IMAGEN_PREU.addEventListener('click', function () {
     IMAGEN_PRE.style.transform = 'scale(3)'; 

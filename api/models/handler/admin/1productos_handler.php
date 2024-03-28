@@ -64,13 +64,12 @@ class ProductoHandler
         INSERT INTO tb_productos (id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
         imagen_producto,estado_producto,lunes_producto,martes_producto,miercoles_producto,jueves_producto,
         viernes_producto,sabado_producto,domingo_producto) 
-        VALUES((SELECT get_next_id("tb_productos")),?,?,?,?,?,?,?,?,?,?,?,?,?);
-        (SELECT get_next_id("tb_productos"));';
+        VALUES((SELECT get_next_id("tb_productos")),?,?,?,?,?,?,?,?,?,?,?,?,?);';
 
         $params = array($this->tipoproducto, $this->nombre, $this->horario, $this->precio
         , $this->url, $this->estado, $this->lunes, $this->martes, $this->miercoles, $this->jueves
         , $this->viernes, $this->sabado, $this->domingo);
-        return Database::getRows($sql, $params);
+        return Database::executeRow($sql, $params);
     }
 
     public function readAll()

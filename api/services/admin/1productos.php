@@ -26,11 +26,12 @@ if (isset($_GET['action'])) {
                 break;*/
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
+                echo isset($_POST['lunesER']);
                 if (
                     !$producto->setTipoProducto($_POST['tipoProducto']) or
                     !$producto->setNombre($_POST['nombreProducto']) or
                     !$producto->setHorario($_POST['horarioProducto']) or
-                    !$producto->setPrecio($_POST['descripcionProducto']) or
+                    !$producto->setPrecio($_POST['precioProducto']) or
                     !$producto->setURL($_POST['imagenProducto']) or
                     !$producto->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) or
                     !$producto->setLunes(isset($_POST['lunesER']) ? 1 : 0) or
@@ -42,7 +43,7 @@ if (isset($_GET['action'])) {
                     !$producto->setDomingo(isset($_POST['domingoER']) ? 1 : 0) 
                 ) {
                     $result['error'] = $producto->getDataError();
-                } elseif ($result['dataset'] = $producto->createRow()) {
+                } elseif ($producto->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Producto creado correctamente';
                 } else {
