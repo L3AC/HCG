@@ -1,5 +1,5 @@
 // Constantes para completar las rutas de la API.
-const CRUD_API = 'services/admin/5tiponoticias.php';
+const CRUD_API = 'services/admin/3tipoitems.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer el contenido de la tabla.
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Gestionar Tipo Noticias';
+    MAIN_TITLE.textContent = 'Gestionar tipo items';
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
 });

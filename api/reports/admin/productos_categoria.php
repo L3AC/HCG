@@ -7,8 +7,8 @@ $pdf = new Report;
 // Se verifica si existe un valor para la categoría, de lo contrario se muestra un mensaje.
 if (isset($_GET['idCategoria'])) {
     // Se incluyen las clases para la transferencia y acceso a datos.
-    require_once('../../models/data/categoria_data.php');
-    require_once('../../models/data/producto_data.php');
+    require_once('../../models/data/admin/categoria_data.php');
+    require_once('../../models/data/admin/producto_data.php');
     // Se instancian las entidades correspondientes.
     $categoria = new CategoriaData;
     $producto = new ProductoData;

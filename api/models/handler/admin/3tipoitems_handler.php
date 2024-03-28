@@ -4,7 +4,7 @@ require_once('../../helpers/database.php');
 /*
 *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
 */
-class MarcaHandler
+class TipoItemHandler
 {
     /*
     *   Declaración de atributos para el manejo de datos.
@@ -37,7 +37,7 @@ class MarcaHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO tb_marcas(id_tipo_item,descripcion_tipo_item,estado_tipo_item)
+        $sql = 'INSERT INTO tb_tipo_items(id_tipo_item,descripcion_tipo_item,estado_tipo_item)
                 VALUES((SELECT get_next_id("tb_tipo_items")),?,?)';
         $params = array($this->nombre, $this->estado);
         return Database::executeRow($sql, $params);
@@ -45,8 +45,9 @@ class MarcaHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_marca, descripcion_marca,estado_marca
-                FROM ctg_marcas' ;
+        $sql = 'SELECT id_tipo_item, descripcion_tipo_item,estado_tipo_item
+                FROM tb_tipo_items
+                ORDER BY estado_tipo_item DESC, descripcion_tipo_item;' ;
         return Database::getRows($sql);
     }
     public function readAllActive()
