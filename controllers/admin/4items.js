@@ -1,5 +1,5 @@
 // Constantes para completar las rutas de la API.
-const TALLA_API = 'services/admin/3tallas.php';
+const TALLA_API = 'services/admin/4items.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer el contenido de la tabla.
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Gestionar tallas';
+    MAIN_TITLE.textContent = 'Gestionar items';
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
 });

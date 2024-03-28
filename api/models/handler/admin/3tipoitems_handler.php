@@ -37,8 +37,8 @@ class MarcaHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO ctg_marcas(descripcion_marca, estado_marca)
-                VALUES(?, ?)';
+        $sql = 'INSERT INTO tb_marcas(id_tipo_item,descripcion_tipo_item,estado_tipo_item)
+                VALUES((SELECT get_next_id("tb_tipo_items")),?,?)';
         $params = array($this->nombre, $this->estado);
         return Database::executeRow($sql, $params);
     }
@@ -76,17 +76,17 @@ class MarcaHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE ctg_marcas
-                SET descripcion_marca = ?, estado_marca = ?
-                WHERE id_marca = ?';
+        $sql = 'UPDATE tb_tipo_items
+                SET descripcion_tipo_item = ?, estado_tipo_item = ?
+                WHERE id_tipo_item = ?';
         $params = array( $this->nombre, $this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM ctg_marcas 
-                WHERE id_marca = ?';
+        $sql = 'DELETE FROM tb_tipo_items 
+                WHERE id_tipo_item = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }

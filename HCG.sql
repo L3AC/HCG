@@ -186,8 +186,6 @@ VALUES((SELECT get_next_id("tb_productos")),"Conjunto","Nachos Preparados","Almu
 "https://mojo.generalmills.com/api/public/content/MJYMoQ0lUkezBkK5ql2cSg_gmi_hi_res_jpeg.jpeg?
 v=c5e8a159&t=16e3ce250f244648bef28c5949fb99ff",true,true,true,true,true,true,true,true);
 
-
-
 INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantidad_item) 
 VALUES((SELECT get_next_id("tb_detalle_productos")),1,1,1),
 ((SELECT get_next_id("tb_detalle_productos")),2,1,1);
