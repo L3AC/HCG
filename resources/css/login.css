@@ -176,9 +176,8 @@
 
 @media (max-width: 767px) {
     .veen {
-        padding: 5px;
+        padding: 10px;
         margin: 0;
-        width: 100%;
         display: block;
     }
 
