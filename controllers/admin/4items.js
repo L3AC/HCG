@@ -1,6 +1,6 @@
 // Constantes para completar las rutas de la API.
 const PRODUCTO_API = 'services/admin/4items.php',
-    TIPOItem_API = 'services/admin/3tipoitems.php';
+    TIPOITEM_API = 'services/admin/3tipoitems.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer el contenido de la tabla.
@@ -13,7 +13,6 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
 const SAVE_FORM = document.getElementById('saveForm'),
     ID_PRODUCTO = document.getElementById('idItem'),
     NOMBRE_PRODUCTO = document.getElementById('nombreItem'),
-    CONTENIDO_Item = document.getElementById('contenidoItem'),
     //PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     //EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoItem');
@@ -118,7 +117,7 @@ const openCreate = () => {
     // Se prepara el formulario.
     SAVE_FORM.reset();
     //EXISTENCIAS_PRODUCTO.disabled = false;
-    fillSelect(TIPOItem_API, 'readAll', 'tipoItem');
+    fillSelect(TIPO_API, 'readAll', 'tipoItem');
 }
 
 /*
@@ -142,10 +141,9 @@ const openUpdate = async (id) => {
         MODAL_TITLE.textContent = 'Actualizar registro';
         const ROW = DATA.dataset;
         ID_PRODUCTO.value = ROW.id_item;
-        NOMBRE_PRODUCTO.value = ROW.titulo_Item;
-        CONTENIDO_Item.value = ROW.contenido_Item;
-        ESTADO_PRODUCTO.checked = ROW.estado_Item;
-        fillSelect(TIPOItem_API, 'readAll', 'tipoItem', ROW.id_tipo_Item);
+        NOMBRE_PRODUCTO.value = ROW.descripcion_item;
+        ESTADO_PRODUCTO.checked = ROW.estado_item;
+        fillSelect(TIPOITEM_API, 'readAllActive', 'tipoItem', ROW.id_tipo_item);
     } else {
         sweetAlert(2, DATA.error, false);
     }

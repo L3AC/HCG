@@ -48,7 +48,7 @@ class ItemHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_item,id_tipo_item,descripcion_item,descripcion_tipo_item,estado_tipo_item
+        $sql = 'SELECT id_item,id_tipo_item,descripcion_item,descripcion_tipo_item,estado_item
         FROM tb_items JOIN tb_tipo_items USING (id_tipo_item)
         ORDER BY descripcion_tipo_item;';
         return Database::getRows($sql);
@@ -82,8 +82,9 @@ class ItemHandler
 
     public function readOne()
     {
-        $sql ='SELECT id_item, descripcion_item, estado_item
-        FROM tb_items
+        $sql ='SELECT id_item,id_tipo_item,descripcion_item,descripcion_tipo_item,estado_item
+        FROM tb_items 
+        INNER JOIN tb_tipo_items USING (id_tipo_item)
         WHERE id_item=? ';
         $params = array($this->id);
         return Database::getRow($sql, $params);

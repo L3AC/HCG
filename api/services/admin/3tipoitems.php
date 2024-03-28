@@ -49,6 +49,14 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen categorías registradas';
                 }
                 break;
+            case 'readAllActive':
+                    if ($result['dataset'] = $categoria->readAllActive()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                    } else {
+                        $result['error'] = 'No existen categorías registradas';
+                    }
+                break;
             case 'readOne':
                 if (!$categoria->setId($_POST['idTipoItem'])) {
                     $result['error'] = $categoria->getDataError();
