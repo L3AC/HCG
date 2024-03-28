@@ -29,10 +29,10 @@ class ItemHandler
     {
         $value = ($value === '') ? '%%' : '%' . $value . '%';
 
-        $sql = 'SELECT id_talla, descripcion_talla, estado_talla
-                FROM ctg_tallas
-                WHERE descripcion_talla LIKE  ? 
-                ORDER BY CAST(descripcion_talla AS UNSIGNED)';
+        $sql = 'SELECT id_item, descripcion_item, estado_item
+                FROM tb_items
+                WHERE descripcion_item LIKE  ? 
+                ORDER BY CAST(descripcion_item AS UNSIGNED)';
 
         $params = array($value);
         return Database::getRows($sql, $params);
@@ -40,7 +40,7 @@ class ItemHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO ctg_tallas(descripcion_talla, estado_talla)
+        $sql = 'INSERT INTO tb_items(descripcion_item, estado_item)
                 VALUES(?, ?)';
         $params = array($this->nombre, $this->estado);
         return Database::executeRow($sql, $params);
@@ -48,9 +48,9 @@ class ItemHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_talla, descripcion_talla, estado_talla
-        FROM ctg_tallas
-        ORDER BY CAST(descripcion_talla AS UNSIGNED)';
+        $sql = 'SELECT id_item,id_tipo_item,descripcion_item,descripcion_tipo_item,estado_tipo_item
+        FROM tb_items JOIN tb_tipo_items USING (id_tipo_item)
+        ORDER BY descripcion_tipo_item;';
         return Database::getRows($sql);
     }
     public function readAllActive()
@@ -82,9 +82,9 @@ class ItemHandler
 
     public function readOne()
     {
-        $sql ='SELECT id_talla, descripcion_talla, estado_talla
-        FROM ctg_tallas
-        WHERE id_talla=? ';
+        $sql ='SELECT id_item, descripcion_item, estado_item
+        FROM tb_items
+        WHERE id_item=? ';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
@@ -100,17 +100,17 @@ class ItemHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE ctg_tallas
-                SET descripcion_talla = ?,estado_talla = ?
-                WHERE id_talla = ?';
+        $sql = 'UPDATE tb_items
+                SET descripcion_item = ?,estado_item = ?
+                WHERE id_item = ?';
         $params = array($this->nombre,$this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM ctg_tallas
-                WHERE id_talla = ?';
+        $sql = 'DELETE FROM tb_items
+                WHERE id_item = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
@@ -119,7 +119,7 @@ class ItemHandler
     {
         $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
         FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
+        INNER JOIN tb_marcas ma USING(id_marca)
         WHERE mo.id_marca LIKE ? OR estado="A"
         ORDER BY mo.descripcion';
         /*'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
