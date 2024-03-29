@@ -167,7 +167,7 @@ class AdministradorHandler
 
     public function readOne()
     {
-        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario,
+        $sql = 'SELECT id_usuario,id_rol, nombre_usuario, apellido_usuario,
                 email_usuario, alias_usuario
                 FROM tb_usuarios
                 WHERE id_usuario = ?';
