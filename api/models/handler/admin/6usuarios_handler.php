@@ -126,7 +126,7 @@ class AdministradorHandler
     }
     public function fillTab($idrol)
     {
-        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, alias_usuario
+        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, alias_usuario,estado_usuario
         FROM tb_usuarios
         WHERE id_usuario != (SELECT MIN(id_usuario) FROM tb_usuarios)
         AND id_rol!=?
@@ -152,14 +152,14 @@ class AdministradorHandler
     public function readAll()
     {
         $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario,
-        email_usuario, alias_usuario
+        email_usuario, alias_usuario,estado_usuario
         FROM tb_usuarios';
         return Database::getRows($sql);
     }
     public function readAllA()
     {
         $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario,
-                email_usuario, alias_usuario
+                email_usuario, alias_usuario,estado_usuario
                 FROM tb_usuarios WHERE estado_usuario=true
                 ORDER BY apellido_usuario';
         return Database::getRows($sql);
@@ -168,7 +168,7 @@ class AdministradorHandler
     public function readOne()
     {
         $sql = 'SELECT id_usuario,id_rol, nombre_usuario, apellido_usuario,
-                email_usuario, alias_usuario
+                email_usuario, alias_usuario,estado_usuario
                 FROM tb_usuarios
                 WHERE id_usuario = ?';
         $params = array($this->id);

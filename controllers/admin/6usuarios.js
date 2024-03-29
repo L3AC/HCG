@@ -19,8 +19,8 @@ INPUTSEARCH = document.getElementById('inputsearch'),
     CORREO_ADMINISTRADOR = document.getElementById('correoAdministrador'),
     ALIAS_ADMINISTRADOR = document.getElementById('aliasAdministrador'),
     CLAVE_ADMINISTRADOR = document.getElementById('claveAdministrador'),
-    CONFIRMAR_CLAVE = document.getElementById('confirmarClave');
-
+    CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
+    ESTADO_USUARIO=document.getElementById('estadoUsuario');
     const mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
 
@@ -79,6 +79,8 @@ INPUTSEARCH.addEventListener('input', async function ()  {
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
+            
+            (row.estado_usuario) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
@@ -86,6 +88,7 @@ INPUTSEARCH.addEventListener('input', async function ()  {
                     <td>${row.nombre_usuario}</td>
                     <td>${row.email_usuario}</td>
                     <td>${row.alias_usuario}</td>
+                    <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_usuario})">
                             <i class="bi bi-pencil-fill"></i>
@@ -136,6 +139,8 @@ const fillTable = async (form = null) => {
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.
         DATA.dataset.forEach(row => {
+            console.log(row.estado_usuario);
+            (row.estado_usuario) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
@@ -143,6 +148,7 @@ const fillTable = async (form = null) => {
                     <td>${row.nombre_usuario}</td>
                     <td>${row.email_usuario}</td>
                     <td>${row.alias_usuario}</td>
+                    <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_usuario})">
                             <i class="bi bi-pencil-fill"></i>
@@ -207,6 +213,7 @@ const openUpdate = async (id) => {
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
         CORREO_ADMINISTRADOR.value = ROW.email_usuario;
         ALIAS_ADMINISTRADOR.value = ROW.alias_usuario;
+        ESTADO_USUARIO.checked=ROW.estado_usuario;
         fillSelect(ROL_API, 'fillSelect', 'rolUsuario',ROW.id_rol);
     } else {
         sweetAlert(2, DATA.error, false);
