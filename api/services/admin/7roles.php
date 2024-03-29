@@ -27,16 +27,12 @@ if (isset($_GET['action'])) {
                 if (
                     !$producto->setDescripcion($_POST['descripcionRol']) or
                     !$producto->setEstado(isset($_POST['estadoRol']) ? 1 : 0)  or
-                    !$producto->setMarca(isset($_POST['estadoMarca']) ? 1 : 0)  or
-                    !$producto->setModelo(isset($_POST['estadoModelo']) ? 1 : 0)  or
-                    !$producto->setTalla(isset($_POST['estadoTalla']) ? 1 : 0)  or
+                    !$producto->setProducto(isset($_POST['estadoProducto']) ? 1 : 0)  or
                     !$producto->setPedido(isset($_POST['estadoPedido']) ? 1 : 0)  or
-                    !$producto->setTipoNoticia(isset($_POST['estadoTipoNoticia']) ? 1 : 0)  or
-                    !$producto->setNoticia(isset($_POST['estadoNoticia']) ? 1 : 0)  or
-                    !$producto->setComentario(isset($_POST['estadoComentario']) ? 1 : 0)  or
+                    !$producto->setTipoItem(isset($_POST['estadoTipoItem']) ? 1 : 0)  or
+                    !$producto->setItem(isset($_POST['estadoItem']) ? 1 : 0)  or
                     !$producto->setCliente(isset($_POST['estadoCliente']) ? 1 : 0)  or
-                    !$producto->setUsuario(isset($_POST['estadoUsuario']) ? 1 : 0)  or
-                    !$producto->setRol(isset($_POST['estadopRol']) ? 1 : 0)  
+                    !$producto->setUsuario(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {
@@ -81,16 +77,12 @@ if (isset($_GET['action'])) {
                     !$producto->setId($_POST['idRol']) or
                     !$producto->setDescripcion($_POST['descripcionRol']) or
                     !$producto->setEstado(isset($_POST['estadoRol']) ? 1 : 0)  or
-                    !$producto->setMarca(isset($_POST['estadoMarca']) ? 1 : 0)  or
-                    !$producto->setModelo(isset($_POST['estadoModelo']) ? 1 : 0)  or
-                    !$producto->setTalla(isset($_POST['estadoTalla']) ? 1 : 0)  or
+                    !$producto->setProducto(isset($_POST['estadoProducto']) ? 1 : 0)  or
                     !$producto->setPedido(isset($_POST['estadoPedido']) ? 1 : 0)  or
-                    !$producto->setTipoNoticia(isset($_POST['estadoTipoNoticia']) ? 1 : 0)  or
-                    !$producto->setNoticia(isset($_POST['estadNoticia']) ? 1 : 0)  or
-                    !$producto->setComentario(isset($_POST['estadoComentario']) ? 1 : 0)  or
+                    !$producto->setTipoItem(isset($_POST['estadoTipoItem']) ? 1 : 0)  or
+                    !$producto->setItem(isset($_POST['estadoItem']) ? 1 : 0)  or
                     !$producto->setCliente(isset($_POST['estadoCliente']) ? 1 : 0)  or
-                    !$producto->setUsuario(isset($_POST['estadoUsuario']) ? 1 : 0)  or
-                    !$producto->setRol(isset($_POST['estadoRol']) ? 1 : 0)  
+                    !$producto->setUsuario(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->updateRow()) {

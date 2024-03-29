@@ -60,6 +60,10 @@ CREATE TABLE tb_items(
   CONSTRAINT fk_item_tipo 
   FOREIGN KEY(id_tipo_item) REFERENCES tb_tipo_items(id_tipo_item)
 );
+
+SELECT id_item,id_tipo_item,descripcion_item,descripcion_tipo_item,estado_tipo_item
+FROM tb_items JOIN tb_tipo_items USING (id_tipo_item)
+ORDER BY descripcion_tipo_item;
 /*D = Desayuno, A = Almuerzo, C = Cena, T = Tipico,TD = Todo el dia
   D-A = Desayuno y Almuerzo, D-C = Desayuno y Cena, A-C = Almuerzo y Cena
   T-D = Tipico y Desayuno , T-A = Tipico y Almuerzo T-C = Tipico y Cena

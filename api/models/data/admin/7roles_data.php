@@ -53,30 +53,10 @@ class RolData extends RolHandler
             return false;
         }
     }
-    public function setMarca($value)
+    public function setProducto($value)
     {
         if (Validator::validateBoolean($value)) {
-            $this->marcas = $value;
-            return true;
-        } else {
-            $this->data_error = 'Estado incorrecto';
-            return false;
-        }
-    }
-    public function setModelo($value)
-    {
-        if (Validator::validateBoolean($value)) {
-            $this->modelos = $value;
-            return true;
-        } else {
-            $this->data_error = 'Estado incorrecto';
-            return false;
-        }
-    }
-    public function setTalla($value)
-    {
-        if (Validator::validateBoolean($value)) {
-            $this->tallas = $value;
+            $this->productos = $value;
             return true;
         } else {
             $this->data_error = 'Estado incorrecto';
@@ -93,30 +73,20 @@ class RolData extends RolHandler
             return false;
         }
     }
-    public function setTipoNoticia($value)
+    public function setTipoItem($value)
     {
         if (Validator::validateBoolean($value)) {
-            $this->tiponoticias = $value;
+            $this->tipoitems = $value;
             return true;
         } else {
             $this->data_error = 'Estado incorrecto';
             return false;
         }
     }
-    public function setNoticia($value)
+    public function setItem($value)
     {
         if (Validator::validateBoolean($value)) {
-            $this->noticias = $value;
-            return true;
-        } else {
-            $this->data_error = 'Estado incorrecto';
-            return false;
-        }
-    }
-    public function setComentario($value)
-    {
-        if (Validator::validateBoolean($value)) {
-            $this->comentarios = $value;
+            $this->items = $value;
             return true;
         } else {
             $this->data_error = 'Estado incorrecto';

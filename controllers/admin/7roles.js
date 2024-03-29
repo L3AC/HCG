@@ -18,16 +18,13 @@ const SAVE_FORM = document.getElementById('saveForm'),
     ID_ROL = document.getElementById('idRol'),
     NOMBRE_OPC = document.getElementById('nombreRol'),
     ESTADO_ROL = document.getElementById('estadoRol'),
-    MARCA_OPC = document.getElementById('estadoMarca'),
-    MODELO_OPC = document.getElementById('estadoModelo'),
-    TALLA_OPC = document.getElementById('estadoTalla'),
-    PEDIDO_OPC = document.getElementById('estadoPedido'),
-    TIPONOTICIA_OPC = document.getElementById('estadoTipoNoticia'),
-    NOTICIA_OPC = document.getElementById('estadoNoticia'),
-    COMENTARIO_OPC = document.getElementById('estadoComentario'),
+    MARCA_OPC = document.getElementById('estadoProducto'),
+    MODELO_OPC = document.getElementById('estadoPedido'),
+    TALLA_OPC = document.getElementById('estadoTipoItem'),
+    PEDIDO_OPC = document.getElementById('estadoItem'),
     CLIENTE_OPC = document.getElementById('estadoCliente'),
     USUARIO_OPC = document.getElementById('estadoUsuario'),
-    ROL_OPC = document.getElementById('estadopRol');
+    ROL_OPC = document.getElementById('estadoRol');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {

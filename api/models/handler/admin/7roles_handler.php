@@ -12,13 +12,10 @@ class RolHandler
     protected $id = null;
     protected $estado = null;
     protected $descripcion = null;
-    protected $marcas = null;
-    protected $modelos = null;
-    protected $tallas = null;
+    protected $productos = null;
     protected $pedidos = null;
-    protected $tiponoticias = null;
-    protected $noticias = null;
-    protected $comentarios = null;
+    protected $tipoitems = null;
+    protected $items = null;
     protected $clientes = null;
     protected $usuarios = null;
     protected $roles = null;
@@ -50,13 +47,13 @@ class RolHandler
 
     public function createRow()
     {
-        $sql = 'insert into sec_roles (descripcion_opc, estado_opc,marcas_opc,modelos_opc,tallas_opc,
-        pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc,roles_opc) 
-        values(?,?,?,?,?,?,?,?,?,?,?,?);';
+        $sql = 'insert into tb_roles (id_rol, descripcion_rol, estado_rol, 
+        productos_opc, pedidos_opc, tipo_items_opc, items_opc, clientes_opc,
+         usuarios_opc, roles_opc) 
+        values((SELECT get_next_id("tb_roles")), ?, ?, ?, ?, ?, ?, ?, ?, false);';
         $params = array(
-            $this->descripcion, $this->estado, $this->marcas, $this->modelos, $this->tallas,
-            $this->pedidos, $this->tiponoticias, $this->noticias, $this->comentarios, $this->roles,
-            $this->clientes, $this->usuarios
+            $this->descripcion, $this->estado, $this->productos, $this->pedidos, $this->tipoitems,
+            $this->items,$this->clientes, $this->usuarios
         );
         return Database::executeRow($sql, $params);
     }
@@ -86,10 +83,10 @@ class RolHandler
 
     public function readOne()
     {
-        $sql = 'SELECT id_rol, descripcion_opc, estado_opc,marcas_opc,marcas_opc,modelos_opc,
-        tallas_opc,pedidos_opc,tipo_noticias_opc,noticias_opc,
-        comentarios_opc,clientes_opc,usuarios_opc,roles_opc
-        FROM sec_roles
+        $sql = 'SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
+        tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
+        comentarios_opc, clientes_opc, usuarios_opc, roles_opc
+        FROM tb_roles
         WHERE id_rol=? ';
         $params = array($this->id);
         return Database::getRow($sql, $params);
