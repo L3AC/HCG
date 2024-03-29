@@ -1,6 +1,6 @@
 // Constante para completar la ruta de la API.
-const ADMINISTRADOR_API = 'services/admin/9usuarios.php',
-       ROL_API = 'services/admin/10roles.php'; 
+const ADMINISTRADOR_API = 'services/admin/6usuarios.php',
+       ROL_API = 'services/admin/7roles.php'; 
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer los elementos de la tabla.
@@ -85,7 +85,7 @@ INPUTSEARCH.addEventListener('input', async function ()  {
                     <td>${row.apellido_usuario}</td>
                     <td>${row.nombre_usuario}</td>
                     <td>${row.email_usuario}</td>
-                    <td>${row.usuario_usuario}</td>
+                    <td>${row.alias_usuario}</td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_usuario})">
                             <i class="bi bi-pencil-fill"></i>
@@ -142,7 +142,7 @@ const fillTable = async (form = null) => {
                     <td>${row.apellido_usuario}</td>
                     <td>${row.nombre_usuario}</td>
                     <td>${row.email_usuario}</td>
-                    <td>${row.usuario_usuario}</td>
+                    <td>${row.alias_usuario}</td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_usuario})">
                             <i class="bi bi-pencil-fill"></i>
@@ -206,7 +206,7 @@ const openUpdate = async (id) => {
         NOMBRE_ADMINISTRADOR.value = ROW.nombre_usuario;
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
         CORREO_ADMINISTRADOR.value = ROW.email_usuario;
-        ALIAS_ADMINISTRADOR.value = ROW.usuario_usuario;
+        ALIAS_ADMINISTRADOR.value = ROW.alias_usuario;
         fillSelect(ROL_API, 'fillSelect', 'rolUsuario',ROW.id_rol);
     } else {
         sweetAlert(2, DATA.error, false);
