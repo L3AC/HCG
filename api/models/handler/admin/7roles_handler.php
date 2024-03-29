@@ -72,20 +72,18 @@ class RolHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
-        tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
-        comentarios_opc, clientes_opc, usuarios_opc, roles_opc
-        FROM sec_roles
-        WHERE id_rol != idmin("sec_roles") 
-        ORDER BY descripcion_opc';
+        $sql = 'SELECT id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, 
+        tipo_items_opc, items_opc, clientes_opc, usuarios_opc, roles_opc
+        FROM tb_roles
+        WHERE id_rol !=(SELECT MIN(id_rol) as id_rol FROM tb_roles)
+        ORDER BY estado_rol DESC;';
         return Database::getRows($sql);
     }
 
     public function readOne()
     {
-        $sql = 'SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
-        tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
-        comentarios_opc, clientes_opc, usuarios_opc, roles_opc
+        $sql = 'SELECT id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, 
+        tipo_items_opc, items_opc, clientes_opc, usuarios_opc, roles_opc
         FROM tb_roles
         WHERE id_rol=? ';
         $params = array($this->id);

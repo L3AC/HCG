@@ -1,5 +1,5 @@
 // Constantes para completar las rutas de la API.
-const ROL_API = 'services/admin/10roles.php';
+const ROL_API = 'services/admin/7roles.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer el contenido de la tabla.
@@ -18,10 +18,10 @@ const SAVE_FORM = document.getElementById('saveForm'),
     ID_ROL = document.getElementById('idRol'),
     NOMBRE_OPC = document.getElementById('nombreRol'),
     ESTADO_ROL = document.getElementById('estadoRol'),
-    MARCA_OPC = document.getElementById('estadoProducto'),
-    MODELO_OPC = document.getElementById('estadoPedido'),
-    TALLA_OPC = document.getElementById('estadoTipoItem'),
-    PEDIDO_OPC = document.getElementById('estadoItem'),
+    PRODUCTO_OPC = document.getElementById('estadoProducto'),
+    PEDIDO_OPC = document.getElementById('estadoPedido'),
+    TIPOITEM_OPC = document.getElementById('estadoTipoItem'),
+    ITEM_OPC= document.getElementById('estadoItem'),
     CLIENTE_OPC = document.getElementById('estadoCliente'),
     USUARIO_OPC = document.getElementById('estadoUsuario'),
     ROL_OPC = document.getElementById('estadoRol');
@@ -82,11 +82,11 @@ INPUTSEARCH.addEventListener('input', async function ()  {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se establece un icono para el estado del ROL.
-            (row.estado_opc) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            (row.estado_rol) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.descripcion_opc}</td>
+                    <td>${row.descripcion_rol}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_rol})">
@@ -124,11 +124,11 @@ const fillTable = async (form = null) => {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se establece un icono para el estado del ROL.
-            (row.estado_opc) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            (row.estado_rol) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.descripcion_opc}</td>
+                    <td>${row.descripcion_rol}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_rol})">
@@ -185,18 +185,14 @@ const openUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_ROL.value = ROW.id_rol;
-        NOMBRE_OPC.value = ROW.descripcion_opc;
-        ESTADO_ROL.checked = ROW.estado_opc;
-        MARCA_OPC.checked        = ROW.marcas_opc;
-        MODELO_OPC.checked       = ROW.modelos_opc;
-        TALLA_OPC.checked        = ROW.tallas_opc;
-        PEDIDO_OPC.checked       = ROW.pedidos_opc;
-        TIPONOTICIA_OPC.checked  = ROW.tipo_noticias_opc;
-        NOTICIA_OPC.checked      = ROW.noticias_opc;
-        COMENTARIO_OPC.checked   = ROW.comentarios_opc;
-        CLIENTE_OPC.checked      = ROW.clientes_opc;
-        USUARIO_OPC.checked      = ROW.usuarios_opc;
-        //ROL_OPC.checked          = ROW.roles_opc;
+        NOMBRE_OPC.value = ROW.descripcion_rol;
+        ESTADO_ROL.checked = ROW.estado_rol;
+        PRODUCTO_OPC.checked = ROW.productos_opc;
+        PEDIDO_OPC.checked = ROW.pedidos_opc;
+        TIPOITEM_OPC.checked = ROW.tipo_items_opc;
+        ITEM_OPC.checked = ROW.items_opc;
+        CLIENTE_OPC.checked = ROW.clientes_opc;
+        USUARIO_OPC.checked = ROW.usuarios_opc;
  
         
     } else {
@@ -216,7 +212,7 @@ const openDelete = async (id) => {
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
         const FORM = new FormData();
-        FORM.append('idROL', id);
+        FORM.append('idRol', id);
         // Petición para eliminar el registro seleccionado.
         const DATA = await fetchData(ROL_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.

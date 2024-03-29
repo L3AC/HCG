@@ -1,6 +1,6 @@
 <?php
 // Se incluye la clase del modelo.
-require_once('../../models/data/admin/10roles_data.php');
+require_once('../../models/data/admin/7roles_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
@@ -25,7 +25,7 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setDescripcion($_POST['descripcionRol']) or
+                    !$producto->setDescripcion($_POST['nombreRol']) or
                     !$producto->setEstado(isset($_POST['estadoRol']) ? 1 : 0)  or
                     !$producto->setProducto(isset($_POST['estadoProducto']) ? 1 : 0)  or
                     !$producto->setPedido(isset($_POST['estadoPedido']) ? 1 : 0)  or
