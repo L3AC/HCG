@@ -21,11 +21,12 @@
 
 
 .veen {
-    width: 70%;
+    width: 40%;
     margin: 100px auto;
     background: #AA6231;
     min-height: 400px;
     display: table;
+    padding: 15px;
     border-radius: 20px;
     position: relative;
     box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
@@ -62,6 +63,7 @@
     background: #F1EFEF;
 }
 
+
 .veen .splits p {
     font-size: 18px;
 }
@@ -75,11 +77,10 @@
 }
 
 .veen>.wrapper {
-    position: absolute;
+    position: relative;
     width: 40%;
     height: 120%;
-    top: -10%;
-    left: 5%;
+    top: -20px;
     background: #fff;
     box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
     transition: all .5s;
@@ -179,6 +180,7 @@
         padding: 10px;
         margin: 0;
         display: block;
+        width: 80%;
     }
 
     .veen>.wrapper {
@@ -204,6 +206,12 @@
         border-radius: 0;
         background: #505050;
         border: 0;
+    }
+
+    form#loginForm{
+        position: relative;
+        left: 0px;
+        top: 0px;
     }
 
     .splits button.active {
