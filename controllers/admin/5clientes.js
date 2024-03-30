@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const ADMINISTRADOR_API = 'services/admin/8clientes.php';
+const ADMINISTRADOR_API = 'services/admin/5clientes.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer los elementos de la tabla.
@@ -105,9 +105,7 @@ const fillTable = async (form = null) => {
                 <tr>
                     <td>${row.apellido_cliente}</td>
                     <td>${row.nombre_cliente}</td>
-                    <td>${row.email_cliente}</td>
-                    <td>${row.usuario_cliente}</td>
-                    <td><i class="${icon}"></i></td>
+                    <td>${row.telefono_cliente}</td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_cliente})">
                             <i class="bi bi-pencil-fill"></i>

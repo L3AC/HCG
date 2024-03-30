@@ -16,7 +16,6 @@ CREATE TABLE tb_roles(
   PRIMARY KEY (id_rol)
 );
 
-
 CREATE TABLE tb_usuarios(
   id_usuario INT UNSIGNED /*auto_increment*/,
   id_rol INT UNSIGNED,
@@ -187,6 +186,12 @@ INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantida
 VALUES((SELECT get_next_id("tb_detalle_productos")),1,1,1),
 ((SELECT get_next_id("tb_detalle_productos")),2,1,1);
 
+INSERT INTO tb_clientes(id_cliente,nombre_cliente,apellido_cliente,telefono_cliente)
+VALUES((SELECT get_next_id("tb_clientes")),"Juan","Hernandez","50371926778"),
+((SELECT get_next_id("tb_clientes")),"Rosa","Martinez","50371000778"),
+((SELECT get_next_id("tb_clientes")),"Emma","Lopez","50371926678");
 
 
+
+delete from tb_clientes where id_cliente>=1
         

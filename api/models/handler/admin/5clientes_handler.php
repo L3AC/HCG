@@ -121,9 +121,9 @@ class ClienteHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_cliente,usuario_cliente, clave_cliente, 
-         nombre_cliente, apellido_cliente ,email_cliente, estado_cliente,direccion_cliente
-                from prc_clientes 
+        $sql = 'SELECT id_cliente,nombre_cliente,apellido_cliente,
+                SUBSTRING(telefono_cliente, 4) AS telefono_cliente
+                FROM tb_clientes; 
                 ORDER BY apellido_cliente';
         return Database::getRows($sql);
     }
@@ -138,9 +138,8 @@ class ClienteHandler
 
     public function readOne()
     {
-        $sql = 'SELECT id_cliente,usuario_cliente,clave_cliente,nombre_cliente,
-                apellido_cliente,email_cliente,estado_cliente,direccion_cliente
-                from prc_clientes
+        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente ,telefono_cliente
+                 from tb_clientes 
                 WHERE id_cliente = ?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
