@@ -60,6 +60,7 @@ CREATE TABLE tb_items(
   FOREIGN KEY(id_tipo_item) REFERENCES tb_tipo_items(id_tipo_item)
 );
 
+
 SELECT id_item,id_tipo_item,descripcion_item,descripcion_tipo_item,estado_tipo_item
 FROM tb_items JOIN tb_tipo_items USING (id_tipo_item)
 ORDER BY descripcion_tipo_item;
@@ -85,6 +86,7 @@ CREATE TABLE tb_productos(
   domingo_producto BOOLEAN NOT NULL,
   PRIMARY KEY (id_producto)
 );
+
 
 CREATE TABLE tb_items(
   id_item INT UNSIGNED /*auto_increment*/,
@@ -114,11 +116,17 @@ CREATE TABLE tb_pedidos(
     id_pedido INT UNSIGNED NOT NULL,
     id_cliente INT UNSIGNED  NOT NULL,
     fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    estado_pedido enum('Pendiente','Entregado') NOT NULL,
+    estado_pedido enum('Pendiente','Finalizado') NOT NULL,
     PRIMARY KEY (id_pedido),
     CONSTRAINT fk_pedido_cliente 
     FOREIGN KEY(id_cliente) REFERENCES tb_clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE
 );
+SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,fecha_pedido,estado_pedido
+FROM tb_pedidos 
+INNER JOIN tb_clientes USING(id_cliente)
+WHERE estado_pedido = 'Pendiente'
+ORDER BY fecha_pedido DESC;
+
 
 CREATE TABLE tb_detalle_pedidos (
   id_detalle_pedido INT UNSIGNED /*auto_increment*/,
@@ -151,6 +159,8 @@ BEGIN
             SELECT IFNULL(MAX(id_producto), 0) + 1 INTO next_id FROM tb_productos;
         WHEN 'tb_detalle_productos' THEN
             SELECT IFNULL(MAX(id_detalle_producto), 0) + 1 INTO next_id FROM tb_detalle_productos;
+		WHEN 'tb_detalle_pedidos' THEN
+            SELECT IFNULL(MAX(id_detalle_pedido), 0) + 1 INTO next_id FROM tb_detalle_pedidos;
         WHEN 'tb_pedidos' THEN
             SELECT IFNULL(MAX(id_pedido), 0) + 1 INTO next_id FROM tb_pedidos;
     END CASE;
@@ -191,7 +201,10 @@ VALUES((SELECT get_next_id("tb_clientes")),"Juan","Hernandez","50371926778"),
 ((SELECT get_next_id("tb_clientes")),"Rosa","Martinez","50371000778"),
 ((SELECT get_next_id("tb_clientes")),"Emma","Lopez","50371926678");
 
+INSERT INTO tb_pedidos (id_pedido, id_cliente,estado_pedido)
+VALUES ((SELECT get_next_id("tb_pedidos")), 1,'Pendiente');
 
-
-delete from tb_clientes where id_cliente>=1
+INSERT INTO tb_detalle_pedidos (id_detalle_pedido,id_pedido, id_producto, cantidad_pedido)
+VALUES((SELECT get_next_id("tb_detalle_pedidos")),1, 1, 2),
+((SELECT get_next_id("tb_detalle_pedidos")),1, 2, 1);
         

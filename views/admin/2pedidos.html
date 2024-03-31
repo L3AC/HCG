@@ -53,7 +53,6 @@
                     </tr>
                     <tr>
                         <th>CLIENTE</th>
-                        <th>PAGO</th>
                         <th>FECHA</th>
                         <th>ESTADO</th>
                         <th>ACCIONES</th>
@@ -92,18 +91,11 @@
                                 <input id="fechaPedido" type="text" name="fechaPedido" class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="formaPago" class="form-label">Forma de pago</label>
-                                <input id="formaPago" type="text" name="formaPago" class="form-control" required>
-                            </div>
-                            <div class="col-6">
-                                <div class="p-3">
-                                    <div class="switch-button">
-                                        <p id="T1">Estado</p>
-                                        <input type="checkbox" name="estadoPedido" id="estadoPedido"
-                                            class="switch-button__checkbox form-control">
-                                        <label for="estadoPedido" id="swa" class="switch-button__label"></label>
-                                    </div>
-                                </div>
+                                <label for="tipoProducto" class="form-label">Estado</label>
+                                <select id="tipoProducto" name="tipoProducto" class="form-select" required>
+                                    <option value="Pendiente">Pendiente</option>
+                                    <option value="Finalizado">Finalizado</option>
+                                </select>
                             </div>
 
                             <!-- Subtabla para mostrar los detalles del pedido -->
@@ -132,9 +124,9 @@
                                             <td colspan="5" id="subrowsFound"></td>
                                         </tr>
                                         <tr>
-                                            <th>MODELO</th>
-                                            <th>MARCA</th>
-                                            <th>TALLA</th>
+                                            <th>IMAGEN</th>
+                                            <th>PRODUCTO</th>
+                                            <th>CANTIDAD</th>
                                             <th>PRECIO</th>
                                             <th>CANTIDAD</th>
                                         </tr>

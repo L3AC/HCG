@@ -53,11 +53,11 @@ class PedidoHandler
 
     public function readAll()
     {
-        $sql = 'SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
-        p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
-        FROM prc_pedidos p
-        INNER JOIN prc_clientes c USING(id_cliente)
-        ORDER BY p.fecha_pedido DESC, p.estado_pedido DESC';
+        $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,fecha_pedido,estado_pedido
+        FROM tb_pedidos 
+        INNER JOIN tb_clientes USING(id_cliente)
+        WHERE estado_pedido = "Pendiente"
+        ORDER BY fecha_pedido DESC;';
         return Database::getRows($sql);
     }
     public function readsubAll()
