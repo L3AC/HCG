@@ -129,7 +129,7 @@ const fillTable = async (form = null) => {
             (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-                <tr class="text-center">
+                <tr>
                     <td>${row.cliente}</td>
                     <td>${row.fecha}</td>
                     <td>${row.estado_pedido}</td>
@@ -285,10 +285,10 @@ const fillsubTable = async () => {
         DATA.dataset.forEach(row => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             SUBTABLE_BODY.innerHTML += `
-                <tr class="text-center">
-                <td><img src="${row.imagen_producto}" height="70" width="100"></td>
+                <tr >
+                <td class="text-center"><img src="${row.imagen_producto}" height="70" width="100"></td>
                 <td>${row.descripcion_producto}</td>
-                <td>${row.cantidad_pedido}</td>
+                <td class="text-center">${row.cantidad_pedido}</td>
                 <td>$ ${row.precio_producto}</td>
                 <td>$ ${row.total_pedido}</td>
                 </tr>
