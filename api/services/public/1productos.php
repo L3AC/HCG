@@ -20,12 +20,12 @@ if (isset($_GET['action'])) {
             }
             break;
         case 'searchModelos':
-                if ($result['dataset'] = $producto->searchModelos($_POST['modelo'])) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = ' no existen registros para mostrar';
-                }
-                break;
+            if ($result['dataset'] = $producto->searchModelos($_POST['modelo'])) {
+                $result['status'] = 1;
+            } else {
+                $result['error'] = ' no existen registros para mostrar';
+            }
+            break;
         case 'readOne':
             if (!$producto->setId($_POST['idProducto'])) {
                 $result['error'] = $producto->getDataError();
@@ -35,13 +35,20 @@ if (isset($_GET['action'])) {
                 $result['error'] = 'Producto inexistente';
             }
             break;
-            case 'readDesc':
-                if ($result['dataset'] = $producto->readDesc()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'Producto inexistente';
-                }
-                break;
+        case 'readConjunto':
+            if ($result['dataset'] = $producto->readConjunto()) {
+                $result['status'] = 1;
+            } else {
+                $result['error'] = 'Producto inexistente';
+            }
+            break;
+        case 'readComplemento':
+            if ($result['dataset'] = $producto->readComplemento()) {
+                $result['status'] = 1;
+            } else {
+                $result['error'] = 'Producto inexistente';
+            }
+            break;
         default:
             $result['error'] = 'Acción no disponible';
     }

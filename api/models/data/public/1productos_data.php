@@ -73,7 +73,7 @@ class ProductoData extends ProductoHandler
             $this->data_error = 'La descripción contiene caracteres prohibidos';
             return false;
         } elseif (Validator::validateLength($value, $min, $max)) {
-            $this->descripcion = $value;
+            $this->nombre = $value;
             return true;
         } else {
             $this->data_error = 'La descripción debe tener una longitud entre ' . $min . ' y ' . $max;
@@ -93,6 +93,7 @@ class ProductoData extends ProductoHandler
         } else {
             $this->data_error = 'El precio debe ser un valor numérico';
             return false;
+
         }
     }
 
@@ -103,7 +104,7 @@ class ProductoData extends ProductoHandler
     {
         // Validación de las existencias.
         if (Validator::validateNaturalNumber($value)) {
-            $this->existencias = $value;
+            $this->id = $value;
             return true;
         } else {
             $this->data_error = 'El valor de las existencias debe ser numérico entero';
@@ -118,15 +119,15 @@ class ProductoData extends ProductoHandler
     {
         // Validación de la imagen.
         if (Validator::validateImageFile($file, 500, 500)) {
-            $this->imagen = Validator::getFileName();
+            $this->url = Validator::getFileName();
             return true;
         } elseif (Validator::getFileError()) {
             return false;
         } elseif ($filename) {
-            $this->imagen = $filename;
+            $this->url = $filename;
             return true;
         } else {
-            $this->imagen = 'default.png';
+            $this->url = 'default.png';
             return true;
         }
     }
@@ -138,7 +139,7 @@ class ProductoData extends ProductoHandler
     {
         // Validación del identificador de la categoría.
         if (Validator::validateNaturalNumber($value)) {
-            $this->categoria = $value;
+            $this->id = $value;
             return true;
         } else {
             $this->data_error = 'El identificador es incorrecto';

@@ -86,46 +86,36 @@ CREATE TABLE tb_productos(
   domingo_producto BOOLEAN NOT NULL,
   PRIMARY KEY (id_producto)
 );
-select id_detalle_pedido,id_pedido,id_producto,cantidad_pedido,
-descripcion_producto,imagen_producto,precio_producto
-from tb_detalle_pedidos
-INNER JOIN tb_productos USING(id_producto)
-WHERE id_pedido=1
-ORDER BY tipo_producto
 
-
-SELECT *FROM tb_productos
-WHERE estado_producto = 1
-AND (
-  (horario_producto = 'Desayuno' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
-  OR (horario_producto = 'Almuerzo' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
-  OR (horario_producto = 'Cena' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
-  OR (horario_producto = 'Típico' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
-  OR (horario_producto = 'Todo el día')
-  OR (horario_producto = 'Desayuno y Almuerzo' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
-  OR (horario_producto = 'Desayuno y Cena' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
-  OR (horario_producto = 'Almuerzo y Cena' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
-  OR (horario_producto = 'Típico y Desayuno' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
-  OR (horario_producto = 'Típico y Almuerzo' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
-  OR (horario_producto = 'Típico y Cena' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
-);
-
+ update tb_productos set horario_producto='Almuerzo' where id_producto=3;
+ 
 SELECT *
 FROM tb_productos
 WHERE estado_producto = 1
 AND (
-  (horario_producto = 'Desayuno' AND (DAYOFWEEK(NOW()) = 2) AND TIME(NOW()) BETWEEN '06:00:00' AND '10:00:00')
-  OR (horario_producto = 'Almuerzo' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '11:00:00' AND '15:00:00')
-  OR (horario_producto = 'Cena' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '17:00:00' AND '00:00:00')
-  OR (horario_producto = 'Típico' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7))
-  OR (horario_producto = 'Todo el día')
-  OR (horario_producto = 'Desayuno y Almuerzo' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '06:00:00' AND '15:00:00')
-  OR (horario_producto = 'Desayuno y Cena' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '06:00:00' AND '21:00:00')
-  OR (horario_producto = 'Almuerzo y Cena' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '11:00:00' AND '21:00:00')
-  OR (horario_producto = 'Típico y Desayuno' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '06:00:00' AND '10:00:00')
-  OR (horario_producto = 'Típico y Almuerzo' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '06:00:00' AND '15:00:00')
-  OR (horario_producto = 'Típico y Cena' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '06:00:00' AND '21:00:00')
+    (DAYOFWEEK(NOW()) = 1 AND domingo_producto = 1)
+    OR (DAYOFWEEK(NOW()) = 2 AND lunes_producto = 1)
+    OR (DAYOFWEEK(NOW()) = 3 AND martes_producto = 1)
+    OR (DAYOFWEEK(NOW()) = 4 AND miercoles_producto = 1)
+    OR (DAYOFWEEK(NOW()) = 5 AND jueves_producto = 1)
+    OR (DAYOFWEEK(NOW()) = 6 AND viernes_producto = 1)
+    OR (DAYOFWEEK(NOW()) = 7 AND sabado_producto = 1)
+)
+AND (
+    (horario_producto = 'Desayuno' AND TIME(NOW()) BETWEEN '06:00:00' AND '11:00:00')
+    OR (horario_producto = 'Almuerzo' AND TIME(NOW()) BETWEEN '11:00:00' AND '15:00:00')
+    OR (horario_producto = 'Típico' AND TIME(NOW()) BETWEEN '15:00:00' AND '18:00:00')
+    OR (horario_producto = 'Cena' AND TIME(NOW()) BETWEEN '18:00:00' AND '22:00:00')
+    OR (horario_producto = 'Todo el día')
+    OR (horario_producto = 'Desayuno y Almuerzo' AND (TIME(NOW()) BETWEEN '06:00:00' AND '11:00:00' OR TIME(NOW()) BETWEEN '11:00:00' AND '15:00:00'))
+    OR (horario_producto = 'Desayuno y Cena' AND (TIME(NOW()) BETWEEN '06:00:00' AND '11:00:00' OR TIME(NOW()) BETWEEN '18:00:00' AND '22:00:00'))
+    OR (horario_producto = 'Almuerzo y Cena' AND (TIME(NOW()) BETWEEN '11:00:00' AND '15:00:00' OR TIME(NOW()) BETWEEN '18:00:00' AND '22:00:00'))
+    OR (horario_producto = 'Típico y Desayuno' AND (TIME(NOW()) BETWEEN '06:00:00' AND '10:00:00' OR TIME(NOW()) BETWEEN '15:00:00' AND '18:00:00'))
+    OR (horario_producto = 'Típico y Almuerzo' AND (TIME(NOW()) BETWEEN '11:00:00' AND '15:00:00' OR TIME(NOW()) BETWEEN '18:00:00' AND '22:00:00'))
+    OR (horario_producto = 'Típico y Cena' AND (TIME(NOW()) BETWEEN '06:00:00' AND '10:00:00' OR TIME(NOW()) BETWEEN '15:00:00' AND '18:00:00'))
 );
+
+
 
 
 CREATE TABLE tb_items(
