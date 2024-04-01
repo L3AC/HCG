@@ -53,7 +53,8 @@ class PedidoHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,fecha_pedido,estado_pedido
+        $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha,estado_pedido
         FROM tb_pedidos 
         INNER JOIN tb_clientes USING(id_cliente)
         WHERE estado_pedido = "Pendiente"
@@ -77,11 +78,11 @@ class PedidoHandler
 
     public function readOne()
     {
-        $sql = 'SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
-        p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
-        from prc_pedidos p
-        inner join prc_clientes c USING(id_cliente)
-        WHERE p.id_pedido =?';
+        $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha,estado_pedido
+        FROM tb_pedidos 
+        INNER JOIN tb_clientes USING(id_cliente)
+        WHERE id_pedido=?';
         $params = array($this->id);
         $data = Database::getRow($sql, $params);
         //$_SESSION['idmod'] = $data['id_modelo'];

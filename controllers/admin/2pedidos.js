@@ -1,6 +1,6 @@
 // Constantes para completar las rutas de la API.
-const PEDIDO_API = 'services/admin/4pedidos.php',
-    DETALLEPEDIDO_API = 'services/admin/12detallepedidos.php';
+const PEDIDO_API = 'services/admin/2pedidos.php',
+    DETALLEPEDIDO_API = 'services/admin/9detallepedidos.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm'),
     SEARCHSUB_FORM = document.getElementById('searchsubForm');
@@ -22,7 +22,6 @@ const SAVE_FORM = document.getElementById('saveForm'),
     ID_PEDIDO = document.getElementById('idPedido'),
     CLIENTE_PEDIDO = document.getElementById('clientePedido'),
     FECHA_PEDIDO = document.getElementById('fechaPedido'),
-    FORMA_PAGO = document.getElementById('formaPago'),
     ESTADO_PEDIDO = document.getElementById('estadoPedido');
 
 // Método del evento para cuando el documento ha cargado.
@@ -130,14 +129,19 @@ const fillTable = async (form = null) => {
             (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-                <tr>
+                <tr class="text-center">
                     <td>${row.cliente}</td>
-                    <td>${row.forma_pago_pedido}</td>
                     <td>${row.fecha}</td>
-                    <td><i class="${icon}"></i></td>
+                    <td>${row.estado_pedido}</td>
                     <td>
-                        <button type="button" class="btn btn-success" onclick="openUpdate(${row.id_pedido})">
-                        <i class="bi bi-info-circle"></i>
+                        <button type="button" title="Finalizar pedido" class="btn btn-success" onclick="openConfirm(${row.id_pedido})">
+                            <i class="bi bi-check-lg"></i>
+                        </button>
+                        <button type="button" title="Detalle pedido" class="btn btn-primary" onclick="openUpdate(${row.id_pedido})">
+                            <i class="bi bi-info-circle"></i>
+                        </button>
+                        <button type="button" title="Eliminar pedido" class="btn btn-danger" onclick="openDelete(${row.id_pedido})">
+                            <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
                 </tr>
@@ -194,15 +198,13 @@ const openUpdate = async (id) => {
         SAVE_FORM.reset();
         CLIENTE_PEDIDO.disabled = true;
         FECHA_PEDIDO.disabled = true;
-        FORMA_PAGO.disabled = true;
         ESTADO_PEDIDO.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_PEDIDO.value = ROW.id_pedido;
         CLIENTE_PEDIDO.value = ROW.cliente;
         FECHA_PEDIDO.value = ROW.fecha;
-        FORMA_PAGO.value = ROW.forma_pago_pedido;
-        ESTADO_PEDIDO.checked = ROW.estado_pedido;
+        ESTADO_PEDIDO.value= ROW.estado_pedido;
         
         fillsubTable(SEARCHSUB_FORM);
     } else {
@@ -283,12 +285,12 @@ const fillsubTable = async () => {
         DATA.dataset.forEach(row => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             SUBTABLE_BODY.innerHTML += `
-                <tr>
-                <td>${row.descripcion_modelo}</td>
-                <td>${row.descripcion_marca}</td>
-                <td>${row.descripcion_talla}</td>
-                <td>$ ${row.precio_modelo_talla}</td>
-                <td>${row.cantidad_detalle_pedido}</td>
+                <tr class="text-center">
+                <td><img src="${row.imagen_producto}" height="70" width="100"></td>
+                <td>${row.descripcion_producto}</td>
+                <td>${row.cantidad_pedido}</td>
+                <td>$ ${row.precio_producto}</td>
+                <td>$ ${row.total_pedido}</td>
                 </tr>
             `;
         });
