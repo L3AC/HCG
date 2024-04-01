@@ -86,6 +86,46 @@ CREATE TABLE tb_productos(
   domingo_producto BOOLEAN NOT NULL,
   PRIMARY KEY (id_producto)
 );
+select id_detalle_pedido,id_pedido,id_producto,cantidad_pedido,
+descripcion_producto,imagen_producto,precio_producto
+from tb_detalle_pedidos
+INNER JOIN tb_productos USING(id_producto)
+WHERE id_pedido=1
+ORDER BY tipo_producto
+
+
+SELECT *FROM tb_productos
+WHERE estado_producto = 1
+AND (
+  (horario_producto = 'Desayuno' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
+  OR (horario_producto = 'Almuerzo' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
+  OR (horario_producto = 'Cena' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
+  OR (horario_producto = 'Típico' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
+  OR (horario_producto = 'Todo el día')
+  OR (horario_producto = 'Desayuno y Almuerzo' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
+  OR (horario_producto = 'Desayuno y Cena' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
+  OR (horario_producto = 'Almuerzo y Cena' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
+  OR (horario_producto = 'Típico y Desayuno' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
+  OR (horario_producto = 'Típico y Almuerzo' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
+  OR (horario_producto = 'Típico y Cena' AND (lunes_producto = 1 OR martes_producto = 1 OR miercoles_producto = 1 OR jueves_producto = 1 OR viernes_producto = 1 OR sabado_producto = 1 OR domingo_producto = 1))
+);
+
+SELECT *
+FROM tb_productos
+WHERE estado_producto = 1
+AND (
+  (horario_producto = 'Desayuno' AND (DAYOFWEEK(NOW()) = 2) AND TIME(NOW()) BETWEEN '06:00:00' AND '10:00:00')
+  OR (horario_producto = 'Almuerzo' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '11:00:00' AND '15:00:00')
+  OR (horario_producto = 'Cena' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '17:00:00' AND '00:00:00')
+  OR (horario_producto = 'Típico' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7))
+  OR (horario_producto = 'Todo el día')
+  OR (horario_producto = 'Desayuno y Almuerzo' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '06:00:00' AND '15:00:00')
+  OR (horario_producto = 'Desayuno y Cena' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '06:00:00' AND '21:00:00')
+  OR (horario_producto = 'Almuerzo y Cena' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '11:00:00' AND '21:00:00')
+  OR (horario_producto = 'Típico y Desayuno' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '06:00:00' AND '10:00:00')
+  OR (horario_producto = 'Típico y Almuerzo' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '06:00:00' AND '15:00:00')
+  OR (horario_producto = 'Típico y Cena' AND (DAYOFWEEK(NOW()) = 2 OR DAYOFWEEK(NOW()) = 3 OR DAYOFWEEK(NOW()) = 4 OR DAYOFWEEK(NOW()) = 5 OR DAYOFWEEK(NOW()) = 6 OR DAYOFWEEK(NOW()) = 7) AND TIME(NOW()) BETWEEN '06:00:00' AND '21:00:00')
+);
 
 
 CREATE TABLE tb_items(
@@ -110,8 +150,6 @@ CREATE TABLE tb_detalle_productos(
   FOREIGN KEY(id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
-
 CREATE TABLE tb_pedidos(
     id_pedido INT UNSIGNED NOT NULL,
     id_cliente INT UNSIGNED  NOT NULL,
@@ -121,12 +159,6 @@ CREATE TABLE tb_pedidos(
     CONSTRAINT fk_pedido_cliente 
     FOREIGN KEY(id_cliente) REFERENCES tb_clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE
 );
-SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,fecha_pedido,estado_pedido
-FROM tb_pedidos 
-INNER JOIN tb_clientes USING(id_cliente)
-WHERE estado_pedido = 'Pendiente'
-ORDER BY fecha_pedido DESC;
-
 
 CREATE TABLE tb_detalle_pedidos (
   id_detalle_pedido INT UNSIGNED /*auto_increment*/,
@@ -191,6 +223,13 @@ viernes_producto,sabado_producto,domingo_producto)
 VALUES((SELECT get_next_id("tb_productos")),"Conjunto","Nachos Preparados","Almuerzo",2,
 "https://mojo.generalmills.com/api/public/content/MJYMoQ0lUkezBkK5ql2cSg_gmi_hi_res_jpeg.jpeg?
 v=c5e8a159&t=16e3ce250f244648bef28c5949fb99ff",true,true,true,true,true,true,true,true);
+
+INSERT INTO tb_productos (id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
+imagen_producto,estado_producto,lunes_producto,martes_producto,miercoles_producto,jueves_producto,
+viernes_producto,sabado_producto,domingo_producto) 
+VALUES((SELECT get_next_id("tb_productos")),"Conjunto","Combo Hamburgues","Cena",3,
+"https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcRRto3I
+lY56MlAIOAvXHvPEVxBDVzG1uz1zULEBYdJ-I4Aa-xOyPEVvv7fmIjLnxaOz",true,true,true,true,true,true,true,true);
 
 INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantidad_item) 
 VALUES((SELECT get_next_id("tb_detalle_productos")),1,1,1),

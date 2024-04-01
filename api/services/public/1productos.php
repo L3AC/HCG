@@ -1,11 +1,11 @@
 <?php
 // Se incluye la clase del modelo.
-require_once('../../models/data/admin/2modelos_data.php');
+require_once('../../models/data/public/1productos_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
     // Se instancia la clase correspondiente.
-    $producto = new ModeloData;
+    $producto = new ProductoData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null);
     // Se compara la acción a realizar según la petición del controlador.

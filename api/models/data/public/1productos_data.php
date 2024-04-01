@@ -2,7 +2,7 @@
 // Se incluye la clase para validar los datos de entrada.
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/producto_handler.php');
+require_once('../../models/handler/public/1productos_handler.php');
 /*
  *	Clase para manejar el encapsulamiento de los datos de la tabla PRODUCTO.
  */
@@ -23,13 +23,17 @@ class ProductoData extends ProductoHandler
             $this->id = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador del producto es incorrecto';
+            $this->data_error = 'El identificador es incorrecto';
             return false;
         }
     }
 
+    /*
+ * Establece el nombre del modelo.
+ */
     public function setNombre($value, $min = 2, $max = 50)
     {
+        // Validación del nombre.
         if (!Validator::validateAlphanumeric($value)) {
             $this->data_error = 'El nombre debe ser un valor alfanumérico';
             return false;
@@ -41,9 +45,30 @@ class ProductoData extends ProductoHandler
             return false;
         }
     }
+    public function setTipoProducto($value)
+    {
+        $this->tipoproducto = $value;
+        return true;
+    }
 
+    public function setHorario($value)
+    {
+        $this->horario = $value;
+        return true;
+    }
+
+    public function setURL($value)
+    {
+        $this->url = $value;
+        return true;
+    }
+
+    /*
+ * Establece la descripción del modelo.
+ */
     public function setDescripcion($value, $min = 2, $max = 250)
     {
+        // Validación de la descripción.
         if (!Validator::validateString($value)) {
             $this->data_error = 'La descripción contiene caracteres prohibidos';
             return false;
@@ -56,8 +81,12 @@ class ProductoData extends ProductoHandler
         }
     }
 
+    /*
+ * Establece el precio del modelo.
+ */
     public function setPrecio($value)
     {
+        // Validación del precio.
         if (Validator::validateMoney($value)) {
             $this->precio = $value;
             return true;
@@ -67,8 +96,12 @@ class ProductoData extends ProductoHandler
         }
     }
 
+    /*
+ * Establece las existencias del modelo.
+ */
     public function setExistencias($value)
     {
+        // Validación de las existencias.
         if (Validator::validateNaturalNumber($value)) {
             $this->existencias = $value;
             return true;
@@ -78,8 +111,12 @@ class ProductoData extends ProductoHandler
         }
     }
 
+    /*
+ * Establece la imagen del modelo.
+ */
     public function setImagen($file, $filename = null)
     {
+        // Validación de la imagen.
         if (Validator::validateImageFile($file, 500, 500)) {
             $this->imagen = Validator::getFileName();
             return true;
@@ -94,19 +131,27 @@ class ProductoData extends ProductoHandler
         }
     }
 
+    /*
+ * Establece la categoría del modelo.
+ */
     public function setCategoria($value)
     {
+        // Validación del identificador de la categoría.
         if (Validator::validateNaturalNumber($value)) {
             $this->categoria = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador de la categoría es incorrecto';
+            $this->data_error = 'El identificador es incorrecto';
             return false;
         }
     }
 
+    /*
+ * Establece el estado del modelo.
+ */
     public function setEstado($value)
     {
+        // Validación del estado.
         if (Validator::validateBoolean($value)) {
             $this->estado = $value;
             return true;
@@ -115,9 +160,90 @@ class ProductoData extends ProductoHandler
             return false;
         }
     }
+    public function setLunes($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->lunes = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setMartes($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->martes = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setMiercoles($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->miercoles = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setJueves($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->jueves = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setViernes($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->viernes = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setSabado($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->sabado = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setDomingo($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->domingo = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
 
+    /*
+ * Establece el nombre de archivo.
+ */
     public function setFilename()
     {
+        // Obtiene el nombre de archivo desde la lectura.
         if ($data = $this->readFilename()) {
             $this->filename = $data['imagen_producto'];
             return true;

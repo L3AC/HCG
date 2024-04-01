@@ -1,26 +1,26 @@
 // Constante para completar la ruta de la API.
-const CATEGORIA_API = 'services/public/producto.php',
-    NOTICIA_API = 'services/public/noticia.php';
-CATEGORIAS = document.getElementById('categorias'),
+const CATEGORIA_API = 'services/public/1productos.php',
+    //NOTICIA_API = 'services/public/noticia.php';
+    CATEGORIAS = document.getElementById('categorias'),
     BTNSLIDE = document.getElementById('btnSlide'),
     CARDSLIDE = document.getElementById('cardSlide');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
+    // Constante para obtener el número de horas.
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
     MAIN_TITLE.textContent = 'Modelos Recientes';
-
     // Petición para obtener las categorías disponibles.
-    const DATA2 = await fetchData(NOTICIA_API, 'readAllActive');
+    /*const DATA2 = await fetchData(NOTICIA_API, 'readAllActive');
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA2.status) {
-        // Se inicializa el contenedor de categorías.
+        //Se inicializa el contenedor de categorías.
         CARDSLIDE.innerHTML = '';
         BTNSLIDE.innerHTML = '';
-        let cBtn = 0;/*CONTADOR DE BOTONES DEL SLIDE*/
-        let cElemento = 1;/*CONTADOR DE LOS CARROUSEL DEL SLIDE*/
+        let cBtn = 0;//CONTADOR DE BOTONES DEL SLIDE
+        let cElemento = 1;//CONTADOR DE LOS CARROUSEL DEL SLIDE
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA2.dataset.forEach(row => {
             // Se crean y concatenan las tarjetas con los datos de cada categoría.
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 class="${cBtn === 0 ? 'active' : ''}" aria-current="${cBtn === 0 ? 'true' : 'false'}"
                 aria-label="Slide ${cElemento}"></button>
 
-`;
+            `;
             CARDSLIDE.innerHTML += `
                 <div class="carousel-item ${cBtn === 0 ? 'active' : ''}">
                     <div class="d-flex justify-content-center align-items-center" style="height: 600px; ">
@@ -66,8 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <p>El café reduce el riesgo de padecer Alzheimer.</p>
                 </div>
             </div>`;
-    }
-
+    }*/
 
     // Petición para obtener las categorías disponibles.
     const DATA = await fetchData(CATEGORIA_API, 'readDesc');
