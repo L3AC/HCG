@@ -1,5 +1,5 @@
 // Constantes para completar la ruta de la API.
-const PRODUCTO_API = 'services/public/producto.php',
+const PRODUCTO_API = 'services/public/1productos.php',
     PEDIDO_API = 'services/public/pedido.php',
     MODELOTALLAS_API = 'services/public/modelotallas.php',
     COMENTARIOS_API = 'services/public/comentario.php';
@@ -39,15 +39,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     MAIN_TITLE.textContent = 'Modelo';
     // Constante tipo objeto con los datos del producto seleccionado.
     const FORM = new FormData();
+    console.log(PARAMS.get('id'));
     FORM.append('idProducto', PARAMS.get('id'));
     // Petición para solicitar los datos del producto seleccionado.
     const DATA = await fetchData(PRODUCTO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
+        const ROW=DATA.dataset;
         // Se colocan los datos en la página web de acuerdo con el producto seleccionado previamente.
-        IMAGEN_MODELO.src = SERVER_URL.concat('images/modelos/', DATA.dataset.foto_modelo);
-        NOMBRE_MODELO.textContent = DATA.dataset.descripcion_modelo;
-        ID_MODELO.value = DATA.dataset.id_modelo;
+        IMAGEN_MODELO.src = ROW.imagen_producto;
+        NOMBRE_MODELO.textContent =ROW.descripcion_producto;
+        ID_MODELO.value = ROW.id_producto;
         BTNCOMENTARIO.innerHTML =
             `<button type="button" class="btn btn-warning" onclick="openComentario(${PARAMS.get('id')})">
             <i class="bi bi-chat-dots"></i> Comentarios

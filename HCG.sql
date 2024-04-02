@@ -87,7 +87,32 @@ CREATE TABLE tb_productos(
   PRIMARY KEY (id_producto)
 );
 
- 
+ SELECT *
+        FROM tb_productos
+        WHERE estado_producto = 1 AND tipo_producto="Conjunto"
+        AND (
+            (DAYOFWEEK(NOW()) = 1 AND domingo_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 2 AND lunes_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 3 AND martes_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 4 AND miercoles_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 5 AND jueves_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 6 AND viernes_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 7 AND sabado_producto = 1)
+        )
+        AND (
+            (horario_producto = "Desayuno" AND TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00")
+            OR (horario_producto = "Almuerzo" AND TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00")
+            OR (horario_producto = "Típico" AND TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00")
+            OR (horario_producto = "Cena" AND TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00")
+            OR (horario_producto = "Todo el día")
+            OR (horario_producto = "Desayuno y Almuerzo" AND (TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00" OR TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00"))
+            OR (horario_producto = "Desayuno y Cena" AND (TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+            OR (horario_producto = "Almuerzo y Cena" AND (TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+            OR (horario_producto = "Típico y Desayuno" AND (TIME(NOW()) BETWEEN "06:00:00" AND "10:00:00" OR TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00"))
+            OR (horario_producto = "Típico y Almuerzo" AND (TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+            OR (horario_producto = "Típico y Cena" AND (TIME(NOW()) BETWEEN "06:00:00" AND "10:00:00" OR TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00"))
+        )             
+        ORDER BY id_producto DESC
  
 SELECT *
 FROM tb_productos
@@ -220,6 +245,8 @@ viernes_producto,sabado_producto,domingo_producto)
 VALUES((SELECT get_next_id("tb_productos")),"Conjunto","Combo Hamburgues","Cena",3,
 "https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcRRto3I
 lY56MlAIOAvXHvPEVxBDVzG1uz1zULEBYdJ-I4Aa-xOyPEVvv7fmIjLnxaOz",true,true,true,true,true,true,true,true);
+
+
 
 INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantidad_item) 
 VALUES((SELECT get_next_id("tb_detalle_productos")),1,1,1),

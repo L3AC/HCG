@@ -84,40 +84,42 @@ document.addEventListener('DOMContentLoaded', async () => {
             /*col-sm-12 col-md-6 col-lg-3*/
             CATEGORIAS.innerHTML += `
             <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 20px; margin-right: 60px;">
-                    <div class="image_container">
-                        <img src="${row.imagen_producto}" alt="" class="image">
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="title">
-                                <span class="titulo">${row.descripcion_producto}</span>
-                            </div>
+                <div class="image_container">
+                    <img src="${row.imagen_producto}" alt="" class="image">
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="title">
+                            <span class="titulo">${row.descripcion_producto}</span>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="size">
-                                <span class="Horario">Horario: ${row.horario_producto}</span><br>
-                                
-                            </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="size">
+                            <span class="Horario">Horario: ${row.horario_producto}</span><br>
+                            
                         </div>
                     </div>
-                    
-                    <div class="row">
-                        <div class="action">
+                </div>
+                
+                <div class="row">
+                    <div class="action">
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="price">
                                 <span>$${row.precio_producto}</span>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_producto})">
-                                <i class="bi bi-plus-lg"></i>
-                            </button>
-                        </div>
+                            <a href="detail.html?id=${row.id_producto}" class="btn90">
+                                <button type="button" class="btnAgregar">
+                                    <i class="bi bi-plus-lg"></i>
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
+            </div>
             `;
         });
 
@@ -158,10 +160,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 </div>
                             </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_producto})">
-                                    <i class="bi bi-plus-lg"></i>
-                                </button>
+                                    <a href="detail.html?id=${row.id_producto}" >
+                                        <i class="bi bi-plus-lg"></i>
+                                    </a>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
