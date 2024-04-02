@@ -56,8 +56,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         </button> `;
 
         const FORM2 = new FormData();
-        FORM2.append('idModelo', ID_MODELO.value);
-        const DATA2 = await fetchData(MODELOTALLAS_API, 'readAllActive', FORM2);
+        FORM2.append('idProducto', ID_MODELO.value);
+        const DATA2 = await fetchData(MODELOTALLAS_API, 'readByProducto', FORM2);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA2.status) {
             // Se inicializa el contenedor de productos.
