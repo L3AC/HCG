@@ -26,7 +26,7 @@
     background: #AA6231;
     min-height: 400px;
     display: table;
-    padding: 15px;
+    padding: 0 15px 1px 15px;
     border-radius: 20px;
     position: relative;
     box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
@@ -76,13 +76,17 @@
     outline: none;
 }
 
+.imglogo{
+    width: auto;
+    height: 105px;
+    border-radius: 50%; 
+}
+
 .veen>.wrapper {
     position: relative;
     width: 40%;
     height: 120%;
-    top: -20px;
-    background: #fff;
-    box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+    top: -30px;
     transition: all .5s;
     color: #303030;
     overflow: hidden;
@@ -90,6 +94,11 @@
     border-bottom-right-radius: 30px;
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
+}
+
+.wrapper>.logo-container{
+    position: relative;
+    top: 15px;
 }
 
 .veen .wrapper>form {
@@ -177,7 +186,7 @@
 
 @media (max-width: 767px) {
     .veen {
-        padding: 10px;
+        padding: 0 10px 1px 10px;
         margin: 0;
         display: block;
         width: 80%;
@@ -186,7 +195,6 @@
     .veen>.wrapper {
         position: relative;
         height: auto;
-        top: 0;
         left: 0;
         width: 100%;
     }
@@ -208,11 +216,6 @@
         border: 0;
     }
 
-    form#loginForm{
-        position: relative;
-        left: 0px;
-        top: 0px;
-    }
 
     .splits button.active {
         opacity: 1;
