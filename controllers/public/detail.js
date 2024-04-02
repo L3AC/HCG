@@ -7,8 +7,9 @@ const PRODUCTO_API = 'services/public/1productos.php',
 const PARAMS = new URLSearchParams(location.search);
 // Constante para establecer el formulario de agregar un producto al carrito de compras.
 const TALLAS = document.getElementById('selectedItemsListU'),
-    ID_MODELO = document.getElementById('idModelo'),
-    IMAGEN_MODELO = document.getElementById('imagenModelo'),
+    ID_MODELO = document.getElementById('idProducto'),
+    CANTIDAD_PRODUCTO = document.getElementById('cantidadProducto'),
+    IMAGEN_MODELO = document.getElementById('imagenProducto'),
     TIPO_PRODUCTO = document.getElementById('tipoProducto'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     STOCK_MODELO = document.getElementById('stockModelo'),
