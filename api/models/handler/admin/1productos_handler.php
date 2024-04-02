@@ -133,7 +133,7 @@ class ProductoHandler
         $sql = 'UPDATE prc_modelos 
                 SET foto_modelo = ?, descripcion_modelo = ?,estado_modelo = ?, id_marca = ?
                 WHERE id_modelo = ?';
-        $params = array($this->imagen, $this->nombre, $this->estado, $this->categoria, $this->id);
+        $params = array($this->url, $this->nombre, $this->estado, $this->id, $this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -152,7 +152,7 @@ class ProductoHandler
         INNER JOIN ctg_marcas USING(id_marca)
         WHERE estado_modelo=true and id_marca=?
         ORDER BY descripcion_modelo';
-        $params = array($this->categoria);
+        $params = array($this->id);
         return Database::getRows($sql, $params);
     }
 
@@ -188,7 +188,7 @@ class ProductoHandler
                 INNER JOIN categoria USING(id_categoria)
                 WHERE id_categoria = ?
                 ORDER BY nombre_producto';
-        $params = array($this->categoria);
+        $params = array($this->id);
         return Database::getRows($sql, $params);
     }
 }

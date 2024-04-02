@@ -87,11 +87,11 @@ CREATE TABLE tb_productos(
   PRIMARY KEY (id_producto)
 );
 
- update tb_productos set horario_producto='Almuerzo' where id_producto=3;
+ 
  
 SELECT *
 FROM tb_productos
-WHERE estado_producto = 1
+WHERE estado_producto = 1 AND tipo_producto='Complementario'
 AND (
     (DAYOFWEEK(NOW()) = 1 AND domingo_producto = 1)
     OR (DAYOFWEEK(NOW()) = 2 AND lunes_producto = 1)

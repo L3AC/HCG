@@ -1,9 +1,11 @@
 // Constante para completar la ruta de la API.
 const CATEGORIA_API = 'services/public/1productos.php',
     //NOTICIA_API = 'services/public/noticia.php';
-    CATEGORIAS = document.getElementById('categorias'),
-    BTNSLIDE = document.getElementById('btnSlide'),
-    CARDSLIDE = document.getElementById('cardSlide');
+    CATEGORIAS = document.getElementById('conjuntos'),
+    COMPLEMENTOS = document.getElementById('complementos')
+BTNSLIDE = document.getElementById('btnSlide'),
+    CARDSLIDE = document.getElementById('cardSlide'),
+    SUBMAIN_TITLE = document.getElementById('submainTitle');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
@@ -11,7 +13,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Modelos Recientes';
+    MAIN_TITLE.textContent = 'Menu del día';
+    SUBMAIN_TITLE.textContent = 'Complementos';
     // Petición para obtener las categorías disponibles.
     /*const DATA2 = await fetchData(NOTICIA_API, 'readAllActive');
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -69,42 +72,105 @@ document.addEventListener('DOMContentLoaded', async () => {
     }*/
 
     // Petición para obtener las categorías disponibles.
-    const DATA = await fetchData(CATEGORIA_API, 'readDesc');
+    const DATA = await fetchData(CATEGORIA_API, 'readConjunto');
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se inicializa el contenedor de categorías.
         CATEGORIAS.innerHTML = '';
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
+            console.log(row.id_producto);
             // Se crean y concatenan las tarjetas con los datos de cada categoría.
             /*col-sm-12 col-md-6 col-lg-3*/
             CATEGORIAS.innerHTML += `
-            <div class="d-flex justify-content-center col-md-3 col-sm-6 mb-4">
-            <div class="card hadow">
-                <div >
-                <a href="detail.html?id=${row.id_modelo}">
-                    <img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img img-fluid img-hover" style="height: 220px; width: 260px;" alt="${row.descripcion_modelo}">
-                    </a>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title title ew-truncate">${row.descripcion_modelo}</h5>
-                    <p class="card-text marca ew-truncate">${row.marca}</p>
-                    <div class="d-grid gap-2 mmm">
-                        <a href="detail.html?id=${row.id_modelo}" class="btn90">
-                            <span class="text">Comprar</span>
-                            <span>Adquirir!</span>
-                        </a>
+            <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 20px; margin-right: 60px;">
+                    <div class="image_container">
+                        <img src="${row.imagen_producto}" alt="" class="image">
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="title">
+                                <span class="titulo">${row.descripcion_producto}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="size">
+                                <span class="Horario">Horario: ${row.horario_producto}</span><br>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="action">
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="price">
+                                <span>$${row.precio_producto}</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_producto})">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
             `;
         });
+
+        const DATA2 = await fetchData(CATEGORIA_API, 'readComplemento');
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA2.status) {
+            // Se inicializa el contenedor de categorías.
+            COMPLEMENTOS.innerHTML = '';
+            // Se recorre el conjunto de registros fila por fila a través del objeto row.
+            DATA2.dataset.forEach(row => {
+                // Se crean y concatenan las tarjetas con los datos de cada categoría.
+                /*col-sm-12 col-md-6 col-lg-3*/
+                COMPLEMENTOS.innerHTML += `
+                <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 20px; margin-right: 60px;">
+                        <div class="image_container" >
+                            <img src="${row.imagen_producto}" alt="" class="image">
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="title">
+                                    <span class="titulo">${row.descripcion_producto}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="size">
+                                    <span class="Horario">Horario: ${row.horario_producto}</span><br>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="action">
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="price">
+                                    <span>$${row.precio_producto}</span>
+                                </div>
+                            </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_producto})">
+                                    <i class="bi bi-plus-lg"></i>
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
     } else {
         // Se asigna al título del contenido de la excepción cuando no existen datos para mostrar.
         document.getElementById('mainTitle').textContent = DATA.error;
     }
-
-
 
 });
