@@ -35,9 +35,6 @@
             <!-- Título del contenido principal -->
 
             <h4 id="mainTitle" class="mt-4 "></h4>
-            <div class="d-flex justify-content-end  pb-3" id="btnComentario">
-
-            </div>
 
             <!-- Componente Horizontal Card para mostrar el detalle de un Modelo -->
 
@@ -51,16 +48,51 @@
                     <div class="col-md-6">
                         <div class="card-body">
                             <input type="hidden" id="idModelo" name="idModelo">
-                            <p class="card-title text-center mt-2 mb-5" style="font-size: 30px; text-align: center;"
-                                id="nombreModelo"></p>
-                            <p class="card-title text-center" style="font-size: 25px; text-align: center;" id="">Tallas
-                            </p>
-                            <div class="row d-flex justify-content-center" id="tallas"></div>
 
+                            <div class="row">
+                                <p class="col-sm-12 col-md-6 card-title text-center" 
+                                id="tipoProducto">Tipo:</p>
+                                <p class="col-sm-12 col-md-6 card-title text-center" 
+                                id="precioProducto">Precio:</p>
+                            </div>
+
+                            <div id="tableSelected" class="col-12 text-center">
+                                <!-- Tabla para mostrar los registros en la subtabla -->
+                                <div class="mt-4 table-responsive border-0"
+                                    style="max-height: 200px; overflow-y: auto;">
+                                    <table id="subheaderTU" class="table table-hover">
+                                        <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+                                        <thead>
+                                            <tr>
+                                                <th>ITEM</th>
+                                                <th>TIPO</th>
+                                                <th>CANTIDAD</th>
+                                            </tr>
+                                        </thead>
+                                        <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+                                        <tbody id="selectedItemsListU"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6 mt-4">
+                                <label for="cantidadItem" class="form-label">Cantidad</label>
+                                <input id="cantidadItem" type="number" name="cantidadItem" min="1" step="1"
+                                    class="form-control" required>
+                            </div>
+                            
                         </div>
+                        <div class="d-flex justify-content-end  pb-3" id="idGuardar">
+                            <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
+                        </div>
+                        
                     </div>
+
                     <div class="col-md-1"></div>
+                    
                 </div>
+                
+                
             </div>
 
         </div>

@@ -87,6 +87,8 @@ CREATE TABLE tb_productos(
   PRIMARY KEY (id_producto)
 );
 
+update tb_productos set horario_producto='Desayuno' where id_producto=2
+
  SELECT *
         FROM tb_productos
         WHERE estado_producto = 1 AND tipo_producto="Conjunto"
@@ -185,6 +187,7 @@ CREATE TABLE tb_detalle_pedidos (
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
 DELIMITER //
 CREATE FUNCTION get_next_id(table_name VARCHAR(255))
 RETURNS INT UNSIGNED
@@ -231,6 +234,9 @@ VALUES((SELECT get_next_id("tb_items")),1,"Lata Coca Cola 550ml",true),
 ((SELECT get_next_id("tb_items")),2,"Nachos Diana",true),
 ((SELECT get_next_id("tb_items")),3,"Budín",true),
 ((SELECT get_next_id("tb_items")),4,"Porción de arroz",true);
+
+select * from tb_productos
+update tb_productos set martes_producto=false where id_producto=2
 
 INSERT INTO tb_productos (id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
 imagen_producto,estado_producto,lunes_producto,martes_producto,miercoles_producto,jueves_producto,

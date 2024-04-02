@@ -1,14 +1,16 @@
 // Constantes para completar la ruta de la API.
 const PRODUCTO_API = 'services/public/1productos.php',
     PEDIDO_API = 'services/public/pedido.php',
-    MODELOTALLAS_API = 'services/public/modelotallas.php',
+    MODELOTALLAS_API = 'services/public/2detalleproductos.php',
     COMENTARIOS_API = 'services/public/comentario.php';
 // Constante tipo objeto para obtener los parámetros disponibles en la URL.
 const PARAMS = new URLSearchParams(location.search);
 // Constante para establecer el formulario de agregar un producto al carrito de compras.
-const TALLAS = document.getElementById('tallas'),
+const TALLAS = document.getElementById('selectedItemsListU'),
     ID_MODELO = document.getElementById('idModelo'),
     IMAGEN_MODELO = document.getElementById('imagenModelo'),
+    TIPO_PRODUCTO = document.getElementById('tipoProducto'),
+    PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     STOCK_MODELO = document.getElementById('stockModelo'),
     NOMBRE_MODELO = document.getElementById('nombreModelo');
 
@@ -36,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Modelo';
+    
     // Constante tipo objeto con los datos del producto seleccionado.
     const FORM = new FormData();
     console.log(PARAMS.get('id'));
@@ -45,15 +47,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const DATA = await fetchData(PRODUCTO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
+        
         const ROW=DATA.dataset;
         // Se colocan los datos en la página web de acuerdo con el producto seleccionado previamente.
+        MAIN_TITLE.textContent = ROW.descripcion_producto;
         IMAGEN_MODELO.src = ROW.imagen_producto;
-        NOMBRE_MODELO.textContent =ROW.descripcion_producto;
         ID_MODELO.value = ROW.id_producto;
-        BTNCOMENTARIO.innerHTML =
-            `<button type="button" class="btn btn-warning" onclick="openComentario(${PARAMS.get('id')})">
-            <i class="bi bi-chat-dots"></i> Comentarios
-        </button> `;
+        TIPO_PRODUCTO.textContent = "Tipo: "+ROW.tipo_producto;
+        PRECIO_PRODUCTO.textContent = "Precio: "+ROW.precio_producto;
 
         const FORM2 = new FormData();
         FORM2.append('idProducto', ID_MODELO.value);
@@ -66,20 +67,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             DATA2.dataset.forEach(row => {
                 // Se crean y concatenan las tarjetas con los datos de cada producto.
                 TALLAS.innerHTML += `
-                    <div class="col-4 " 
-                    onclick="openModal(${row.id_modelo_talla})">
-                    <div class="container d-flex justify-content-center">
-                        <div class="contenedor-botones">
-                            <button class="boton-numero ">
-                                ${row.talla}
-                                <div class="precio" style="font-weight: bold; opacity: 50%;
-                                font-size: 14px;">$${row.precio_modelo_talla}</div>
-                            </button>
-                            <!-- ... -->
-                        </div>
-                        </div>
-                    </div>
-`;
+                <td>${row.descripcion_item}</td>
+                <td>${row.descripcion_tipo_item}</td>
+                <td>${row.cantidad_item}</td>
+                `;
             });
         } else {
             // Se presenta un mensaje de error cuando no existen datos para mostrar.
