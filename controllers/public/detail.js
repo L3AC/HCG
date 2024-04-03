@@ -1,3 +1,4 @@
+
 // Constantes para completar la ruta de la API.
 const PRODUCTO_API = 'services/public/1productos.php',
     PEDIDO_API = 'services/public/pedido.php',
@@ -85,7 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('detalle').innerHTML = '';
     }
 });
-CANTIDAD.addEventListener('input', async function () {
+/*CANTIDAD.addEventListener('input', async function () {
     const FORM = new FormData();
     FORM.append('idModeloTalla', ID_MODELO_TALLA.value);
     // Petición para obtener los datos del registro solicitado.
@@ -108,7 +109,7 @@ CANTIDAD.addEventListener('input', async function () {
             IDGUARDAR.disabled = false;
         }
     }
-});
+});*/
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.
 *   Parámetros: id (identificador del registro seleccionado).
@@ -211,6 +212,9 @@ const openComentario = async (id) => {
 
 // Método del evento para cuando se envía el formulario de agregar un producto al carrito.
 SAVE_FORM.addEventListener('submit', async (event) => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    
+    /*
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     // Constante tipo objeto con los datos del formulario.
@@ -224,5 +228,5 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     } else {
         sweetAlert(3, DATA.error, true, 'login.html');
-    }
+    }*/
 });
