@@ -413,6 +413,7 @@ const openUpdate = async (id) => {
         VIERNES_EU.checked = ROW.viernes_producto;
         SABADO_EU.checked = ROW.sabado_producto;
         DOMINGO_EU.checked = ROW.domingo_producto;
+        PRECIO_PRODUCTOU.value=ROW.precio_producto;
 
         for (var i = 0; i < TIPO_PRODUCTOU.options.length; i++) {
             // Si el valor de la opción es igual al valor que quieres seleccionar

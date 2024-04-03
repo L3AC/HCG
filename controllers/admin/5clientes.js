@@ -106,6 +106,7 @@ const fillTable = async (form = null) => {
                     <td>${row.apellido_cliente}</td>
                     <td>${row.nombre_cliente}</td>
                     <td>${row.telefono_cliente}</td>
+                    <td>${row.correo_cliente}</td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_cliente})">
                             <i class="bi bi-pencil-fill"></i>
