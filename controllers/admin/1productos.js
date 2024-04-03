@@ -510,7 +510,7 @@ const fillsubTableU = async (busqueda, idProducto) => {
 SAVE_TREFORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    (ID_DETALLEPRODUCTO.value) ? action = 'updateRow' : action = 'createRow';
+    (ID_DETALLEPRODUCTO.value) ? action = 'updateRow' : action = 'subcreateRow';
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_TREFORM);
     // Petición para guardar los datos del formulario.

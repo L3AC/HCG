@@ -35,6 +35,21 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al crear el registro';
                 }
                 break;
+                case 'subcreateRow':
+                    $_POST = Validator::validateForm($_POST);
+                    if (
+                        !$producto->setIdProducto($_POST['idProducto'])or
+                        !$producto->setIdItem($_POST['idItem'])or 
+                        !$producto->setCantidad($_POST['cantidadItem']))
+                     {
+                        $result['error'] = $producto->getDataError();
+                    } elseif ($producto->subcreateRow()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Registro creado correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al crear el registro';
+                    }
+                    break;
             /*case 'readAll':
                 if (!$producto->setIdModelo($_SESSION['idmod'])) {
                     $result['error'] = $producto->getDataError();

@@ -52,15 +52,7 @@ const loadTemplate = async () => {
             </button>
             <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
                 <div class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown ">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
-                            href="index.html"><i class="bi bi-tags-fill"> Ver marcas</i>
-                        </a>
-                        <ul class="dropdown-menu" id="listmarca">
-
-                        </ul>
-                    </li>
-                    <a class="nav-link" href="login.html"><i class="bi bi-box-arrow-right"></i> Iniciar sesión</a>
+                <a class="nav-link" href="cart.html" title="Ir al carrito de compras"><i class="bi bi-cart h3"></i></a>
                 </div>
             </div>
             <!-- Right elements -->
