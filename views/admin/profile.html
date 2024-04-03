@@ -13,12 +13,14 @@
     <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
     <!-- Llamada al icono de la página web -->
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
+    <link rel="stylesheet" href="../../resources/css/btnE.css">
+    <link rel="stylesheet" href="../../resources/css/univer.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
 </head>
 
-<body>
+<body class="bodyp">
     <!-- Contenido principal del documento -->
     <main>
         <div id="mainTitle"></div>
@@ -49,13 +51,13 @@
                 <label for="aliasAdministrador" class="form-label">Usuario</label>
                 <input id="aliasAdministrador" type="text" name="aliasAdministrador" class="form-control" required>
             </div>
-            <div >
-                <button type="submit" class="btn" style="background-color: #CCC8AA;"><i class="bi bi-save"></i> Guardar</button>
+            <div class="text-center" >
+                <button type="submit" class="btnAgregar" style="background-color: #CCC8AA;"><i class="bi bi-save"></i> Guardar</button>
             </div>
         </form>
         <!-- Contenedor con enlace para abrir la caja de diálogo del formulario de cambiar constraseña -->
         <div class="text-center p-3">
-            <button type="button" class="btn btn-secondary" onclick="openPassword()">
+            <button type="button" class="btnAgregar" onclick="openPassword()">
                 <i class="bi bi-shield-lock"></i> Cambiar contraseña
             </button>
         </div>

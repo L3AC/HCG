@@ -61,9 +61,10 @@ class ProductoHandler
     public function createRow()
     {
         $sql = '
-        INSERT INTO tb_productos (id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
-        imagen_producto,estado_producto,lunes_producto,martes_producto,miercoles_producto,jueves_producto,
-        viernes_producto,sabado_producto,domingo_producto) 
+        INSERT INTO tb_productos 
+        (id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
+        imagen_producto,estado_producto,lunes_producto,martes_producto,miercoles_producto,
+        jueves_producto,viernes_producto,sabado_producto,domingo_producto) 
         VALUES((SELECT get_next_id("tb_productos")),?,?,?,?,?,?,?,?,?,?,?,?,?);';
 
         $params = array($this->tipoproducto, $this->nombre, $this->horario, $this->precio
