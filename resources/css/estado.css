@@ -1,6 +1,6 @@
 :root {
     --color-green: #00a878;
-    --color-red: #f40000;
+    --color-red: #AA6231;
     --color-button: #fdffff;
     --color-black: #000;
   }
@@ -30,7 +30,7 @@
     transition: .2s; /* Transición suave al cambiar de estado */
     display: block;
     position: absolute;
-    width: 1.5rem; /* Ancho del círculo */
+    width: 1.8rem; /* Ancho del círculo */
     height: 1.5rem; /* Alto del círculo */
     background-color: var(--color-button); /* Color de fondo del círculo */
     content: ''; /* Contenido vacío del pseudo-elemento */
@@ -51,4 +51,30 @@
   .loco{
     margin-bottom: 14px;
     text-align: start;
+  }
+
+  /* arreglo de clases css*/
+  .btnGuardar{
+    background-color: #DDA35D !important;
+     color: aliceblue; 
+  }
+
+  .btnGuardar:hover{
+    box-shadow: 10px 5px 5px rgb(78, 78, 78);
+  }
+
+  .barraBusquedaRol{
+    border-color: #AA6231 !important;
+  }
+
+  .modal-header{
+    background-color: #DDA35D;
+  }
+  
+  .btnAgregar{
+    background-color: #DDA35D !important;
+  }
+
+  .btnAgregar:hover{
+    box-shadow: 10px 5px 5px rgb(128, 128, 128);
   }
