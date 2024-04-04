@@ -9,7 +9,7 @@ const ITEM_MODAL = new bootstrap.Modal('#itemModal');
 // Constante para establecer el formulario de cambiar producto.
 const ITEM_FORM = document.getElementById('itemForm');
 
-const ID_DETALLE = document.getElementById('idDetalle'),
+const ID_PRODUCTO= document.getElementById('idProducto'),
     CANTIDAD = document.getElementById('cantidadModelo'),
     ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
     STOCK_INFO = document.getElementById('stock'),
@@ -104,13 +104,14 @@ async function readDetail() {
                         <div class="col-1"></div>
                         <div class="col-5">
                             <button class="btn1 "
-                                onclick="openUpdate(${/*ROW.id_detalle}, ${ROW.cantidad_producto}, ${row.id_modelo_talla*/1})"
+                                onclick="openUpdate(${item.idProducto})"
                                 style=" margin-right: 10px;">
                                 Edit
                             </button>
                         </div>
                         <div class="col-5">
-                            <button class="btn1 " onclick="openDelete(${/*row.id_detalle*/1})" style="text-align: center;">
+                            <button class="btn1 " onclick="openDelete(${item.idProducto})" 
+                            style="text-align: center;">
                                 Delete
                             </button>
                         </div>
@@ -132,63 +133,16 @@ async function readDetail() {
     document.getElementById('pago').textContent = total.toFixed(2);
 
 }
-CANTIDAD.addEventListener('input', async function () {
-    const FORM = new FormData();
-    FORM.append('idModeloTalla', ID_MODELO_TALLA.value);
-    // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status === 1) {
-        const ROW = DATA.dataset;
-        if (CANTIDAD.value > ROW.stock_modelo_talla) {
-            mensajeDiv.textContent = 'No puede escoger mas del stock';
-            mensajeDiv.style.display = 'block';
-            IDGUARDAR.disabled = true;
-        }
-        else if (CANTIDAD.value < 0 || CANTIDAD.value > 3) {
-            mensajeDiv.textContent = 'Solo puede escoger 3 existencias a la vez';
-            mensajeDiv.style.display = 'block';
-            IDGUARDAR.disabled = true;
-        }
-        else {
-            mensajeDiv.textContent = "";
-            IDGUARDAR.disabled = false;
-        }
-    }
-});
 /*
 * Función para abrir la caja de diálogo con el formulario de cambiar cantidad de producto.
 * Parámetros: id (identificador del producto) y quantity (cantidad actual del producto).
 * Retorno: ninguno.
 */
-const openUpdate = async (id, quantity, idmt) => {
-    // Se abre la caja de diálogo que contiene el formulario.
-    //ITEM_MODAL.show();
-    // Se inicializan los campos del formulario con los datos del registro seleccionado.
-    /*ID_DETALLE.value = id;
-    CANTIDAD.value = quantity;*/
-
-
-    const FORM = new FormData();
-    FORM.append('idModeloTalla', idmt);
-    // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        // Se muestra la caja de diálogo con su título.
-        // Se prepara el formulario.
-        ITEM_MODAL.show();
-        ITEM_FORM.reset();
-        // Se inicializan los campos con los datos.
-        const ROW = DATA.dataset;
-        ID_DETALLE.value = id;
-        CANTIDAD.value = quantity;
-        ID_MODELO_TALLA.value = ROW.id_modelo_talla;
-        STOCK_INFO.textContent = 'Existencias disponibles ' + ROW.stock_modelo_talla;
-    } else {
-        sweetAlert(2, DATA.error, false);
-    }
-
+const openUpdate = async (idProducto,cantidad) => {
+    ITEM_MODAL.show();
+    ITEM_FORM.reset();
+    ID_PRODUCTO.value = idProducto;
+    CANTIDAD.value = cantidad;
 }
 
 /*
@@ -217,23 +171,12 @@ async function finishOrder() {
 * Parámetros: id (identificador del producto).
 * Retorno: ninguno.
 */
-async function openDelete(id) {
-    // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Está seguro de remover el producto?');
-    // Se verifica la respuesta del mensaje.
-    if (RESPONSE) {
-        // Se define un objeto con los datos del producto seleccionado.
-        const FORM = new FormData();
-        FORM.append('idDetalle', id);
-        // Petición para eliminar un producto del carrito de compras.
-        const DATA = await fetchData(PEDIDO_API, 'deleteDetail', FORM);
-        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-        if (DATA.status) {
-            await sweetAlert(1, DATA.message, true);
-            // Se carga nuevamente la tabla para visualizar los cambios.
-            readDetail();
-        } else {
-            sweetAlert(2, DATA.error, false);
-        }
-    }
+async function openDelete(idProducto) {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    // Filtrar el carrito para eliminar el producto con el id indicado
+    carrito = carrito.filter(item => item.idProducto !== idProducto);
+    // Actualizar el carrito en el localStorage
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    // Volver a cargar los detalles del carrito
+    readDetail();
 }
