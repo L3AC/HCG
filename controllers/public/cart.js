@@ -10,7 +10,7 @@ const ITEM_MODAL = new bootstrap.Modal('#itemModal');
 const ITEM_FORM = document.getElementById('itemForm');
 
 const ID_PRODUCTO= document.getElementById('idProducto'),
-    CANTIDAD = document.getElementById('cantidadModelo'),
+    CANTIDAD = document.getElementById('cantidadProducto'),
     ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
     STOCK_INFO = document.getElementById('stock'),
     mensajeDiv = document.getElementById('mensajeDiv'),
@@ -26,27 +26,23 @@ document.addEventListener('DOMContentLoaded', () => {
     readDetail();
 });
 
-// Método del evento para cuando se envía el formulario de cambiar cantidad de producto.
 ITEM_FORM.addEventListener('submit', async (event) => {
-    // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    console.log(ID_DETALLE.value);
-    // Constante tipo objeto con los datos del formulario.
-    const FORM = new FormData(ITEM_FORM);
-    // Petición para actualizar la cantidad de producto.
-    const DATA = await fetchData(PEDIDO_API, 'updateDetail', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        // Se actualiza la tabla para visualizar los cambios.
-        readDetail();
-        // Se cierra la caja de diálogo del formulario.
-        ITEM_MODAL.hide();
-        // Se muestra un mensaje de éxito.
-        sweetAlert(1, DATA.message, true);
-    } else {
-        sweetAlert(2, DATA.error, false);
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    // Buscar el índice del producto en el carrito
+    const index = carrito.findIndex(item => item.idProducto === ID_PRODUCTO.value);
+    // Si el producto está en el carrito, actualizar la cantidad
+    if (index !== -1) {
+        carrito[index].cantidad = CANTIDAD.value;
     }
+    // Guardar el carrito actualizado en localStorage
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+
+    ITEM_MODAL.hide();
+    readDetail(); // Volver a cargar los detalles del carrito
 });
+
+
 
 /*
 * Función para obtener el detalle del carrito de compras.
@@ -54,10 +50,7 @@ ITEM_FORM.addEventListener('submit', async (event) => {
 * Retorno: ninguno.
 */
 async function readDetail() {
-
-
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    
     // Inicializar el cuerpo de la tabla
     TABLE_BODY.innerHTML = '';
     // Inicializar el total a pagar
@@ -104,7 +97,7 @@ async function readDetail() {
                         <div class="col-1"></div>
                         <div class="col-5">
                             <button class="btn1 "
-                                onclick="openUpdate(${item.idProducto})"
+                                onclick="openUpdate(${item.idProducto},${item.cantidad});"
                                 style=" margin-right: 10px;">
                                 Edit
                             </button>
@@ -172,11 +165,18 @@ async function finishOrder() {
 * Retorno: ninguno.
 */
 async function openDelete(idProducto) {
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    // Filtrar el carrito para eliminar el producto con el id indicado
-    carrito = carrito.filter(item => item.idProducto !== idProducto);
-    // Actualizar el carrito en el localStorage
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    // Volver a cargar los detalles del carrito
-    readDetail();
+
+    const RESPONSE = await confirmAction('¿Está seguro de finalizar el pedido?');
+    // Se verifica la respuesta del mensaje.
+    if (RESPONSE) {
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        // Filtrar el carrito para eliminar el producto con el id indicado
+        carrito = carrito.filter(item => item.idProducto !== idProducto);
+        // Actualizar el carrito en el localStorage
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        // Volver a cargar los detalles del carrito
+        readDetail();
+    }
+
+
 }

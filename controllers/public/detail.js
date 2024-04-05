@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Obtener el carrito actual o crear uno vacío si no existe
             const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             // Agregar el nuevo producto al carrito
-            carrito.push({ idProducto, cantidad });
+            carrito.push({ idProducto,cantidad});
             // Guardar el carrito en localStorage
             localStorage.setItem('carrito', JSON.stringify(carrito));
 
