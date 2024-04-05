@@ -8,14 +8,12 @@ const TABLE_BODY = document.getElementById('tableBody');
 const ITEM_MODAL = new bootstrap.Modal('#itemModal');
 // Constante para establecer el formulario de cambiar producto.
 const ITEM_FORM = document.getElementById('itemForm');
-
 const ID_PRODUCTO= document.getElementById('idProducto'),
     CANTIDAD = document.getElementById('cantidadProducto'),
     ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
     STOCK_INFO = document.getElementById('stock'),
     mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
-
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
@@ -25,23 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar los productos del carrito de compras.
     readDetail();
 });
-
-ITEM_FORM.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    // Buscar el índice del producto en el carrito
-    const index = carrito.findIndex(item => item.idProducto === ID_PRODUCTO.value);
-    // Si el producto está en el carrito, actualizar la cantidad
-    if (index !== -1) {
-        carrito[index].cantidad = CANTIDAD.value;
-    }
-    // Guardar el carrito actualizado en localStorage
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-
-    ITEM_MODAL.hide();
-    readDetail(); // Volver a cargar los detalles del carrito
-});
-
 
 
 /*
@@ -78,8 +59,6 @@ async function readDetail() {
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <img height="80px" width="70%" src="${ROW.imagen_producto}"
                         class="img-fluid rounded" alt="${ROW.descripcion_producto}">
-
-
                 </div>
                 <div class="col-lg-5 col-md-12 col-sm-12">
                     <div class="card-body">
@@ -110,8 +89,6 @@ async function readDetail() {
                         </div>
                         <div class="col-1"></div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -121,22 +98,14 @@ async function readDetail() {
             sweetAlert(4, DATA.error, false, 'index.html');
         }
     }
-
     // Mostrar el total a pagar
     document.getElementById('pago').textContent = total.toFixed(2);
-
 }
 /*
 * Función para abrir la caja de diálogo con el formulario de cambiar cantidad de producto.
 * Parámetros: id (identificador del producto) y quantity (cantidad actual del producto).
 * Retorno: ninguno.
 */
-const openUpdate = async (idProducto,cantidad) => {
-    ITEM_MODAL.show();
-    ITEM_FORM.reset();
-    ID_PRODUCTO.value = idProducto;
-    CANTIDAD.value = cantidad;
-}
 
 /*
 * Función asíncrona para mostrar un mensaje de confirmación al momento de finalizar el pedido.
@@ -164,19 +133,45 @@ async function finishOrder() {
 * Parámetros: id (identificador del producto).
 * Retorno: ninguno.
 */
-async function openDelete(idProducto) {
+const openUpdate = async (idProducto) => {
+    ITEM_MODAL.show();
+    ITEM_FORM.reset();
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const index = carrito.findIndex(item => item.idProducto === idProducto);
+    if (index >= 0) {
+        ID_PRODUCTO.value = idProducto;
+        CANTIDAD.value = carrito[index].cantidad;
+        // Almacenar el índice en una propiedad del formulario
+        ITEM_FORM.dataset.index = index;
+    }
+}
 
+ITEM_FORM.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const index = parseInt(ITEM_FORM.dataset.index);
+    // Si el índice es válido, actualizar la cantidad del producto en el carrito
+    if (!isNaN(index) && index >= 0 && index < carrito.length) {
+        carrito[index].cantidad = CANTIDAD.value;
+        // Guardar el carrito actualizado en localStorage
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+    }
+
+    ITEM_MODAL.hide();
+    readDetail(); // Volver a cargar los detalles del carrito
+});
+
+async function openDelete(idProducto) {
     const RESPONSE = await confirmAction('¿Está seguro de finalizar el pedido?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
         // Filtrar el carrito para eliminar el producto con el id indicado
-        carrito = carrito.filter(item => item.idProducto !== idProducto);
+        carrito = carrito.filter(item => item.idProducto.toString() !== idProducto.toString());
         // Actualizar el carrito en el localStorage
         localStorage.setItem('carrito', JSON.stringify(carrito));
         // Volver a cargar los detalles del carrito
         readDetail();
     }
-
-
 }
+
