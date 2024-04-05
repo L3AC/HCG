@@ -114,7 +114,6 @@ CREATE TABLE tb_detalle_pedidos (
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 DELIMITER //
 CREATE FUNCTION get_next_id(table_name VARCHAR(255))
 RETURNS INT UNSIGNED
@@ -172,12 +171,14 @@ VALUES((SELECT get_next_id("tb_tipo_items")),"Bebida",true),
 ((SELECT get_next_id("tb_tipo_items")),"Postre",true),
 ((SELECT get_next_id("tb_tipo_items")),"Porción de plato",true);
 
-
 INSERT INTO tb_items(id_item,id_tipo_item,descripcion_item,estado_item) 
-VALUES((SELECT get_next_id("tb_items")),1,"Lata Coca Cola 550ml",true),
+VALUES
+((SELECT get_next_id("tb_items")),1,"Lata Coca Cola 550ml",true),
 ((SELECT get_next_id("tb_items")),2,"Nachos Diana",true),
 ((SELECT get_next_id("tb_items")),3,"Budín",true),
-((SELECT get_next_id("tb_items")),4,"Porción de arroz",true);
+((SELECT get_next_id("tb_items")),4,"Porción de arroz",true),
+((SELECT get_next_id("tb_items")),4,"Ensalada Fresca",true),
+((SELECT get_next_id("tb_items")),4,"Pechuga a la parilla",true);
 
 
 
