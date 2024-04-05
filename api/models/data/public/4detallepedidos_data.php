@@ -27,6 +27,36 @@ class DetallePedidoData extends DetallePedidoHandler
             return false;
         }
     }
+    public function setIdPedido($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->idPedido = $value;
+            return true; 
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
+    public function setIdProducto($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->idProducto = $value;
+            return true; 
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
+    public function setCantidad($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->cantidad = $value;
+            return true; 
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
     public function setIdModelo($value)
     {
         if (Validator::validateNaturalNumber($value)) {

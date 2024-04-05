@@ -42,6 +42,7 @@ CREATE TABLE tb_clientes(
   PRIMARY KEY (id_cliente)
 );
 
+
 /*ESTO VA A SERVIR PARA INGRESAR POR EJEMPLO, CATEGORIA DE BEBIDAS, SNACKS, POSTRE, PORCION DE UN PLATILLO*/
 CREATE TABLE tb_tipo_items(
   id_tipo_item INT UNSIGNED /*auto_increment*/,
@@ -160,6 +161,38 @@ BEGIN
 END//
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE obtener_id_cliente_y_pedido(
+	IN p_nombre_cliente VARCHAR(255),
+	IN p_apellido_cliente VARCHAR(255),
+    IN p_telefono_cliente VARCHAR(255),
+    IN p_correo_cliente VARCHAR(255),
+    OUT p_id_cliente INT UNSIGNED,
+    OUT p_id_pedido INT UNSIGNED
+)
+BEGIN
+    DECLARE cliente_existente INT;
+    
+    SELECT id_cliente INTO cliente_existente
+    FROM tb_clientes
+    WHERE telefono_cliente = p_telefono_cliente OR correo_cliente = p_correo_cliente
+    LIMIT 1;
+    IF cliente_existente IS NULL THEN
+        INSERT INTO tb_clientes (id_cliente,telefono_cliente, correo_cliente, nombre_cliente, apellido_cliente)
+        VALUES ((SELECT get_next_id("tb_clientes")),p_telefono_cliente, 
+        p_correo_cliente, p_nombre_cliente, p_apellido_cliente);
+        SELECT LAST_INSERT_ID() INTO p_id_cliente;
+    ELSE
+        SELECT id_cliente INTO p_id_cliente
+        FROM tb_clientes
+        WHERE telefono_cliente = p_telefono_cliente OR correo_cliente = p_correo_cliente
+        LIMIT 1;
+    END IF;
+    INSERT INTO tb_pedidos (id_cliente, fecha_pedido, codigo_pedido, estado_pedido)
+    VALUES (p_id_cliente, now(), generar_codigo(), 'Pendiente');
+    SELECT LAST_INSERT_ID() INTO p_id_pedido;
+END //
+DELIMITER ;
 
 
 INSERT INTO tb_roles (id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, tipo_items_opc, items_opc, clientes_opc, usuarios_opc, roles_opc)

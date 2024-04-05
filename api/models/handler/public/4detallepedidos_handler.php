@@ -10,7 +10,10 @@ class DetallePedidoHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
-    protected $idModelo = null;
+    protected $idPedido = null;
+    protected $idProducto = null;
+    protected $cantidad = null;
+
     protected $idTalla = null;
     protected $nombre = null;
     protected $descripcion = null;
@@ -44,9 +47,9 @@ class DetallePedidoHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO prc_modelo_tallas(id_talla, id_modelo, stock_modelo_talla, precio_modelo_talla)
-                VALUES(?, ?, ?, ?)';
-        $params = array($this->idTalla, $this->idModelo, $this->existencias, $this->precio);
+        $sql = 'INSERT INTO tb_detalle_pedidos (id_detalle_pedido,id_pedido, id_producto, cantidad_pedido)
+        VALUES((SELECT get_next_id("tb_detalle_pedidos")),?, ?, ?)';
+        $params = array($this->idPedido, $this->idProducto, $this->cantidad);
         return Database::executeRow($sql, $params);
     }
 

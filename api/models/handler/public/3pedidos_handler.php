@@ -10,13 +10,20 @@ class PedidoHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $idCliente = null;
+    protected $estado = null;
+    protected $codigo = null;
     protected $nombre = null;
+    protected $apellido = null;
+    protected $telefono = null;
+    protected $correo = null;
+
     protected $descripcion = null;
     protected $precio = null;
     protected $existencias = null;
     protected $imagen = null;
     protected $categoria = null;
-    protected $estado = null;
+
 
     // Constante para establecer la ruta de las imágenes.
     const RUTA_IMAGEN = '../../images/modelos/';
@@ -45,10 +52,15 @@ class PedidoHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO prc_modelos(descripcion_modelo, id_marca, foto_modelo, estado_modelo)
-                VALUES(?, ?, ?, ?)';
-        $params = array($this->descripcion, $this->id, $this->imagen, $this->estado);
-        return Database::executeRow($sql, $params);
+        $sql = 'CALL obtener_id_cliente_y_pedido(?,?,?, ?, @id_cliente, @id_pedido);';
+        $params = array($this->nombre,$this->apellido,$this->telefono, $this->correo);
+        Database::executeRow($sql, $params);
+
+        // Obtener los valores de @id_cliente y @id_pedido
+        $sql = 'SELECT @id_cliente AS id_cliente, @id_pedido AS id_pedido;';
+        $result = Database::getRow($sql);
+        $_SESSION['id_pedido'] = $result['id_pedido'];
+        return $result;
     }
 
     public function readAll()

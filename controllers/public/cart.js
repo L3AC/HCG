@@ -14,6 +14,18 @@ const ID_PRODUCTO= document.getElementById('idProducto'),
     STOCK_INFO = document.getElementById('stock'),
     mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
+
+const CLIENTE_MODAL=new bootstrap.Modal('#clienteModal')
+    CLIENTE_FORM = document.getElementById('clienteForm'),
+    NOMBRE_CLIENTE=document.getElementById('nombreCliente'),
+    APELLIDO_CLIENTE=document.getElementById('apellidoCliente'),
+    TELEFONO_CLIENTE=document.getElementById('telefonoCliente'),
+    CORREO_CLIENTE=document.getElementById('correoCliente');
+
+vanillaTextMask.maskInput({
+        inputElement: document.getElementById('telefonoCliente'),
+        mask: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    });
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
@@ -133,6 +145,11 @@ async function finishOrder() {
 * Parámetros: id (identificador del producto).
 * Retorno: ninguno.
 */
+const openCliente = async () => {
+    CLIENTE_MODAL.show();
+    CLIENTE_FORM.reset();
+}
+
 const openUpdate = async (idProducto) => {
     ITEM_MODAL.show();
     ITEM_FORM.reset();
