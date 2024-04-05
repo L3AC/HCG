@@ -21,7 +21,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     PRODUCTO_OPC = document.getElementById('estadoProducto'),
     PEDIDO_OPC = document.getElementById('estadoPedido'),
     TIPOITEM_OPC = document.getElementById('estadoTipoItem'),
-    ITEM_OPC= document.getElementById('estadoItem'),
+    ITEM_OPC = document.getElementById('estadoItem'),
     CLIENTE_OPC = document.getElementById('estadoCliente'),
     USUARIO_OPC = document.getElementById('estadoUsuario'),
     ROL_OPC = document.getElementById('estadoRol');
@@ -70,7 +70,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 //METODO PARA BUSCAR 
-INPUTSEARCH.addEventListener('input', async function ()  {
+INPUTSEARCH.addEventListener('input', async function () {
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     const FORM = new FormData();
@@ -90,7 +90,7 @@ INPUTSEARCH.addEventListener('input', async function ()  {
                     <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_rol})">
-                            <i class="bi bi-pencil-fill"></i>
+                            <i class="bi bi-pencil-square"></i>
                         </button>
                         <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_rol})">
                             <i class="bi bi-trash-fill"></i>
@@ -102,7 +102,7 @@ INPUTSEARCH.addEventListener('input', async function ()  {
         // Se muestra un mensaje de acuerdo con el resultado.
         ROWS_FOUND.textContent = DATA.message;
     } else {
-       // sweetAlert(4, DATA.error, true);
+        // sweetAlert(4, DATA.error, true);
     }
 });
 
@@ -124,18 +124,23 @@ const fillTable = async (form = null) => {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se establece un icono para el estado del ROL.
-            (row.estado_rol) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            (row.estado_rol) ? icon = 'bi bi-eye-fill ' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
                     <td>${row.descripcion_rol}</td>
-                    <td><i class="${icon}"></i></td>
+                    <td><i class="${icon}" style="font-size: 30px;"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_rol})">
-                            <i class="bi bi-pencil-fill"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="40" fill="#FFFFFF" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                        </svg>
                         </button>
                         <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_rol})">
-                            <i class="bi bi-trash-fill"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="40" fill="#FFFFFF    " class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                        </svg>
                         </button>
                     </td>
                 </tr>
@@ -168,7 +173,7 @@ const openCreate = () => {
 *   Retorno: ninguno.
 */
 const openUpdate = async (id) => {
-    
+
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
     FORM.append('idRol', id);
@@ -193,8 +198,8 @@ const openUpdate = async (id) => {
         ITEM_OPC.checked = ROW.items_opc;
         CLIENTE_OPC.checked = ROW.clientes_opc;
         USUARIO_OPC.checked = ROW.usuarios_opc;
- 
-        
+
+
     } else {
         sweetAlert(2, DATA.error, false);
     }
