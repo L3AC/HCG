@@ -1,7 +1,7 @@
 # HCG
 Seccion B2
 
-Nuestro proyecto es acerca de un sistema para gestionar los pedidos de una cafeteria de un centro hospital.
+Nuestro proyecto es acerca de un sistema para gestionar los pedidos de una cafeteria de un centro hospitalario.
 
 Francisco Daniel Garcia Ramos 20220326
 
