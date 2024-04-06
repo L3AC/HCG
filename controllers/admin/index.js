@@ -55,7 +55,8 @@ LOGIN_FORM.addEventListener('submit', async (event) => {
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         sweetAlert(1, DATA.message, true, 'dashboard.html');
-    } else {
-        alerta(4, DATA.error, true,"https://unsplash.it/400/200");
+    } else { 
+        sweetAlert(3, "Credenciales inválidas", true);
+        //alerta(4, DATA.error, true,"https://unsplash.it/400/200");
     }
 });
