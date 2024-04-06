@@ -1,31 +1,31 @@
 // Constante para completar la ruta de la API.
-const PEDIDO_API = 'services/public/pedido.php',
-    PRODUCTO_API = 'services/public/1productos.php',
-    MODELOTALLAS_API = 'services/public/modelotallas.php';
+const PRODUCTO_API = 'services/public/1productos.php',
+    PEDIDO_API = 'services/public/3pedidos.php',
+    DETALLEPEDIDO_API = 'services/public/4detallepedidos.php';
 // Constante para establecer el cuerpo de la tabla.
 const TABLE_BODY = document.getElementById('tableBody');
 // Constante para establecer la caja de diálogo de cambiar producto.
 const ITEM_MODAL = new bootstrap.Modal('#itemModal');
 // Constante para establecer el formulario de cambiar producto.
 const ITEM_FORM = document.getElementById('itemForm');
-const ID_PRODUCTO= document.getElementById('idProducto'),
+const ID_PRODUCTO = document.getElementById('idProducto'),
     CANTIDAD = document.getElementById('cantidadProducto'),
     ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
     STOCK_INFO = document.getElementById('stock'),
     mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
 
-const CLIENTE_MODAL=new bootstrap.Modal('#clienteModal')
-    CLIENTE_FORM = document.getElementById('clienteForm'),
-    NOMBRE_CLIENTE=document.getElementById('nombreCliente'),
-    APELLIDO_CLIENTE=document.getElementById('apellidoCliente'),
-    TELEFONO_CLIENTE=document.getElementById('telefonoCliente'),
-    CORREO_CLIENTE=document.getElementById('correoCliente');
+const CLIENTE_MODAL = new bootstrap.Modal('#clienteModal')
+CLIENTE_FORM = document.getElementById('clienteForm'),
+    NOMBRE_CLIENTE = document.getElementById('nombreCliente'),
+    APELLIDO_CLIENTE = document.getElementById('apellidoCliente'),
+    TELEFONO_CLIENTE = document.getElementById('telefonoCliente'),
+    CORREO_CLIENTE = document.getElementById('correoCliente');
 
 vanillaTextMask.maskInput({
-        inputElement: document.getElementById('telefonoCliente'),
-        mask: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    });
+    inputElement: document.getElementById('telefonoCliente'),
+    mask: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+});
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
@@ -35,7 +35,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar los productos del carrito de compras.
     readDetail();
 });
+CLIENTE_FORM.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const FORM = new FormData(CLIENTE_FORM);
+    // Petición para guardar los datos del formulario.
+    const DATA = await fetchData(PEDIDO_API, "createRow", FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {   
 
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        for (const item of carrito) {
+            const FORM2 = new FormData();
+            console.log(DATA.dataset.id_pedido);
+            FORM2.append('idPedido', DATA.dataset.id_pedido);
+            FORM2.append('idProducto', item.idProducto);
+            FORM2.append('cantidadProducto', item.cantidad);
+
+            const DATA2 = await fetchData(DETALLEPEDIDO_API, "createRow", FORM2);
+            if (DATA2.status) {
+                
+            } else {
+                // Mostrar mensaje de error si la petición falla
+                sweetAlert(4, DATA2.error, false);
+            }
+        }
+        localStorage.setItem('carrito', JSON.stringify([]));
+        sweetAlert(1, DATA.message, true,"index.html");
+        CLIENTE_MODAL.hide();
+    } else {
+        
+        sweetAlert(2, DATA.error, false);
+    }
+});
 
 /*
 * Función para obtener el detalle del carrito de compras.

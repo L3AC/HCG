@@ -25,7 +25,7 @@ if (isset($_GET['action'])) {
         case 'createRow':
             $_POST = Validator::validateForm($_POST);
             if (
-                !$producto->setIdPedido($_SESSION['id_pedido']) or
+                !$producto->setIdPedido($_POST['idPedido']) or
                 !$producto->setIdProducto($_POST['idProducto']) or
                 !$producto->setCantidad($_POST['cantidadProducto']) 
             ) {

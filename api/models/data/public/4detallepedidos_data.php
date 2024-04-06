@@ -33,7 +33,7 @@ class DetallePedidoData extends DetallePedidoHandler
             $this->idPedido = $value;
             return true; 
         } else {
-            $this->data_error = 'El identificador es incorrecto';
+            $this->data_error = 'El identificador del pedido es incorrecto';
             return false;
         }
     }
@@ -43,7 +43,7 @@ class DetallePedidoData extends DetallePedidoHandler
             $this->idProducto = $value;
             return true; 
         } else {
-            $this->data_error = 'El identificador es incorrecto';
+            $this->data_error = 'El identificador del producto es incorrecto';
             return false;
         }
     }

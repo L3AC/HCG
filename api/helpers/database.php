@@ -12,6 +12,7 @@ class Database
     private static $statement = null;
     private static $error = null;
 
+
     /*
      *   Método para ejecutar las sentencias SQL.
      *   Parámetros: $query (sentencia SQL) y $values (arreglo con los valores para la sentencia SQL).
@@ -47,6 +48,7 @@ class Database
         }
         return $id;
     }
+
 
     /*
      *   Método para obtener un registro de una sentencia SQL tipo SELECT.

@@ -188,11 +188,14 @@ BEGIN
         WHERE telefono_cliente = p_telefono_cliente OR correo_cliente = p_correo_cliente
         LIMIT 1;
     END IF;
-    INSERT INTO tb_pedidos (id_cliente, fecha_pedido, codigo_pedido, estado_pedido)
-    VALUES (p_id_cliente, now(), generar_codigo(), 'Pendiente');
+    INSERT INTO tb_pedidos (id_pedido,id_cliente, fecha_pedido, codigo_pedido, estado_pedido)
+    VALUES ((SELECT get_next_id("tb_pedidos")),p_id_cliente, now(), generar_codigo(), 'Pendiente');
     SELECT LAST_INSERT_ID() INTO p_id_pedido;
 END //
 DELIMITER ;
+select * from tb_clientes
+CALL obtener_id_cliente_y_pedido("Luis","Alvarenga","75900909", "leac.2xy@gmail.com", @id_cliente, @id_pedido)
+SELECT @id_cliente AS id_cliente, @id_pedido AS id_pedido;
 
 
 INSERT INTO tb_roles (id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, tipo_items_opc, items_opc, clientes_opc, usuarios_opc, roles_opc)
@@ -244,4 +247,6 @@ VALUES ((SELECT get_next_id("tb_pedidos")), 1,'Pendiente',generar_codigo());
 INSERT INTO tb_detalle_pedidos (id_detalle_pedido,id_pedido, id_producto, cantidad_pedido)
 VALUES((SELECT get_next_id("tb_detalle_pedidos")),1, 1, 2),
 ((SELECT get_next_id("tb_detalle_pedidos")),1, 2, 1);
-        
+
+select * from tb_pedidos;
+select * from tb_detalle_pedidos

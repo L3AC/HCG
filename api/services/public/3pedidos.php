@@ -23,19 +23,21 @@ if (isset($_GET['action'])) {
         case 'createRow':
             $_POST = Validator::validateForm($_POST);
             if (
-                !$producto->setNombre($_POST['nombreModelo']) or
-                !$producto->setCategoria($_POST['marcaModelo']) or
-                !$producto->setEstado(isset($_POST['estadoModelo']) ? 1 : 0) or
-                !$producto->setImagen($_FILES['imagenModelo'])
+                !$producto->setNombre($_POST['nombreCliente']) or
+                !$producto->setApellido($_POST['apellidoCliente']) or
+                !$producto->setTelefono($_POST['telefonoCliente']) or
+                !$producto->setCorreo($_POST['correoCliente'])
             ) {
                 $result['error'] = $producto->getDataError();
-            } elseif ($producto->createRow()) {
-                $result['status'] = 1;
-                $result['message'] = 'Producto creado correctamente';
-                // Se asigna el estado del archivo después de insertar.
-                $result['fileStatus'] = Validator::saveFile($_FILES['imagenProducto'], $producto::RUTA_IMAGEN);
             } else {
-                $result['error'] = 'Ocurrió un problema al crear el producto';
+                $id_pedido = $producto->createRow();
+                if ($id_pedido) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Pedido enviado correctamente';
+                    $result['dataset'] = array('id_pedido' => $id_pedido);
+                } else {
+                    $result['error'] = 'Ocurrió un problema al crear el producto';
+                }
             }
             break;
         case 'readAll':
