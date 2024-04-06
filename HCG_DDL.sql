@@ -46,3 +46,20 @@ BEGIN
 END//
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE InsertarProducto(IN tipo_producto VARCHAR(255),IN descripcion_producto VARCHAR(255),IN horario_producto VARCHAR(255),
+IN precio_producto DECIMAL(10,2),IN imagen_producto VARCHAR(255),IN estado_producto BOOLEAN,IN lunes_producto BOOLEAN,IN martes_producto BOOLEAN,
+IN miercoles_producto BOOLEAN,IN jueves_producto BOOLEAN,IN viernes_producto BOOLEAN,IN sabado_producto BOOLEAN,IN domingo_producto BOOLEAN
+)
+BEGIN
+    INSERT INTO tb_productos (id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,imagen_producto,estado_producto,
+        lunes_producto,martes_producto,miercoles_producto,jueves_producto,viernes_producto,sabado_producto,domingo_producto
+    ) 
+    VALUES (
+        (SELECT get_next_id("tb_productos")),tipo_producto,descripcion_producto,horario_producto,precio_producto,imagen_producto,
+        estado_producto,lunes_producto,martes_producto,miercoles_producto,jueves_producto,viernes_producto,sabado_producto,domingo_producto
+    );
+END //
+DELIMITER ;
+
+

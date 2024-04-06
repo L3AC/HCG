@@ -43,15 +43,13 @@ class ProductoHandler
         $params = array($value, $value);
         return Database::getRows($sql, $params);
     }
-    public function searchModelos($value)
+    public function searchProductos($value)
     {
         $value = !empty($value) ? '%' . $value . '%' : '%%';
         
-        $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
-        FROM prc_modelos 
-        INNER JOIN ctg_marcas USING(id_marca)
-        WHERE estado_modelo=true AND descripcion_modelo like ?
-        ORDER BY descripcion_modelo';
+        $sql = 'SELECT *
+        FROM tb_productos
+        WHERE estado_producto = 1 AND descripcion_producto LIKE ?';
 
         $params = array($value);
         return Database::getRows($sql, $params);

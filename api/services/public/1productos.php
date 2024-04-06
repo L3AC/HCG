@@ -19,8 +19,8 @@ if (isset($_GET['action'])) {
                 $result['error'] = ' no existen registros para mostrar';
             }
             break;
-        case 'searchModelos':
-            if ($result['dataset'] = $producto->searchModelos($_POST['modelo'])) {
+        case 'searchProductos':
+            if ($result['dataset'] = $producto->searchProductos($_POST['producto'])) {
                 $result['status'] = 1;
             } else {
                 $result['error'] = ' no existen registros para mostrar';
