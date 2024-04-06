@@ -34,6 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
     MAIN_TITLE.textContent = 'Carrito de compras';
     // Llamada a la función para mostrar los productos del carrito de compras.
     readDetail();
+
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    if (carrito.length === 0) {
+        sweetAlert(4, "El carrito está vacío", true, "index.html");
+    } else {
+        
+    }
 });
 CLIENTE_FORM.addEventListener('submit', async (event) => {
     event.preventDefault();
