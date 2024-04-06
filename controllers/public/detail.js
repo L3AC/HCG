@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const DATA = await fetchData(PRODUCTO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
-
         const ROW = DATA.dataset;
         // Se colocan los datos en la página web de acuerdo con el producto seleccionado previamente.
         MAIN_TITLE.textContent = ROW.descripcion_producto;
@@ -57,7 +56,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         ID_MODELO.value = ROW.id_producto;
         TIPO_PRODUCTO.textContent = "Tipo: " + ROW.tipo_producto;
         PRECIO_PRODUCTO.textContent = "Precio: " + ROW.precio_producto;
-
 
         const agregarAlPedidoBtn = document.querySelector('#idGuardar button');
         agregarAlPedidoBtn.addEventListener('click', () => {
@@ -71,9 +69,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             // Obtener el carrito actual o crear uno vacío si no existe
-            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            // Agregar el nuevo producto al carrito
-            carrito.push({ idProducto,cantidad});
+            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            // Buscar si el producto ya está en el carrito
+            const index = carrito.findIndex(item => item.idProducto === idProducto);
+            if (index !== -1) {
+                // Si el producto ya está en el carrito, sumar la cantidad
+                carrito[index].cantidad = parseInt(carrito[index].cantidad) + parseInt(cantidad);
+            } else {
+                // Si el producto no está en el carrito, agregarlo con la nueva cantidad
+                carrito.push({ idProducto, cantidad });
+            }
             // Guardar el carrito en localStorage
             localStorage.setItem('carrito', JSON.stringify(carrito));
 
@@ -81,6 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Limpiar el campo de cantidad
             document.getElementById('cantidadProducto').value = '';
         });
+
 
         const FORM2 = new FormData();
         FORM2.append('idProducto', ID_MODELO.value);
