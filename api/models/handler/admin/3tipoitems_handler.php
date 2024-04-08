@@ -79,7 +79,7 @@ class TipoItemHandler
     {
         $sql = 'UPDATE tb_tipo_items
                 SET descripcion_tipo_item = ?, estado_tipo_item = ?
-                WHERE id_tipo_items = ?';
+                WHERE id_tipo_item = ?';
         $params = array( $this->nombre, $this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
