@@ -25,8 +25,9 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setNombretalla($_POST['nombreTalla']) or
-                    !$producto->setEstado(isset($_POST['estadoTalla']) ? 1 : 0) 
+                    !$producto->setNombre($_POST['nombreItem']) or
+                    !$producto->setIdTipoItem($_POST['tipoItem']) or
+                    !$producto->setEstado(isset($_POST['estadoItem']) ? 1 : 0) 
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {
@@ -76,14 +77,15 @@ if (isset($_GET['action'])) {
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setId($_POST['idTalla']) or
-                    !$producto->setNombretalla($_POST['nombreTalla']) or
-                    !$producto->setEstado(isset($_POST['estadoTalla']) ? 1 : 0) 
+                    !$producto->setId($_POST['idItem']) or
+                    !$producto->setNombre($_POST['nombreItem']) or
+                    !$producto->setIdTipoItem($_POST['tipoItem']) or
+                    !$producto->setEstado(isset($_POST['estadoItem']) ? 1 : 0) 
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto modificado correctamente';
+                    $result['message'] = 'Registro modificado correctamente';
                     // Se asigna el estado del archivo después de actualizar.
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el producto';
@@ -91,14 +93,12 @@ if (isset($_GET['action'])) {
                 break;
             case 'deleteRow':
                 if (
-                    !$producto->setId($_POST['idTalla']) 
+                    !$producto->setId($_POST['idItem']) 
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto eliminado correctamente';
-                    // Se asigna el estado del archivo después de eliminar.
-                    $result['fileStatus'] = Validator::deleteFile($producto::RUTA_IMAGEN, $producto->getFilename());
+                    $result['message'] = 'Registro eliminado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar el producto';
                 }

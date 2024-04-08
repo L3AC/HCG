@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const PRODUCTO_API = 'services/public/producto.php';
+const PRODUCTO_API = 'services/public/1productos.php';
 // Constante tipo objeto para obtener los parámetros disponibles en la URL.
 const PARAMS = new URLSearchParams(location.search);
 const PRODUCTOS = document.getElementById('productos');
@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(2);
     }
     if (PARAMS.has('modelo')) {
-        FORM.append('modelo', PARAMS.get('modelo'));
-        action='searchModelos';
+        FORM.append('producto', PARAMS.get('modelo'));
+        action='searchProductos';
         console.log(1);
     }
     // Petición para solicitar los productos de la categoría seleccionada.
@@ -33,25 +33,43 @@ document.addEventListener('DOMContentLoaded', async () => {
         DATA.dataset.forEach(row => {
             // Se crean y concatenan las tarjetas con los datos de cada producto.
             PRODUCTOS.innerHTML += `
-            <div class="d-flex justify-content-center col-md-3 col-sm-6 mb-4">
-            <div class="card hadow">
-                <div >
-                <a href="detail.html?id=${row.id_modelo}">
-                    <img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img img-fluid img-hover" style="height: 220px; width: 260px;" alt="${row.descripcion_modelo}">
-                    </a>
+            <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 20px; margin-right: 60px;">
+                <div class="image_container">
+                    <img src="${row.imagen_producto}" alt="" class="image">
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title title ew-truncate">${row.descripcion_modelo}</h5>
-                    <p class="card-text marca ew-truncate">${row.marca}</p>
-                    <div class="d-grid gap-2 mmm">
-                        <a href="detail.html?id=${row.id_modelo}" class="btn90">
-                            <span class="text">Comprar</span>
-                            <span>Adquirir!</span>
-                        </a>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="title">
+                            <span class="titulo">${row.descripcion_producto}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="size">
+                            <span class="Horario">Horario: ${row.horario_producto}</span><br>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="action">
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="price">
+                                <span>$${row.precio_producto}</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <a href="detail.html?id=${row.id_producto}" class="btn90">
+                                <button type="button" class="btnAgregar">
+                                    <i class="bi bi-plus-lg"></i>
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
             `;
         });
     } else {

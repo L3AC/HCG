@@ -46,7 +46,7 @@ class AdministradorHandler
         $params = array($username);
         $data = Database::getRow($sql, $params);
         //echo $data['clave'];
-        if (password_verify($password, $data['clave_usuario'])) {
+        if ($data && password_verify($password, $data['clave_usuario'])) {
             $_SESSION['idUsuario'] = $data['id_usuario'];
             $_SESSION['alias'] = $data['alias_usuario'];
             $_SESSION['idRol'] = $data['id_rol'];

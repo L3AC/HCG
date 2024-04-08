@@ -4,14 +4,17 @@ require_once('../../helpers/database.php');
 /*
 *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
 */
-class ItemHandler
+class DetallePedidoHandler
 {
     /*
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
-    protected $idTipoItem = null;
+    protected $idPedido = null;
     protected $idProducto = null;
+    protected $cantidad = null;
+
+    protected $idTalla = null;
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -28,66 +31,53 @@ class ItemHandler
     */
     public function searchRows($value)
     {
-        $value = ($value === '') ? '%%' : '%' . $value . '%';
+        $value = $value === '' ? '%%' : '%' . $value . '%';
 
-        $sql = 'SELECT id_item, descripcion_item, estado_item
-                FROM tb_items
-                WHERE descripcion_item LIKE  ? 
-                ORDER BY CAST(descripcion_item AS UNSIGNED)';
+        $sql = 'select id_detalle_pedido,id_pedido,id_producto,cantidad_pedido,
+        descripcion_producto,imagen_producto,precio_producto,
+        precio_producto * cantidad_pedido AS total_pedido
+        from tb_detalle_pedidos
+        INNER JOIN tb_productos USING(id_producto)
+        WHERE id_pedido=? AND descripcion_producto like ?
+        ORDER BY tipo_producto';
 
-        $params = array($value);
+        $params = array($this->id,$value);
         return Database::getRows($sql, $params);
     }
 
     public function createRow()
     {
-        $sql = 'INSERT INTO tb_items(id_item,id_tipo_item,descripcion_item, estado_item)
-                VALUES((SELECT get_next_id("tb_items")),?,?, ?)';
-        $params = array($this->idTipoItem,$this->nombre, $this->estado);
+        $sql = 'INSERT INTO tb_detalle_pedidos (id_detalle_pedido,id_pedido, id_producto, cantidad_pedido)
+        VALUES((SELECT get_next_id("tb_detalle_pedidos")),?, ?, ?)';
+        $params = array($this->idPedido, $this->idProducto, $this->cantidad);
         return Database::executeRow($sql, $params);
     }
 
     public function readAll()
     {
-        $sql = 'SELECT id_item,id_tipo_item,descripcion_item,descripcion_tipo_item,estado_item
-        FROM tb_items 
-        INNER JOIN tb_tipo_items USING (id_tipo_item)
-        ORDER BY descripcion_tipo_item;';
-        return Database::getRows($sql);
-    }
-    public function readAllActive()
-    {
-        $sql = 'SELECT id_item, descripcion_tipo_item,descripcion_item, estado_item
-        FROM tb_items
-        INNER JOIN tb_tipo_items USING(id_tipo_item)
-        WHERE estado_item=true and estado_tipo_item=true
-        ORDER BY CAST(descripcion_tipo_item AS UNSIGNED)';
-        return Database::getRows($sql);
-    }
-    public function readAllNot($value)
-    {
-        $value = ($value === '') ? '%%' : '%' . $value . '%';
-        $sql = 'SELECT id_item, descripcion_tipo_item,descripcion_item, estado_item 
-        FROM tb_items 
-        INNER JOIN tb_tipo_items USING(id_tipo_item)
-        WHERE id_item NOT IN (
-            SELECT id_item
-            FROM tb_detalle_productos
-            WHERE id_producto = ?
-        ) 
-        AND estado_item=true and estado_tipo_item=true 
-        AND descripcion_item like ?
-        ORDER BY CAST(descripcion_tipo_item AS UNSIGNED);';
-        $params = array($this->idProducto,$value);
+        $sql = 'select mt.id_modelo_talla,mt.id_talla,mt.id_modelo,mt.stock_modelo_talla,
+        mt.precio_modelo_talla,t.descripcion_talla as talla
+        from prc_modelo_tallas mt 
+        INNER JOIN ctg_tallas t USING(id_talla)
+        INNER JOIN prc_modelos m USING(id_modelo)
+        WHERE mt.id_modelo = ?
+        ORDER BY t.descripcion_talla';
+        //echo $this->idModelo. ' que';
+        $params = array($this->idModelo);
+        
         return Database::getRows($sql, $params);
     }
+    
 
     public function readOne()
     {
-        $sql ='SELECT id_item,id_tipo_item,descripcion_item,descripcion_tipo_item,estado_item
-        FROM tb_items 
-        INNER JOIN tb_tipo_items USING (id_tipo_item)
-        WHERE id_item=? ';
+        $sql ='select mt.id_modelo_talla,mt.id_talla,mt.id_modelo,mt.stock_modelo_talla,
+        mt.precio_modelo_talla,t.descripcion_talla as talla
+        from prc_modelo_tallas mt 
+        INNER JOIN ctg_tallas t USING(id_talla)
+        INNER JOIN prc_modelos m USING(id_modelo)
+        WHERE mt.id_modelo_talla =?
+        ORDER BY t.descripcion_talla ';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
@@ -103,17 +93,17 @@ class ItemHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE tb_items
-                SET descripcion_item = ?,estado_item = ?,id_tipo_item=?
-                WHERE id_item = ?';
-        $params = array($this->nombre,$this->estado,$this->idTipoItem, $this->id);
+        $sql = 'UPDATE prc_modelo 
+                SET foto = ?, descripcion = ?,estado = ?, id_marca = ?
+                WHERE id_modelo = ?';
+        $params = array($this->imagen, $this->nombre,$this->estado, $this->categoria, $this->id);
         return Database::executeRow($sql, $params);
     }
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM tb_items
-                WHERE id_item = ?';
+        $sql = 'DELETE FROM prc_modelos
+                WHERE id_modelo = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
@@ -122,7 +112,7 @@ class ItemHandler
     {
         $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
         FROM prc_modelos mo
-        INNER JOIN tb_marcas ma USING(id_marca)
+        INNER JOIN ctg_marcas ma USING(id_marca)
         WHERE mo.id_marca LIKE ? OR estado="A"
         ORDER BY mo.descripcion';
         /*'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto

@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    
+
     // Constante tipo objeto con los datos del producto seleccionado.
     const FORM = new FormData();
     console.log(PARAMS.get('id'));
@@ -49,14 +49,44 @@ document.addEventListener('DOMContentLoaded', async () => {
     const DATA = await fetchData(PRODUCTO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
-        
-        const ROW=DATA.dataset;
+        const ROW = DATA.dataset;
         // Se colocan los datos en la página web de acuerdo con el producto seleccionado previamente.
         MAIN_TITLE.textContent = ROW.descripcion_producto;
         IMAGEN_MODELO.src = ROW.imagen_producto;
         ID_MODELO.value = ROW.id_producto;
-        TIPO_PRODUCTO.textContent = "Tipo: "+ROW.tipo_producto;
-        PRECIO_PRODUCTO.textContent = "Precio: "+ROW.precio_producto;
+        TIPO_PRODUCTO.textContent = "Tipo: " + ROW.tipo_producto;
+        PRECIO_PRODUCTO.textContent = "Precio: " + ROW.precio_producto;
+
+        const agregarAlPedidoBtn = document.querySelector('#idGuardar button');
+        agregarAlPedidoBtn.addEventListener('click', () => {
+            const idProducto = ROW.id_producto;
+            const cantidad = document.getElementById('cantidadProducto').value;
+
+            // Validar que la cantidad no esté vacía y sea mayor que cero
+            if (cantidad.trim() === '' || parseInt(cantidad) <= 0) {
+                alert('Por favor ingrese una cantidad válida.');
+                return;
+            }
+
+            // Obtener el carrito actual o crear uno vacío si no existe
+            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            // Buscar si el producto ya está en el carrito
+            const index = carrito.findIndex(item => item.idProducto === idProducto);
+            if (index !== -1) {
+                // Si el producto ya está en el carrito, sumar la cantidad
+                carrito[index].cantidad = parseInt(carrito[index].cantidad) + parseInt(cantidad);
+            } else {
+                // Si el producto no está en el carrito, agregarlo con la nueva cantidad
+                carrito.push({ idProducto, cantidad });
+            }
+            // Guardar el carrito en localStorage
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+
+            alert('Producto agregado al pedido');
+            // Limpiar el campo de cantidad
+            document.getElementById('cantidadProducto').value = '';
+        });
+
 
         const FORM2 = new FormData();
         FORM2.append('idProducto', ID_MODELO.value);
@@ -139,9 +169,8 @@ const openModal = async (id) => {
 
 
 // Método del evento para cuando se envía el formulario de agregar un producto al carrito.
-SAVE_FORM.addEventListener('submit', async (event) => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    
+/*SAVE_FORM.addEventListener('submit', async (event) => {
+
     /*
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
@@ -156,5 +185,5 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     } else {
         sweetAlert(3, DATA.error, true, 'login.html');
-    }*/
-});
+    }
+});*/
