@@ -81,6 +81,21 @@ CREATE TABLE tb_productos(
   PRIMARY KEY (id_producto)
 );
 
+SELECT id_producto, descripcion_producto, COUNT(*) AS veces_pedidos,
+ROUND((COUNT(id_producto) * 100.0 / (SELECT COUNT(id_producto) FROM tb_productos)), 2)porcentaje
+FROM tb_detalle_pedidos
+INNER JOIN tb_productos USING(id_producto)
+GROUP BY id_producto, descripcion_producto
+ORDER BY veces_pedidos DESC
+LIMIT 10; 
+
+
+SELECT id_producto, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
+        FROM tb_productos
+        INNER JOIN ctg_marcas USING(id_marca)
+        WHERE estado_modelo=true and id_marca=?
+        ORDER BY descripcion_modelo
+
 CREATE TABLE tb_detalle_productos(
   id_detalle_producto INT UNSIGNED /*auto_increment*/,
   id_item INT UNSIGNED  NOT NULL,
