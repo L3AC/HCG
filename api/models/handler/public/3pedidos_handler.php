@@ -52,38 +52,40 @@ class PedidoHandler
 
     public function createRow()
     {
-    // Verificar si el cliente existe
-    $sql = 'SELECT id_cliente FROM tb_clientes WHERE telefono_cliente = ? OR correo_cliente = ?;';
-    $params = array($this->telefono, $this->correo);
-    $result = Database::getRow($sql, $params);
+        // Verificar si el cliente existe
+        $sql = 'SELECT id_cliente FROM tb_clientes WHERE telefono_cliente = ? OR correo_cliente = ?;';
+        $params = array($this->telefono, $this->correo);
+        $result = Database::getRow($sql, $params);
 
-    if ($result) {
-        // El cliente ya existe, obtener su ID
-        $id_cliente = $result['id_cliente'];
-    } else {
-        // El cliente no existe, crear nuevo cliente y obtener su ID
-        $sql = 'INSERT INTO tb_clientes (id_cliente,telefono_cliente, correo_cliente, nombre_cliente, apellido_cliente)
+        if ($result) {
+            // El cliente ya existe, obtener su ID
+            $id_cliente = $result['id_cliente'];
+        } else {
+            // El cliente no existe, crear nuevo cliente y obtener su ID
+            $sql = 'INSERT INTO tb_clientes (id_cliente,telefono_cliente, correo_cliente, nombre_cliente, apellido_cliente)
                 VALUES ((SELECT get_next_id("tb_clientes")),?, ?, ?, ?);';
-        $params = array($this->telefono, $this->correo,$this->nombre,$this->apellido);
-        Database::executeRow($sql, $params);
-        $id_cliente = Database::getLastRow($sql, $params);
-    }
+            $params = array($this->telefono, $this->correo, $this->nombre, $this->apellido);
+            Database::executeRow($sql, $params);
+            $sql = 'select * from tb_clientes;';
+            $params = array('');
+            $id_cliente = Database::getLastRow($sql, $params);
+        }
 
-    // Insertar el pedido
-    $sql = 'INSERT INTO tb_pedidos (id_pedido,id_cliente, fecha_pedido, codigo_pedido, estado_pedido)
+        // Insertar el pedido
+        $sql = 'INSERT INTO tb_pedidos (id_pedido,id_cliente, fecha_pedido, codigo_pedido, estado_pedido)
             VALUES ((SELECT get_next_id("tb_pedidos")),?, now(), generar_codigo(), "Pendiente");';
-    $params = array($id_cliente);
-    Database::executeRow($sql, $params);
+        $params = array($id_cliente);
+        Database::executeRow($sql, $params);
 
-    $sql = 'SELECT IFNULL(MAX(id_pedido), 0) as id_pedido FROM tb_pedidos;';
-    $result = Database::getRow($sql);
+        $sql = 'SELECT IFNULL(MAX(id_pedido), 0) as id_pedido FROM tb_pedidos;';
+        $result = Database::getRow($sql);
 
-    //$id_pedido = Database::getLastRow($sql, $params);
+        //$id_pedido = Database::getLastRow($sql, $params);
 
-    //echo "ID PEDIDO ". $result['id_pedido'];
-    // Retornar el ID del pedido
-    return $result['id_pedido'];
-}
+        //echo "ID PEDIDO ". $result['id_pedido'];
+        // Retornar el ID del pedido
+        return $result['id_pedido'];
+    }
 
     public function readAll()
     {
