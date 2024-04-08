@@ -104,11 +104,11 @@ async function readDetail() {
 
             // Agregar la fila a la tabla
             TABLE_BODY.innerHTML += `
-            <div class="card mb-3" id="detalle" style="background-color: #F1EFEF;">
-            <div class="row g-0" style="background-color: #F1EFEF;">
+            <div class="cardlard mb-3" id="detalle" style="background-color: #F1EFEF;">
+            <div class="row g-0 cardlard" style="background-color: #E3DECA;">
                 <div class="col-lg-4 col-md-12 col-sm-12">
-                    <img height="80px" width="70%" src="${ROW.imagen_producto}"
-                        class="img-fluid rounded" alt="${ROW.descripcion_producto}">
+                    <img height="80px" width="100%" src="${ROW.imagen_producto}"
+                        class="img-fluid" style="border-radius:20px;" alt="${ROW.descripcion_producto}">
                 </div>
                 <div class="col-lg-5 col-md-12 col-sm-12">
                     <div class="card-body">
@@ -123,18 +123,17 @@ async function readDetail() {
                 </div>
                 <div class="col-lg-3 col-md-12 col-sm-12 ">
                     <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-5">
-                            <button class="btn1 "
+                        <div class="col-lg-5 col-md-6 col-sm-12">
+                            <button class="btnAgregare "
                                 onclick="openUpdate(${item.idProducto},${item.cantidad});"
                                 style=" margin-right: 10px;">
-                                Edit
+                                <i class="bi bi-pencil-square"></i>
                             </button>
                         </div>
-                        <div class="col-5">
-                            <button class="btn1 " onclick="openDelete(${item.idProducto})" 
+                        <div class="col-lg-5 col-md-6 col-sm-12">
+                            <button class="btnAgregare " onclick="openDelete(${item.idProducto})" 
                             style="text-align: center;">
-                                Delete
+                            <i class="bi bi-trash3"></i>
                             </button>
                         </div>
                         <div class="col-1"></div>

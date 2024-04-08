@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <img src="${row.imagen_producto}" alt="" class="image">
                         </div>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12" >
                                 <div class="title">
                                     <span class="titulo">${row.descripcion_producto}</span>
                                 </div>
