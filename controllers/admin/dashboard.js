@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const PRODUCTO_API = 'services/admin/2modelos.php';
+const PRODUCTO_API = 'services/admin/1productos.php';
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -44,7 +44,7 @@ const graficoBarrasCategorias = async () => {
             cantidades.push(row.cantidad);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        barGraph('chart1', categorias, cantidades, 'Cantidad de modelos', 'Cantidad de modelos por marca');
+        barGraph('chart1', categorias, cantidades, 'Cantidad de productos', 'Cantidad de modelos por marca');
     } else {
         document.getElementById('chart1').remove();
         console.log(DATA.error);

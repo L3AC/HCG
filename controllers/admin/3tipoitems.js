@@ -140,9 +140,7 @@ const openUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_PRODUCTO.value = ROW.id_tipo_item;
-        
         NOMBRE_PRODUCTO.value = ROW.descripcion_tipo_item;
-        console.log(NOMBRE_PRODUCTO.value);
         ESTADO_PRODUCTO.checked = ROW.estado_tipo_item;
     } else {
         sweetAlert(2, DATA.error, false);
