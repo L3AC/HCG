@@ -105,8 +105,8 @@ const fillTable = async (form = null) => {
             <div class="cardlar row" style="width: 100%; py-5">
             <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Apellido: </div>${row.apellido_cliente}</div>
             <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.nombre_cliente}</div>
-            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Correo: </div>${row.telefono_cliente}</div>
-            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Usuario: </div>${row.correo_cliente}</div>
+            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Teléfono: </div>${row.telefono_cliente}</div>
+            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Correo: </div>${row.correo_cliente}</div>
                 <div class="col-lg-1 col-md-12 col-sm-12" style="display: flex; align-items: center;font-size: 30px;"><div class="texto-antes" style="font-size: 17px;">Estado: </div><i  class="${icon}"></i></div>
                 <div class="col-lg-1 col-md-6 col-sm-12">
                 <button type="button" class="btnAgregar" style="width: 100%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_cliente})">

@@ -130,17 +130,17 @@ const fillTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
-                    <div class="col-lg-2 col-md-3" style="display: flex; align-items: center;">${row.cliente}</div>
-                    <div class="col-lg-2 col-md-3" style="display: flex; align-items: center;">${row.fecha}</div>
-                    <div class="col-lg-2 col-md-3" style="display: flex; align-items: center;">${row.estado_pedido}</div>
-                    <div class="col-lg-4 col-md-3">
-                        <button type="button" title="Finalizar pedido" class="btnAgregar" onclick="openConfirm(${row.id_pedido})">
+                    <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.cliente}</div>
+                    <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
+                    <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Estado: </div>${row.estado_pedido}</div>
+                    <div class="col-lg-3 col-md-12 col-sm-12 d-flex justify-content-end">
+                        <button type="button" title="Finalizar pedido" class="btnAgregar"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openConfirm(${row.id_pedido})">
                             <i class="bi bi-check-lg"></i>
                         </button>
-                        <button type="button" title="Detalle pedido" style="margin-top: 10px; margin-bottom: 10px;" class="btnAgregar" onclick="openUpdate(${row.id_pedido})">
+                        <button type="button" title="Detalle pedido" class="btnAgregar"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_pedido})">
                             <i class="bi bi-info-circle" ></i>
                         </button>
-                        <button type="button" title="Eliminar pedido" class="btnAgregar" onclick="openDelete(${row.id_pedido})">
+                        <button type="button" title="Eliminar pedido" class="btnAgregar" style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_pedido})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </div>

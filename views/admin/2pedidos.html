@@ -41,7 +41,7 @@
             <!-- Formulario de búsqueda -->
             <form class="col-sm-12 col-md-12" id="searchForm">
                 <div class="row">
-                    <div class="col-lg-3 col-md-5 col-sm-6 mx-auto">
+                    <div class="col-lg-6 col-md-5 col-sm-6 mx-auto">
                         <!-- Campo de búsqueda -->
                         <div class="group">
                             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -62,8 +62,24 @@
         <br>
 
         <!-- Tabla con registros -->
-
-        <div colspan="6" id="rowsFound" style="color: white; font-weight: bold;"></div>
+        <p colspan="6" id="rowsFound" class="text elemtoCampoTabla"></p>
+        <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+        <div class="apa">
+            <div class="row row-md-12">
+                <div class="col-2">
+                </div>
+                <div class="col-2">
+                    <p class="elemtoCampoTabla">NOMBRES</p>
+                </div>
+                <div class="col-2">
+                    <p class="elemtoCampoTabla">FECHA</p></div> 
+                <div class="col-1 me-5">
+                    <p class="elemtoCampoTabla">ESTADO</p>
+                </div> 
+                <div class="col-2 ms-4">
+                </div> 
+            </div>
+        </div>
         <div id="tableBody"></div>
 
         <!-- Componente Modal para guardar un registro -->
