@@ -139,3 +139,16 @@
   color: #5C2C0C;
   background-color: #E3DECA;
 }
+
+.btnAgregar3 {
+  position: relative;
+  font-size: 17px;
+  padding: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: inline-block;
+  border-radius: 6em;
+  border-color: #5C2C0C;
+  color: #5C2C0C;
+  background-color: #E3DECA;
+}

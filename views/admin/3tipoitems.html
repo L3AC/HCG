@@ -22,6 +22,10 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    <!--FONTS-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
 <body class="bodyp">
@@ -49,14 +53,19 @@
         <!-- Botones de la parte derecha -->
         <div class="col-sm-12 col-md-12 d-flex justify-content-end pb-3 pt-3">
             <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
-            <button type="button" class="btn btn-primary" onclick="openCreate()">
-                <i class="bi bi-plus-square-fill"></i>
+            <button type="button" class="btnAgregar3" onclick="openCreate()">
+                 <i class="bi bi-plus-square-fill"></i>   Agregar
             </button>
         </div>
 
 
         <p style="color: #FFFFFF;" colspan="6" id="rowsFound" class="text"></p>
         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-4"><p style="font-weight: bold; color: white;">Tipo item</p></div>
+            <div class="col-3"><p style="font-weight: bold; color: white;">Estado</p></div>
+        </div>
         <div id="tableBody"></div>
 
         <!-- Componente Modal para guardar un registro -->
