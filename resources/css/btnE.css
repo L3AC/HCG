@@ -68,7 +68,7 @@
 }
 
 .btn2:hover {
-  color: rgb(148, 147, 147);
+  box-shadow: 10px 5px 5px rgba(54, 54, 54, 0.842);
 }
 
 .btn2:hover svg {
@@ -129,7 +129,7 @@
 
 .btnAgregar {
   position: relative;
-  font-size: 17px;
+  font-size: 25px;
   padding: 5px;
   padding-left: 20px;
   padding-right: 20px;
@@ -138,6 +138,10 @@
   border-color: #5C2C0C;
   color: #5C2C0C;
   background-color: #E3DECA;
+}
+
+.btnAgregar:hover{
+  box-shadow: 10px 4px 5px rgba(54, 54, 54, 0.938);
 }
 
 .btnAgregar3 {

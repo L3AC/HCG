@@ -1,6 +1,21 @@
 .cardlar {
     width: 70%;
-    height: 100%;
+    height: 90px;
     border-radius: 20px;
-    background: #E3DECA;
+    background-color: #ffffff;
+ }
+
+ .cardlarUsu{
+    height: 90px;
+    border-radius: 20px;
+    background-color: #ffffff;
+ }
+
+   .elemtoCampoTabla{
+    font-weight: bold; 
+    color: rgb(255, 255, 255);
+   }
+
+   .btnBotonTabla:hover{
+    box-shadow: 10px 5px 5px rgba(54, 54, 54, 0.842);
    }
