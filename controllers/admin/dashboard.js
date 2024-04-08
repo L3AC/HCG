@@ -40,8 +40,8 @@ const graficoBarrasCategorias = async () => {
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            categorias.push(row.descripcion_marca);
-            cantidades.push(row.cantidad);
+            categorias.push(row.descripcion_producto);
+            cantidades.push(row.precio_producto);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
         barGraph('chart1', categorias, cantidades, 'Cantidad de productos', 'Cantidad de modelos por marca');
@@ -67,7 +67,7 @@ const graficoPastelCategorias = async () => {
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            categorias.push(row.descripcion_marca);
+            categorias.push(row.descripcion_producto);
             porcentajes.push(row.porcentaje);
         });
         // Llamada a la función para generar y mostrar un gráfico de pastel. Se encuentra en el archivo components.js

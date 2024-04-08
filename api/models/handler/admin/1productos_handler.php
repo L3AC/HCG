@@ -171,11 +171,14 @@ class ProductoHandler
 
     public function porcentajeProductosCategoria()
     {
-        $sql = 'SELECT descripcion_marca, ROUND((COUNT(id_modelo) * 100.0 / (SELECT COUNT(id_modelo) FROM prc_modelos)), 2)
-        porcentaje
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        GROUP BY descripcion_marca ORDER BY porcentaje DESC';
+        $sql = '
+        SELECT id_producto, descripcion_producto, COUNT(*) AS veces_pedidos,
+        ROUND((COUNT(id_producto) * 100.0 / (SELECT COUNT(id_producto) FROM tb_productos)), 2)porcentaje
+        FROM tb_detalle_pedidos
+        INNER JOIN tb_productos USING(id_producto)
+        GROUP BY id_producto, descripcion_producto
+        ORDER BY veces_pedidos DESC
+        LIMIT 10;';
         return Database::getRows($sql);
     }
 
