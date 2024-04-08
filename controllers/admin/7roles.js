@@ -137,12 +137,12 @@ const fillTable = async (form = null) => {
                     <div class="col-1" style="display: flex; align-items: center;font-size: 30px;""><i  class="${icon}"></i></div>
                     <div class="col-lg-5 row ">
                     <div class="col-lg-4 col-md-3 col-sm-3 ms-4">
-                    <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_rol})" style="margin-top:20px;">
+                    <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_rol})" >
                         <i class="bi bi-pencil-fill"></i>
                     </button>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-3">
-                    <button type="button" class="btnAgregar" onclick="openDelete(${row.id_rol})" style="margin-top:20px;">
+                    <button type="button" class="btnAgregar" onclick="openDelete(${row.id_rol})" >
                         <i class="bi bi-trash-fill"></i>
                     </button>
                 </div>

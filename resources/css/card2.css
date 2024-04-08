@@ -1,12 +1,6 @@
 .cardlar {
     width: 70%;
-    height: 90px;
-    border-radius: 20px;
-    background-color: #ffffff;
- }
-
- .cardlarUsu{
-    height: 90px;
+    height: 100%;
     border-radius: 20px;
     background-color: #ffffff;
  }

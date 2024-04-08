@@ -148,20 +148,20 @@ const fillTable = async (form = null) => {
             (row.estado_usuario) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-            <div class="cardlarUsu row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
+            <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
             <div class="col-2" style="display: flex; align-items: center;">${row.apellido_usuario}</div>
             <div class="col-2" style="display: flex; align-items: center;">${row.nombre_usuario}</div>
             <div class="col-2" style="display: flex; align-items: center;">${row.email_usuario}</div>
             <div class="col-2" style="display: flex; align-items: center;">${row.alias_usuario}</div>
                 <div class="col-1 " style="display: flex; align-items: center;font-size: 30px;""><i  class="${icon}"></i></div>
                 <div class="col-lg-2 col-md-2 row ">
-                <div class="col-lg-6 col-md-2 col-sm-3 ms-4">
-                <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_usuario})" style="margin-top:20px;">
+                <div class="col-lg-4 col-md-2 col-sm-3">
+                <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_usuario})">
                     <i class="bi bi-pencil-fill"></i>
                 </button>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-3">
-                <button type="button" class="btnAgregar" onclick="openDelete(${row.id_usuario})" style="margin-top:20px;">
+                <button type="button" class="btnAgregar" onclick="openDelete(${row.id_usuario})" >
                     <i class="bi bi-trash-fill"></i>
                 </button>
             </div>
