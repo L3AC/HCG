@@ -10,6 +10,7 @@ class ItemHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $idTipoItem = null;
     protected $idProducto = null;
     protected $nombre = null;
     protected $descripcion = null;
@@ -40,9 +41,9 @@ class ItemHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO tb_items(descripcion_item, estado_item)
-                VALUES(?, ?)';
-        $params = array($this->nombre, $this->estado);
+        $sql = 'INSERT INTO tb_items(id_item,id_tipo_item,descripcion_item, estado_item)
+                VALUES((SELECT get_next_id("tb_items")),?,?, ?)';
+        $params = array($this->idTipoItem,$this->nombre, $this->estado);
         return Database::executeRow($sql, $params);
     }
 
@@ -103,9 +104,9 @@ class ItemHandler
     public function updateRow()
     {
         $sql = 'UPDATE tb_items
-                SET descripcion_item = ?,estado_item = ?
+                SET descripcion_item = ?,estado_item = ?,id_tipo_item=?
                 WHERE id_item = ?';
-        $params = array($this->nombre,$this->estado, $this->id);
+        $params = array($this->nombre,$this->estado,$this->idTipoItem, $this->id);
         return Database::executeRow($sql, $params);
     }
 
