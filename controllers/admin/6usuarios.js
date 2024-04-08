@@ -1,6 +1,6 @@
 // Constante para completar la ruta de la API.
 const ADMINISTRADOR_API = 'services/admin/6usuarios.php',
-       ROL_API = 'services/admin/7roles.php'; 
+    ROL_API = 'services/admin/7roles.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer los elementos de la tabla.
@@ -11,7 +11,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-INPUTSEARCH = document.getElementById('inputsearch'),   
+    INPUTSEARCH = document.getElementById('inputsearch'),
     ID_ADMINISTRADOR = document.getElementById('idAdministrador'),
     ROL_ADMINISTRADOR = document.getElementById('rolUsuario'),
     NOMBRE_ADMINISTRADOR = document.getElementById('nombreAdministrador'),
@@ -20,8 +20,8 @@ INPUTSEARCH = document.getElementById('inputsearch'),
     ALIAS_ADMINISTRADOR = document.getElementById('aliasAdministrador'),
     CLAVE_ADMINISTRADOR = document.getElementById('claveAdministrador'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
-    ESTADO_USUARIO=document.getElementById('estadoUsuario');
-    const mensajeDiv = document.getElementById('mensajeDiv'),
+    ESTADO_USUARIO = document.getElementById('estadoUsuario');
+const mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
 
 // Método del evento para cuando el documento ha cargado.
@@ -68,7 +68,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 //METODO PARA BUSCAR 
-INPUTSEARCH.addEventListener('input', async function ()  {
+INPUTSEARCH.addEventListener('input', async function () {
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     const FORM = new FormData();
@@ -79,7 +79,7 @@ INPUTSEARCH.addEventListener('input', async function ()  {
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            
+
             (row.estado_usuario) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
@@ -90,12 +90,17 @@ INPUTSEARCH.addEventListener('input', async function ()  {
                     <td>${row.alias_usuario}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_usuario})">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_usuario})">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
+                    <button type="button" class="btn" onclick="openUpdate(${row.id_rol})" style="background-color: green;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="40" fill="#FFFFFF" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                    </svg>
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_rol})">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="40" fill="#FFFFFF    " class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                    </svg>
+                    </button>
                     </td>
                 </tr>
             `;
@@ -103,10 +108,10 @@ INPUTSEARCH.addEventListener('input', async function ()  {
         // Se muestra un mensaje de acuerdo con el resultado.
         ROWS_FOUND.textContent = DATA.message;
     } else {
-       // sweetAlert(4, DATA.error, true);
+        // sweetAlert(4, DATA.error, true);
     }
 });
-ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
+ALIAS_ADMINISTRADOR.addEventListener('input', async function () {
     const FORM = new FormData();
     FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
     // Petición para obtener los datos del registro solicitado.
@@ -114,7 +119,7 @@ ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status === 1) {
         mensajeDiv.textContent = 'Ya existe el usuario';
-        mensajeDiv.style.display = 'block'; 
+        mensajeDiv.style.display = 'block';
         IDGUARDAR.disabled = true;
     } else {
         mensajeDiv.textContent = "";
@@ -134,7 +139,7 @@ const fillTable = async (form = null) => {
     (form) ? action = 'searchRows' : action = 'fillTab';
     // Petición para obtener los registros disponibles.
 
-    const DATA = await fetchData(ADMINISTRADOR_API,action, form);
+    const DATA = await fetchData(ADMINISTRADOR_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.
@@ -213,8 +218,8 @@ const openUpdate = async (id) => {
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
         CORREO_ADMINISTRADOR.value = ROW.email_usuario;
         ALIAS_ADMINISTRADOR.value = ROW.alias_usuario;
-        ESTADO_USUARIO.checked=ROW.estado_usuario;
-        fillSelect(ROL_API, 'fillSelect', 'rolUsuario',ROW.id_rol);
+        ESTADO_USUARIO.checked = ROW.estado_usuario;
+        fillSelect(ROL_API, 'fillSelect', 'rolUsuario', ROW.id_rol);
     } else {
         sweetAlert(2, DATA.error, false);
     }

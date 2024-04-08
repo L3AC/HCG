@@ -34,7 +34,7 @@
     display: table-cell;
     vertical-align: middle;
     text-align: center;
-    color: #3b2200;
+    color: #ffb041;
 }
 
 .veen button {
@@ -80,6 +80,8 @@
     width: 130px;
     height: 120px;
     border-radius: 60px;
+    align-items: center;
+    border: 3px solid #5C2C0C;
     -webkit-box-shadow: 13px 11px 10px 0px rgba(56, 56, 56, 0.79);
     -moz-box-shadow: 13px 11px 10px 0px rgba(56, 56, 56, 0.79);
     box-shadow: 13px 11px 10px 0px rgba(56, 56, 56, 0.79);
@@ -111,10 +113,9 @@
     border-top-left-radius: 30px;
     transition: all .5s;
     background: #fff;
+    border: 4px solid #5C2C0C;
     width: 100%;
-    -webkit-box-shadow: 10px 22px 12px 0px rgba(41, 41, 41, 0.74);
-    -moz-box-shadow: 10px 22px 12px 0px rgba(41, 41, 41, 0.74);
-    box-shadow: 10px 22px 12px 0px rgba(41, 41, 41, 0.74);
+    box-shadow: 12px 12px 2px 1px rgba(36, 36, 36, 0.637);
 }
 
 .veen .wrapper>form:focus {
@@ -149,13 +150,13 @@
 .veen .wrapper label {
     position: absolute;
     top: -7px;
-    font-size: 16px;
+    font-size: 14px;
     white-space: nowrap;
     background: white;
     text-align: left;
     left: 15px;
     padding: 0 5px;
-    color: #000000;
+    color: #5C2C0C;
     pointer-events: none;
 }
 
