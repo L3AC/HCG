@@ -84,7 +84,7 @@ INPUTSEARCH.addEventListener('input', async function ()  {
             (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-                <tr>
+                <div class="cardlar row">
                     <td>${row.cliente}</td>
                     <td>${row.forma_pago_pedido}</td>
                     <td>${row.fecha}</td>
@@ -97,7 +97,7 @@ INPUTSEARCH.addEventListener('input', async function ()  {
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
-                </tr>
+                </div>
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.
@@ -129,21 +129,21 @@ const fillTable = async (form = null) => {
             (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-                <tr>
-                    <td>${row.cliente}</td>
-                    <td>${row.fecha}</td>
-                    <td>${row.estado_pedido}</td>
-                    <td>
-                        <button type="button" title="Finalizar pedido" class="btn btn-success" onclick="openConfirm(${row.id_pedido})">
+                <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
+                    <div class="col-lg-3" style="display: flex; align-items: center;">${row.cliente}</div>
+                    <div class="col-lg-3" style="display: flex; align-items: center;">${row.fecha}</div>
+                    <div class="col-lg-3" style="display: flex; align-items: center;">${row.estado_pedido}</div>
+                    <div class="col-lg-3">
+                        <button type="button" title="Finalizar pedido" class="btnAgregar" onclick="openConfirm(${row.id_pedido})">
                             <i class="bi bi-check-lg"></i>
                         </button>
-                        <button type="button" title="Detalle pedido" class="btn btn-primary" onclick="openUpdate(${row.id_pedido})">
-                            <i class="bi bi-info-circle"></i>
+                        <button type="button" title="Detalle pedido" style="margin-top: 10px; margin-bottom: 10px;" class="btnAgregar" onclick="openUpdate(${row.id_pedido})">
+                            <i class="bi bi-info-circle" ></i>
                         </button>
-                        <button type="button" title="Eliminar pedido" class="btn btn-danger" onclick="openDelete(${row.id_pedido})">
+                        <button type="button" title="Eliminar pedido" class="btnAgregar" onclick="openDelete(${row.id_pedido})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
-                    </td>
+                    </div>
                 </tr>
             `;
         });
