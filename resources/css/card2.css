@@ -2,5 +2,14 @@
     width: 70%;
     height: 100%;
     border-radius: 20px;
-    background: #E3DECA;
+    background-color:   #E3DECA;
+ }
+
+   .elemtoCampoTabla{
+    font-weight: bold; 
+    color: rgb(255, 255, 255);
+   }
+
+   .btnBotonTabla:hover{
+    box-shadow: 10px 5px 5px rgba(54, 54, 54, 0.842);
    }

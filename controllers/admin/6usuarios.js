@@ -148,26 +148,25 @@ const fillTable = async (form = null) => {
             (row.estado_usuario) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-                <tr>
-                    <td>${row.apellido_usuario}</td>
-                    <td>${row.nombre_usuario}</td>
-                    <td>${row.email_usuario}</td>
-                    <td>${row.alias_usuario}</td>
-                    <td><i class="${icon}"style="font-size: 30px;"></i></td>
-                    <td>
-                    <button type="button" class="btn" onclick="openUpdate(${row.id_usuario})" style="background-color: #AA6231;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="40" fill="#5C2C0C" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                    </svg>
-                    </button>
-                    <button type="button" class="btn " onclick="openDelete(${row.id_usuario})" style="background-color: #AA6231;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="40" fill="#5C2C0C    " class="bi bi-trash-fill" viewBox="0 0 16 16">
-                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
-                    </svg>
-                    </button>
-                    </td>
-                </tr>
+            <div class="cardlar row" style="width: 100%;">
+            <div class="col-2" style="display: flex; align-items: center;">${row.apellido_usuario}</div>
+            <div class="col-2" style="display: flex; align-items: center;">${row.nombre_usuario}</div>
+            <div class="col-2" style="display: flex; align-items: center;">${row.email_usuario}</div>
+            <div class="col-2" style="display: flex; align-items: center;">${row.alias_usuario}</div>
+                <div class="col-1 " style="display: flex; align-items: center;font-size: 30px;""><i  class="${icon}"></i></div>
+                <div class="row ">
+                <div class="col-lg-2 col-md-2 col-sm-3">
+                <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_usuario})">
+                    <i class="bi bi-pencil-fill"></i>
+                </button>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3">
+                <button type="button" class="btnAgregar" onclick="openDelete(${row.id_usuario})" >
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </div>
+            </div>
+        </div>
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.

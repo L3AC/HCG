@@ -24,12 +24,12 @@ const loadTemplate = async () => {
     MAIN.style.paddingBottom = '100px';
     // Se agrega el encabezado de la página web antes del contenido principal.
     MAIN.insertAdjacentHTML('beforebegin', `
-    <nav class="navbar navbar-expand-md fixed-top" style="background-color: #CCC8AA; ">
+    <nav class="navbar navbar-expand-md fixed-top" style="background-color: #5C2C0C; ">
         <div class="container">
             <!-- Left elements -->
             <div class="col-md-2 d-flex justify-content-center justify-content-md-start mb-md-0">
                 <!-- Logo -->
-                <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60"
+                <a class="navbar-brand" href="index.html"><img src="../../resources/img/home.png" height="60"
                         alt="YNWA"></a>
             </div>
             <!-- Left elements -->
@@ -52,7 +52,7 @@ const loadTemplate = async () => {
             </button>
             <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
                 <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="cart.html" title="Ir al carrito de compras"><i class="bi bi-cart h3"></i></a>
+                <a class="nav-link" href="cart.html" title="Ir al carrito de compras"><img src="../../resources/img/carrito.png" alt=""></a>
                 </div>
             </div>
             <!-- Right elements -->

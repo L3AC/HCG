@@ -13,6 +13,8 @@
     <!-- Llamada al icono de la página web -->
     <link href="../../resources/css/nav.css" rel="stylesheet">
     <link rel="stylesheet" href="../../resources/css/estado.css">
+    <link rel="stylesheet" href="../../resources/css/card2.css">
+    <link rel="stylesheet" href="../../resources/css/btnE.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
@@ -26,42 +28,42 @@
         <h3 id="mainTitle"></h3>
 
         <!-- Fila que contiene el formulario de búsqueda y botones -->
-        <div class="row mb-5">
-           <!-- Formulario de búsqueda -->
-           <form class="col-sm-12 col-md-12" id="searchForm">
-            <div class="row">
-                <div class="col-lg-6 col-md-5 col-sm-6 mx-auto">
-                    <!-- Campo de búsqueda -->
-                    <input id="inputsearch" type="search" class="form-control barraBusquedaRol" name="search" placeholder="Buscar" required>
+        <div class="row">
+            <!-- Formulario de búsqueda -->
+            <form class="col-sm-12 col-md-12" id="searchForm">
+                <div class="row">
+                    <div class="col-lg-6 col-md-5 col-sm-6 mx-auto">
+                        <!-- Campo de búsqueda -->
+                        <input id="inputsearch" type="search" class="form-control barraBusquedaRol" name="search"
+                            placeholder="Buscar" required>
+                    </div>
+
                 </div>
+            </form>
 
+        </div>
+
+
+      <p class="elemtoCampoTabla text" colspan="6" id="rowsFound"></p>
+        <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+        <div class="row row-md-12">
+            <div class="col-4 ">
+                <p class="elemtoCampoTabla">APELLIDOS</p>
             </div>
-        </form>
-
+            <div class="col-2">
+                <p class="elemtoCampoTabla">NOMBRES</p>
+            </div>
+            <div class="col-2">
+                <p class="elemtoCampoTabla">TELEFONOS</p>
+            </div>
+            <div class="col-2">
+                <p class="elemtoCampoTabla">CORREO</p>
+            </div>
+            <div class="col-1">
+                <p class="elemtoCampoTabla">ACCIONES</p>
+            </div>
         </div>
-
-
-        <!-- Hace que la tabla sea scrollable -->
-        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
-            <!-- Tabla para mostrar los registros existentes -->
-            <table class="table table-hover">
-                <!-- Encabezado de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
-                <thead>
-                    <tr>
-                        <td colspan="6" id="rowsFound"></td>
-                    </tr>
-                    <tr>
-                        <th>APELLIDOS</th>
-                        <th>NOMBRES</th>
-                        <th>TELÉFONO</th>
-                        <th>CORREO</th>
-                        <th>ACCIONES</th>
-                    </tr>
-                </thead>
-                <!-- Cuerpo de la tabla para mostrar un registro por fila -->
-                <tbody id="tableBody"></tbody>
-            </table>
-        </div>
+        <div id="tableBody"></div>
 
         <!-- Componente Modal para guardar un registro -->
         <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
