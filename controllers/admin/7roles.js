@@ -132,22 +132,23 @@ const fillTable = async (form = null) => {
             (row.estado_rol) ? icon = 'bi bi-eye-fill ' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-            <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
-                <div class="col-6" style="display: flex; align-items: center;">${row.descripcion_rol}</div>
-                    <div class="col-1" style="display: flex; align-items: center;font-size: 30px;""><i  class="${icon}"></i></div>
-                    <div class="col-lg-5 row ">
-                    <div class="col-lg-4 col-md-3 col-sm-3 ms-4">
-                    <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_rol})" >
+            <div style="display: flex; justify-content: center;">
+            <div class="cardlar row">
+                <div class="col-lg-3 col-md-12 col-sm-12" style="align-items: center; display: flex; font-size: 17px;"><div class="texto-antes">descripcion: </div>${row.descripcion_rol}</div>
+                <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center;font-size: 30px;"><div class="texto-antes" style="font-size: 17px;">Estado: </div><i  class="${icon}"></i></div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btnAgregar" style="width: 100%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_rol})">
                         <i class="bi bi-pencil-fill"></i>
                     </button>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-sm-3">
-                    <button type="button" class="btnAgregar" onclick="openDelete(${row.id_rol})" >
+                </div>
+                <div class="col-lg-2  col-md-6 col-sm-12">
+                    <button type="button" class="btnAgregar" style="width: 100%;  margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_rol})" >
                         <i class="bi bi-trash-fill"></i>
                     </button>
                 </div>
-                </div>
             </div>
+        </div>
+        
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.
