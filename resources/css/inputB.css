@@ -1,0 +1,29 @@
+.inputBox {
+    position: relative;
+    width: 100%;
+  }
+  
+  .inputBox input {
+    padding: 15px 20px;
+    outline: none;
+    background: transparent;
+    border-radius: 5px;
+    color: #5C2C0C;
+    border: 1px solid#5C2C0C;
+    font-size: 1em;
+    width: 100%;
+  }
+  
+  .inputBox span {
+    position: absolute;
+    left: 0;
+    font-size: 0.7em;
+    transform: translateX(14px) translateY(-7.5px);
+    padding: 0 6px 1px 5px;
+    border-radius: 2px;
+    background: #5C2C0C;
+    letter-spacing: 1px;
+    border: 1px solid #5C2C0C;
+    color: white ;
+    
+  }
