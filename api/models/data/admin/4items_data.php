@@ -27,6 +27,16 @@ class ItemData extends ItemHandler
             return false;
         }
     }
+    public function setIdTipoItem($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->idTipoItem = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
     public function setIdProducto($value)
     {
         if (Validator::validateNaturalNumber($value)) {
