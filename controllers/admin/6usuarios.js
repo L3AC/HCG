@@ -149,22 +149,20 @@ const fillTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
             <div class="cardlar row" style="width: 100%;">
-            <div class="col-2" style="display: flex; align-items: center;">${row.apellido_usuario}</div>
-            <div class="col-2" style="display: flex; align-items: center;">${row.nombre_usuario}</div>
-            <div class="col-2" style="display: flex; align-items: center;">${row.email_usuario}</div>
-            <div class="col-2" style="display: flex; align-items: center;">${row.alias_usuario}</div>
-                <div class="col-1 " style="display: flex; align-items: center;font-size: 30px;""><i  class="${icon}"></i></div>
-                <div class="row ">
-                <div class="col-lg-2 col-md-2 col-sm-3">
-                <button type="button" class="btnAgregar" onclick="openUpdate(${row.id_usuario})">
+            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Apellido: </div>${row.apellido_usuario}</div>
+            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.nombre_usuario}</div>
+            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Correo: </div>${row.email_usuario}</div>
+            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Usuario: </div>${row.alias_usuario}</div>
+                <div class="col-lg-1 col-md-12 col-sm-12" style="display: flex; align-items: center;font-size: 30px;"><div class="texto-antes" style="font-size: 17px;">Estado: </div><i  class="${icon}"></i></div>
+                <div class="col-lg-1 col-md-6 col-sm-12">
+                <button type="button" class="btnAgregar" style="width: 100%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_usuario})">
                     <i class="bi bi-pencil-fill"></i>
                 </button>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-3">
-                <button type="button" class="btnAgregar" onclick="openDelete(${row.id_usuario})" >
+                <div class="col-lg-1 col-md-6 col-sm-12">
+                <button type="button" class="btnAgregar" style="width: 100%;  margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_usuario})" >
                     <i class="bi bi-trash-fill"></i>
                 </button>
-            </div>
             </div>
         </div>
             `;
