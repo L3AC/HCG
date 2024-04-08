@@ -56,11 +56,11 @@
   /* arreglo de clases css*/
   .btnGuardar{
     background-color: #DDA35D !important;
-     color: aliceblue; 
+     color: #5C2C0C !important; 
   }
 
   .btnGuardar:hover{
-    box-shadow: 10px 5px 5px rgb(78, 78, 78);
+    box-shadow: 10px 5px 5px rgba(54, 54, 54, 0.842);
   }
 
   .barraBusquedaRol{
