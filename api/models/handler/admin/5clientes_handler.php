@@ -122,7 +122,7 @@ class ClienteHandler
     public function readAll()
     {
         $sql = 'SELECT id_cliente,nombre_cliente,apellido_cliente,
-                SUBSTRING(telefono_cliente, 4) AS telefono_cliente,correo_cliente
+                telefono_cliente,correo_cliente
                 FROM tb_clientes; 
                 ORDER BY apellido_cliente';
         return Database::getRows($sql);

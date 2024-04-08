@@ -66,7 +66,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 
-ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
+/*ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
     const FORM = new FormData();
     FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
     // Petición para obtener los datos del registro solicitado.
@@ -80,7 +80,7 @@ ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
         mensajeDiv.textContent = "";
         IDGUARDAR.disabled = false;
     }
-});
+});*/
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
