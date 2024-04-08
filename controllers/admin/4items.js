@@ -83,18 +83,20 @@ const fillTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
-                    <div class="col-4" style="display: flex; align-items: center;">${row.descripcion_item}</div>
-                    <div class="col-4" style="display: flex; align-items: center;">${row.descripcion_tipo_item}</div>
-                        <div class="col-2 " style="display: flex; align-items: center;"><i  class="${icon}"></i></div>
-                        <div class="col-2">
-                            <button type="button" style="margin-top: 10px; margin-bottom: 10px;" class="btnAgregar" onclick="openUpdate(${row.id_item})">
+                    <div class="col-lg-4" style="display: flex; align-items: center;"><div class="texto-antes">Item: </div>${row.descripcion_item}</div>
+                    <div class="col-lg-4" style="display: flex; align-items: center;"><div class="texto-antes">Tipo item: </div>${row.descripcion_tipo_item}</div>
+                        <div class="col-lg-1 " style="display: flex; align-items: center;"><div class="texto-antes">Estado: </div><i  class="${icon}"></i></div>
+                        <div class="col-lg-1 col-md-6">
+                            <button type="button" style="margin-top: 10px; margin-bottom: 10px;" class="btnAgregarx" onclick="openUpdate(${row.id_item})">
                                 <i class="bi bi-pencil-fill"></i>
                             </button>
-                            <button type="button" class="btnAgregar" onclick="openDelete(${row.id_item})">
+                        </div>
+                        <div class="col-lg-1 col-md-6">
+                            <button type="button" style="margin-top: 10px; margin-bottom: 10px; " class="btnAgregars" onclick="openDelete(${row.id_item})">
                                 <i class="bi bi-trash-fill"></i>
                             </button>
-                    </div>
-            </div>
+                        </div>  
+             </div>
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.
