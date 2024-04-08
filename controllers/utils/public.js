@@ -38,8 +38,16 @@ const loadTemplate = async () => {
             <div class="col-md-4">
                 <div class="nav-link">
                     <div class="input-group">
-                        <input id="searchMain" type="text" name="searchMain" class="form-control"
-                            placeholder="Búsqueda">
+                        <div class="group">
+                            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                                <g>
+                                    <path
+                                        d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
+                                    </path>
+                                </g>
+                            </svg>
+                            <input id="inputsearch" placeholder="Buscar..." type="search" class="inputSearch" required>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -91,7 +99,7 @@ const loadTemplate = async () => {
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `
         
-            <footer class="text-center text-white fixed-bottom" 
+            <footer class="text-center text-white " 
             id="foot" style="min-height: auto; ">
                 <!-- Grid container -->
                 <div class="container pt-1">
@@ -99,19 +107,19 @@ const loadTemplate = async () => {
                     <section class="mb-1">
                     <!-- Acerca de nosotros -->
                     <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="aboutUs.html" role="button"
-                    data-mdb-ripple-color="dark"><i class="bi bi-question-circle-fill"></i></a>
+                    data-mdb-ripple-color="dark"><i class="bi bi-question-circle-fill" style="color: white;"></i></a>
 
                     <!-- Facebook -->
                     <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://facebook.com/" role="button"
-                    data-mdb-ripple-color="dark"><i class="bi bi-facebook"></i></a>
+                    data-mdb-ripple-color="dark"><i class="bi bi-facebook" style="color: white;"></i></a>
 
                     <!-- Twitter -->
                     <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://twitter.com/" role="button"
-                    data-mdb-ripple-color="dark"><i class="bi bi-twitter"></i></a>
+                    data-mdb-ripple-color="dark"><i class="bi bi-twitter" style="color: white;"></i></a>
 
                     <!-- Instagram -->
                     <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://instagram.com/" role="button"
-                    data-mdb-ripple-color="dark"><i class="bi bi-instagram"></i></a>
+                    data-mdb-ripple-color="dark"><i class="bi bi-instagram" style="color: white;"></i></a>
 
 
                     </section>
@@ -120,7 +128,7 @@ const loadTemplate = async () => {
 
                 <!-- Copyright -->
                 <div class="text-center text-dark p-1" style="background-color: rgba(0, 0, 0, 0.2);">
-                    © 2024 Copyright YNWA
+                    <p style="color: white;">© 2024 Copyright YNWA</p>
                 </div>
                 <!-- Copyright -->
             </footer>

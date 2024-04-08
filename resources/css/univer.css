@@ -5,6 +5,8 @@
     font-weight: normal;
     font-style: normal;
 }
+
+
 .texto-antes {
     display: none; /* Oculta el texto */
     font-weight: bold;

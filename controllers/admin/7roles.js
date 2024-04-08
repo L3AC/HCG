@@ -133,7 +133,7 @@ const fillTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
             <div style="display: flex; justify-content: center;">
-            <div class="cardlar row">
+            <div class="cardlar row" style="margin-bottom: 10px;">
                 <div class="col-lg-3 col-md-12 col-sm-12" style="align-items: center; display: flex; font-size: 17px;"><div class="texto-antes">descripcion: </div>${row.descripcion_rol}</div>
                 <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center;font-size: 30px;"><div class="texto-antes" style="font-size: 17px;">Estado: </div><i  class="${icon}"></i></div>
                 <div class="col-lg-2 col-md-6 col-sm-12">
