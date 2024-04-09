@@ -23,5 +23,21 @@
   }
 }
 
+.scrollbar::-webkit-scrollbar-track
+{
+    border-radius: 10px;
+    background-color: #DDA35D;
+}
 
+.scrollbar::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #DDA35D;
+}
+
+.scrollbar::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-color: #5C2C0C;
+}
 

@@ -118,7 +118,6 @@ const fillTable = async (form = null) => {
             </div>  
             </div>
         </div>
-        <div class="py-2"></div>
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.
