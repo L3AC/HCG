@@ -22,7 +22,7 @@ CREATE TABLE tb_usuarios(
   clave_usuario VARCHAR(255) NOT NULL,
   nombre_usuario VARCHAR(255) NOT NULL,
   apellido_usuario VARCHAR(255) NOT NULL,
-  email_usuario VARCHAR(255) NOT NULL,
+  email_usuario VARCHAR(255) NOT NULL UNIQUE,
   pin_usuario VARCHAR(6) NOT NULL,
   estado_usuario BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_usuario),
@@ -32,8 +32,8 @@ CREATE TABLE tb_usuarios(
 );
 CREATE TABLE tb_clientes(
   id_cliente INT UNSIGNED,
-  telefono_cliente VARCHAR(255) NOT NULL,
-  correo_cliente VARCHAR(255) NOT NULL,
+  telefono_cliente VARCHAR(255) NOT NULL UNIQUE,
+  correo_cliente VARCHAR(255) NOT NULL UNIQUE,
   nombre_cliente VARCHAR(255) NOT NULL,
   apellido_cliente VARCHAR(255) NOT NULL,
   PRIMARY KEY (id_cliente)
@@ -97,7 +97,8 @@ CREATE TABLE tb_detalle_pedidos (
   id_detalle_pedido INT UNSIGNED ,
   id_pedido INT UNSIGNED NOT NULL,
   id_producto INT UNSIGNED NOT NULL,
-  cantidad_pedido INT UNSIGNED NOT NULL,
+  cantidad_pedido INT UNSIGNED NOT NULL,                                                   
+  nota_pedido LONGTEXT DEFAULT "",
   PRIMARY KEY (id_detalle_pedido),
   FOREIGN KEY (id_pedido) REFERENCES tb_pedidos(id_pedido) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE

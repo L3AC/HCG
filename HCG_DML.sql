@@ -41,12 +41,13 @@ VALUES((SELECT get_next_id("tb_clientes")),"Juan","Hernandez","50371926778","lea
 ((SELECT get_next_id("tb_clientes")),"Rosa","Martinez","50371000778","rosamart@gmail.com"),
 ((SELECT get_next_id("tb_clientes")),"Emma","Lopez","50371926678","emmalop@gmail.com");
 
+/*
 INSERT INTO tb_pedidos (id_pedido, id_cliente,estado_pedido,codigo_pedido)
 VALUES ((SELECT get_next_id("tb_pedidos")), 1,'Pendiente',generar_codigo());
 
 INSERT INTO tb_detalle_pedidos (id_detalle_pedido,id_pedido, id_producto, cantidad_pedido)
 VALUES((SELECT get_next_id("tb_detalle_pedidos")),1, 1, 2),
-((SELECT get_next_id("tb_detalle_pedidos")),1, 2, 1);
+((SELECT get_next_id("tb_detalle_pedidos")),1, 2, 1);*/
 
 /*
 INSERT INTO tb_tipo_items(id_tipo_item,descripcion_tipo_item,estado_tipo_item) 
