@@ -89,8 +89,7 @@ if (isset($_GET['action'])) {
                 } elseif ($categoria->deleteRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Categoría eliminada correctamente';
-                    // Se asigna el estado del archivo después de eliminar.
-                    $result['fileStatus'] = Validator::deleteFile($categoria::RUTA_IMAGEN, $categoria->getFilename());
+                    
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar la categoría';
                 }

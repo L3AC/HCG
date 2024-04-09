@@ -68,28 +68,35 @@
         </div>
 
 
-        <p class="elemtoCampoTabla text" colspan="6" id="rowsFound"></p>
+        <div class="row">
+            <div class="col-lg-2 col-2"></div>
+            <p style="color: #FFFFFF;" colspan="6" id="rowsFound" class="text col-10 col-md-4 px-1 mb-4"></p>
+        </div>
         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
         <div class="apa">
             <div class="row row-md-12">
-                <div class="col-2 ">
+                <div class="col-2">
+                </div>
+                <div class="col-1 me-4">
                     <p class="elemtoCampoTabla">APELLIDOS</p>
                 </div>
-                <div class="col-2">
+                <div class="col-1 me-4">
                     <p class="elemtoCampoTabla">NOMBRES</p>
                 </div>
-                <div class="col-2">
-                    <p class="elemtoCampoTabla">CORREO</p>
-                </div>
-                <div class="col-2">
+                <div class="col-2 px-4">
+                    <p class="elemtoCampoTabla">CORREO</p></div> 
+                <div class="col-1 me-4 ms-4">
                     <p class="elemtoCampoTabla">USUARIO</p>
-                </div>
-                <div class="col-1">
+                </div> 
+                <div class="col-2 ms-2">
                     <p class="elemtoCampoTabla">ESTADO</p>
-                </div>
+                </div> 
             </div>
         </div>
-        <div id="tableBody"></div>
+        <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
+            <div id="tableBody"></div>
+        </div>
+
 
         <!-- Componente Modal para guardar un registro -->
         <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

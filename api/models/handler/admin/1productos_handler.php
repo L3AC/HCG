@@ -140,8 +140,8 @@ class ProductoHandler
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM prc_modelos
-                WHERE id_modelo = ?';
+        $sql = 'DELETE FROM tb_productos
+                WHERE id_producto = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }

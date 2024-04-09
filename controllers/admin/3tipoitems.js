@@ -85,14 +85,12 @@ const fillTable = async (form = null) => {
             TABLE_BODY.innerHTML += `
             <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
                 <div class="col-lg-6 col-md-12" style="display: flex; align-items: center;"><div class="texto-antes">Item:</div>${row.descripcion_tipo_item}</div>
-                    <div class="col-lg-2 col-md-12" style="display: flex; align-items: center;"><div class="texto-antes">Estado:</div><i  class="${icon}"></i></div>
-                    <div class="col-lg-2 col-md-6">
-                        <button type="button" style="margin-top: 10px; margin-bottom: 10px;" class="btnAgregarx" onclick="openUpdate(${row.id_tipo_item})">
+                    <div class="col-lg-2 col-md-12" style="display: flex; align-items: center; font-size: 20px;"><div class="texto-antes">Estado:</div><i  class="${icon}"></i></div>
+                    <div class="col-lg-4 col-md-12 col-sm-12 d-flex justify-content-end">
+                        <button type="button" title="Detalle pedido" class="btnAgregar btnMargin"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_tipo_item})">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
-                    </div>
-                    <div class="col-lg-2 col-md-6">
-                        <button type="button" class="btnAgregarx" style="margin-top: 10px; margin-bottom: 10px;" onclick="openDelete(${row.id_tipo_item})">
+                        <button type="button" title="Eliminar pedido" class="btnAgregar" style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_tipo_item})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </div>

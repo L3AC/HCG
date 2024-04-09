@@ -87,7 +87,7 @@ class TipoItemHandler
     public function deleteRow()
     {
         $sql = 'DELETE FROM tb_tipo_items 
-                WHERE id_tipo_items = ?';
+                WHERE id_tipo_item = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }

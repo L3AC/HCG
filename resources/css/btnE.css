@@ -140,6 +140,10 @@
   background-color: #E3DECA;
 }
 
+.btnMargin{
+  margin-left: 120px;
+}
+
 .btnAgregar:hover{
   box-shadow: 10px 4px 5px rgba(54, 54, 54, 0.938);
 }
@@ -206,4 +210,9 @@
     width: 100%;
   }
     
+  .btnMargin{
+    margin-left: 0px;
+  }
 }
+
+

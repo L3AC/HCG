@@ -41,7 +41,7 @@
             <!-- Formulario de búsqueda -->
             <form class="col-sm-12 col-md-12" id="searchForm">
                 <div class="row">
-                    <div class="col-lg-3 col-md-5 col-sm-6 mx-auto">
+                    <div class="col-lg-6 col-md-5 col-sm-6 mx-auto">
                         <!-- Campo de búsqueda -->
                         <div class="group">
                             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -54,9 +54,9 @@
                             <input id="inputsearch" placeholder="Buscar..." type="search" class="inputSearch" required>
                         </div>
                     </div>
+
                 </div>
             </form>
-
         </div>
         <!-- Botones de la parte derecha -->
         <div class="col-sm-12 col-md-12 d-flex justify-content-end pb-3 pt-3">
@@ -67,7 +67,10 @@
         </div>
 
 
-        <p style="color: #FFFFFF;" colspan="6" id="rowsFound" class="text"></p>
+        <div class="row">
+            <div class="col-lg-2 col-2"></div>
+            <p style="color: #FFFFFF;" colspan="6" id="rowsFound" class="text col-10 col-md-4 px-1"></p>
+        </div>
         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
 
         <div class="row apa">
@@ -75,14 +78,14 @@
             <div class="col-2">
                 <p style="font-weight: bold; color: white;">ITEM</p>
             </div>
-            <div class="col-3 px-5">
+            <div class="col-3 ms-4 px-5">
                 <p style="font-weight: bold; color: white;">TIPO</p>
             </div>
-            <div class="col-1 px-4">
+            <div class="col-1 px-1">
                 <p style="font-weight: bold; color: white;">ESTADO</p>
             </div>
         </div>
-        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+        <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
             <div id="tableBody"></div>
         </div>
 
