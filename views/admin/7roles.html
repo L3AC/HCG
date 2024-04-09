@@ -54,7 +54,7 @@
 
         </div>
         <!-- Botones de la parte derecha -->
-        <div class="col-sm-12 col-md-12 d-flex justify-content-end pb-3 pt-3">
+        <div class="col-sm-12 col-md-12 d-flex justify-content-end pb-3 pt-3 me-5">
             <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
             <button type="button" class="btnAgregar3" onclick="openCreate()">
                 <i class="bi bi-plus-square-fill"></i> Agregar
@@ -62,20 +62,26 @@
         </div>
 
 
-        <p class="elemtoCampoTabla text" colspan="6" id="rowsFound"></p>
-        <!-- Cuerpo de la tabla para mostrar un registro por fila -->
-        <div class="apa">
+        <div class="row">
+            <div class="col-lg-2 col-2"></div>
+            <p style="color: #FFFFFF;" colspan="6" id="rowsFound" class="text col-10 col-md-4 px-1  mb-4"></p>
+        </div>
+         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+         <div class="apa">
             <div class="row row-md-12">
-                <div class="col-2"></div>
-                <div class="col-2 ">
+                <div class="col-2">
+                </div>
+                <div class="col-3  me-5 px-1">
                     <p class="elemtoCampoTabla">NOMBRE</p>
                 </div>
-                <div class="col-2">
+                <div class="col-3  me-4 ms-5">
                     <p class="elemtoCampoTabla">ESTADO</p>
-                </div>
+                </div> 
             </div>
         </div>
-        <div id="tableBody"></div>
+        <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
+            <div id="tableBody"></div>
+        </div>
 
         <!-- Componente Modal para guardar un registro -->
 
