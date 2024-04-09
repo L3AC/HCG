@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS db_hcg;
-CREATE DATABASE IF NOT EXISTS db_hcg;
-USE db_hcg;
+DROP DATABASE IF EXISTS db_hcg2;
+CREATE DATABASE IF NOT EXISTS db_hcg2;
+USE db_hcg2;
 
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED,
@@ -15,6 +15,7 @@ CREATE TABLE tb_roles(
   roles_opc BOOLEAN NOT NULL,
   PRIMARY KEY (id_rol)
 );
+
 CREATE TABLE tb_usuarios(
   id_usuario INT UNSIGNED,
   id_rol INT UNSIGNED,
@@ -30,6 +31,8 @@ CREATE TABLE tb_usuarios(
   FOREIGN KEY(id_rol) REFERENCES tb_roles(id_rol)
   ON DELETE CASCADE ON UPDATE CASCADE
 );
+        
+
 CREATE TABLE tb_clientes(
   id_cliente INT UNSIGNED,
   telefono_cliente VARCHAR(255) NOT NULL,
@@ -38,12 +41,16 @@ CREATE TABLE tb_clientes(
   apellido_cliente VARCHAR(255) NOT NULL,
   PRIMARY KEY (id_cliente)
 );
+
+
+/*ESTO VA A SERVIR PARA INGRESAR POR EJEMPLO, CATEGORIA DE BEBIDAS, SNACKS, POSTRE, PORCION DE UN PLATILLO*/
 CREATE TABLE tb_tipo_items(
   id_tipo_item INT UNSIGNED,
   descripcion_tipo_item VARCHAR(255) NOT NULL,
   estado_tipo_item BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_tipo_item)
 );
+
 CREATE TABLE tb_items(
   id_item INT UNSIGNED,
   id_tipo_item INT UNSIGNED ,
@@ -71,18 +78,28 @@ CREATE TABLE tb_productos(
   domingo_producto BOOLEAN NOT NULL,
   PRIMARY KEY (id_producto)
 );
+
+
+
 CREATE TABLE tb_detalle_productos(
-  id_detalle_producto INT UNSIGNED /*auto_increment*/,
-  id_item INT UNSIGNED  NOT NULL,
-  id_producto INT UNSIGNED  NOT NULL, /*TRAE EL ID DEL producto*/
+  id_detalle_producto INT UNSIGNED ,
+  id_producto INT UNSIGNED  NOT NULL,
+  id_item_padre INT UNSIGNED  NOT NULL,
+  id_item_hijo INT UNSIGNED  NOT NULL, 
   cantidad_item INT UNSIGNED NOT NULL,
+  estado enum("Padre","Hijo"),
+  cambiable BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (id_detalle_producto),
-  CONSTRAINT fk_item_producto_item /*LLAVE FORANEA*/
-  FOREIGN KEY(id_item) REFERENCES tb_items(id_item)
+  CONSTRAINT fk_item_producto_item_1 /*LLAVE FORANEA*/
+  FOREIGN KEY(id_item_padre) REFERENCES tb_items(id_item)
+  ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_item_producto_item_2 /*LLAVE FORANEA*/
+  FOREIGN KEY(id_item_hijo) REFERENCES tb_items(id_item)
   ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT fk_item_producto_producto /*LLAVE FORANEA*/
   FOREIGN KEY(id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 CREATE TABLE tb_pedidos(
     id_pedido INT UNSIGNED NOT NULL,
     id_cliente INT UNSIGNED  NOT NULL,
@@ -93,6 +110,7 @@ CREATE TABLE tb_pedidos(
     CONSTRAINT fk_pedido_cliente 
     FOREIGN KEY(id_cliente) REFERENCES tb_clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 CREATE TABLE tb_detalle_pedidos (
   id_detalle_pedido INT UNSIGNED ,
   id_pedido INT UNSIGNED NOT NULL,
@@ -102,6 +120,8 @@ CREATE TABLE tb_detalle_pedidos (
   FOREIGN KEY (id_pedido) REFERENCES tb_pedidos(id_pedido) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
 
 
 

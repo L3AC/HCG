@@ -66,8 +66,10 @@
             </button>
         </div>
 
+
         <p style="color: #FFFFFF;" colspan="6" id="rowsFound" class="text"></p>
         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+
         <div class="row apa">
             <div class="col-2"></div>
             <div class="col-2">
@@ -80,7 +82,9 @@
                 <p style="font-weight: bold; color: white;">ESTADO</p>
             </div>
         </div>
-        <div id="tableBody"></div>
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+            <div id="tableBody"></div>
+        </div>
 
         <!-- Componente Modal para guardar un registro -->
         <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
