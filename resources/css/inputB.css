@@ -13,6 +13,27 @@
     font-size: 1em;
     width: 100%;
   }
+  .inputBox select {
+    padding: 15px 20px;
+    outline: none;
+    background: transparent;
+    border-radius: 5px;
+    color: #5C2C0C;
+    border: 1px solid#5C2C0C;
+    font-size: 1em;
+    width: 100%;
+  }
+
+  .inputBox textarea {
+    padding: 15px 20px;
+    outline: none;
+    background: transparent;
+    border-radius: 5px;
+    color: #5C2C0C;
+    border: 1px solid#5C2C0C;
+    font-size: 1em;
+    width: 100%;
+  }
   
   .inputBox span {
     position: absolute;

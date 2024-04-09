@@ -18,8 +18,10 @@
     <link rel="stylesheet" href="../../resources/css/busca.css">
     <link rel="stylesheet" href="../../resources/css/btnE.css">
     <link rel="stylesheet" href="../../resources/css/tarjeta.css">
+    <link rel="stylesheet" href="../../resources/css/card2.css">
     <link rel="stylesheet" href="../../resources/css/univer.css">
     <link rel="stylesheet" href="../../resources/css/checkbox.css">
+    <link rel="stylesheet" href="../../resources/css/inputB.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
@@ -75,15 +77,15 @@
         <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
+                <div class="modal-content" >
+                    <div class="modal-header" style="background-color: #5C2C0C;">
                         <!-- Título del modal -->
-                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <h1 class="modal-title fs-5" id="modalTitle" style="color: white;"></h1>
                         <!-- Botón de cierre del modal -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para crear o actualizar un registro -->
-                    <form id="saveForm">
+                    <form id="saveForm" style="background-color: #DDA35D;">
                         <div class="modal-body row g-3">
                             <div class="col-12 d-flex justify-content-center">
                                 <h5>Días disponibles</h5>
@@ -163,42 +165,55 @@
                             </div>
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
-                                <label for="nombreProducto" class="form-label">Nombre</label>
-                                <input id="nombreProducto" type="text" name="nombreProducto" class="form-control"
-                                    required>
+                                    <div class="inputBox">
+                                        <input required="" style="color: white; font-weight: bold;" id="nombreProducto" type="text" name="nombreProducto">
+                                        <span>Nombre :</span>
+                                    </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="tipoProducto" class="form-label">Tipo Producto</label>
-                                <select id="tipoProducto" name="tipoProducto" class="form-select" required>
-                                    <option value="Conjunto">Conjunto</option>
-                                    <option value="Complementario">Complementario</option>
-                                </select>
+                                <div class="inputBox">
+                                    <span>Tipo Producto :</span>
+                                    <select id="tipoProducto" style="color: white; font-weight: bold;" name="tipoProducto" class="form-select" required>
+                                        <option value="Conjunto">Conjunto</option>
+                                        <option value="Complementario">Complementario</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="precioProducto" class="form-label">Precio (US$)</label>
-                                <input id="precioProducto" type="number" name="precioProducto" min="0.01"
-                                    step="0.01" class="form-control" required>
+                                    <div class="inputBox">
+                                        <input required="" style="color: white; font-weight: bold;" id="precioProducto" type="number" name="precioProducto" min="0.01"
+                                        step="0.01">
+                                        <span>Precio (US$) :</span>
+                                    </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="horarioProducto" class="form-label">Horario</label>
-                                <select id="horarioProducto" name="horarioProducto" class="form-select" required>
-                                    <option value="Desayuno">Desayuno</option>
-                                    <option value="Almuerzo">Almuerzo</option>
-                                    <option value="Cena">Cena</option>
-                                    <option value="Típico">Típico</option>
-                                    <option value="Todo el día">Todo el día</option>
-                                    <option value="Desayuno y Almuerzo">Desayuno y Almuerzo</option>
-                                    <option value="Desayuno y Cena">Desayuno y Cena</option>
-                                    <option value="Almuerzo y Cena">Almuerzo y Cena</option>
-                                    <option value="Típico y Desayuno">Típico y Desayuno</option>
-                                    <option value="Típico y Almuerzo">Típico y Almuerzo</option>
-                                    <option value="Tipico y Cena">Típico y Cena</option>
-                                </select>
+                                
+
+                                <div class="inputBox">
+                                    <span>Horario :</span>
+                                    <select id="horarioProducto" style="color: white; font-weight: bold;" name="horarioProducto" class="form-select" required>
+                                        <option value="Desayuno">Desayuno</option>
+                                        <option value="Almuerzo">Almuerzo</option>
+                                        <option value="Cena">Cena</option>
+                                        <option value="Típico">Típico</option>
+                                        <option value="Todo el día">Todo el día</option>
+                                        <option value="Desayuno y Almuerzo">Desayuno y Almuerzo</option>
+                                        <option value="Desayuno y Cena">Desayuno y Cena</option>
+                                        <option value="Almuerzo y Cena">Almuerzo y Cena</option>
+                                        <option value="Típico y Desayuno">Típico y Desayuno</option>
+                                        <option value="Típico y Almuerzo">Típico y Almuerzo</option>
+                                        <option value="Tipico y Cena">Típico y Cena</option>
+                                    </select>
+                                    
+                                </div>
                             </div>
                             <div class="col-12">
-                                <label for="imagenProducto" class="form-label">Imagen</label>
-                                <textarea id="imagenProducto" type="text" name="imagenProducto" class="form-control"
-                                    rows="3"></textarea>
+                                    <div class="inputBox">
+                                        <span>Imagen :</span>
+                                        <textarea id="imagenProducto" type="text" name="imagenProducto" class="form-control"
+                                        rows="3"></textarea>
+                                        
+                                    </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <div class="row justify-content-center px-3 mb-1" id="imgPre"></div>
@@ -217,51 +232,49 @@
                             </div>
                             <!-- Subtabla para Productos tallas -->
                             <div id="subtable" class="col-sm-12 col-md-5">
-                                <div class="modal-header">
+                                <div class="modal-header" style="background-color: #5C2C0C;">
                                     <!-- Título del modal -->
-                                    <h1 class="modal-title fs-5">Items</h1>
+                                    <h1 class="modal-title fs-5" style="color: #FFFFFF;">Items</h1>
                                 </div>
                                 <!-- TABLA DE Producto TALLAS-->
-                                <div class="modal-header border-0">
-                                    <h1 class="modal-title fs-5" id="submodalTitle"></h1>
-                                </div>
 
                                 <!-- Formulario y botones para la subtabla -->
                                 <form class="col-12" id="searchsubForm">
                                     <div class="row">
                                         <div class="col-12">
                                             <!-- Campo de búsqueda en la subtabla -->
-                                            <input type="search" class="form-control" 
-                                            name="search" placeholder="Buscar" >
+                                            <div class="group" style="margin-top: 20px;">
+                                                <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                                                    <g>
+                                                        <path
+                                                            d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
+                                                        </path>
+                                                    </g>
+                                                </svg>
+                                                <input name="search" placeholder="Buscar..." type="search" class="inputSearch" >
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
 
                                 <!-- Tabla para mostrar los registros en la subtabla -->
-                                <div class="mt-4 table-responsive border-0"
-                                    style="max-height: 200px; overflow-y: auto;">
-                                    <table id="subheaderT" class="table table-hover">
+                                
+                                    <div id="subheaderT" class=" mt-4 table-responsive border-0 " style="max-height: 400px;">
                                         <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
-                                        <thead>
-                                            <tr>
-                                                <td colspan="3" id="subrowsFound"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>ITEM</th>
-                                                <th>TIPO</th>
-                                                <th>ACCIONES</th>
-                                            </tr>
-                                        </thead>
+                                        <div>
+                                            <div>
+                                                <div colspan="3" id="subrowsFound"></div>
+                                            </div>
+                                        </div>
                                         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
-                                        <tbody id="subtableBody"></tbody>
-                                    </table>
-                                </div>
+                                        <div id="subtableBody"></div>
+                                    </div>
 
                             </div>
                             <div id="tableSelectedR" class="col-sm-12 col-md-7">
-                                <div class="modal-header">
+                                <div class="modal-header" style="background-color: #5C2C0C;">
                                     <!-- Título del modal -->
-                                    <h1 class="modal-title fs-5">Items seleccionados</h1>
+                                    <h1 class="modal-title fs-5" style="color: #FFFFFF;">Items seleccionados</h1>
                                 </div>
                                 <!-- Tabla para mostrar los registros en la subtabla -->
                                 <div class="mt-4 table-responsive border-0"
@@ -473,7 +486,7 @@
                                 <!-- Tabla para mostrar los registros en la subtabla -->
                                 <div class="mt-4 table-responsive border-0"
                                     style="max-height: 200px; overflow-y: auto;">
-                                    <table id="subheaderTU" class="table table-hover">
+                                    <table id="subheaderTU" class="cardlard">
                                         <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
                                         <thead>
                                             <tr>
