@@ -279,13 +279,18 @@ const fillsubTable = async (form = null) => {
             const item = document.createElement("tr");
             item.setAttribute('data-id', row.id_item); // Añadimos el atributo data-id
             item.innerHTML = `
-                <td>${row.descripcion_item}</td>
-                <td>${row.descripcion_tipo_item}</td>
-                <td>
-                    <button type="button" class="btn btn-primary" onclick="selectItem(${row.id_item})">
+            <center>
+            <div class="row carditem" style="margin-bottom: 10px;">
+                <div class="col-6">${row.descripcion_item}</div>
+                <div class="col-3">${row.descripcion_tipo_item}</div>
+                <div class="col-1">
+                    <button type="button" class="btnAgregarItem" onclick="selectItem(${row.id_item})">
                         <i class="bi bi-plus-square-fill"></i>
                     </button>
-                </td>
+                </div>
+            </div>
+        </center>
+                
             `;
             SUBTABLE_BODY.appendChild(item);
         });
