@@ -28,9 +28,11 @@ const loadTemplate = async () => {
         // Se comprueba si existe un alias definido para el usuario, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se agrega el encabezado de la página web antes del contenido principal.
+            MAIN.style.paddingTop = '75px';
+            MAIN.style.paddingBottom = '100px';
             MAIN.insertAdjacentHTML('beforebegin', `
             <header>
-    <nav class="navbar">
+    <nav class="navbar fixed-top">
         <div class="container-fluid">
             <a class=" " href="#">
                 <img src="../../resources/img/home.png" alt="Bootstrap" width="50" height="50" type="button"

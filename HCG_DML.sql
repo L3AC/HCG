@@ -38,21 +38,21 @@ true,true,true,true,true,true,true,true),
 "https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcRRto3I
 lY56MlAIOAvXHvPEVxBDVzG1uz1zULEBYdJ-I4Aa-xOyPEVvv7fmIjLnxaOz",true,true,true,true,true,true,true,true),
 ((SELECT get_next_id("tb_productos")),"Conjunto","Tacos de carne asada","Almuerzo y Cena",10,
-"https://www.example.com/tacos_image.jpg",true,false,false,true,false,true,true,true),
+"https://forevertwentysomethings.com/wp-content/uploads/2016/10/tacos-768x469.jpg",true,false,false,true,false,true,true,true),
 ((SELECT get_next_id("tb_productos")),"Conjunto","Pasta Alfredo","Almuerzo y Cena",12,
-"https://www.example.com/pasta_image.jpg",true,false,true,false,true,true,false,true),
-((SELECT get_next_id("tb_productos")),"Complementario","Sopa de pollo","Almuerzo y Cena",6,
-"https://www.example.com/chicken_soup_image.jpg",true,false,false,true,false,true,false,true),
+"https://www.tureceta.net/wp-content/uploads/2019/12/Pasta-Alfredo.jpg",true,false,true,false,true,true,false,true),
+((SELECT get_next_id("tb_productos")),"Conjunto","Sopa de pollo","Almuerzo y Cena",6,
+"https://i.ytimg.com/vi/i-9EeaO2MM8/maxresdefault.jpg",true,false,false,true,false,true,false,true),
 ((SELECT get_next_id("tb_productos")),"Complementario","Ensalada mixta","Almuerzo y Cena",7,
-"https://www.example.com/mixed_salad_image.jpg",true,false,true,false,true,true,false,true),
+"https://lirp.cdn-website.com/43d8542e/dms3rep/multi/opt/AdobeStock_77449575-1920w.jpeg",true,false,true,false,true,true,false,true),
 ((SELECT get_next_id("tb_productos")),"Conjunto","Hamburguesa de pollo","Todo el día",5.5,
-"https://www.example.com/chicken_burger_image.jpg",true,true,true,true,true,true,true,true),
+"https://restaurantes.mesa247.pe/archivos/local/foto/2020/05/mtlxi-foto-fotonetflix3-new-your-burger-chacarilla-1.jpg",true,true,true,true,true,true,true,true),
 ((SELECT get_next_id("tb_productos")),"Conjunto","Sandwich club","Todo el día",6.5,
-"https://www.example.com/sandwich_image.jpg",true,true,true,true,true,true,true,true),
+"https://www.cucinare.tv/wp-content/uploads/2020/06/S%C3%A1ndwich-Club.jpg",true,true,true,true,true,true,true,true),
 ((SELECT get_next_id("tb_productos")),"Complementario","Tiramisú","Cena",4.5,
-"https://www.example.com/tiramisu_image.jpg",true,false,false,false,true,false,false,true),
+"https://mui.kitchen/__export/1604882392531/sites/muikitchen/img/2020/11/08/receta-tiramisu-italiano.jpg_1103262588.jpg",true,false,false,false,true,false,false,true),
 ((SELECT get_next_id("tb_productos")),"Complementario","Fruta fresca","Todo el día",3.5,
-"https://www.example.com/fruit_image.jpg",true,true,true,true,true,true,true,true);
+"https://d2d8wwwkmhfcva.cloudfront.net/800x/d2lnr5mha7bycj.cloudfront.net/product-image/file/large_b2c11e1a-b4b0-43e6-936d-7c66c1e5fd9c.jpg",true,true,true,true,true,true,true,true);
 
 
 INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantidad_item) 
