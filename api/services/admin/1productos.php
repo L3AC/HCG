@@ -77,7 +77,7 @@ if (isset($_GET['action'])) {
                     !$producto->setHorario($_POST['horarioProductoU']) or
                     !$producto->setPrecio($_POST['precioProductoU']) or
                     !$producto->setURL($_POST['imagenProductoU']) or
-                    !$producto->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) or
+                    !$producto->setEstado(isset($_POST['estadoProductoU']) ? 1 : 0) or
                     !$producto->setLunes(isset($_POST['lunesU']) ? 1 : 0) or
                     !$producto->setMartes(isset($_POST['martesU']) ? 1 : 0) or
                     !$producto->setMiercoles(isset($_POST['miercolesU']) ? 1 : 0) or
