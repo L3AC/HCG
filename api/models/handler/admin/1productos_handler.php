@@ -131,10 +131,14 @@ class ProductoHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE prc_modelos 
-                SET foto_modelo = ?, descripcion_modelo = ?,estado_modelo = ?, id_marca = ?
-                WHERE id_modelo = ?';
-        $params = array($this->url, $this->nombre, $this->estado, $this->id, $this->id);
+        $sql = 'UPDATE tb_productos SET
+        tipo_producto = ?,descripcion_producto = ?,horario_producto = ?,precio_producto = ?,
+        imagen_producto = ?,estado_producto = ?,lunes_producto = ?,martes_producto = ?,
+        miercoles_producto = ?,jueves_producto = ?,viernes_producto = ?,sabado_producto = ?,
+        domingo_producto = ? WHERE id_producto = ?;';
+        $params = array($this->tipoproducto, $this->nombre, $this->horario, $this->precio
+        , $this->url, $this->estado, $this->lunes, $this->martes, $this->miercoles, $this->jueves
+        , $this->viernes, $this->sabado, $this->domingo,$this->id);
         return Database::executeRow($sql, $params);
     }
 

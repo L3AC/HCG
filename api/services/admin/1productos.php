@@ -70,6 +70,7 @@ if (isset($_GET['action'])) {
             
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
+                //echo $_POST['idProductoU'];
                 if (
                     !$producto->setId($_POST['idProductoU']) or
                     !$producto->setTipoProducto($_POST['tipoProductoU']) or
@@ -78,13 +79,13 @@ if (isset($_GET['action'])) {
                     !$producto->setPrecio($_POST['precioProductoU']) or
                     !$producto->setURL($_POST['imagenProductoU']) or
                     !$producto->setEstado(isset($_POST['estadoProductoU']) ? 1 : 0) or
-                    !$producto->setLunes(isset($_POST['lunesU']) ? 1 : 0) or
-                    !$producto->setMartes(isset($_POST['martesU']) ? 1 : 0) or
-                    !$producto->setMiercoles(isset($_POST['miercolesU']) ? 1 : 0) or
-                    !$producto->setJueves(isset($_POST['juevesU']) ? 1 : 0) or
-                    !$producto->setViernes(isset($_POST['viernesU']) ? 1 : 0) or
-                    !$producto->setSabado(isset($_POST['sabadoU']) ? 1 : 0) or
-                    !$producto->setDomingo(isset($_POST['domingoU']) ? 1 : 0) 
+                    !$producto->setLunes(isset($_POST['lunesEU']) ? 1 : 0) or
+                    !$producto->setMartes(isset($_POST['martesEU']) ? 1 : 0) or
+                    !$producto->setMiercoles(isset($_POST['miercolesEU']) ? 1 : 0) or
+                    !$producto->setJueves(isset($_POST['juevesEU']) ? 1 : 0) or
+                    !$producto->setViernes(isset($_POST['viernesEU']) ? 1 : 0) or
+                    !$producto->setSabado(isset($_POST['sabadoEU']) ? 1 : 0) or
+                    !$producto->setDomingo(isset($_POST['domingoEU']) ? 1 : 0) 
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->updateRow()) {
