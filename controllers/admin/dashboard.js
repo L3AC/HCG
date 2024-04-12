@@ -71,7 +71,7 @@ const graficoPastelCategorias = async () => {
             porcentajes.push(row.porcentaje);
         });
         // Llamada a la función para generar y mostrar un gráfico de pastel. Se encuentra en el archivo components.js
-        pieGraph('chart2', categorias, porcentajes, 'Porcentaje de modelos por marca');
+        pieGraph('chart2', categorias, porcentajes, '5 Productos más pedidos');
     } else {
         document.getElementById('chart2').remove();
         console.log(DATA.error);

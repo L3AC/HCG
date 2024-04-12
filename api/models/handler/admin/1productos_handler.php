@@ -182,7 +182,7 @@ class ProductoHandler
         INNER JOIN tb_productos USING(id_producto)
         GROUP BY id_producto, descripcion_producto
         ORDER BY veces_pedidos DESC
-        LIMIT 10;';
+        LIMIT 5;';
         return Database::getRows($sql);
     }
 
