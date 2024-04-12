@@ -68,16 +68,16 @@ VALUES((SELECT get_next_id("tb_detalle_productos")),1,1,1),
 ((SELECT get_next_id("tb_detalle_productos")),4,10,1);
 
 INSERT INTO tb_clientes(id_cliente,nombre_cliente,apellido_cliente,telefono_cliente,correo_cliente)
-VALUES((SELECT get_next_id("tb_clientes")),"Juan","Hernandez","50371926778","leac.2xy@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Maria","Rodriguez","50371000701","mariarod@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Carlos","Perez","50371926602","carlosperez@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Ana","Diaz","50371926703","anadiaz@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Luis","Sanchez","50371000704","luissanc@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Laura","Ramirez","50371926605","lauraram@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Javier","Garcia","50371926706","javiergar@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Sofia","Martinez","50371000707","sofiamtz@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Diego","Flores","50371926608","diegoflores@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Lucia","Gutierrez","50371926709","luciagtz@gmail.com");
+VALUES((SELECT get_next_id("tb_clientes")),"Juan","Hernandez","71926778","leac.2xy@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Maria","Rodriguez","71000701","mariarod@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Carlos","Perez","71926602","carlosperez@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Ana","Diaz","71926703","anadiaz@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Luis","Sanchez","71000704","luissanc@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Laura","Ramirez","71926605","lauraram@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Javier","Garcia","71926706","javiergar@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Sofia","Martinez","71000707","sofiamtz@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Diego","Flores","71926608","diegoflores@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Lucia","Gutierrez","71926709","luciagtz@gmail.com");
 
 INSERT INTO tb_pedidos (id_pedido, id_cliente,estado_pedido,codigo_pedido)
 VALUES 

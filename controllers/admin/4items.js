@@ -94,7 +94,7 @@ const fillTable = async (form = null) => {
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </div>  
-            </div>
+                </div>
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.
