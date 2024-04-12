@@ -67,7 +67,7 @@ const loadTemplate = async () => {
         </div>
     </nav>`);
 
-    const SEARCH_MAIN = document.getElementById('searchMain');
+    const SEARCH_MAIN = document.getElementById('inputsearch');
     SEARCH_MAIN.addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             console.log(document.activeElement)
