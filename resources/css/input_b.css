@@ -1,9 +1,9 @@
-.inputBox {
+.input_box {
     position: relative;
     width: 100%;
   }
   
-  .inputBox input {
+  .input_box input {
     padding: 15px 20px;
     outline: none;
     background: transparent;
@@ -13,7 +13,7 @@
     font-size: 1em;
     width: 100%;
   }
-  .inputBox select {
+  .input_box select {
     padding: 15px 20px;
     outline: none;
     background: transparent;
@@ -24,7 +24,7 @@
     width: 100%;
   }
 
-  .inputBox textarea {
+  .input_box textarea {
     padding: 15px 20px;
     outline: none;
     background: transparent;
@@ -35,7 +35,7 @@
     width: 100%;
   }
   
-  .inputBox span {
+  .input_box span {
     position: absolute;
     left: 0;
     font-size: 0.7em;

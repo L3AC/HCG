@@ -21,7 +21,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-    BTNCOMENTARIO = document.getElementById('btnComentario'),
+    btn_comENTARIO = document.getElementById('btn_comentario'),
     ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
     CANTIDAD = document.getElementById('cantidadModelo'),
     STOCK_INFO = document.getElementById('stock'),

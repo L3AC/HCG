@@ -82,7 +82,7 @@ async function readDetail() {
             total += subtotal;
 
             /*PARA VERIFICAR SI YA HAY UN COMENTARIO*/
-            btnComentario = '';
+            btn_comentario = '';
             const FORM3 = new FormData();
             FORM3.append('idDetalle', row.id_detalle);
             // Petición para obtener los datos del registro solicitado.
@@ -90,9 +90,9 @@ async function readDetail() {
             /*const ROW = DATA3.dataset;
             console.log(ROW.id_comentario);*/
             if (DATA3.dataset.length > 0) {
-                btnComentario = `openRead(${DATA3.dataset[0].id_comentario})`;
+                btn_comentario = `openRead(${DATA3.dataset[0].id_comentario})`;
             } else {
-                btnComentario = `openCreate(${row.id_detalle})`;
+                btn_comentario = `openCreate(${row.id_detalle})`;
             }
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
@@ -146,7 +146,7 @@ async function readDetail() {
                                         <strong>Fecha:</strong> ${row.fecha_pedido}<br>
                                         <strong>Subtotal:</strong> $ ${subtotal.toFixed(2)}
                                     </p>-->
-                                    <button type="button" class="btn3" onclick="${btnComentario}">
+                                    <button type="button" class="btn3" onclick="${btn_comentario}">
                                         <i class="bi bi-chat-dots"></i>
                                     </button>
                                 </div>
