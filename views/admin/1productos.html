@@ -35,8 +35,7 @@
     <!-- Contenido principal del documento -->
     <main>
         <!-- Título del contenido principal -->
-        <h3 id="mainTitle" class="mt-5 text-white" ></h3>
-
+        <h3 id="mainTitle" class="mt-5 text-white"></h3>
         <!-- Fila que contiene el formulario de búsqueda y botones -->
         <div class="row">
             <!-- Formulario de búsqueda -->
@@ -55,10 +54,8 @@
                             <input id="inputsearch" placeholder="Buscar..." type="search" class="inputSearch" required>
                         </div>
                     </div>
-
                 </div>
             </form>
-
         </div>
         <!-- Botones de la parte derecha -->
         <div class="col-sm-12 col-md-12 d-flex justify-content-end pb-3 pt-3">
@@ -68,15 +65,13 @@
             </button>
         </div>
         <div colspan="6" id="rowsFound" class="text-white d-flex justify-content-center mb-4"></div>
-
         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
         <div id="tableBody" class="row d-flex justify-content-center"></div>
-
         <!-- Componente Modal para guardar un registro -->
         <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content" >
+                <div class="modal-content">
                     <div class="modal-header" style="background-color: #5C2C0C;">
                         <!-- Título del modal -->
                         <h1 class="modal-title fs-5" id="modalTitle" style="color: white;"></h1>
@@ -95,8 +90,8 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <span>L</span>
                                         <label class="checkbox-container">
-                                            <input id="lunesER" class="custom-checkbox form-control" 
-                                            checked="" type="checkbox" name="lunesER">
+                                            <input id="lunesER" class="custom-checkbox form-control" checked=""
+                                                type="checkbox" name="lunesER">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -105,8 +100,8 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <span>M</span>
                                         <label class="checkbox-container">
-                                            <input id="martesER" name="martesER"
-                                            class="custom-checkbox form-control" checked="" type="checkbox">
+                                            <input id="martesER" name="martesER" class="custom-checkbox form-control"
+                                                checked="" type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -116,7 +111,7 @@
                                         <span>X</span>
                                         <label class="checkbox-container">
                                             <input type="checkbox" id="miercolesER" name="miercolesER"
-                                            class="custom-checkbox form-control" checked="" >
+                                                class="custom-checkbox form-control" checked="">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -125,8 +120,8 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <span>J</span>
                                         <label class="checkbox-container">
-                                            <input type="checkbox" id="juevesER" name="juevesER" 
-                                            class="custom-checkbox form-control" checked="">
+                                            <input type="checkbox" id="juevesER" name="juevesER"
+                                                class="custom-checkbox form-control" checked="">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -135,8 +130,8 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <span>V</span>
                                         <label class="checkbox-container">
-                                            <input type="checkbox" id="viernesER" name="viernesER" 
-                                            class="custom-checkbox form-control" checked="">
+                                            <input type="checkbox" id="viernesER" name="viernesER"
+                                                class="custom-checkbox form-control" checked="">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -145,8 +140,8 @@
                                     <div class="d-flex flex-column align-items-center ">
                                         <span>S</span>
                                         <label class="checkbox-container">
-                                            <input type="checkbox" id="sabadoER"  name="sabadoER"
-                                            class="custom-checkbox form-control" checked="" >
+                                            <input type="checkbox" id="sabadoER" name="sabadoER"
+                                                class="custom-checkbox form-control" checked="">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -155,8 +150,8 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <span>D</span>
                                         <label class="checkbox-container">
-                                            <input id="domingoER" name="domingoER"
-                                            class="custom-checkbox form-control" checked="" type="checkbox">
+                                            <input id="domingoER" name="domingoER" class="custom-checkbox form-control"
+                                                checked="" type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -164,33 +159,34 @@
                             </div>
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
-                                    <div class="input_box">
-                                        <input required="" style="color: white; font-weight: bold;" id="nombreProducto" type="text" name="nombreProducto">
-                                        <span>Nombre :</span>
-                                    </div>
+                                <div class="input_box">
+                                    <input required="" style="color: white; font-weight: bold;" id="nombreProducto"
+                                        type="text" name="nombreProducto">
+                                    <span>Nombre :</span>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <div class="input_box">
                                     <span>Tipo Producto :</span>
-                                    <select id="tipoProducto" style="color: white; font-weight: bold;" name="tipoProducto" class="form-select" required>
+                                    <select id="tipoProducto" style="color: white; font-weight: bold;"
+                                        name="tipoProducto" class="form-select" required>
                                         <option value="Conjunto">Conjunto</option>
                                         <option value="Complementario">Complementario</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                    <div class="input_box">
-                                        <input required="" style="color: white; font-weight: bold;" id="precioProducto" type="number" name="precioProducto" min="0.01"
-                                        step="0.01">
-                                        <span>Precio (US$) :</span>
-                                    </div>
+                                <div class="input_box">
+                                    <input required="" style="color: white; font-weight: bold;" id="precioProducto"
+                                        type="number" name="precioProducto" min="0.01" step="0.01">
+                                    <span>Precio (US$) :</span>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                
-
                                 <div class="input_box">
                                     <span>Horario :</span>
-                                    <select id="horarioProducto" style="color: white; font-weight: bold;" name="horarioProducto" class="form-select" required>
+                                    <select id="horarioProducto" style="color: white; font-weight: bold;"
+                                        name="horarioProducto" class="form-select" required>
                                         <option value="Desayuno">Desayuno</option>
                                         <option value="Almuerzo">Almuerzo</option>
                                         <option value="Cena">Cena</option>
@@ -203,21 +199,19 @@
                                         <option value="Típico y Almuerzo">Típico y Almuerzo</option>
                                         <option value="Tipico y Cena">Típico y Cena</option>
                                     </select>
-                                    
+
                                 </div>
                             </div>
                             <div class="col-12">
-                                    <div class="input_box">
-                                        <span>Imagen :</span>
-                                        <textarea id="imagenProducto" type="text" name="imagenProducto" class="form-control"
+                                <div class="input_box">
+                                    <span>Imagen :</span>
+                                    <textarea id="imagenProducto" type="text" name="imagenProducto" class="form-control"
                                         rows="3"></textarea>
-                                        
-                                    </div>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <div class="row justify-content-center px-3 mb-1" id="imgPre"></div>
                             </div>
-
                             <div class="col-6">
                                 <div class="p-3">
                                     <!-- Interruptor para el estado del registro -->
@@ -235,8 +229,6 @@
                                     <!-- Título del modal -->
                                     <h1 class="modal-title fs-5" style="color: #FFFFFF;">Items</h1>
                                 </div>
-                                <!-- TABLA DE Producto TALLAS-->
-
                                 <!-- Formulario y botones para la subtabla -->
                                 <form class="col-12" id="searchsubForm">
                                     <div class="row">
@@ -250,25 +242,25 @@
                                                         </path>
                                                     </g>
                                                 </svg>
-                                                <input name="search" placeholder="Buscar..." type="search" class="inputSearch" >
+                                                <input name="search" placeholder="Buscar..." type="search"
+                                                    class="inputSearch">
                                             </div>
                                         </div>
                                     </div>
                                 </form>
-
                                 <!-- Tabla para mostrar los registros en la subtabla -->
-                                
-                                    <div id="subheaderT" class=" mt-4 table-responsive border-0 " style="max-height: 400px;  overflow-y: scroll; ">
-                                        <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+                                <div id="subheaderT" class=" mt-4 table-responsive border-0 "
+                                    style="max-height: 400px;  overflow-y: scroll; ">
+                                    <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+                                    <div>
                                         <div>
-                                            <div>
-                                                <div colspan="3" id="subrowsFound" style="font-weight: bold; color: white;"></div>
+                                            <div colspan="3" id="subrowsFound" style="font-weight: bold; color: white;">
                                             </div>
                                         </div>
-                                        <!-- Cuerpo de la tabla para mostrar un registro por fila -->
-                                        <div id="subtableBody"></div>
                                     </div>
-
+                                    <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+                                    <div id="subtableBody"></div>
+                                </div>
                             </div>
                             <div id="tableSelectedR" class="col-sm-12 col-md-7">
                                 <div class="modal-header" style="background-color: #5C2C0C;">
@@ -293,7 +285,6 @@
                                     </table>
                                 </div>
                             </div>
-
                             <!-- Pie del modal con el botón de guardar -->
                             <div class="modal-footer border-0 border-bottom">
                                 <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
@@ -332,8 +323,8 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <span>L</span>
                                         <label class="checkbox-container">
-                                            <input id="lunesEU" name="lunesEU" 
-                                            class="custom-checkbox" checked="" type="checkbox">
+                                            <input id="lunesEU" name="lunesEU" class="custom-checkbox" checked=""
+                                                type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -342,8 +333,8 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <span>M</span>
                                         <label class="checkbox-container">
-                                            <input id="martesEU" name="martesEU"
-                                            class="custom-checkbox" checked="" type="checkbox">
+                                            <input id="martesEU" name="martesEU" class="custom-checkbox" checked=""
+                                                type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -352,8 +343,8 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <span>X</span>
                                         <label class="checkbox-container">
-                                            <input id="miercolesEU" name="miercolesEU"
-                                            class="custom-checkbox" checked="" type="checkbox">
+                                            <input id="miercolesEU" name="miercolesEU" class="custom-checkbox"
+                                                checked="" type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -362,8 +353,8 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <span>J</span>
                                         <label class="checkbox-container">
-                                            <input id="juevesEU" name="juevesEU" 
-                                            class="custom-checkbox" checked="" type="checkbox">
+                                            <input id="juevesEU" name="juevesEU" class="custom-checkbox" checked=""
+                                                type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -372,8 +363,8 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <span>V</span>
                                         <label class="checkbox-container">
-                                            <input id="viernesEU" name="viernesEU" 
-                                            class="custom-checkbox" checked="" type="checkbox">
+                                            <input id="viernesEU" name="viernesEU" class="custom-checkbox" checked=""
+                                                type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -382,8 +373,8 @@
                                     <div class="d-flex flex-column align-items-center ">
                                         <span>S</span>
                                         <label class="checkbox-container">
-                                            <input id="sabadoEU" name="sabadoEU"
-                                            class="custom-checkbox" checked="" type="checkbox">
+                                            <input id="sabadoEU" name="sabadoEU" class="custom-checkbox" checked=""
+                                                type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -392,14 +383,13 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <span>D</span>
                                         <label class="checkbox-container">
-                                            <input id="domingoEU" name="domingoEU" 
-                                            class="custom-checkbox" checked="" type="checkbox">
+                                            <input id="domingoEU" name="domingoEU" class="custom-checkbox" checked=""
+                                                type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
                                 </div>
                             </div>
-
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
                                 <label for="nombreProductoU" class="form-label">Nombre</label>
@@ -415,8 +405,8 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="precioProductoU" class="form-label">Precio (US$)</label>
-                                <input id="precioProductoU" type="number" name="precioProductoU" min="0.01"
-                                    step="0.01" class="form-control" required>
+                                <input id="precioProductoU" type="number" name="precioProductoU" min="0.01" step="0.01"
+                                    class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="horarioProductoU" class="form-label">Horario</label>
@@ -456,10 +446,6 @@
                             <div class="modal-footer border-0 border-bottom">
                                 <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
                             </div>
-
-                            <!-- Pie del modal con el botón de guardar -->
-
-
                             <!-- Subtabla para Productos tallas -->
                             <div id="subtableU" class="col-sm-12 col-md-5">
                                 <div class="modal-header">
@@ -476,12 +462,11 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <!-- Campo de búsqueda en la subtabla -->
-                                            <input type="search" class="form-control" name="search" placeholder="Buscar"
-                                                >
+                                            <input type="search" class="form-control" name="search"
+                                                placeholder="Buscar">
                                         </div>
                                     </div>
                                 </form>
-
                                 <!-- Tabla para mostrar los registros en la subtabla -->
                                 <div class="mt-4 table-responsive border-0"
                                     style="max-height: 200px; overflow-y: auto;">
@@ -503,8 +488,6 @@
                                 </div>
 
                             </div>
-
-
                             <div id="tableSelected" class="col-sm-12 col-md-7">
                                 <div class="modal-header">
                                     <!-- Título del modal -->
@@ -527,12 +510,8 @@
                                         <tbody id="selectedItemsListU"></tbody>
                                     </table>
                                 </div>
-
                             </div>
-
-
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -570,11 +549,7 @@
                 </div>
             </div>
         </div>
-
-
     </main>
-
-    
 
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->
