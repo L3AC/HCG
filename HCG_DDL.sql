@@ -1,11 +1,12 @@
 use db_hcg;
-/*CREACION DE USUARIO*/
+/*CREACION DE USUARIO
 CREATE USER hcg_desarrollador IDENTIFIED BY '123456';
 GRANT INSERT, UPDATE, DELETE, SELECT ON db_hcg.* TO hcg_desarrollador@'localhost';
 GRANT EXECUTE ON db_hcg.* TO hcg_desarrollador@'localhost';
 GRANT CREATE ROUTINE ON db_hcg.* TO hcg_desarrollador@'localhost';
 GRANT TRIGGER ON db_hcg.* TO hcg_desarrollador@'localhost';
 GRANT CREATE VIEW ON db_hcg.* TO hcg_desarrollador@'localhost';
+*/
 
 /*FUNCION QUE ME DEVUELVE EL ID SIGUIENTE QUE SE REGISTRARIA EN ORDEN Y SE MANDA A QUE TABLA SE AGARRARIA
 ESTO SE USA EN LUGAR DEL AUTO_INCREMENT*/
