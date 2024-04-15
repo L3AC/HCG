@@ -82,7 +82,6 @@ INPUTSEARCH.addEventListener('input', async function ()  {
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            console.log(DATA.dataset);
             // Se establece un icono para el estado del PEDIDO.
             (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
@@ -127,7 +126,6 @@ const fillTable = async (form = null) => {
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            console.log(DATA.dataset);
             // Se establece un icono para el estado del PEDIDO.
             (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
@@ -333,8 +331,8 @@ const opensubCreate = () => {
 */
 const opensubUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
+    console.log(id);
     SAVE_MODAL.hide();
-    SELECTALLA.hidden = true;
     const FORM = new FormData();
     FORM.append('idDetallePedido', id);
     // Petición para obtener los datos del registro solicitado.
@@ -343,15 +341,11 @@ const opensubUpdate = async (id) => {
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
         DETALLE_MODAL.show();
-        TREMODAL_TITLE.textContent = 'Tallas del modelo';
         // Se prepara el formulario.
-        SAVE_TREFORM.reset();
+        DETALLE_FORM.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_MODELOTALLA.value = ROW.id_modelo_talla;
-        console.log(ROW.stock + ' ' + ROW.precio_modelo_talla);
-        STOCK_MODELOTALLA.value = ROW.stock_modelo_talla;
-        PRECIO_MODELOTALLA.value = ROW.precio_modelo_talla;
+        NOTA_PEDIDO.value = ROW.nota_pedido;
 
     } else {
         sweetAlert(2, DATA.error, false);

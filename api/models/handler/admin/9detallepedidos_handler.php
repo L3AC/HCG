@@ -68,13 +68,7 @@ class DetallePedidoHandler
 
     public function readOne()
     {
-        $sql ='select mt.id_modelo_talla,mt.id_talla,mt.id_modelo,mt.stock_modelo_talla,
-        mt.precio_modelo_talla,t.descripcion_talla as talla
-        from prc_modelo_tallas mt 
-        INNER JOIN ctg_tallas t USING(id_talla)
-        INNER JOIN prc_modelos m USING(id_modelo)
-        WHERE mt.id_modelo_talla =?
-        ORDER BY t.descripcion_talla ';
+        $sql ='select * from tb_detalle_pedidos where id_detalle_pedido=?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }

@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Guardar el carrito en localStorage
             localStorage.setItem('carrito', JSON.stringify(carrito));
 
-            alert('Producto agregado al pedido');
+            sweetAlert(1, DATA.message, true,"cart.html");
             // Limpiar el campo de cantidad
             document.getElementById('cantidadProducto').value = '';
         });

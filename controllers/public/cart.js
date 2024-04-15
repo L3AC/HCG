@@ -58,6 +58,7 @@ CLIENTE_FORM.addEventListener('submit', async (event) => {
             FORM2.append('idPedido', DATA.dataset.id_pedido);
             FORM2.append('idProducto', item.idProducto);
             FORM2.append('cantidadProducto', item.cantidad);
+            FORM2.append('notaProducto', item.nota);
 
             const DATA2 = await fetchData(DETALLEPEDIDO_API, "createRow", FORM2);
             if (DATA2.status) {
@@ -209,6 +210,7 @@ ITEM_FORM.addEventListener('submit', async (event) => {
     // Si el índice es válido, actualizar la cantidad del producto en el carrito
     if (!isNaN(index) && index >= 0 && index < carrito.length) {
         carrito[index].cantidad = CANTIDAD.value;
+        carrito[index].nota = NOTA_PRODUCTO.value;
         // Guardar el carrito actualizado en localStorage
         localStorage.setItem('carrito', JSON.stringify(carrito));
     }
