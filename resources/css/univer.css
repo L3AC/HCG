@@ -15,7 +15,7 @@
 
 @media (max-width: 991px) {
     .apa{
-        visibility: hidden;
+        display: none;
     }
 
   .texto-antes {
