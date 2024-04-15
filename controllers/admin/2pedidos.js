@@ -277,30 +277,47 @@ const fillsubTable = async () => {
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
     const FORM = new FormData();
-    FORM.append('valor', SUBINPUTSEARCH.value?? null);
-    FORM.append('idPedido', ID_PEDIDO.value?? null);
+    FORM.append('valor', SUBINPUTSEARCH.value ?? null);
+    FORM.append('idPedido', ID_PEDIDO.value ?? null);
     // Petición para obtener los registros disponibles.
     const DATA = await fetchData(DETALLEPEDIDO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
-            SUBTABLE_BODY.innerHTML += `
-                <tr >
-                <td class="text-center"><img src="${row.imagen_producto}" height="70" width="100"></td>
-                <td>${row.descripcion_producto}</td>
-                <td class="text-center">${row.cantidad_pedido}</td>
-                <td>$ ${row.precio_producto}</td>
-                <td>$ ${row.total_pedido}</td>
-                <td>
-                    <button type="button" title="Detalle" class="btnAgregar"  style="width: 75%; 
-                    margin-top: 5px; margin-bottom: 5px;" onclick="opensubUpdate(${row.id_detalle_pedido})">
-                        <i class="bi bi-info-circle" ></i>
-                    </button>
-                </td>
-                </tr>
-            `;
+            // Se verifica si la nota_pedido no es "Vacío" antes de agregar la fila a la tabla.
+            if (row.nota_pedido !== 'Nota vacía') {
+                // Se crea y concatena la fila de la tabla con los datos de cada registro, incluyendo el botón.
+                const rowHTML = `
+                    <tr >
+                    <td class="text-center"><img src="${row.imagen_producto}" height="70" width="100"></td>
+                    <td>${row.descripcion_producto}</td>
+                    <td class="text-center">${row.cantidad_pedido}</td>
+                    <td>$ ${row.precio_producto}</td>
+                    <td>$ ${row.total_pedido}</td>
+                    <td>
+                        <button type="button" title="Existe una nota" class="btn btn-danger"  style="width: 75%; 
+                        margin-top: 5px; margin-bottom: 5px;" onclick="opensubUpdate(${row.id_detalle_pedido})">
+                            <i class="bi bi-app-indicator"></i>
+                        </button>
+                    </td>
+                    </tr>
+                `;
+                SUBTABLE_BODY.innerHTML += rowHTML;
+            } else {
+                // Si la nota_pedido es "Vacío", se crea y concatena la fila de la tabla sin el botón.
+                const rowHTML = `
+                    <tr >
+                    <td class="text-center"><img src="${row.imagen_producto}" height="70" width="100"></td>
+                    <td>${row.descripcion_producto}</td>
+                    <td class="text-center">${row.cantidad_pedido}</td>
+                    <td>$ ${row.precio_producto}</td>
+                    <td>$ ${row.total_pedido}</td>
+                    <td></td>
+                    </tr>
+                `;
+                SUBTABLE_BODY.innerHTML += rowHTML;
+            }
         });
         // Se muestra un mensaje de acuerdo con el resultado.
         SUBROWS_FOUND.textContent = DATA.message;
@@ -308,6 +325,7 @@ const fillsubTable = async () => {
        // sweetAlert(4, DATA.error, true);
     }
 }
+
 const subclose = () => {
     SAVE_MODAL.show();
 }

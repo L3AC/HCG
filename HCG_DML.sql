@@ -103,3 +103,5 @@ VALUES((SELECT get_next_id("tb_detalle_pedidos")),1, 1, 2),
 ((SELECT get_next_id("tb_detalle_pedidos")),4, 8, 3),
 ((SELECT get_next_id("tb_detalle_pedidos")),5, 9, 2),
 ((SELECT get_next_id("tb_detalle_pedidos")),5, 10, 1);
+
+
