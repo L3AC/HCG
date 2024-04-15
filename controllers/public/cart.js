@@ -10,6 +10,7 @@ const ITEM_MODAL = new bootstrap.Modal('#itemModal');
 const ITEM_FORM = document.getElementById('itemForm');
 const ID_PRODUCTO = document.getElementById('idProducto'),
     CANTIDAD = document.getElementById('cantidadProducto'),
+    NOTA_PRODUCTO = document.getElementById('notaProducto'),
     ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
     STOCK_INFO = document.getElementById('stock'),
     mensajeDiv = document.getElementById('mensajeDiv'),
@@ -195,6 +196,7 @@ const openUpdate = async (idProducto) => {
     if (index >= 0) {
         ID_PRODUCTO.value = idProducto;
         CANTIDAD.value = carrito[index].cantidad;
+        NOTA_PRODUCTO.value = carrito[index].nota;
         // Almacenar el índice en una propiedad del formulario
         ITEM_FORM.dataset.index = index;
     }

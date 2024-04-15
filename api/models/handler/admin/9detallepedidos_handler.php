@@ -32,7 +32,7 @@ class DetallePedidoHandler
 
         $sql = 'select id_detalle_pedido,id_pedido,id_producto,cantidad_pedido,
         descripcion_producto,imagen_producto,precio_producto,
-        precio_producto * cantidad_pedido AS total_pedido
+        precio_producto * cantidad_pedido AS total_pedido,nota_pedido
         from tb_detalle_pedidos
         INNER JOIN tb_productos USING(id_producto)
         WHERE id_pedido=? AND descripcion_producto like ?

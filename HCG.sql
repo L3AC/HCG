@@ -98,7 +98,7 @@ CREATE TABLE tb_detalle_pedidos (
   id_pedido INT UNSIGNED NOT NULL,
   id_producto INT UNSIGNED NOT NULL,
   cantidad_pedido INT UNSIGNED NOT NULL,                                                   
-  nota_pedido LONGTEXT DEFAULT "",
+  nota_pedido LONGTEXT DEFAULT "Nota vacía",
   PRIMARY KEY (id_detalle_pedido),
   FOREIGN KEY (id_pedido) REFERENCES tb_pedidos(id_pedido) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE

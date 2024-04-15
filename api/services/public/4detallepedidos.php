@@ -27,7 +27,8 @@ if (isset($_GET['action'])) {
             if (
                 !$producto->setIdPedido($_POST['idPedido']) or
                 !$producto->setIdProducto($_POST['idProducto']) or
-                !$producto->setCantidad($_POST['cantidadProducto']) 
+                !$producto->setCantidad($_POST['cantidadProducto']) or
+                !$producto->setNota($_POST['notaProducto']) 
             ) {
                 $result['error'] = $producto->getDataError();
             } elseif ($producto->createRow()) {
@@ -48,7 +49,7 @@ if (isset($_GET['action'])) {
             }
             break;
         case 'readOne':
-            if (!$producto->setId($_POST['idModeloTalla'])) {
+            if (!$producto->setId($_POST['idDetallePedido'])) {
                 $result['error'] = $producto->getDataError();
             } elseif ($result['dataset'] = $producto->readOne()) {
                 $result['status'] = 1;

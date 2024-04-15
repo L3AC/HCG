@@ -109,6 +109,7 @@
                                 <label for="fechaPedido" class="form-label">Fecha</label>
                                 <input id="fechaPedido" type="text" name="fechaPedido" class="form-control" required>
                             </div>
+
                             <div class="col-sm-12 col-md-6">
                                 <label for="estadoPedido" class="form-label">Estado</label>
                                 <input id="estadoPedido" type="text" name="estadoPedido" class="form-control" required>
@@ -117,19 +118,15 @@
                             <!-- Subtabla para mostrar los detalles del pedido -->
                             <div id="subtable">
                                 <!-- TABLA DE MODELO TALLAS -->
-                                <div class="modal-header border-0">
-                                    <h1 class="modal-title fs-5" id="submodalTitle"></h1>
-                                </div>
-
-                                <!-- Formulario de búsqueda para la subtabla -->
-                                <form class="col-sm-12 col-md-6" id="searchsubForm">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <input id="subinputsearch" type="search" class="form-control" name="search"
-                                                placeholder="Buscar" required>
-                                        </div>
+                                <div class="modal-header border-0 row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <h1 class="modal-title fs-5" id="submodalTitle"></h1>
                                     </div>
-                                </form>
+                                    <div class="col-md-4 col-sm-12">
+                                        <input id="subinputsearch" type="search" class="form-control" name="search"
+                                            placeholder="Buscar" required>
+                                    </div>
+                                </div>
 
                                 <!-- Subtabla para mostrar los detalles del pedido -->
                                 <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
@@ -145,6 +142,7 @@
                                                 <th class="text-center">CANTIDAD</th>
                                                 <th>PRECIO</th>
                                                 <th>TOTAL</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
@@ -161,6 +159,32 @@
                 </div>
             </div>
         </div>
+
+        <!-- Componente Modal para mostrar una caja de diálogo -->
+        <div class="modal fade" id="detalleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <!-- Contenido del componente Modal -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalTitle">Nota</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Formulario para actualizar cantidad -->
+                    <form id="detalleForm">
+                        <div class="modal-body row">
+                            <h1 class="fs-5" id="stock"></h1>
+                            <div class="col-sm-12">
+                                <label for="notaProducto" class="form-label">Descripción</label>
+                                <textarea id="notaProducto" type="text" name="notaProducto" class="form-control"
+                                    rows="4"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </main>
 
 

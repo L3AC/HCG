@@ -50,8 +50,8 @@ class DetallePedidoHandler
     {
         $sql = 'INSERT INTO tb_detalle_pedidos (id_detalle_pedido,id_pedido,
          id_producto, cantidad_pedido,nota_producto)
-        VALUES((SELECT get_next_id("tb_detalle_pedidos")),?, ?, ?)';
-        $params = array($this->idPedido, $this->idProducto, $this->cantidad);
+        VALUES((SELECT get_next_id("tb_detalle_pedidos")),?, ?, ?,?)';
+        $params = array($this->idPedido, $this->idProducto, $this->cantidad,$this->nota);
         return Database::executeRow($sql, $params);
     }
 

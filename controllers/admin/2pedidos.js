@@ -13,14 +13,17 @@ const SUBTABLE_HEAD = document.getElementById('subheaderT'),
     SUBROWS_FOUND = document.getElementById('subrowsFound');
 // Constantes para establecer los elementos del componente Modal.
 const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
+    DETALLE_MODAL = new bootstrap.Modal('#detalleModal'),
     MODAL_TITLE = document.getElementById('modalTitle'),
     SUBMODAL_TITLE = document.getElementById('submodalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
+    DETALLE_FORM = document.getElementById('detalleForm'),
     INPUTSEARCH = document.getElementById('inputsearch'),
     SUBINPUTSEARCH = document.getElementById('subinputsearch'),
     ID_PEDIDO = document.getElementById('idPedido'),
     CLIENTE_PEDIDO = document.getElementById('clientePedido'),
+    NOTA_PEDIDO = document.getElementById('notaPedido'),
     FECHA_PEDIDO = document.getElementById('fechaPedido'),
     ESTADO_PEDIDO = document.getElementById('estadoPedido');
 
@@ -231,6 +234,7 @@ SUBINPUTSEARCH.addEventListener('input', async function ()  {
                     <td>${row.descripcion_talla}</td>
                     <td>$ ${row.precio_modelo_talla}</td>
                     <td>${row.cantidad_detalle_pedido}</td>
+                    
                 </tr>
             `;
         });
@@ -291,6 +295,12 @@ const fillsubTable = async () => {
                 <td class="text-center">${row.cantidad_pedido}</td>
                 <td>$ ${row.precio_producto}</td>
                 <td>$ ${row.total_pedido}</td>
+                <td>
+                    <button type="button" title="Detalle" class="btnAgregar"  style="width: 75%; 
+                    margin-top: 5px; margin-bottom: 5px;" onclick="opensubUpdate(${row.id_detalle_pedido})">
+                        <i class="bi bi-info-circle" ></i>
+                    </button>
+                </td>
                 </tr>
             `;
         });
@@ -326,13 +336,13 @@ const opensubUpdate = async (id) => {
     SAVE_MODAL.hide();
     SELECTALLA.hidden = true;
     const FORM = new FormData();
-    FORM.append('idModeloTalla', id);
+    FORM.append('idDetallePedido', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
+    const DATA = await fetchData(DETALLEPEDIDO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
-        SAVE_TREMODAL.show();
+        DETALLE_MODAL.show();
         TREMODAL_TITLE.textContent = 'Tallas del modelo';
         // Se prepara el formulario.
         SAVE_TREFORM.reset();
@@ -347,6 +357,8 @@ const opensubUpdate = async (id) => {
         sweetAlert(2, DATA.error, false);
     }
 }
+
+
 /*
 *   Función asíncrona para eliminar un registro.
 *   Parámetros: id (identificador del registro seleccionado).
