@@ -17,6 +17,11 @@ class DetallePedidoData extends DetallePedidoHandler
     /*
      *   Métodos para validar y establecer los datos.
      */
+    public function setNota($value)
+    {
+        $this->nota = $value;
+        return true;
+    }
     public function setId($value)
     {
         if (Validator::validateNaturalNumber($value)) {

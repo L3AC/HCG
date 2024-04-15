@@ -13,6 +13,7 @@ class DetallePedidoHandler
     protected $idPedido = null;
     protected $idProducto = null;
     protected $cantidad = null;
+    protected $nota = null;
 
     protected $idTalla = null;
     protected $nombre = null;
@@ -47,7 +48,8 @@ class DetallePedidoHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO tb_detalle_pedidos (id_detalle_pedido,id_pedido, id_producto, cantidad_pedido)
+        $sql = 'INSERT INTO tb_detalle_pedidos (id_detalle_pedido,id_pedido,
+         id_producto, cantidad_pedido,nota_producto)
         VALUES((SELECT get_next_id("tb_detalle_pedidos")),?, ?, ?)';
         $params = array($this->idPedido, $this->idProducto, $this->cantidad);
         return Database::executeRow($sql, $params);

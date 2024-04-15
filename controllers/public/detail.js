@@ -10,6 +10,7 @@ const PARAMS = new URLSearchParams(location.search);
 const TALLAS = document.getElementById('selectedItemsListU'),
     ID_MODELO = document.getElementById('idProducto'),
     CANTIDAD_PRODUCTO = document.getElementById('cantidadProducto'),
+    NOTA_PRODUCTO = document.getElementById('notaProducto'),
     IMAGEN_MODELO = document.getElementById('imagenProducto'),
     TIPO_PRODUCTO = document.getElementById('tipoProducto'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
@@ -60,14 +61,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         const agregarAlPedidoBtn = document.querySelector('#idGuardar button');
         agregarAlPedidoBtn.addEventListener('click', () => {
             const idProducto = ROW.id_producto;
-            const cantidad = document.getElementById('cantidadProducto').value;
-
+            //const cantidad = document.getElementById('cantidadProducto').value;
+            const cantidad = CANTIDAD_PRODUCTO.value;
+            const nota = NOTA_PRODUCTO.value;
+            
             // Validar que la cantidad no esté vacía y sea mayor que cero
             if (cantidad.trim() === '' || parseInt(cantidad) <= 0) {
                 alert('Por favor ingrese una cantidad válida.');
                 return;
             }
-
             // Obtener el carrito actual o crear uno vacío si no existe
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             // Buscar si el producto ya está en el carrito
@@ -75,9 +77,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (index !== -1) {
                 // Si el producto ya está en el carrito, sumar la cantidad
                 carrito[index].cantidad = parseInt(carrito[index].cantidad) + parseInt(cantidad);
+                carrito[index].nota = nota;
             } else {
                 // Si el producto no está en el carrito, agregarlo con la nueva cantidad
-                carrito.push({ idProducto, cantidad });
+                carrito.push({ idProducto, cantidad,nota });
             }
             // Guardar el carrito en localStorage
             localStorage.setItem('carrito', JSON.stringify(carrito));

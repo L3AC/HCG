@@ -33,7 +33,7 @@
 <body class="bodyp">
     <!-- Contenido principal del documento -->
     <main>
-        <div id="contenido"> 
+        <div id="contenido">
             <!-- Título del contenido principal -->
 
             <h4 id="mainTitle" class="mt-4 "></h4>
@@ -52,10 +52,8 @@
                             <input type="hidden" id="idProducto" name="idProducto">
 
                             <div class="row">
-                                <p class="col-sm-12 col-md-6 card-title text-center" 
-                                id="tipoProducto">Tipo:</p>
-                                <p class="col-sm-12 col-md-6 card-title text-center" 
-                                id="precioProducto">Precio:</p>
+                                <p class="col-sm-12 col-md-6 card-title text-center" id="tipoProducto">Tipo:</p>
+                                <p class="col-sm-12 col-md-6 card-title text-center" id="precioProducto">Precio:</p>
                             </div>
 
                             <div id="tableSelected" class="col-12 text-center">
@@ -77,20 +75,28 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-12 col-md-6 mt-4">
-
-                                    <div class="input_box">
-                                        <input required="" min="1" step="1" type="number" id="cantidadProducto" name="cantidadProducto">
-                                        <span>Cantidad :</span>
-                                    </div>
+                            <div class="d-flex justify-content-center  m-4">
+                                <div class="input_box col-md-6">
+                                    <input required="" min="1" step="1" type="number" id="cantidadProducto"
+                                        name="cantidadProducto">
+                                    <span>Cantidad :</span>
+                                </div>
                             </div>
-                            
+                            <div class="col-12  mt-4 mb-4">
+                                <div class="input_box">
+                                    <span>Nota :</span>
+                                    <textarea id="notaProducto" type="text" name="notaProducto" 
+                                    class="form-control"
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="d-flex justify-content-end pb-3" id="idGuardar">
                             <button type="submit" class="btnAgregar">Agregar al pedido</button>
-                        </div>               
+                        </div>
                     </div>
-                    <div class="col-md-1"></div>        
+                    <div class="col-md-1"></div>
                 </div>
             </div>
         </div>
