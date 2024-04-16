@@ -188,20 +188,6 @@ class UsuarioHandler
             return true;
         }
     }
-    public function readExistEmail($correo)
-    {
-        $sql = 'SELECT email_usuario
-        FROM tb_usuarios
-        WHERE email_usuario= ?';
-        $params = array($correo);
-        $data = Database::getRow($sql, $params);
-
-        if (empty($data['email_usuario'])) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     public function updateRow()
     {

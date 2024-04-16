@@ -26,7 +26,6 @@ CREATE TABLE tb_usuarios(
   pin_usuario VARCHAR(6) NOT NULL,
   estado_usuario BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_usuario),
-  CONSTRAINT email_usuario UNIQUE (email_usuario),
   CONSTRAINT alias_usuario UNIQUE (alias_usuario),
   CONSTRAINT fk_usuario_rol
   FOREIGN KEY(id_rol) REFERENCES tb_roles(id_rol)

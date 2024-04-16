@@ -67,6 +67,13 @@ if (isset($_GET['action'])) {
                     $result['status'] = 2;
                 }
                 break;
+            case 'readExistCorreo':
+                    if ($Usuario->readExistCorreo($_POST['correo'])) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['status'] = 2;
+                    }
+                break;
             case 'readOne':
                 if (!$Usuario->setId($_POST['idUsuario'])) {
                     $result['error'] = 'Usuario incorrecto';
