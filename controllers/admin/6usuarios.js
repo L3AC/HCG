@@ -1,3 +1,4 @@
+
 // Constante para completar la ruta de la API.
 const USUARIO_API = 'services/admin/6usuarios.php',
     ROL_API = 'services/admin/7roles.php';

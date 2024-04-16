@@ -76,6 +76,16 @@ class UsuarioData extends UsuarioHandler
             return false;
         }
     }
+    public function setEstado($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->estado = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
 
     public function setAlias($value, $min = 6, $max = 25)
     {

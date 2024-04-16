@@ -39,7 +39,8 @@ if (isset($_GET['action'])) {
                     !$Usuario->setApellido($_POST['apellidoUsuario']) or
                     !$Usuario->setCorreo($_POST['correoUsuario']) or
                     !$Usuario->setAlias($_POST['aliasUsuario']) or
-                    !$Usuario->setClave($_POST['claveUsuario'])
+                    !$Usuario->setClave($_POST['claveUsuario']) or
+                    !$Usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
                     $result['error'] = $Usuario->getDataError();
                 } elseif ($_POST['claveUsuario'] != $_POST['confirmarClave']) {
@@ -67,13 +68,6 @@ if (isset($_GET['action'])) {
                     $result['status'] = 2;
                 }
                 break;
-            case 'readExistCorreo':
-                    if ($Usuario->readExistCorreo($_POST['correo'])) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['status'] = 2;
-                    }
-                break;
             case 'readOne':
                 if (!$Usuario->setId($_POST['idUsuario'])) {
                     $result['error'] = 'Usuario incorrecto';
@@ -86,13 +80,14 @@ if (isset($_GET['action'])) {
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$Usuario->setId($_POST['']) or
+                    !$Usuario->setId($_POST['idUsuario']) or
                     !$Usuario->setIdRol($_POST['rolUsuario']) or
                     !$Usuario->setNombre($_POST['nombreUsuario']) or
                     !$Usuario->setApellido($_POST['apellidoUsuario']) or
                     !$Usuario->setCorreo($_POST['correoUsuario']) or
                     !$Usuario->setAlias($_POST['aliasUsuario']) or
-                    !$Usuario->setClave($_POST['claveUsuario'])
+                    !$Usuario->setClave($_POST['claveUsuario']) or
+                    !$Usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
                     $result['error'] = $Usuario->getDataError();
                 } elseif ($Usuario->updateRow()) {
