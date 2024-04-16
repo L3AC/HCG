@@ -185,6 +185,7 @@ const openCreate = () => {
     MODAL_TITLE.textContent = 'Crear Usuario';
     // Se prepara el formulario.
     SAVE_FORM.reset();
+    ID_USUARIO.value = null;
     ALIAS_Usuario.disabled = false;
     CLAVE_Usuario.disabled = false;
     CONFIRMAR_CLAVE.disabled = false;

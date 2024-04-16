@@ -85,8 +85,6 @@ if (isset($_GET['action'])) {
                     !$Usuario->setNombre($_POST['nombreUsuario']) or
                     !$Usuario->setApellido($_POST['apellidoUsuario']) or
                     !$Usuario->setCorreo($_POST['correoUsuario']) or
-                    !$Usuario->setAlias($_POST['aliasUsuario']) or
-                    !$Usuario->setClave($_POST['claveUsuario']) or
                     !$Usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
                     $result['error'] = $Usuario->getDataError();
