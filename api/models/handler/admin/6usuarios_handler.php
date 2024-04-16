@@ -4,7 +4,7 @@ require_once('../../helpers/database.php');
 /*
  *  Clase para manejar el comportamiento de los datos de la tabla administrador.
  */
-class AdministradorHandler
+class UsuarioHandler
 {
     /*
      *  Declaración de atributos para el manejo de datos.
@@ -176,13 +176,27 @@ class AdministradorHandler
     }
     public function readExist($username)
     {
-        $sql = 'SELECT usuario_usuario
-        FROM sec_usuarios
-        WHERE usuario_usuario= ?';
+        $sql = 'SELECT alias_usuario
+        FROM tb_usuarios
+        WHERE alias_usuario= ?';
         $params = array($username);
         $data = Database::getRow($sql, $params);
 
-        if (empty($data['usuario_usuario'])) {
+        if (empty($data['alias_usuario'])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public function readExistEmail($correo)
+    {
+        $sql = 'SELECT email_usuario
+        FROM tb_usuarios
+        WHERE email_usuario= ?';
+        $params = array($correo);
+        $data = Database::getRow($sql, $params);
+
+        if (empty($data['email_usuario'])) {
             return false;
         } else {
             return true;
@@ -191,7 +205,7 @@ class AdministradorHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE sec_usuarios
+        $sql = 'UPDATE tb_usuarios
                 SET nombre_usuario = ?, apellido_usuario= ?, email_usuario = ?
                 WHERE id_usuario = ?';
         $params = array($this->nombre, $this->apellido, $this->correo, $this->id);

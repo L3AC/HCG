@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const ADMINISTRADOR_API = 'services/admin/6usuarios.php',
+const USUARIO_API = 'services/admin/6usuarios.php',
     ROL_API = 'services/admin/7roles.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
@@ -12,13 +12,13 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
     INPUTSEARCH = document.getElementById('inputsearch'),
-    ID_ADMINISTRADOR = document.getElementById('idAdministrador'),
-    ROL_ADMINISTRADOR = document.getElementById('rolUsuario'),
-    NOMBRE_ADMINISTRADOR = document.getElementById('nombreAdministrador'),
-    APELLIDO_ADMINISTRADOR = document.getElementById('apellidoAdministrador'),
-    CORREO_ADMINISTRADOR = document.getElementById('correoAdministrador'),
-    ALIAS_ADMINISTRADOR = document.getElementById('aliasAdministrador'),
-    CLAVE_ADMINISTRADOR = document.getElementById('claveAdministrador'),
+    ID_USUARIO = document.getElementById('idUsuario'),
+    ROL_USUARIO = document.getElementById('rolUsuario'),
+    NOMBRE_Usuario = document.getElementById('nombreUsuario'),
+    APELLIDO_Usuario = document.getElementById('apellidoUsuario'),
+    CORREO_Usuario = document.getElementById('correoUsuario'),
+    ALIAS_Usuario = document.getElementById('aliasUsuario'),
+    CLAVE_Usuario = document.getElementById('claveUsuario'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
     ESTADO_USUARIO = document.getElementById('estadoUsuario');
 const mensajeDiv = document.getElementById('mensajeDiv'),
@@ -49,18 +49,18 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     // Se verifica la acción a realizar.
-    (ID_ADMINISTRADOR.value) ? action = 'updateRow' : action = 'createRow';
+    (ID_USUARIO.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
     // Petición para guardar los datos del formulario.
-    const DATA = await fetchData(ADMINISTRADOR_API, action, FORM);
+    const DATA = await fetchData(USUARIO_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se cierra la caja de diálogo.
         SAVE_MODAL.hide();
         // Se muestra un mensaje de éxito.
         sweetAlert(1, DATA.message, true);
-        ID_ADMINISTRADOR.value = null;
+        ID_USUARIO.value = null;
         // Se carga nuevamente la tabla para visualizar los cambios.
         fillTable();
     } else {
@@ -74,7 +74,7 @@ INPUTSEARCH.addEventListener('input', async function () {
     const FORM = new FormData();
     FORM.append('valor', INPUTSEARCH.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(ADMINISTRADOR_API, 'searchRows', FORM);
+    const DATA = await fetchData(USUARIO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
@@ -90,13 +90,13 @@ INPUTSEARCH.addEventListener('input', async function () {
                     <td>${row.alias_usuario}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
-                    <button type="button" class="btn" onclick="openUpdate(${row.id_usuario})" style="background-color: #AA6231;">
+                    <button type="button" class="btn" onclick="openUpdate(${row.ID_USUARIO})" style="background-color: #AA6231;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="40" fill="#FFFFFF" class="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                     </svg>
                     </button>
-                    <button type="button" class="btn" onclick="openDelete(${row.id_usuario})" style="background-color: #AA6231;">
+                    <button type="button" class="btn" onclick="openDelete(${row.ID_USUARIO})" style="background-color: #AA6231;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="40" fill="#FFFFFF    " class="bi bi-trash-fill" viewBox="0 0 16 16">
                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                     </svg>
@@ -111,11 +111,11 @@ INPUTSEARCH.addEventListener('input', async function () {
         // sweetAlert(4, DATA.error, true);
     }
 });
-ALIAS_ADMINISTRADOR.addEventListener('input', async function () {
+ALIAS_Usuario.addEventListener('input', async function () {
     const FORM = new FormData();
-    FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
+    FORM.append('usuario', ALIAS_Usuario.value);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(ADMINISTRADOR_API, 'readExist', FORM);
+    const DATA = await fetchData(USUARIO_API, 'readExist', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status === 1) {
         mensajeDiv.textContent = 'Ya existe el usuario';
@@ -139,12 +139,11 @@ const fillTable = async (form = null) => {
     (form) ? action = 'searchRows' : action = 'fillTab';
     // Petición para obtener los registros disponibles.
 
-    const DATA = await fetchData(ADMINISTRADOR_API, action, form);
+    const DATA = await fetchData(USUARIO_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.
         DATA.dataset.forEach(row => {
-            console.log(row.estado_usuario);
             (row.estado_usuario) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
@@ -155,10 +154,12 @@ const fillTable = async (form = null) => {
             <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Usuario: </div>${row.alias_usuario}</div>
                 <div class="col-lg-1 col-md-12 col-sm-12" style="display: flex; align-items: center;font-size: 30px;"><div class="texto-antes" style="font-size: 17px;">Estado: </div><i  class="${icon}"></i></div>
                 <div class="col-lg-2 col-md-12 col-sm-12 d-flex justify-content-end">
-                <button type="button" title="Detalle pedido" class="btnAgregar btnMargin"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_usuario})">
+                <button type="button" title="Detalle pedido" class="btnAgregar btnMargin"  
+                style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_usuario})">
                     <i class="bi bi-pencil-fill"></i>
                 </button>
-                <button type="button" title="Eliminar pedido" class="btnAgregar" style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_usuario})">
+                <button type="button" title="Eliminar pedido" class="btnAgregar" 
+                style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_usuario})">
                     <i class="bi bi-trash-fill"></i>
                 </button>
             </div>   
@@ -180,11 +181,11 @@ const fillTable = async (form = null) => {
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
-    MODAL_TITLE.textContent = 'Crear administrador';
+    MODAL_TITLE.textContent = 'Crear Usuario';
     // Se prepara el formulario.
     SAVE_FORM.reset();
-    ALIAS_ADMINISTRADOR.disabled = false;
-    CLAVE_ADMINISTRADOR.disabled = false;
+    ALIAS_Usuario.disabled = false;
+    CLAVE_Usuario.disabled = false;
     CONFIRMAR_CLAVE.disabled = false;
 
     fillSelect(ROL_API, 'fillSelect', 'rolUsuario');
@@ -198,26 +199,26 @@ const openCreate = () => {
 const openUpdate = async (id) => {
     // Se define una constante tipo objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    FORM.append('idAdministrador', id);
+    FORM.append('idUsuario', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(ADMINISTRADOR_API, 'readOne', FORM);
+    const DATA = await fetchData(USUARIO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
-        MODAL_TITLE.textContent = 'Actualizar administrador';
+        MODAL_TITLE.textContent = 'Actualizar Usuario';
         // Se prepara el formulario.
         SAVE_FORM.reset();
-        ALIAS_ADMINISTRADOR.disabled = true;
-        CLAVE_ADMINISTRADOR.disabled = true;
+        ALIAS_Usuario.disabled = true;
+        CLAVE_Usuario.disabled = true;
         CONFIRMAR_CLAVE.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_ADMINISTRADOR.value = ROW.id_usuario;
-        NOMBRE_ADMINISTRADOR.value = ROW.nombre_usuario;
-        APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
-        CORREO_ADMINISTRADOR.value = ROW.email_usuario;
-        ALIAS_ADMINISTRADOR.value = ROW.alias_usuario;
+        ID_USUARIO.value = ROW.id_usuario;
+        NOMBRE_Usuario.value = ROW.nombre_usuario;
+        APELLIDO_Usuario.value = ROW.apellido_usuario;
+        CORREO_Usuario.value = ROW.email_usuario;
+        ALIAS_Usuario.value = ROW.alias_usuario;
         ESTADO_USUARIO.checked = ROW.estado_usuario;
         fillSelect(ROL_API, 'fillSelect', 'rolUsuario', ROW.id_rol);
     } else {
@@ -232,14 +233,14 @@ const openUpdate = async (id) => {
 */
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Desea eliminar el administrador de forma permanente?');
+    const RESPONSE = await confirmAction('¿Desea eliminar el Usuario de forma permanente?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
         const FORM = new FormData();
-        FORM.append('idAdministrador', id);
+        FORM.append('idUsuario', id);
         // Petición para eliminar el registro seleccionado.
-        const DATA = await fetchData(ADMINISTRADOR_API, 'deleteRow', FORM);
+        const DATA = await fetchData(USUARIO_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se muestra un mensaje de éxito.

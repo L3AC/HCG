@@ -6,7 +6,7 @@ require_once('../../models/handler/admin/6usuarios_handler.php');
 /*
  *  Clase para manejar el encapsulamiento de los datos de la tabla USUARIO.
  */
-class AdministradorData extends AdministradorHandler
+class UsuarioData extends UsuarioHandler
 {
     // Atributo genérico para manejo de errores.
     private $data_error = null;

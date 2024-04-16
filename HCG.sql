@@ -18,25 +18,31 @@ CREATE TABLE tb_roles(
 CREATE TABLE tb_usuarios(
   id_usuario INT UNSIGNED,
   id_rol INT UNSIGNED,
-  alias_usuario VARCHAR(30) UNIQUE NOT NULL,
+  alias_usuario VARCHAR(30) NOT NULL,
   clave_usuario VARCHAR(255) NOT NULL,
   nombre_usuario VARCHAR(255) NOT NULL,
   apellido_usuario VARCHAR(255) NOT NULL,
-  email_usuario VARCHAR(255) NOT NULL UNIQUE,
+  email_usuario VARCHAR(255) NOT NULL,
   pin_usuario VARCHAR(6) NOT NULL,
   estado_usuario BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_usuario),
+  CONSTRAINT email_usuario UNIQUE (email_usuario),
+  CONSTRAINT alias_usuario UNIQUE (alias_usuario),
   CONSTRAINT fk_usuario_rol
   FOREIGN KEY(id_rol) REFERENCES tb_roles(id_rol)
   ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
 CREATE TABLE tb_clientes(
   id_cliente INT UNSIGNED,
-  telefono_cliente VARCHAR(255) NOT NULL UNIQUE,
-  correo_cliente VARCHAR(255) NOT NULL UNIQUE,
+  telefono_cliente VARCHAR(255) NOT NULL,
+  correo_cliente VARCHAR(255) NOT NULL,
   nombre_cliente VARCHAR(255) NOT NULL,
   apellido_cliente VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id_cliente)
+  PRIMARY KEY (id_cliente),
+  CONSTRAINT telefono_unique UNIQUE (telefono_cliente),
+  CONSTRAINT correo_unique UNIQUE (correo_cliente)
 );
 CREATE TABLE tb_tipo_items(
   id_tipo_item INT UNSIGNED,

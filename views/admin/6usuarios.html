@@ -108,7 +108,7 @@
                     <form id="saveForm">
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                            <input type="hidden" id="idAdministrador" name="idAdministrador">
+                            <input type="hidden" id="idUsuario" name="idUsuario">
 
                             <!-- Select para elegir el rol del usuario -->
                             <div class="col-sm-12 col-md-6" id="selectRol">
@@ -119,29 +119,30 @@
                             </div>
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
-                                <label for="nombreAdministrador" class="form-label">Nombre</label>
-                                <input id="nombreAdministrador" type="text" name="nombreAdministrador"
+                                <label for="nombreUsuario" class="form-label">Nombre</label>
+                                <input id="nombreUsuario" type="text" name="nombreUsuario"
                                     class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="apellidoAdministrador" class="form-label">Apellido</label>
-                                <input id="apellidoAdministrador" type="text" name="apellidoAdministrador"
+                                <label for="apellidoUsuario" class="form-label">Apellido</label>
+                                <input id="apellidoUsuario" type="text" name="apellidoUsuario"
                                     class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="correoAdministrador" class="form-label">Correo</label>
-                                <input id="correoAdministrador" type="email" name="correoAdministrador"
+                                <label for="correoUsuario" class="form-label">Correo</label>
+                                <input id="correoUsuario" type="email" name="correoUsuario"
                                     class="form-control" required>
+                                    <div id="mensajeCorreo" style="display: none;"></div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="aliasAdministrador" class="form-label">Usuario</label>
-                                <input id="aliasAdministrador" type="text" name="aliasAdministrador"
+                                <label for="aliasUsuario" class="form-label">Usuario</label>
+                                <input id="aliasUsuario" type="text" name="aliasUsuario"
                                     class="form-control" required>
                                 <div id="mensajeDiv" style="display: none;"></div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="claveAdministrador" class="form-label">Contraseña</label>
-                                <input id="claveAdministrador" type="password" name="claveAdministrador"
+                                <label for="claveUsuario" class="form-label">Contraseña</label>
+                                <input id="claveUsuario" type="password" name="claveUsuario"
                                     class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">

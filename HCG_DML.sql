@@ -1,7 +1,8 @@
 use db_hcg;
 
 INSERT INTO tb_roles (id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, tipo_items_opc, items_opc, clientes_opc, usuarios_opc, roles_opc)
-VALUES ((SELECT get_next_id('tb_roles')), 'Aministrador', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE);
+VALUES ((SELECT get_next_id('tb_roles')), 'Aministrador', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+((SELECT get_next_id('tb_roles')), 'Cajero', TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE);
 
 INSERT INTO tb_tipo_items(id_tipo_item,descripcion_tipo_item,estado_tipo_item) 
 VALUES((SELECT get_next_id("tb_tipo_items")),"Bebida",true),
