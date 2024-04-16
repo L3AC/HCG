@@ -59,7 +59,7 @@ CREATE TABLE tb_productos(
   descripcion_producto VARCHAR(255) NOT NULL,
   horario_producto ENUM('Desayuno','Almuerzo','Cena','Típico','Todo el día','Desayuno y Almuerzo',
   'Desayuno y Cena','Almuerzo y Cena','Típico y Desayuno','Típico y Almuerzo','Tipico y Cena') NOT NULL,
-  precio_producto DECIMAL(10, 2) NOT NULL,
+  precio_producto DECIMAL(10, 2) UNSIGNED NOT NULL,
   imagen_producto LONGTEXT,
   estado_producto BOOLEAN NOT NULL,
   lunes_producto BOOLEAN NOT NULL,

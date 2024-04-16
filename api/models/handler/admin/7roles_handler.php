@@ -110,8 +110,8 @@ class RolHandler
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM ctg_tallas
-                WHERE id_talla = ?';
+        $sql = 'DELETE FROM tb_roles
+                WHERE id_rol = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
