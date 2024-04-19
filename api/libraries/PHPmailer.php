@@ -19,10 +19,14 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method == "OPTIONS") {
 	die();
 }
-
+/*
 $user = isset($_GET['user']) ? $_GET['user'] : '';
 $pin = isset($_GET['pin']) ? $_GET['pin'] : '';
 $email = isset($_GET['email']) ? $_GET['email'] : '';
+*/ 
+$user = isset($_POST['user']) ? $_POST['user'] : '';
+$pin = isset($_POST['pin']) ? $_POST['pin'] : '';
+$email = isset($_POST['email']) ? $_POST['email'] : '';
 
 //ENVIO DE CORREO PARA NOTIFICACION DE ASIGNACION
 ini_set("sendmail_from", "noreply@gi-sv.com");
@@ -61,25 +65,26 @@ try {
 	$html = "<html>
 					<head>
 					  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-					  <title>VetSoft</title>
+					  <title>HCG</title>
 					</head>
 					<body>
 					<div style='font-family: Arial, Helvetica, sans-serif; font-size: 12px;'>
 						<center>
-							<h1>CAMBIO DE CLAVE</h1>
-							
-							<img width='220px' height='220px' src='https://cdn.templates.unlayer.com/assets/1676615059956-password.gif'>
+							<h1>Pedido Listo</h1>
+
+							<img width='220px' height='220px'
+								src='https://assets-v2.lottiefiles.com/a/781495f8-117f-11ee-839c-2b2a0d480406/lajeWDVTpy.gif'>
 							<br>
-							<h2>! Hola " . $user . " </h2>
-							<h2>Este es su PIN de seguridad</h2>
-							<h1>" . $pin . "</h1>
+							<h2> Hola ".$user." </h2>
+							<h2>Su código de pedido es</h2>
+							<h1>".$pin."</h1>
 							<br><br>
 							<h3>Powered By</h3>
-							<img width='120px' height='120px' src='https://i.ibb.co/QXLvW87/logo2.png'>
-						</center>" .
-		"</div>" .
-		"</body>
-					</html>";
+							<img width='120px' height='120px' src='https://i.ibb.co/4p96gTW/hcg.jpg'>
+							</center>
+					</div>
+					</body>
+			</html>";
 	$mail->msgHTML($html);
 	//echo $html;
 

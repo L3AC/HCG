@@ -136,7 +136,9 @@ const fillTable = async (form = null) => {
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Estado: </div>${row.estado_pedido}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12 d-flex justify-content-end">
-                        <button type="button" title="Finalizar pedido" class="btnAgregar"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openConfirm(${row.id_pedido})">
+                        <button type="button" title="Finalizar pedido" class="btnAgregar"  
+                        style="width: 55%; margin-top: 5px; margin-bottom: 5px;" 
+                        onclick="openConfirm(${row.id_pedido},'${row.cliente}','${row.correo_cliente}','${row.codigo_pedido}')">
                             <i class="bi bi-check-lg"></i>
                         </button>
                         <button type="button" title="Detalle pedido" class="btnAgregar"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_pedido})">
@@ -269,7 +271,7 @@ const openDelete = async (id) => {
         }
     }
 }
-const openConfirm = async (id) => {
+const openConfirm = async (id,cliente,correo,codigo) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea finalizar el pedido?');
     // Se verifica la respuesta del mensaje.
@@ -282,9 +284,16 @@ const openConfirm = async (id) => {
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se muestra un mensaje de éxito.
+            const FORM = new FormData();
+            FORM.append('user', cliente);
+            FORM.append('email', correo);
+            FORM.append('pin', codigo);
+            const DATA = await fetchMail(PHPMAILER_API, FORM);
+
             await sweetAlert(1, DATA.message, true);
             // Se carga nuevamente la tabla para visualizar los cambios.
             fillTable();
+
         } else {
             sweetAlert(2, DATA.error, false);
         }

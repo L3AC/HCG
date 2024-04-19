@@ -232,6 +232,28 @@ const fetchData = async (filename, action, form = null) => {
         console.log(error);
     }
 }
+const fetchMail = async (filename,form = null) => {
+    // Se define una constante tipo objeto para establecer las opciones de la petición.
+    const OPTIONS = {};
+    // Se determina el tipo de petición a realizar.
+    if (form) {
+        OPTIONS.method = 'post';
+        OPTIONS.body = form;
+    } else {
+        OPTIONS.method = 'get';
+    }
+    try {
+        // Se declara una constante tipo objeto con la ruta específica del servidor.
+        const PATH = new URL(SERVER_URL + filename);
+        // Se retorna el resultado en formato JSON.
+        const RESPONSE = await fetch(PATH.href, OPTIONS);
+        console.log(RESPONSE); // Muestra la respuesta en la consola para verificar su contenido
+        return await RESPONSE.json();
+    } catch (error) {
+        // Se muestra un mensaje en la consola del navegador web cuando ocurre un problema.
+        console.log(error);
+    }
+}
 /*const fetchData = async (filename, action, form = null) => {
     // Se define una constante tipo objeto para establecer las opciones de la petición.
     const OPTIONS = {};

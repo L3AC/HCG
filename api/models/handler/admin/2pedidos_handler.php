@@ -32,13 +32,14 @@ class PedidoHandler
             $value = '%' . $value . '%';
         }
 
-        $sql = 'SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
-        p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
-        FROM prc_pedidos p
-        INNER JOIN prc_clientes c USING(id_cliente)
-        WHERE CONCAT(c.nombre_cliente,c.apellido_cliente) LIKE ?
-        ORDER BY p.fecha_pedido DESC, p.estado_pedido DESC';
-
+        $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        id_cliente,correo_cliente,codigo_pedido,
+        DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha,estado_pedido
+        FROM tb_pedidos 
+        INNER JOIN tb_clientes USING(id_cliente)
+        WHERE estado_pedido = "Pendiente" AND
+        CONCAT(nombre_cliente," ",apellido_cliente) LIKE ?
+        ORDER BY fecha_pedido DESC';
         $params = array($value);
         return Database::getRows($sql, $params);
     }
@@ -54,6 +55,7 @@ class PedidoHandler
     public function readAll()
     {
         $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        id_cliente,correo_cliente,codigo_pedido,
         DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha,estado_pedido
         FROM tb_pedidos 
         INNER JOIN tb_clientes USING(id_cliente)
@@ -118,7 +120,7 @@ class PedidoHandler
     public function confirmRow()
     {
         $sql = 'UPDATE tb_pedidos SET estado_pedido = "Finalizado"
-                WHERE id_estado = ?';
+                WHERE id_pedido = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
