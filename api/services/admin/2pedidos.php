@@ -92,8 +92,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'deleteRow':
                 if (
-                    !$producto->setId($_POST['idPedido']) or
-                    !$producto->setFilename()
+                    !$producto->setId($_POST['idPedido']) 
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->deleteRow()) {
@@ -103,17 +102,16 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al eliminar el pedido';
                 }
                 break;
-            case 'deleteRow':
+            case 'confirmRow':
                     if (
-                        !$producto->setId($_POST['idPedido']) or
-                        !$producto->setFilename()
+                        !$producto->setId($_POST['idPedido']) 
                     ) {
                         $result['error'] = $producto->getDataError();
-                    } elseif ($producto->deleteRow()) {
+                    } elseif ($producto->confirmRow()) {
                         $result['status'] = 1;
-                        $result['message'] = 'Pedido eliminado correctamente';
+                        $result['message'] = 'Pedido finalizado correctamente';
                     } else {
-                        $result['error'] = 'Ocurrió un problema al eliminar el pedido';
+                        $result['error'] = 'Ocurrió un problema al finalizar el pedido';
                     }
                 break;
             case 'cantidadProductosCategoria':

@@ -1,6 +1,7 @@
 // Constantes para completar las rutas de la API.
 const PEDIDO_API = 'services/admin/2pedidos.php',
-    DETALLEPEDIDO_API = 'services/admin/9detallepedidos.php';
+    DETALLEPEDIDO_API = 'services/admin/9detallepedidos.php',
+    PHPMAILER_API = 'libraries/PHPMailer.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm'),
     SEARCHSUB_FORM = document.getElementById('searchsubForm');
@@ -270,7 +271,7 @@ const openDelete = async (id) => {
 }
 const openConfirm = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Desea confirmar el pedido?');
+    const RESPONSE = await confirmAction('¿Desea finalizar el pedido?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.

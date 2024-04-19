@@ -117,7 +117,7 @@ class PedidoHandler
     }
     public function confirmRow()
     {
-        $sql = 'UPDATE tb_pedidos SET estado_pedido = ?
+        $sql = 'UPDATE tb_pedidos SET estado_pedido = "Finalizado"
                 WHERE id_estado = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
