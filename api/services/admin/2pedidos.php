@@ -92,18 +92,29 @@ if (isset($_GET['action'])) {
                 break;
             case 'deleteRow':
                 if (
-                    !$producto->setId($_POST['idProducto']) or
+                    !$producto->setId($_POST['idPedido']) or
                     !$producto->setFilename()
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto eliminado correctamente';
-                    // Se asigna el estado del archivo después de eliminar.
-                    $result['fileStatus'] = Validator::deleteFile($producto::RUTA_IMAGEN, $producto->getFilename());
+                    $result['message'] = 'Pedido eliminado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el producto';
+                    $result['error'] = 'Ocurrió un problema al eliminar el pedido';
                 }
+                break;
+            case 'deleteRow':
+                    if (
+                        !$producto->setId($_POST['idPedido']) or
+                        !$producto->setFilename()
+                    ) {
+                        $result['error'] = $producto->getDataError();
+                    } elseif ($producto->deleteRow()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Pedido eliminado correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al eliminar el pedido';
+                    }
                 break;
             case 'cantidadProductosCategoria':
                 if ($result['dataset'] = $producto->cantidadProductosCategoria()) {

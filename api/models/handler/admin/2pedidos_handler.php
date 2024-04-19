@@ -110,8 +110,15 @@ class PedidoHandler
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM prc_modelos
-                WHERE id_modelo = ?';
+        $sql = 'DELETE FROM tb_pedidos
+                WHERE id_pedido = ?';
+        $params = array($this->id);
+        return Database::executeRow($sql, $params);
+    }
+    public function confirmRow()
+    {
+        $sql = 'UPDATE tb_pedidos SET estado_pedido = ?
+                WHERE id_estado = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
