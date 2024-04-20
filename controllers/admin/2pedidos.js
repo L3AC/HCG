@@ -283,16 +283,16 @@ const openConfirm = async (id,cliente,correo,codigo) => {
         const DATA = await fetchData(PEDIDO_API, 'confirmRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
-            // Se muestra un mensaje de éxito.
-            const FORM = new FormData();
-            FORM.append('user', cliente);
-            FORM.append('email', correo);
-            FORM.append('pin', codigo);
-            const DATA = await fetchMail(PHPMAILER_API, FORM);
-
             await sweetAlert(1, DATA.message, true);
             // Se carga nuevamente la tabla para visualizar los cambios.
             fillTable();
+            // Se muestra un mensaje de éxito.
+            const FORM2 = new FormData();
+            FORM2.append('user', cliente);
+            FORM2.append('email', correo);
+            FORM2.append('pin', codigo);
+            const DATA2 = await fetchMail(PHPMAILER_API, FORM2);
+
 
         } else {
             sweetAlert(2, DATA.error, false);
