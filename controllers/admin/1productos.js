@@ -290,16 +290,16 @@ const fillsubTable = async (form = null) => {
             item.setAttribute('data-id', row.id_item); // Añadimos el atributo data-id
             item.innerHTML = `
             <center>
-            <div class="row carditem" style="margin-bottom: 10px;">
-                <div class="col-6">${row.descripcion_item}</div>
-                <div class="col-3">${row.descripcion_tipo_item}</div>
-                <div class="col-1">
-                    <button type="button" class="btnAgregarItem" onclick="selectItem(${row.id_item})">
-                        <i class="bi bi-plus-square-fill"></i>
-                    </button>
+                <div class="row carditem" style="margin-bottom: 10px;">
+                    <div class="col-6">${row.descripcion_item}</div>
+                    <div class="col-3">${row.descripcion_tipo_item}</div>
+                    <div class="col-1">
+                        <button type="button" class="btnAgregarItem" onclick="selectItem(${row.id_item})">
+                            <i class="bi bi-plus-square-fill"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </center>
+            </center>
                 
             `;
             SUBTABLE_BODY.appendChild(item);
@@ -473,14 +473,17 @@ const fillsubTableU = async (busqueda, idProducto) => {
             const item = document.createElement("tr");
             item.setAttribute('data-id', row.id_item); // Añadimos el atributo data-id
             item.innerHTML = `
-                <td>${row.descripcion_item}</td>
-                <td>${row.descripcion_tipo_item}</td>
-                <td>
-                    <button type="button" class="btn btn-primary" 
-                    onclick="opensubCreate(${row.id_item},${idProducto})">
-                        <i class="bi bi-plus-square-fill"></i>
-                    </button>
-                </td>
+            <center>
+                <div class="row carditem" style="margin-bottom: 10px;">
+                    <div class="col-6">${row.descripcion_item}</div>
+                    <div class="col-3">${row.descripcion_tipo_item}</div>
+                    <div class="col-1">
+                        <button type="button" class="btnAgregarItem" onclick="opensubCreate(${row.id_item},${idProducto})">
+                            <i class="bi bi-plus-square-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </center>
             `;
             SUBTABLE_BODYU.appendChild(item);
         });
