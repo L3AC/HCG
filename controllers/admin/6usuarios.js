@@ -151,8 +151,12 @@ const fillTable = async (form = null) => {
             <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
             <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Apellido: </div>${row.apellido_usuario}</div>
             <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.nombre_usuario}</div>
-            <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Correo: </div>${row.email_usuario}</div>
-            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Usuario: </div>${row.alias_usuario}</div>
+            <div class="col-lg-3  col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Correo: </div>${row.email_usuario}</div>
+            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;">
+    <div class="texto-antes">Usuario: </div>
+    <div class="ms-md-4 d-md-inline">${row.alias_usuario}</div>
+</div>
+
                 <div class="col-lg-1 col-md-12 col-sm-12" style="display: flex; align-items: center;font-size: 30px;"><div class="texto-antes" style="font-size: 17px;">Estado: </div><i  class="${icon}"></i></div>
                 <div class="col-lg-2 col-md-12 col-sm-12 d-flex justify-content-end">
                 <button type="button" title="Detalle pedido" class="btnAgregar btnMargin"  
