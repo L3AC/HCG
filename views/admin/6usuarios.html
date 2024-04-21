@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../../resources/css/btn_e.css">
     <link rel="stylesheet" href="../../resources/css/univer.css">
     <link rel="stylesheet" href="../../resources/css/busca.css">
+    <link rel="stylesheet" href="../../resources/css/input_b.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
@@ -99,57 +100,71 @@
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="background-color: #5C2C0C;">
                         <!-- Título del modal -->
-                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <h1 class="modal-title fs-5 text-white" id="modalTitle"></h1>
                         <!-- Botón de cierre del modal -->
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para guardar un registro -->
-                    <form id="saveForm">
+                    <form id="saveForm" style="background-color: #DDA35D;">
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idUsuario" name="idUsuario">
 
                             <!-- Select para elegir el rol del usuario -->
                             <div class="col-sm-12 col-md-6" id="selectRol">
-                                <label for="rolUsuario" class="form-label">Rol</label>
-                                <select id="rolUsuario" name="rolUsuario" class="form-select" required>
+                                <div class="input_box py-3">
+                                    <select id="rolUsuario" name="rolUsuario" class="fw-bold text-white" required>
                                     <!-- Opciones del select se pueden cargar dinámicamente -->
-                                </select>
+                                    </select>
+                                    <span>Rol :</span>
+                                </div>
                             </div>
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
-                                <label for="nombreUsuario" class="form-label">Nombre</label>
-                                <input id="nombreUsuario" type="text" name="nombreUsuario" class="form-control"
+                                <div class="input_box py-3">
+                                    <input id="nombreUsuario" type="text" name="nombreUsuario" class="fw-bold text-white"
                                     required>
+                                    <span>Nombre :</span>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="apellidoUsuario" class="form-label">Apellido</label>
-                                <input id="apellidoUsuario" type="text" name="apellidoUsuario" class="form-control"
-                                    required>
+                                <div class="input_box">
+                                    <input id="apellidoUsuario" type="text" name="apellidoUsuario" class="fw-bold text-white"
+                                        required>
+                                    <span>Apellido :</span>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="correoUsuario" class="form-label">Correo</label>
-                                <input id="correoUsuario" type="email" name="correoUsuario" class="form-control"
-                                    required>
+                                <div class="input_box">
+                                    <input id="correoUsuario" type="email" name="correoUsuario" class="fw-bold text-white"
+                                        required>
+                                    <span>Correo :</span>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="aliasUsuario" class="form-label">Usuario</label>
-                                <input id="aliasUsuario" type="text" name="aliasUsuario" class="form-control" required>
-                                <div id="mensajeDiv" style="display: none;"></div>
+                                <div class="input_box py-3">
+                                    <input id="aliasUsuario" type="text" name="aliasUsuario" class="fw-bold text-white" required>
+                                    <div id="mensajeDiv" style="display: none;"></div>
+                                    <span>Usuario :</span>
+                                </div>  
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="claveUsuario" class="form-label">Contraseña</label>
-                                <input id="claveUsuario" type="password" name="claveUsuario" class="form-control"
-                                    required>
+                                <div class="input_box py-3">
+                                    <input id="claveUsuario" type="password" name="claveUsuario" class="fw-bold text-white"
+                                        required>
+                                    <span>Contraseña :</span>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="confirmarClave" class="form-label">Confirmar contraseña</label>
-                                <input id="confirmarClave" type="password" name="confirmarClave" class="form-control"
-                                    required>
+                                <div class="input_box">
+                                    <input id="confirmarClave" type="password" name="confirmarClave" class="fw-bold text-white"
+                                        required>
+                                    <span>Confirmar contraseña :</span>
+                                </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 container-fluid d-flex align-items-center">
                                 <div class="p-3">
                                     <!-- Interruptor para el estado del registro -->
                                     <div class="switch-button">
@@ -163,7 +178,7 @@
                         </div>
                         <!-- Pie del modal con botón de guardar -->
                         <div class="modal-footer border-0">
-                            <button id="idGuardar" type="submit" class="btn btnGuardar">Guardar</button>
+                            <button id="idGuardar" type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
                         </div>
                     </form>
                 </div>
