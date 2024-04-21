@@ -89,7 +89,7 @@ const fillSelect = async (filename, action, select, selected = null) => {
     let content = '';
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje.
     if (DATA.status) {
-        content += '<option value="" selected>Seleccione una opción</option>';
+        content += '<option class="bg-dark fs-5 py-2" value="" selected>Seleccione una opción</option>';
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se obtiene el dato del primer campo.
@@ -98,9 +98,9 @@ const fillSelect = async (filename, action, select, selected = null) => {
             text = Object.values(row)[1];
             // Se verifica cada valor para enlistar las opciones.
             if (value != selected) {
-                content += `<option value="${value}">${text}</option>`;
+                content += `<option class="bg-dark fs-5 py-2" value="${value}">${text}</option>`;
             } else {
-                content += `<option value="${value}" selected>${text}</option>`;
+                content += `<option class="bg-dark fs-5 py-2" value="${value}" selected>${text}</option>`;
             }
         });
     } else {

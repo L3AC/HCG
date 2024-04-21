@@ -320,9 +320,9 @@ const fillsubTable = async () => {
             if (row.nota_pedido !== 'Nota vacía') {
                 // Se crea y concatena la fila de la tabla con los datos de cada registro, incluyendo el botón.
                 const rowHTML = `
-                    <tr>
+                    <tr ">
                     <td class="text-center"><img src="${row.imagen_producto}" height="70" width="100"></td>
-                    <td>${row.descripcion_producto}</td>
+                    <td >${row.descripcion_producto}</td>
                     <td class="text-center">${row.cantidad_pedido}</td>
                     <td>$ ${row.precio_producto}</td>
                     <td>$ ${row.total_pedido}</td>
@@ -338,7 +338,7 @@ const fillsubTable = async () => {
             } else {
                 // Si la nota_pedido es "Vacío", se crea y concatena la fila de la tabla sin el botón.
                 const rowHTML = `
-                    <tr >
+                    <tr">
                     <td class="text-center"><img src="${row.imagen_producto}" height="70" width="100"></td>
                     <td>${row.descripcion_producto}</td>
                     <td class="text-center">${row.cantidad_pedido}</td>

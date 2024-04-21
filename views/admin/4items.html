@@ -17,10 +17,14 @@
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../../resources/css/univer.css">
-    <link rel="stylesheet" href="../../resources/css/card_2.css">
-    <link rel="stylesheet" href="../../resources/css/btn_e.css">
+    <link rel="stylesheet" href="../../resources/css/estado.css">
     <link rel="stylesheet" href="../../resources/css/busca.css">
+    <link rel="stylesheet" href="../../resources/css/btn_e.css">
+    <link rel="stylesheet" href="../../resources/css/tarjeta.css">
+    <link rel="stylesheet" href="../../resources/css/card_2.css">
+    <link rel="stylesheet" href="../../resources/css/univer.css">
+    <link rel="stylesheet" href="../../resources/css/checkbox.css">
+    <link rel="stylesheet" href="../../resources/css/input_b.css">
     <!--FONTS-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,27 +93,32 @@
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="background-color: #5C2C0C;">
                         <!-- Título del modal -->
-                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <h1 class="modal-title fs-5 text-white" id="modalTitle"></h1>
                         <!-- Botón de cierre del modal -->
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para crear o actualizar un registro -->
-                    <form id="saveForm">
+                    <form id="saveForm" style="background-color: #DDA35D;">
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idItem" name="idItem">
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
-                                <label for="nombreItem" class="form-label">Item</label>
-                                <input id="nombreItem" type="text" name="nombreItem" class="form-control" required>
+                                <div class="input_box">
+                                    <input required="" style="color: white; font-weight: bold;" id="nombreItem"
+                                        type="text" name="nombreItem" required>
+                                    <span>Nombre :</span>
+                                </div>
                             </div>
-
-                            <div class="col-sm-12 col-md-6" id="selectTipoItem">
-                                <label for="tipoItem" class="form-label">Tipo Item</label>
-                                <select id="tipoItem" name="tipoItem" class="form-select" required>
-                                </select>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="input_box">
+                                    <span>Tipo Item :</span>
+                                    <select id="tipoItem" class="form-select"
+                                        style="color: white; font-weight: bold;">
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="col-6">

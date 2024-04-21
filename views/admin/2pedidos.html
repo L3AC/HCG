@@ -143,9 +143,9 @@
                                 <!-- Subtabla para mostrar los detalles del pedido -->
                                 <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
                                     <table id="subheaderT" class="table table-hover" 
-                                    style="background-color: #DDA35D;">
+                                    >
                                         <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
-                                        <thead>
+                                        <thead >
                                             <tr>
                                                 <td colspan="6" id="subrowsFound"></td>
                                             </tr>
@@ -179,14 +179,14 @@
             <div class="modal-dialog modal-dialog-centered">
                 <!-- Contenido del componente Modal -->
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalTitle">Nota</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    <div class="modal-header" style="background-color: #5C2C0C;">
+                        <h1 class="modal-title fs-5 text-white" id="modalTitle">Nota</h1>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
                             onclick="subclose()"></button>
 
                     </div>
                     <!-- Formulario para actualizar cantidad -->
-                    <form id="detalleForm">
+                    <form id="detalleForm" style="background-color: #DDA35D;">
                         <div class="modal-body row">
                             <h1 class="fs-5" id="stock"></h1>
                             <div class="col-sm-12">
