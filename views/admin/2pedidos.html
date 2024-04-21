@@ -13,11 +13,14 @@
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
     <!--Llamada a estilos personalizados-->
     <link href="../../resources/css/nav.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../resources/css/univer.css">
     <link rel="stylesheet" href="../../resources/css/estado.css">
     <link rel="stylesheet" href="../../resources/css/busca.css">
-    <link rel="stylesheet" href="../../resources/css/card_2.css">
     <link rel="stylesheet" href="../../resources/css/btn_e.css">
+    <link rel="stylesheet" href="../../resources/css/tarjeta.css">
+    <link rel="stylesheet" href="../../resources/css/card_2.css">
+    <link rel="stylesheet" href="../../resources/css/univer.css">
+    <link rel="stylesheet" href="../../resources/css/checkbox.css">
+    <link rel="stylesheet" href="../../resources/css/input_b.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
@@ -87,38 +90,47 @@
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="background-color: #5C2C0C;">
                         <!-- Título del modal -->
-                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <h1 class="modal-title fs-5 text-white" id="modalTitle"></h1>
                         <!-- Botón de cierre del modal -->
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para crear o actualizar un registro -->
-                    <form id="saveForm">
+                    <form id="saveForm" style="background-color: #DDA35D;">
                         <div class="modal-body row g-4">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idPedido" name="idPedido">
-
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
-                                <label for="clientePedido" class="form-label">Cliente</label>
-                                <input id="clientePedido" type="text" name="clientePedido" class="form-control"
-                                    required>
+                                <div class="input_box">
+                                    <input required="" style="color: white; font-weight: bold;"
+                                     id="clientePedido"
+                                        type="text" name="clientePedido" >
+                                    <span>Cliente :</span>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="fechaPedido" class="form-label">Fecha</label>
-                                <input id="fechaPedido" type="text" name="fechaPedido" class="form-control" required>
+                                <div class="input_box">
+                                    <input required="" style="color: white; font-weight: bold;"
+                                     id="fechaPedido"
+                                        type="text" name="fechaPedido" >
+                                    <span>Fecha :</span>
+                                </div>
                             </div>
-
                             <div class="col-sm-12 col-md-6">
-                                <label for="estadoPedido" class="form-label">Estado</label>
-                                <input id="estadoPedido" type="text" name="estadoPedido" class="form-control" required>
+                                <div class="input_box">
+                                    <input required="" style="color: white; font-weight: bold;"
+                                     id="estadoPedido"
+                                        type="text" name="estadoPedido" >
+                                    <span>Estado :</span>
+                                </div>
                             </div>
 
                             <!-- Subtabla para mostrar los detalles del pedido -->
                             <div id="subtable">
                                 <!-- TABLA DE MODELO TALLAS -->
-                                <div class="modal-header border-0 row">
+                                <div class="modal-header border-0 row text-white" style="background-color: #5C2C0C;">
                                     <div class="col-md-6 col-sm-12">
                                         <h1 class="modal-title fs-5" id="submodalTitle"></h1>
                                     </div>
@@ -130,7 +142,8 @@
 
                                 <!-- Subtabla para mostrar los detalles del pedido -->
                                 <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
-                                    <table id="subheaderT" class="table table-hover ">
+                                    <table id="subheaderT" class="table table-hover" 
+                                    style="background-color: #DDA35D;">
                                         <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
                                         <thead>
                                             <tr>
