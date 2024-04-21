@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../../resources/css/card_2.css">
     <link rel="stylesheet" href="../../resources/css/btn_e.css">
     <link rel="stylesheet" href="../../resources/css/busca.css">
+    <link rel="stylesheet" href="../../resources/css/input_b.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
@@ -84,21 +85,23 @@
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header" style="background-color: #5C2C0C;">
+                        <h1 class="modal-title fs-5 text-white" id="modalTitle"></h1>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para crear o actualizar un registro -->
-                    <form id="saveForm">
+                    <form id="saveForm" style="background-color: #DDA35D;">
                         <div class="modal-body row gx-5">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idRol" name="idRol">
                             <div class="col-6">
                                 <div class="p-3">
                                     <!--Nombre del rol-->
-                                    <label for="nombreRol" class="form-label">Nombre Rol</label>
-                                    <input id="nombreRol" type="text" name="nombreRol"
-                                        class="form-control barraBusquedaRol" required>
+                                    <div class="input_box py-2">
+                                        <input id="nombreRol" type="text" name="nombreRol"
+                                            class="text-white fw-bold barraBusquedaRol" required>
+                                        <span>Nombre Rol :</span>
+                                    </div>
                                 </div>
                             </div>
                             <!--Estado del rol-->
@@ -176,7 +179,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btnGuardar">Guardar</button>
+                            <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
                         </div>
                     </form>
                 </div>
