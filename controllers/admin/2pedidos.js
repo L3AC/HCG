@@ -19,7 +19,10 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     SUBMODAL_TITLE = document.getElementById('submodalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
+    ESTADO_BUSQUEDA = "Pendiente",
     DETALLE_FORM = document.getElementById('detalleForm'),
+    BTN_PENDIENTE = document.getElementById('btnPendiente'),
+    BTN_FINALIZADO = document.getElementById('btnFinalizado'),
     INPUTSEARCH = document.getElementById('inputsearch'),
     SUBINPUTSEARCH = document.getElementById('subinputsearch'),
     ID_PEDIDO = document.getElementById('idPedido'),
@@ -35,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Se establece el título del contenido principal.
     MAIN_TITLE.textContent = 'Pedidos';
     // Llamada a la función para llenar la tabla con los registros existentes.
-    fillTable();
+    fillTable(ESTADO_BUSQUEDA);
 });
 
 // Método del evento para cuando se envía el formulario de buscar.
@@ -45,7 +48,7 @@ SEARCH_FORM.addEventListener('submit', (event) => {
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SEARCH_FORM);
     // Llamada a la función para llenar la tabla con los resultados de la búsqueda.
-    fillTable(FORM);
+    fillTable(ESTADO_BUSQUEDA);
 });
 
 // Método del evento para cuando se envía el formulario de guardar.
@@ -66,17 +69,18 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(1, DATA.message, true);
         ID_PEDIDO.value = null;
         // Se carga nuevamente la tabla para visualizar los cambios.
-        fillTable();
+        fillTable(ESTADO_BUSQUEDA);
     } else {
         sweetAlert(2, DATA.error, false);
     }
 });
 /*BUSQUEDA EN TIEMPO REAL*/
-INPUTSEARCH.addEventListener('input', async function ()  {
+INPUTSEARCH.addEventListener('input', async function () {
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     const FORM = new FormData();
     FORM.append('valor', INPUTSEARCH.value);
+    FORM.append('estado', ESTADO_BUSQUEDA);
     // Petición para obtener los registros disponibles.
     const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -87,26 +91,30 @@ INPUTSEARCH.addEventListener('input', async function ()  {
             (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-                <div class="cardlar row">
-                    <td>${row.cliente}</td>
-                    <td>${row.forma_pago_pedido}</td>
-                    <td>${row.fecha}</td>
-                    <td><i class="${icon}"></i></td>
-                    <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_pedido})">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_pedido})">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-                    </td>
+            <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
+                <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.cliente}</div>
+                <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
+                <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Estado: </div>${row.estado_pedido}</div>
+                <div class="col-lg-3 col-md-12 col-sm-12 d-flex justify-content-end">
+                    <button type="button" title="Finalizar pedido" class="btnAgregar"  
+                    style="width: 55%; margin-top: 5px; margin-bottom: 5px;" 
+                    onclick="openConfirm(${row.id_pedido},'${row.cliente}','${row.correo_cliente}','${row.codigo_pedido}')">
+                        <i class="bi bi-check-lg"></i>
+                    </button>
+                    <button type="button" title="Detalle pedido" class="btnAgregar"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_pedido})">
+                        <i class="bi bi-info-circle" ></i>
+                    </button>
+                    <button type="button" title="Eliminar pedido" class="btnAgregar" style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_pedido})">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
                 </div>
+            </tr>
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.
         ROWS_FOUND.textContent = DATA.message;
     } else {
-       // sweetAlert(4, DATA.error, true);
+        // sweetAlert(4, DATA.error, true);
     }
 });
 
@@ -115,22 +123,26 @@ INPUTSEARCH.addEventListener('input', async function ()  {
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
 *   Retorno: ninguno.
 */
-const fillTable = async (form = null) => {
+const fillTable = async (estado=null) => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
+    FORM.append('estado',estado ); 
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(PEDIDO_API, action, form);
+    const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);
+    /*(form) ? action = 'searchRows' : action = 'readAll';
+    // Petición para obtener los registros disponibles.
+    const DATA = await fetchData(PEDIDO_API, action, form);*/
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            // Se establece un icono para el estado del PEDIDO.
-            (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
-            TABLE_BODY.innerHTML += `
+            if (row.estado_pedido == 'Pendiente') {
+                const rowHTML = `
                 <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.cliente}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
@@ -150,6 +162,23 @@ const fillTable = async (form = null) => {
                     </div>
                 </tr>
             `;
+            TABLE_BODY.innerHTML += rowHTML;
+            } else { 
+                const rowHTML = `
+                <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
+                    <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.cliente}</div>
+                    <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
+                    <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Estado: </div>${row.estado_pedido}</div>
+                    <div class="col-lg-3 col-md-12 col-sm-12 d-flex justify-content-end">
+                        
+                        <button type="button" title="Detalle pedido" class="btnAgregar"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_pedido})">
+                            <i class="bi bi-info-circle" ></i>
+                        </button>
+                    </div>
+                </tr>
+                `;
+                TABLE_BODY.innerHTML += rowHTML;
+            }
         });
         // Se muestra un mensaje de acuerdo con el resultado.
         ROWS_FOUND.textContent = DATA.message;
@@ -157,6 +186,7 @@ const fillTable = async (form = null) => {
         sweetAlert(4, DATA.error, true);
     }
 }
+
 
 /*
 *   Función para preparar el formulario al momento de insertar un registro.
@@ -208,14 +238,14 @@ const openUpdate = async (id) => {
         ID_PEDIDO.value = ROW.id_pedido;
         CLIENTE_PEDIDO.value = ROW.cliente;
         FECHA_PEDIDO.value = ROW.fecha;
-        ESTADO_PEDIDO.value= ROW.estado_pedido;
-        
+        ESTADO_PEDIDO.value = ROW.estado_pedido;
+
         fillsubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);
     }
 }
-SUBINPUTSEARCH.addEventListener('input', async function ()  {
+SUBINPUTSEARCH.addEventListener('input', async function () {
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
     const FORM = new FormData();
@@ -242,7 +272,7 @@ SUBINPUTSEARCH.addEventListener('input', async function ()  {
         // Se muestra un mensaje de acuerdo con el resultado.
         SUBROWS_FOUND.textContent = DATA.message;
     } else {
-       // sweetAlert(4, DATA.error, true);
+        // sweetAlert(4, DATA.error, true);
     }
 });
 /*
@@ -265,13 +295,13 @@ const openDelete = async (id) => {
             // Se muestra un mensaje de éxito.
             await sweetAlert(1, DATA.message, true);
             // Se carga nuevamente la tabla para visualizar los cambios.
-            fillTable();
+            fillTable(ESTADO_BUSQUEDA);
         } else {
             sweetAlert(2, DATA.error, false);
         }
     }
 }
-const openConfirm = async (id,cliente,correo,codigo) => {
+const openConfirm = async (id, cliente, correo, codigo) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea finalizar el pedido?');
     // Se verifica la respuesta del mensaje.
@@ -285,7 +315,7 @@ const openConfirm = async (id,cliente,correo,codigo) => {
         if (DATA.status) {
             await sweetAlert(1, DATA.message, true);
             // Se carga nuevamente la tabla para visualizar los cambios.
-            fillTable();
+            fillTable(ESTADO_BUSQUEDA);
             // Se muestra un mensaje de éxito.
             const FORM2 = new FormData();
             FORM2.append('user', cliente);
@@ -353,7 +383,7 @@ const fillsubTable = async () => {
         // Se muestra un mensaje de acuerdo con el resultado.
         SUBROWS_FOUND.textContent = DATA.message;
     } else {
-       // sweetAlert(4, DATA.error, true);
+        // sweetAlert(4, DATA.error, true);
     }
 }
 
@@ -422,7 +452,7 @@ const opensubDelete = async (id) => {
             // Se muestra un mensaje de éxito.
             await sweetAlert(1, DATA.message, true);
             // Se carga nuevamente la tabla para visualizar los cambios.
-            fillTable();
+            fillTable(ESTADO_BUSQUEDA);
         } else {
             sweetAlert(2, DATA.error, false);
         }

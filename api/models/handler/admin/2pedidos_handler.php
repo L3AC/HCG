@@ -17,6 +17,7 @@ class PedidoHandler
     protected $imagen = null;
     protected $categoria = null;
     protected $estado = null;
+    protected $search = null;
 
     // Constante para establecer la ruta de las imágenes.
     const RUTA_IMAGEN = '../../images/modelos/';
@@ -24,12 +25,12 @@ class PedidoHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows($value)
+    public function searchRows()
     {
-        if ($value === '') {
-            $value = '%%';
+        if ($this->search === '') {
+            $this->search = '%%';
         } else {
-            $value = '%' . $value . '%';
+            $this->search = '%' .  $this->search. '%';
         }
 
         $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
@@ -37,10 +38,10 @@ class PedidoHandler
         DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha,estado_pedido
         FROM tb_pedidos 
         INNER JOIN tb_clientes USING(id_cliente)
-        WHERE estado_pedido = "Pendiente" AND
+        WHERE estado_pedido = ? AND
         CONCAT(nombre_cliente," ",apellido_cliente) LIKE ?
         ORDER BY fecha_pedido DESC';
-        $params = array($value);
+        $params = array($this->estado,$this->search);
         return Database::getRows($sql, $params);
     }
 

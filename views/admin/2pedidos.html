@@ -55,10 +55,21 @@
                             <input id="inputsearch" placeholder="Buscar..." type="search" class="inputSearch" required>
                         </div>
                     </div>
-
                 </div>
             </form>
-
+            
+        </div>
+        <div class="row d-flex justify-content-center mt-4">
+            <div class="col-2">
+                <button onclick="fillTable('Pendiente')" id="btnPendiente" type="button" class="btnAgregar" style="float: right;">
+                    Pendiente
+                </button>
+            </div>
+            <div class="col-2">
+                <button onclick="fillTable('Finalizado')"  id="btnFinalizado" type="button" class="btnAgregar" >
+                    Finalizado
+                </button>
+            </div>
         </div>
 
         <!-- Tabla con registros -->

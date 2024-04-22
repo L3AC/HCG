@@ -107,12 +107,12 @@ class PedidoData extends PedidoHandler
 
     public function setEstado($value)
     {
-        if (Validator::validateBoolean($value)) {
+        if (!Validator::validateAlphanumeric($value)) {
+            $this->data_error = 'El nombre debe ser un valor alfanumérico';
+            return false;
+        } else {
             $this->estado = $value;
             return true;
-        } else {
-            $this->data_error = 'Estado incorrecto';
-            return false;
         }
     }
 
@@ -126,6 +126,12 @@ class PedidoData extends PedidoHandler
             return false;
         }
     }
+    public function setSearch($value)
+    {
+        $this->search= $value;
+        return true;
+    }
+    
 
     /*
      *  Métodos para obtener los atributos adicionales.
