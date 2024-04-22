@@ -15,6 +15,7 @@
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
     <link rel="stylesheet" href="../../resources/css/btn_e.css">
     <link rel="stylesheet" href="../../resources/css/univer.css">
+    <link rel="stylesheet" href="../../resources/css/card_2.css">
     <link rel="stylesheet" href="../../resources/css/input_b.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
@@ -30,43 +31,50 @@
     <main>
         <div id="mainTitle"></div>
 
-        <h1 id="" style="text-align: center; color: white;">Editar perfil</h1>
+        <h1 id="" style="text-align: center; color: black; margin-top: 10px;">Perfil</h1>
+        <div class="perPro">
+            <img src="../../resources/img/avatar.png" height="200px" width="200px" alt="">
+        </div>
         <!-- Formulario para cambiar datos personales -->
-        <form class="row g-3 pt-3" id="profileForm">
-            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                <div class="input_box">
-                    <input required="" type="text" id="nombreAdministrador" name="nombreAdministrador">
-                    <span>Nombre :</span>
+        <div class="backPro">
+            <form class="row g-3 pt-3" id="profileForm">
+                <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                    <div class="input_box">
+                        <input required="" type="text" id="nombreAdministrador" name="nombreAdministrador">
+                        <span>Nombre :</span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <div class="input_box">
-                    <input required="" id="apellidoAdministrador" type="text" name="apellidoAdministrador">
-                    <span>Apellido :</span>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="input_box">
+                        <input required="" id="apellidoAdministrador" type="text" name="apellidoAdministrador">
+                        <span>Apellido :</span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                <div class="input_box">
-                    <input required="" id="correoAdministrador" type="email" name="correoAdministrador">
-                    <span>Correo :</span>
+                <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                    <div class="input_box">
+                        <input required="" id="correoAdministrador" type="email" name="correoAdministrador">
+                        <span>Correo :</span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <div class="input_box">
-                    <input required="" id="aliasAdministrador" type="text" name="aliasAdministrador">
-                    <span>Usuario :</span>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="input_box">
+                        <input required="" id="aliasAdministrador" type="text" name="aliasAdministrador">
+                        <span>Usuario :</span>
+                    </div>
                 </div>
+                <div class="text-center">
+                    <button type="submit" class="btnAgregar" style="background-color: #CCC8AA;"><i
+                            class="bi bi-save"></i>
+                        Guardar</button>
+                </div>
+            </form>
+
+            <!-- Contenedor con enlace para abrir la caja de diálogo del formulario de cambiar constraseña -->
+            <div class="text-center p-3">
+                <button type="button" class="btnAgregar" onclick="openPassword()">
+                    <i class="bi bi-shield-lock"></i> Cambiar contraseña
+                </button>
             </div>
-            <div class="text-center">
-                <button type="submit" class="btnAgregar" style="background-color: #CCC8AA;"><i class="bi bi-save"></i>
-                    Guardar</button>
-            </div>
-        </form>
-        <!-- Contenedor con enlace para abrir la caja de diálogo del formulario de cambiar constraseña -->
-        <div class="text-center p-3">
-            <button type="button" class="btnAgregar" onclick="openPassword()">
-                <i class="bi bi-shield-lock"></i> Cambiar contraseña
-            </button>
         </div>
         <!-- Componente Modal para mostrar el formulario de cambio de contraseña -->
         <div class="modal fade" id="passwordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
