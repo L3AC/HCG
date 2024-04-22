@@ -22,6 +22,7 @@ const SUBTABLE_HEAD = document.getElementById('subheaderT'),
 
 // Constantes para establecer los elementos  del componente Modal.
 const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
+    INPUTSEARCH = document.getElementById('inputsearch'),
     MODAL_TITLE = document.getElementById('modalTitle'),
     SUBMODAL_TITLE = document.getElementById('submodalTitle'),
     SAVE_MODALU = new bootstrap.Modal('#saveModalU'),
@@ -144,20 +145,23 @@ SAVE_FORMU.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
-
+/*BUSQUEDA EN TIEMPO REAL*/
+INPUTSEARCH.addEventListener('input', async function () {
+    fillTable();
+});
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
 *   Retorno: ninguno.
 */
-const fillTable = async (form = null) => {
+const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
-    // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(PRODUCTO_API, action, form);
+    const DATA = await fetchData(PRODUCTO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.

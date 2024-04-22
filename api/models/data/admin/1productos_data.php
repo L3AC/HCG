@@ -237,7 +237,11 @@ class ProductoData extends ProductoHandler
             return false;
         }
     }
-
+    public function setSearch($value)
+    {
+        $this->search= $value;
+        return true;
+    }
     /*
  * Establece el nombre de archivo.
  */

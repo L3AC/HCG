@@ -14,16 +14,19 @@ if (isset($_GET['action'])) {
     if (isset($_SESSION['idUsuario'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
-            /*case 'searchRows':
-                if (!Validator::validateSearch($_POST['search'])) {
-                    $result['error'] = Validator::getSearchError();
-                } elseif ($result['dataset'] = $producto->searchRows()) {
+            case 'searchRows':
+                if (
+                    !$producto->setSearch($_POST['valor'])
+                ) {
+                    $result['error'] = $producto->getDataError();
+                } 
+                elseif ($result['dataset'] = $producto->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
                     $result['error'] = 'No hay coincidencias';
                 }
-                break;*/
+                break;
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 

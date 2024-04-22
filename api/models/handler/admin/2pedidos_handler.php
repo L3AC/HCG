@@ -27,11 +27,7 @@ class PedidoHandler
     */
     public function searchRows()
     {
-        if ($this->search === '') {
-            $this->search = '%%';
-        } else {
-            $this->search = '%' .  $this->search. '%';
-        }
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
         $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
         id_cliente,correo_cliente,codigo_pedido,

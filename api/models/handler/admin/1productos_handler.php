@@ -9,6 +9,7 @@ class ProductoHandler
     /*
     *   Declaración de atributos para el manejo de datos.
     */
+    protected $search = null;
     protected $id = null;
     protected $nombre = null;
     protected $url = null;
@@ -30,17 +31,17 @@ class ProductoHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows($idMarca,$value)
+    public function searchRows()
     {
-        $value = '%' . Validator::getSearchValue() . '%';
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
-        $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
-        FROM prc_modelos 
-        INNER JOIN ctg_marcas USING(id_marca)
-        WHERE descripcion_modelo LIKE ? OR descripcion_marca LIKE ?
-        ORDER BY descripcion_modelo';
+        $sql = 'SELECT id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
+        imagen_producto,estado_producto
+        FROM tb_productos 
+        WHERE descripcion_producto like ?
+        ORDER BY id_producto DESC';
 
-        $params = array($value, $value);
+        $params = array($this->search);
         return Database::getRows($sql, $params);
     }
     public function searchModelos($value)

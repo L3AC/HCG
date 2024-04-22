@@ -15,9 +15,12 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
-                if (!Validator::validateSearch($_POST['search'])) {
-                    $result['error'] = Validator::getSearchError();
-                } elseif ($result['dataset'] = $categoria->searchRows()) {
+                if (
+                    !$categoria->setSearch($_POST['valor'])
+                ) {
+                    $result['error'] = $categoria->getDataError();
+                } 
+                elseif ($result['dataset'] = $categoria->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {

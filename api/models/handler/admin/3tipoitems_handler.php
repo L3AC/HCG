@@ -10,6 +10,7 @@ class TipoItemHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $search = null;
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -26,12 +27,12 @@ class TipoItemHandler
     */
     public function searchRows()
     {
-        $value = '%' . Validator::getSearchValue() . '%';
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
         $sql = 'SELECT id_tipo_item, descripcion_tipo_item, estado_tipo_item
                 FROM tb_tipo_items
                 WHERE descripcion_tipo_item LIKE ? 
                 ORDER BY descripcion_tipo_item';
-        $params = array($value);
+        $params = array($this->search);
         return Database::getRows($sql, $params);
     }
 

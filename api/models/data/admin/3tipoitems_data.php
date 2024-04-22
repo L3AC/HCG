@@ -143,6 +143,11 @@ class TipoItemData extends TipoItemHandler
             return false;
         }
     }
+    public function setSearch($value)
+    {
+        $this->search= $value;
+        return true;
+    }
 
     /*
  * Establece el nombre de archivo.
