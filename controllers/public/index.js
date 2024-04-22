@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <a href="detail.html?id=${row.id_producto}" >
-                                        <i class="bi bi-plus-lg"></i>
+                                        <Button class="btnAgregar">+</Button>
                                     </a>
                                 </div>
                                 
