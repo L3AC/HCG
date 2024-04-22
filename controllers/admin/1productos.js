@@ -504,15 +504,16 @@ const fillsubTableU = async (busqueda, idProducto) => {
             const item = document.createElement("tr");
             item.setAttribute('data-id', row.id_detalle_producto); // Añadimos el atributo data-id
             item.innerHTML = `
+            
                 <td>${row.descripcion_item}</td>
                 <td>${row.descripcion_tipo_item}</td>
                 <td>${row.cantidad_item}</td>
                 <td>
-                    <button type="button" class="btn btn-info" 
+                    <button type="button" class="btnAgregar" 
                     onclick="opensubUpdate(${row.id_detalle_producto},${row.id_producto})">
                         <i class="bi bi-pencil-fill"></i>
                     </button>
-                    <button type="button" class="btn btn-danger" 
+                    <button type="button" class="btnAgregar" 
                     onclick="opensubDelete(${row.id_detalle_producto},${row.id_producto})">
                         <i class="bi bi-trash-fill"></i>
                     </button>

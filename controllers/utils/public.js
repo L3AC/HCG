@@ -60,6 +60,9 @@ const loadTemplate = async () => {
             </button>
             <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
                 <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="catalogo.html" title="Ir al catalogo"><img src="../../resources/img/catalogo.png" alt=""></a>
+                    </div>
+                <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="cart.html" title="Ir al carrito de compras"><img src="../../resources/img/carrito.png" alt=""></a>
                 </div>
             </div>
