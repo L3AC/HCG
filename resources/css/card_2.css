@@ -36,3 +36,14 @@
           display: none;
       }
   }
+
+  .backPro{
+    background-color: #CCC8AA;
+    border-radius: 20px;
+    border: 2px solid #5C2C0C;
+  }
+  .perPro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
