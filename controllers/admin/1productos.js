@@ -167,7 +167,7 @@ const fillTable = async (form = null) => {
 
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-                <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 20px; margin-right: 60px;">
+                <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 20px; margin-right: 30px;margin-left: 30px;">
                     <div class="image_container">
                         <img src="${row.imagen_producto}" alt="" class="image">
                     </div>
