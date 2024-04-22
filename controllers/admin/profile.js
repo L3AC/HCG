@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         NOMBRE_ADMINISTRADOR.value = ROW.nombre_usuario;
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
         CORREO_ADMINISTRADOR.value = ROW.email_usuario;
-        ALIAS_ADMINISTRADOR.value = ROW.usuario_usuario;
+        ALIAS_ADMINISTRADOR.value = ROW.alias_usuario;
     } else {
         sweetAlert(2, DATA.error, null);
     }

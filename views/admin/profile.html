@@ -13,9 +13,12 @@
     <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
     <!-- Llamada al icono de la página web -->
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
+    <link rel="stylesheet" href="../../resources/css/estado.css">
+    <link rel="stylesheet" href="../../resources/css/busca.css">
     <link rel="stylesheet" href="../../resources/css/btn_e.css">
-    <link rel="stylesheet" href="../../resources/css/univer.css">
+    <link rel="stylesheet" href="../../resources/css/tarjeta.css">
     <link rel="stylesheet" href="../../resources/css/card_2.css">
+    <link rel="stylesheet" href="../../resources/css/univer.css">
     <link rel="stylesheet" href="../../resources/css/input_b.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
@@ -36,45 +39,41 @@
             <img src="../../resources/img/avatar.png" height="200px" width="200px" alt="">
         </div>
         <!-- Formulario para cambiar datos personales -->
-        <div class="backPro">
-            <form class="row g-3 pt-3" id="profileForm">
-                <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                    <div class="input_box">
-                        <input required="" type="text" id="nombreAdministrador" name="nombreAdministrador">
-                        <span>Nombre :</span>
-                    </div>
+        <form class="row g-3 pt-3" id="profileForm">
+            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                <div class="input_box">
+                    <input required="" type="text" id="nombreAdministrador" name="nombreAdministrador">
+                    <span>Nombre :</span>
                 </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <div class="input_box">
-                        <input required="" id="apellidoAdministrador" type="text" name="apellidoAdministrador">
-                        <span>Apellido :</span>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                    <div class="input_box">
-                        <input required="" id="correoAdministrador" type="email" name="correoAdministrador">
-                        <span>Correo :</span>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <div class="input_box">
-                        <input required="" id="aliasAdministrador" type="text" name="aliasAdministrador">
-                        <span>Usuario :</span>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btnAgregar" style="background-color: #CCC8AA;"><i
-                            class="bi bi-save"></i>
-                        Guardar</button>
-                </div>
-            </form>
-
-            <!-- Contenedor con enlace para abrir la caja de diálogo del formulario de cambiar constraseña -->
-            <div class="text-center p-3">
-                <button type="button" class="btnAgregar" onclick="openPassword()">
-                    <i class="bi bi-shield-lock"></i> Cambiar contraseña
-                </button>
             </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="input_box">
+                    <input required="" id="apellidoAdministrador" type="text" name="apellidoAdministrador">
+                    <span>Apellido :</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                <div class="input_box">
+                    <input required="" id="correoAdministrador" type="email" name="correoAdministrador">
+                    <span>Correo :</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="input_box">
+                    <input required="" id="aliasAdministrador" type="text" name="aliasAdministrador">
+                    <span>Usuario :</span>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btnAgregar" style="background-color: #CCC8AA;"><i class="bi bi-save"></i>
+                    Guardar</button>
+            </div>
+        </form>
+        <!-- Contenedor con enlace para abrir la caja de diálogo del formulario de cambiar constraseña -->
+        <div class="text-center p-3">
+            <button type="button" class="btnAgregar" onclick="openPassword()">
+                <i class="bi bi-shield-lock"></i> Cambiar contraseña
+            </button>
         </div>
         <!-- Componente Modal para mostrar el formulario de cambio de contraseña -->
         <div class="modal fade" id="passwordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -82,32 +81,38 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <!-- Contenido del componente Modal -->
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalTitle">Cambiar contraseña</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header" style="background-color: #5C2C0C;">
+                        <h1 class="modal-title fs-5 text-white" id="modalTitle">Cambiar contraseña</h1>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
                     <!-- Formulario para actualizar contraseña -->
-                    <form id="passwordForm">
+                    <form id="passwordForm" style="background-color: #DDA35D;">
                         <div class="modal-body row g-3">
+
                             <div class="col-sm-12 col-md-6 offset-md-3">
-                                <!--Se pide la contraseña actual-->
-                                <label for="claveActual" class="form-label">Contraseña actual</label>
-                                <input id="claveActual" type="password" name="claveActual" class="form-control"
-                                    required>
+                                <div class="input_box">
+                                    <input id="claveActual" type="password" name="claveActual" class="text-white"
+                                        required>
+                                    <span>Contraseña actual :</span>
+                                </div>
                             </div>
-                            <div class="col-12 text-center">
+                            <div class="col-12 text-center text-white">
                                 <span>CONTRASEÑA NUEVA</span>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <!--Se pide la contraseña nueva-->
-                                <label for="claveNueva" class="form-label">Contraseña</label>
-                                <input id="claveNueva" type="password" name="claveNueva" class="form-control" required>
+                                <div class="input_box">
+                                    <input id="claveNueva" type="password" name="claveNueva" class="text-white"
+                                        required>
+                                    <span>Contraseña actual :</span>
+                                </div>
                             </div>
-                            <div class="col-sm-12 col-md-6">
-                                <!--Se pide la confirmacion contraseña nueva-->
-                                <label for="confirmarClave" class="form-label">Confirmar contraseña</label>
-                                <input id="confirmarClave" type="password" name="confirmarClave" class="form-control"
-                                    required>
+                            <div class="col-sm-12 col-md-6 ">
+                                <div class="input_box">
+                                    <input id="confirmarClave" type="password" name="confirmarClave" class="text-white"
+                                        required>
+                                    <span>Confirmar contraseña :</span>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
