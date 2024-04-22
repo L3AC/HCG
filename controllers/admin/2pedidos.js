@@ -19,7 +19,6 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     SUBMODAL_TITLE = document.getElementById('submodalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-    ESTADO_BUSQUEDA = "Pendiente",
     DETALLE_FORM = document.getElementById('detalleForm'),
     BTN_PENDIENTE = document.getElementById('btnPendiente'),
     BTN_FINALIZADO = document.getElementById('btnFinalizado'),
@@ -30,6 +29,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     NOTA_PEDIDO = document.getElementById('notaPedido'),
     FECHA_PEDIDO = document.getElementById('fechaPedido'),
     ESTADO_PEDIDO = document.getElementById('estadoPedido');
+let ESTADO_BUSQUEDA = "Pendiente";
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -76,46 +76,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
 });
 /*BUSQUEDA EN TIEMPO REAL*/
 INPUTSEARCH.addEventListener('input', async function () {
-    ROWS_FOUND.textContent = '';
-    TABLE_BODY.innerHTML = '';
-    const FORM = new FormData();
-    FORM.append('valor', INPUTSEARCH.value);
-    FORM.append('estado', ESTADO_BUSQUEDA);
-    // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
-        DATA.dataset.forEach(row => {
-            // Se establece un icono para el estado del PEDIDO.
-            (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
-            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
-            TABLE_BODY.innerHTML += `
-            <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
-                <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.cliente}</div>
-                <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
-                <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Estado: </div>${row.estado_pedido}</div>
-                <div class="col-lg-3 col-md-12 col-sm-12 d-flex justify-content-end">
-                    <button type="button" title="Finalizar pedido" class="btnAgregar"  
-                    style="width: 55%; margin-top: 5px; margin-bottom: 5px;" 
-                    onclick="openConfirm(${row.id_pedido},'${row.cliente}','${row.correo_cliente}','${row.codigo_pedido}')">
-                        <i class="bi bi-check-lg"></i>
-                    </button>
-                    <button type="button" title="Detalle pedido" class="btnAgregar"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_pedido})">
-                        <i class="bi bi-info-circle" ></i>
-                    </button>
-                    <button type="button" title="Eliminar pedido" class="btnAgregar" style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_pedido})">
-                        <i class="bi bi-trash-fill"></i>
-                    </button>
-                </div>
-            </tr>
-            `;
-        });
-        // Se muestra un mensaje de acuerdo con el resultado.
-        ROWS_FOUND.textContent = DATA.message;
-    } else {
-        // sweetAlert(4, DATA.error, true);
-    }
+    fillTable(ESTADO_BUSQUEDA);
 });
 
 /*
@@ -127,10 +88,11 @@ const fillTable = async (estado=null) => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
+    ESTADO_BUSQUEDA=estado;
     // Se verifica la acción a realizar.
     const FORM = new FormData();
     FORM.append('valor', INPUTSEARCH.value);
-    FORM.append('estado',estado ); 
+    FORM.append('estado',estado); 
     // Petición para obtener los registros disponibles.
     const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);
     /*(form) ? action = 'searchRows' : action = 'readAll';
