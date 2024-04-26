@@ -53,10 +53,11 @@ class PedidoHandler
     public function createRow()
     {
         // Verificar si el cliente existe
-        $sql = 'SELECT id_cliente FROM tb_clientes WHERE telefono_cliente = ? OR correo_cliente = ?;';
+        $sql = 'SELECT id_cliente FROM tb_clientes WHERE telefono_cliente = ? 
+        OR correo_cliente = ?;';
         $params = array($this->telefono, $this->correo);
         $result = Database::getRow($sql, $params);
-
+        $id_cliente=null;
         if ($result) {
             // El cliente ya existe, obtener su ID
             $id_cliente = $result['id_cliente'];
@@ -66,7 +67,7 @@ class PedidoHandler
                 VALUES ((SELECT get_next_id("tb_clientes")),?, ?, ?, ?);';
             $params = array($this->telefono, $this->correo, $this->nombre, $this->apellido);
             Database::executeRow($sql, $params);
-            $sql = 'select * from tb_clientes;';
+            $sql = 'select * from tb_clientes where id_cliente> ?;';
             $params = array('');
             $id_cliente = Database::getLastRow($sql, $params);
         }

@@ -105,7 +105,7 @@ const fillTable = async (estado=null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             if (row.estado_pedido == 'Pendiente') {
                 const rowHTML = `
-                <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
+                <div class="cardlard row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.cliente}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Estado: </div>${row.estado_pedido}</div>
@@ -127,7 +127,7 @@ const fillTable = async (estado=null) => {
             TABLE_BODY.innerHTML += rowHTML;
             } else { 
                 const rowHTML = `
-                <div class="cardlar row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
+                <div class="cardlard row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.cliente}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Estado: </div>${row.estado_pedido}</div>
@@ -137,7 +137,7 @@ const fillTable = async (estado=null) => {
                             <i class="bi bi-info-circle" ></i>
                         </button>
                     </div>
-                </tr>
+                </div>
                 `;
                 TABLE_BODY.innerHTML += rowHTML;
             }

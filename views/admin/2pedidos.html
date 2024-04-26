@@ -57,16 +57,17 @@
                     </div>
                 </div>
             </form>
-            
+
         </div>
         <div class="row d-flex justify-content-center mt-4">
             <div class="col-2">
-                <button onclick="fillTable('Pendiente')" id="btnPendiente" type="button" class="btnAgregar" style="float: right;">
+                <button onclick="fillTable('Pendiente')" id="btnPendiente" type="button" class="btnAgregar"
+                    style="float: right;">
                     Pendiente
                 </button>
             </div>
             <div class="col-2">
-                <button onclick="fillTable('Finalizado')"  id="btnFinalizado" type="button" class="btnAgregar" >
+                <button onclick="fillTable('Finalizado')" id="btnFinalizado" type="button" class="btnAgregar">
                     Finalizado
                 </button>
             </div>
@@ -77,12 +78,11 @@
         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
         <div class="apa">
             <div class="row row-md-12">
-                <div class="col-2">
-                </div>
-                <div class="col-2">
+                
+                <div class="col-3">
                     <p class="elemtoCampoTabla">NOMBRES</p>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <p class="elemtoCampoTabla">FECHA</p>
                 </div>
                 <div class="col-1 me-5">
@@ -148,15 +148,14 @@
                                             placeholder="Buscar" required>
                                     </div>
                                 </div>
+                                <br>
+                                <div style="color: white;" colspan="6" id="subrowsFound"></div>
 
                                 <!-- Subtabla para mostrar los detalles del pedido -->
                                 <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
-                                    <table id="subheaderT" class="table table-hover">
+                                    <table id="subheaderT" class="carditem table-hover">
                                         <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
                                         <thead>
-                                            <tr>
-                                                <td colspan="6" id="subrowsFound"></td>
-                                            </tr>
                                             <tr>
                                                 <th class="text-center">IMAGEN</th>
                                                 <th>PRODUCTO</th>
