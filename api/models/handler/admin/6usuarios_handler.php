@@ -11,6 +11,7 @@ class UsuarioHandler
      *  Declaración de atributos para el manejo de datos.
      */
     protected $id = null;
+    protected $search = null;
     protected $idRol = null;
     protected $nombre = null;
     protected $apellido = null;

@@ -86,6 +86,11 @@ class UsuarioData extends UsuarioHandler
             return false;
         }
     }
+    public function setSearch($value)
+    {
+        $this->search= $value;
+        return true;
+    }
 
     public function setAlias($value, $min = 6, $max = 25)
     {
