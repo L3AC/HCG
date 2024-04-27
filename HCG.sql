@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS db_hcg;
 CREATE DATABASE IF NOT EXISTS db_hcg;
 USE db_hcg;
 
+
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED,
   descripcion_rol VARCHAR(100) NOT NULL,
@@ -98,6 +99,7 @@ CREATE TABLE tb_pedidos(
     CONSTRAINT fk_pedido_cliente 
     FOREIGN KEY(id_cliente) REFERENCES tb_clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 CREATE TABLE tb_detalle_pedidos (
   id_detalle_pedido INT UNSIGNED ,
   id_pedido INT UNSIGNED NOT NULL,

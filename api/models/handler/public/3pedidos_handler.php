@@ -67,11 +67,10 @@ class PedidoHandler
                 VALUES ((SELECT get_next_id("tb_clientes")),?, ?, ?, ?);';
             $params = array($this->telefono, $this->correo, $this->nombre, $this->apellido);
             Database::executeRow($sql, $params);
-            $sql = 'select * from tb_clientes where id_cliente> ?;';
-            $params = array('');
-            $id_cliente = Database::getLastRow($sql, $params);
+            $sql = 'SELECT IFNULL(MAX(id_cliente), 0) as id_cliente FROM tb_clientes;';
+            $result = Database::getRow($sql);
+            $id_cliente = $result['id_cliente'];
         }
-
         // Insertar el pedido
         $sql = 'INSERT INTO tb_pedidos (id_pedido,id_cliente, fecha_pedido, codigo_pedido, estado_pedido)
             VALUES ((SELECT get_next_id("tb_pedidos")),?, now(), generar_codigo(), "Pendiente");';
