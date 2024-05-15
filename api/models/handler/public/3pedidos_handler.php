@@ -80,10 +80,6 @@ class PedidoHandler
         $sql = 'SELECT IFNULL(MAX(id_pedido), 0) as id_pedido FROM tb_pedidos;';
         $result = Database::getRow($sql);
 
-        //$id_pedido = Database::getLastRow($sql, $params);
-
-        //echo "ID PEDIDO ". $result['id_pedido'];
-        // Retornar el ID del pedido
         return $result['id_pedido'];
     }
 
