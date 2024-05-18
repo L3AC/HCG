@@ -149,11 +149,7 @@ SAVE_FORMU.addEventListener('submit', async (event) => {
 INPUTSEARCH.addEventListener('input', async function () {
     fillTable();
 });
-/*
-*   Función asíncrona para llenar la tabla con los registros disponibles.
-*   Parámetros: form (objeto opcional con los datos de búsqueda).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para llenar la tabla con los registros disponibles.
 const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
@@ -220,11 +216,7 @@ const fillTable = async () => {
     }
 }
 
-/*
-*   Función para preparar el formulario al momento de insertar un registro.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para preparar el formulario al momento de insertar un registro.
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
@@ -232,16 +224,12 @@ const openCreate = () => {
     MODAL_TITLE.textContent = 'Crear registro';
     // Se prepara el formulario.
     SAVE_FORM.reset();
-    fillsubTable(SEARCHSUB_FORM);
+    fillSubTable(SEARCHSUB_FORM);
 }
 
 
 
-/*
-*   Función asíncrona para eliminar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para eliminar un registro.
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el producto de forma permanente?');
@@ -263,15 +251,11 @@ const openDelete = async (id) => {
         }
     }
 }
-/*
-*   Función asíncrona para llenar la tabla con los registros disponibles.
-*   Parámetros: form (objeto opcional con los datos de búsqueda).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para llenar la tabla con los registros disponibles.
 let DATA;
 let selectedItems = [];
 
-const fillsubTable = async (form = null) => {
+const fillSubTable = async (form = null) => {
     // Limpiar tablas y reiniciar variables
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
@@ -398,15 +382,11 @@ const removeItem = (id) => {
 
 
 
-const subclose = () => {
+const subClose = () => {
     SAVE_MODALU.show();
 }
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
@@ -454,12 +434,12 @@ const openUpdate = async (id) => {
         );
         ESTADO_PRODUCTOU.checked = ROW.estado_producto;
 
-        fillsubTableU('', ROW.id_producto);
+        fillSubTableU('', ROW.id_producto);
     } else {
         //sweetAlert(2, DATA.error, false);
     }
 }
-const fillsubTableU = async (busqueda, idProducto) => {
+const fillSubTableU = async (busqueda, idProducto) => {
     // Se inicializa el contenido de la tabla.
     SUBROWS_FOUNDU.textContent = '';
     SUBTABLE_BODYU.innerHTML = '';
@@ -547,7 +527,7 @@ SAVE_TREFORM.addEventListener('submit', async (event) => {
         ID_DETALLEPRODUCTO.value = null;
         SAVE_MODALU.show();
         // Se carga nuevamente la tabla para visualizar los cambios.
-        fillsubTableU('', ID_PRODUCTO.value);
+        fillSubTableU('', ID_PRODUCTO.value);
     } else {
         sweetAlert(2, DATA.error, false);
     }
@@ -564,11 +544,7 @@ const opensubCreate = (idItem, idProducto) => {
     SAVE_TREFORM.reset();
 }
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const opensubUpdate = async (idDetalle, idProducto) => {
     // Se define un objeto con los datos del registro seleccionado.
     SAVE_MODALU.hide();
@@ -592,11 +568,7 @@ const opensubUpdate = async (idDetalle, idProducto) => {
         sweetAlert(2, DATA.error, false);
     }
 }
-/*
-*   Función asíncrona para eliminar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para eliminar un registro.
 const opensubDelete = async (idDetalle, idProducto) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el item?');
@@ -615,7 +587,7 @@ const opensubDelete = async (idDetalle, idProducto) => {
                 selectedItemsList.removeChild(itemToDelete);
             }
             // Refrescar la tabla de los items no seleccionados
-            fillsubTableU('', idProducto);
+            fillSubTableU('', idProducto);
         } else {
             sweetAlert(2, DATA.error, false);
         }
@@ -623,11 +595,7 @@ const opensubDelete = async (idDetalle, idProducto) => {
 }
 
 
-/*
-*   Función para abrir un reporte automático de productos por categoría.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para abrir un reporte automático de un regristo.
 const openReport = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
     const PATH = new URL(`${SERVER_URL}reports/admin/productos.php`);

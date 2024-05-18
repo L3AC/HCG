@@ -79,11 +79,7 @@ INPUTSEARCH.addEventListener('input', async function () {
     fillTable(ESTADO_BUSQUEDA);
 });
 
-/*
-*   Función asíncrona para llenar la tabla con los registros disponibles.
-*   Parámetros: form (objeto opcional con los datos de búsqueda).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para llenar la tabla con los registros disponibles.
 const fillTable = async (estado=null) => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
@@ -150,11 +146,7 @@ const fillTable = async (estado=null) => {
 }
 
 
-/*
-*   Función para preparar el formulario al momento de insertar un registro.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para preparar el formulario al momento de insertar un registro.
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
@@ -172,11 +164,7 @@ const openCreate = () => {
 }
 
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
@@ -202,7 +190,7 @@ const openUpdate = async (id) => {
         FECHA_PEDIDO.value = ROW.fecha;
         ESTADO_PEDIDO.value = ROW.estado_pedido;
 
-        fillsubTable(SEARCHSUB_FORM);
+        fillSubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);
     }
@@ -237,11 +225,7 @@ SUBINPUTSEARCH.addEventListener('input', async function () {
         // sweetAlert(4, DATA.error, true);
     }
 });
-/*
-*   Función asíncrona para eliminar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para eliminar un registro.
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el pedido de forma permanente?');
@@ -291,12 +275,8 @@ const openConfirm = async (id, cliente, correo, codigo) => {
         }
     }
 }
-/*
-*   Función asíncrona para llenar la tabla con los registros disponibles.
-*   Parámetros: form (objeto opcional con los datos de búsqueda).
-*   Retorno: ninguno.
-*/
-const fillsubTable = async () => {
+//Función asíncrona para llenar la tabla con los registros disponibles.
+const fillSubTable = async () => {
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
     const FORM = new FormData();
@@ -349,7 +329,7 @@ const fillsubTable = async () => {
     }
 }
 
-const subclose = () => {
+const subClose = () => {
     SAVE_MODAL.show();
 }
 
@@ -365,11 +345,7 @@ const opensubCreate = () => {
     fillSelect(TALLA_API, 'readAll', 'tallaModeloTalla');
 }
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const opensubUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     console.log(id);
@@ -394,11 +370,7 @@ const opensubUpdate = async (id) => {
 }
 
 
-/*
-*   Función asíncrona para eliminar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para eliminar un registro.
 const opensubDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el PEDIDO de forma permanente?');

@@ -58,11 +58,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 
-/*
-*   Función asíncrona para llenar la tabla con los registros disponibles.
-*   Parámetros: form (objeto opcional con los datos de búsqueda).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para llenar la tabla con los registros disponibles.
 const fillTable = async (form = null) => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
@@ -103,11 +99,7 @@ const fillTable = async (form = null) => {
     }
 }
 
-/*
-*   Función para preparar el formulario al momento de insertar un registro.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para preparar el formulario al momento de insertar un registro.
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
@@ -116,11 +108,7 @@ const openCreate = () => {
     SAVE_FORM.reset();
 }
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openUpdate = async (id) => {
     // Se define una constante tipo objeto con los datos del registro seleccionado.
     const FORM = new FormData();
@@ -144,11 +132,7 @@ const openUpdate = async (id) => {
     }
 }
 
-/*
-*   Función asíncrona para eliminar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para eliminar un registro.
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea eliminar la categoría de forma permanente?');
