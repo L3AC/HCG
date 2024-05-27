@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Se crean y concatenan las tarjetas con los datos de cada categoría.
                 /*col-sm-12 col-md-6 col-lg-3*/
                 COMPLEMENTOS.innerHTML += `
-                <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 20px; margin-right: 60px;">
+                <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 100px; margin-right: 60px;">
                         <div class="image_container" >
                             <img src="${row.imagen_producto}" alt="" class="image">
                         </div>
