@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 
-const Home = () => {
+const App = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>HCG</Text>
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default App;
