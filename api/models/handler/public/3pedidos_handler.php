@@ -63,8 +63,8 @@ class PedidoHandler
             $id_cliente = $result['id_cliente'];
         } else {
             // El cliente no existe, crear nuevo cliente y obtener su ID
-            $sql = 'INSERT INTO tb_clientes (id_cliente,telefono_cliente, correo_cliente, nombre_cliente, apellido_cliente)
-                VALUES ((SELECT get_next_id("tb_clientes")),?, ?, ?, ?);';
+            $sql = 'INSERT INTO tb_clientes (id_cliente,usuario_cliente,clave_cliente,telefono_cliente, correo_cliente, nombre_cliente, apellido_cliente)
+                VALUES ((SELECT get_next_id("tb_clientes")),"deafult","deafult",?, ?, ?, ?);';
             $params = array($this->telefono, $this->correo, $this->nombre, $this->apellido);
             Database::executeRow($sql, $params);
             $sql = 'SELECT IFNULL(MAX(id_cliente), 0) as id_cliente FROM tb_clientes;';

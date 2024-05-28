@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!-- Declaración del idioma para el documento -->
+<html lang="es">
+
+<head>
+    <!-- Título del documento -->
+    <title></title>
+    <!-- Metadatos de la página web -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
+    <!-- Llamada al icono de la página web -->
+    <link type="image/png" rel="icon" href="../../resources/img/icon.png">
+    <link rel="stylesheet" href="../../resources/css/correc.css">
+    <link rel="stylesheet" href="../../resources/css/car.css">
+    <link rel="stylesheet" href="../../resources/css/btn_e.css">
+    <link rel="stylesheet" href="../../resources/css/busca.css">
+    <link rel="stylesheet" href="../../resources/css/navpub.css">
+    <link rel="stylesheet" href="../../resources/css/busca.css">
+    <link href="../../resources/css/stars.css" rel="stylesheet">
+
+    <!-- Llamada a las hojas de estilos del framework e iconos -->
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body >
+    <!-- Contenido principal del documento -->
+    <main>
+        <div id="contenido">
+            <!-- Título del contenido principal -->
+            <h4 id="mainTitle" style="font-size: 40px;" class="mt-4"></h4>
+            <div class="row m-3 mb-5">
+                <!-- Formulario de búsqueda -->
+                <form class="col-sm-12 col-md-12" id="searchForm">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-5 col-sm-6 mx-auto">
+                            <!-- Campo de búsqueda -->
+                                <div class="input-container">
+                                    <input id="inputsearch" type="text" name="search" class="input " placeholder="buscar...">
+                                  </div>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+
+
+            <div id="tableBody" class="row"></div>
+
+            <!-- Componente Modal  -->
+            <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="modalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content ">
+                        <div class="modal-header">
+                            <!-- Título del modal -->
+                            <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                            <!-- Botón de cierre del modal -->
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <!-- Formulario para crear o actualizar un registro -->
+                        <form id="saveForm">
+                            <div class="modal-body row gx-5">
+                                <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                                <input type="hidden" id="idDetalle" name="idDetalle">
+
+                                <div class="col-sm-12 col-md-12">
+                                    <label for="contenidoComentario" class="form-label">Mensaje</label>
+                                    <textarea id="contenidoComentario" name="contenidoComentario" class="form-control"
+                                        rows="6"></textarea>
+                                </div>
+                                <div class="col-12 mt-4 mb-2 text-center">
+                                    <label for="puntuacionComentario" class="form-label">Puntuación</label>
+                                </div>
+                                <div class="col-12 mt-1 mb-3 d-flex justify-content-center" id="divstars">
+
+                                </div>
+                                <div class="col-sm-12 col-md-6" id="fechaDiv">
+                                    <label for="fechaComentario" class="form-label">Fecha</label>
+                                    <input id="fechaComentario" type="text" name="fechaComentario" class="form-control">
+                                </div>
+
+                            </div>
+                            <!-- Pie del modal con el botón de guardar -->
+                            <div class="modal-footer border-0">
+                                <button type="submit" id="idGuardar" class="btn"
+                                    style="background-color: #CCC8AA;">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+    </main>
+    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- Llamada al framework y librería de mensajes -->
+    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <!-- Llamada al controlador general de la aplicación -->
+    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <!-- Llamada al controlador del sitio público -->
+    <script type="text/javascript" src="../../controllers/utils/public.js"></script>
+    <!-- Llamada al controlador de la página web -->
+    <script type="text/javascript" src="../../controllers/public/historial.js"></script>
+</body>
+
+</html>

@@ -2,7 +2,6 @@ DROP DATABASE IF EXISTS db_hcg;
 CREATE DATABASE IF NOT EXISTS db_hcg;
 USE db_hcg;
 
-
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED,
   descripcion_rol VARCHAR(100) NOT NULL,
@@ -33,14 +32,16 @@ CREATE TABLE tb_usuarios(
   ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 CREATE TABLE tb_clientes(
   id_cliente INT UNSIGNED,
+  usuario_cliente VARCHAR(255) NOT NULL,
+  clave_cliente VARCHAR(255) NOT NULL,
   telefono_cliente VARCHAR(255) NOT NULL,
-  correo_cliente VARCHAR(255) NOT NULL,
+  correo_cliente VARCHAR(255) NOT NULL UNIQUE,
   nombre_cliente VARCHAR(255) NOT NULL,
   apellido_cliente VARCHAR(255) NOT NULL,
   PRIMARY KEY (id_cliente),
+  CONSTRAINT usuario_unique UNIQUE (usuario_cliente),
   CONSTRAINT telefono_unique UNIQUE (telefono_cliente),
   CONSTRAINT correo_unique UNIQUE (correo_cliente)
 );

@@ -27,7 +27,7 @@ class ClienteHandler
     public function checkUser($usuario, $password)
     {
         $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente
-                FROM prc_clientes
+                FROM tb_clientes
                 WHERE usuario_cliente = ?';
         $params = array($usuario);
         $data = Database::getRow($sql, $params);

@@ -7,7 +7,7 @@ GRANT CREATE ROUTINE ON db_hcg.* TO hcg_desarrollador@'localhost';
 GRANT TRIGGER ON db_hcg.* TO hcg_desarrollador@'localhost';
 GRANT CREATE VIEW ON db_hcg.* TO hcg_desarrollador@'localhost';
 */
- 
+
 /*FUNCION QUE ME DEVUELVE EL ID SIGUIENTE QUE SE REGISTRARIA EN ORDEN Y SE MANDA A QUE TABLA SE AGARRARIA
 ESTO SE USA EN LUGAR DEL AUTO_INCREMENT*/
 DELIMITER //

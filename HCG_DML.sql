@@ -68,17 +68,17 @@ VALUES((SELECT get_next_id("tb_detalle_productos")),1,1,1),
 ((SELECT get_next_id("tb_detalle_productos")),1,9,1),
 ((SELECT get_next_id("tb_detalle_productos")),4,10,1);
 
-INSERT INTO tb_clientes(id_cliente,nombre_cliente,apellido_cliente,telefono_cliente,correo_cliente)
-VALUES((SELECT get_next_id("tb_clientes")),"Juan","Hernandez","71926778","leac.2xy@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Maria","Rodriguez","71000701","mariarod@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Carlos","Perez","71926602","carlosperez@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Ana","Diaz","71926703","anadiaz@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Luis","Sanchez","71000704","luissanc@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Laura","Ramirez","71926605","lauraram@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Javier","Garcia","71926706","javiergar@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Sofia","Martinez","71000707","sofiamtz@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Diego","Flores","71926608","diegoflores@gmail.com"),
-((SELECT get_next_id("tb_clientes")),"Lucia","Gutierrez","71926709","luciagtz@gmail.com");
+INSERT INTO tb_clientes(id_cliente,usuario_cliente,clave_cliente,nombre_cliente,apellido_cliente,telefono_cliente,correo_cliente)
+VALUES((SELECT get_next_id("tb_clientes")),"Juan","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Juan","Hernandez","71926778","leac.2xy@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Maria","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Maria","Rodriguez","71000701","mariarod@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Carlos","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Carlos","Perez","71926602","carlosperez@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Ana","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Ana","Diaz","71926703","anadiaz@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Luis","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Luis","Sanchez","71000704","luissanc@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Laura","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Laura","Ramirez","71926605","lauraram@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Javier","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Javier","Garcia","71926706","javiergar@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Sofia","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Sofia","Martinez","71000707","sofiamtz@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Diego","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Diego","Flores","71926608","diegoflores@gmail.com"),
+((SELECT get_next_id("tb_clientes")),"Lucia","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Lucia","Gutierrez","71926709","luciagtz@gmail.com");
 
 INSERT INTO tb_pedidos (id_pedido, id_cliente,estado_pedido,codigo_pedido)
 VALUES 
