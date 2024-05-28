@@ -10,7 +10,7 @@ class ClienteHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
-    protected $nombre = null;    
+    protected $nombre = null;
     protected $usuario = null;
     protected $apellido = null;
     protected $correo = null;
@@ -24,6 +24,18 @@ class ClienteHandler
     /*
     *   Métodos para gestionar la cuenta del cliente.
     */
+
+    /*GENERAR PIN*/
+    public function generarPin()
+    {
+        $pinLength = 6;
+        $pin = '';
+        for ($i = 0; $i < $pinLength; $i++) {
+            $pin .= mt_rand(0, 9);
+        }
+        return $pin;
+    }
+
     public function checkUser($usuario, $password)
     {
         $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente
@@ -103,9 +115,10 @@ class ClienteHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO cliente(nombre_cliente, apellido_cliente, correo_cliente, dui_cliente, telefono_cliente, nacimiento_cliente, direccion_cliente, clave_cliente)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
-        $params = array($this->nombre, $this->apellido, $this->correo, $this->dui, $this->telefono, $this->nacimiento, $this->direccion, $this->clave);
+        $sql = 'INSERT INTO tb_clientes(id_cliente,usuario_cliente,clave_cliente,nombre_cliente, apellido_cliente, correo_cliente,
+         telefono_cliente,pin_cliente)
+                VALUES((SELECT get_next_id("tb_clientes")), ?, ?, ?, ?, ?, ?, ?)';
+        $params = array($this->usuario, $this->clave, $this->nombre, $this->apellido, $this->correo,  $this->telefono,  $this->generarPin());
         return Database::executeRow($sql, $params);
     }
 

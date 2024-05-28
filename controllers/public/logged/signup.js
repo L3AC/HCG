@@ -1,7 +1,10 @@
 // Constante para establecer el formulario de registrar cliente.
 const SIGNUP_FORM = document.getElementById('signupForm');
 // Llamada a la función para establecer la mascara del campo teléfono.
-
+vanillaTextMask.maskInput({
+    inputElement: document.getElementById('telefonoCliente'),
+    mask: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+});
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {

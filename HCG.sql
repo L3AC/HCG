@@ -40,6 +40,8 @@ CREATE TABLE tb_clientes(
   correo_cliente VARCHAR(255) NOT NULL UNIQUE,
   nombre_cliente VARCHAR(255) NOT NULL,
   apellido_cliente VARCHAR(255) NOT NULL,
+  estado_cliente BOOLEAN DEFAULT TRUE NOT NULL,
+  pin_cliente VARCHAR(6) NOT NULL DEFAULT '000000',
   PRIMARY KEY (id_cliente),
   CONSTRAINT usuario_unique UNIQUE (usuario_cliente),
   CONSTRAINT telefono_unique UNIQUE (telefono_cliente),
