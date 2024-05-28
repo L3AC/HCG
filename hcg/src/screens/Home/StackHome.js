@@ -1,15 +1,15 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Explorar from '../../screens/Logged/Explorar';
-import Modelo from './Modelo';  // Importa la nueva pantalla de detalles
+import Home from './Home';
+import Producto from '../Producto'; 
 
 const Stack = createStackNavigator();
 
 const StackHome = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Explorar" component={Explorar} options={{ headerShown: false }} />
-      <Stack.Screen name="Modelo" component={Modelo} options={{ headerShown: false }} /> 
+      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+      <Stack.Screen name="Producto" component={Producto} options={{ headerShown: false }} /> 
     </Stack.Navigator>
   );
 };
