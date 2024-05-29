@@ -35,6 +35,13 @@ if (isset($_GET['action'])) {
                 $result['error'] = 'Producto inexistente';
             }
             break;
+            case 'searchProductos':
+                if ($result['dataset'] = $producto->searchProductos($_POST['producto'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = ' no existen registros para mostrar';
+                }
+                break;
         case 'readConjunto':
             if ($result['dataset'] = $producto->readConjunto()) {
                 $result['status'] = 1;

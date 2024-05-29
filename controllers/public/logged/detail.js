@@ -1,7 +1,7 @@
 
 // Constantes para completar la ruta de la API.
 const PRODUCTO_API = 'services/public/1productos.php',
-    PEDIDO_API = 'services/public/pedido.php',
+    PEDIDO_API = 'services/public/logpedido.php',
     MODELOTALLAS_API = 'services/public/2detalleproductos.php',
     COMENTARIOS_API = 'services/public/comentario.php';
 // Constante tipo objeto para obtener los parámetros disponibles en la URL.

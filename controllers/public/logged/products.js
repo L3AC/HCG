@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const PRODUCTO_API = 'services/public/1productos.php';
+const PRODUCTO_API = 'services/public/logproductos.php';
 // Constante tipo objeto para obtener los parámetros disponibles en la URL.
 const PARAMS = new URLSearchParams(location.search);
 const PRODUCTOS = document.getElementById('productos');
@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         action='readProductosCategoria';
         console.log(2);
     }
-    if (PARAMS.has('modelo')) {
-        FORM.append('producto', PARAMS.get('modelo'));
+    if (PARAMS.has('producto')) {
+        FORM.append('producto', PARAMS.get('producto'));
         action='searchProductos';
         console.log(1);
     }

@@ -34,13 +34,13 @@ const loadTemplate = async () => {
             <!-- Left elements -->
             <div class="col-md-2 d-flex justify-content-center justify-content-md-start mb-md-0">
                 <!-- Logo -->
-                <a class="navbar-brand" href="index.html"><img src="../../../resources/img/home.png" height="60"
+                <a class="navbar-brand" href="index.html"><img src="../../../resources/img/home.png" height="50"
                         alt="YNWA"></a>
             </div>
             <!-- Left elements -->
 
             <!-- Center elements -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="nav-link">
                     <div class="input-group">
                         <div class="group">
@@ -65,16 +65,16 @@ const loadTemplate = async () => {
             </button>
             <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
                 <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="cart.html" title="Ir al catalogo"><img src="../../../resources/img/catalogo.png" alt=""></a>
+                    <a class="nav-link" href="cart.html" title="Carrito"><img src="../../../resources/img/carrito.png" height="40" alt=""></a>
                     </div>
                 <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="historial.html" title="Ir al carrito de compras"><img src="../../../resources/img/carrito.png" alt=""></a>
+                <a class="nav-link" href="historial.html" title="Historial"><img src="../../../resources/img/historial.png" height="40" alt=""></a>
                 </div>
                 <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="perfil.html" title="Ir al carrito de compras"><img src="../../../resources/img/carrito.png" alt=""></a>
+                <a class="nav-link" href="perfil.html" title="Perfil"><img src="../../../resources/img/user.png" height="40" alt=""></a>
                 </div>
                 <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="#" onclick="logOut()" title="Ir al carrito de compras"><img src="../../../resources/img/carrito.png" alt=""></a>
+                <a class="nav-link" href="#" onclick="logOut()" title="Ir al carrito de compras"><img src="../../../resources/img/logout.png" height="40" alt=""></a>
                 </div>
             </div>
             <!-- Right elements -->
@@ -89,7 +89,7 @@ const loadTemplate = async () => {
                     // Obtener el valor del input
                     const searchValue = SEARCH_MAIN.value;
                     // Redirigir a la página de búsqueda con el valor del input como parámetro
-                    window.location.href = 'products.html?modelo=' + searchValue;
+                    window.location.href = 'products.html?producto=' + searchValue;
                 }
             });
 
@@ -152,7 +152,7 @@ const loadTemplate = async () => {
                     // Obtener el valor del input
                     const searchValue = SEARCH_MAIN.value;
                     // Redirigir a la página de búsqueda con el valor del input como parámetro
-                    window.location.href = 'products.html?modelo=' + searchValue;
+                    window.location.href = 'products.html?producto=' + searchValue;
                 }
             });
 

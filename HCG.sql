@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS db_hcg;
 CREATE DATABASE IF NOT EXISTS db_hcg;
 USE db_hcg;
 
+
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED,
   descripcion_rol VARCHAR(100) NOT NULL,
@@ -97,7 +98,7 @@ CREATE TABLE tb_pedidos(
     id_cliente INT UNSIGNED  NOT NULL,
     fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     codigo_pedido VARCHAR(30) NOT NULL,
-    estado_pedido enum('Pendiente','Finalizado') NOT NULL,
+    estado_pedido enum('Pendiente','Confirmado','Finalizado') NOT NULL,
     PRIMARY KEY (id_pedido),
     CONSTRAINT fk_pedido_cliente 
     FOREIGN KEY(id_cliente) REFERENCES tb_clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE
