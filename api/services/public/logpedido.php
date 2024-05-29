@@ -4,124 +4,133 @@ require_once('../../models/data/public/3pedidos_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
-    // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
-    session_start();
+    if (isset($_GET['app'])) {
+    } else {
+        // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
+        session_start();
+    }
     // Se instancia la clase correspondiente.
     $producto = new PedidoData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'fileStatus' => null);
     // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
-    // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
-    switch ($_GET['action']) {
-        case 'searchRows':
-            if ($result['dataset'] = $producto->searchRows($_POST['valor'])) {
-                $result['status'] = 1;
-                $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
-            } else {
-            }
-            break;
-        case 'createRow':
-            $_POST = Validator::validateForm($_POST);
-            if (
-                !$producto->setNombre($_POST['nombreCliente']) or
-                !$producto->setApellido($_POST['apellidoCliente']) or
-                !$producto->setTelefono($_POST['telefonoCliente']) or
-                !$producto->setCorreo($_POST['correoCliente'])
-            ) {
-                $result['error'] = $producto->getDataError();
-            } else {
-                $id_pedido = $producto->createRow();
-                if ($id_pedido) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Pedido enviado correctamente';
-                    $result['dataset'] = array('id_pedido' => $id_pedido);
+    if (isset($_SESSION['idCliente'])) {
+        $result['session'] = 1;
+        // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
+        switch ($_GET['action']) {
+            case 'createDetail':
+                $_POST = Validator::validateForm($_POST);
+                if (!$pedido->startOrder()) {
+                    $result['error'] = 'Ocurrió un problema al iniciar el pedido';
+                } elseif (
+                    !$pedido->setIdModeloTalla($_POST['idModeloTalla']) or
+                    !$pedido->setCantidad($_POST['cantidadModelo'])
+                ) {
+                    $result['error'] = $pedido->getDataError();
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear el producto';
+                    $respuesta = $pedido->createDetail();
+                    if ($respuesta == 1) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Registro exitoso';
+                    }
+                    if ($respuesta == 2) {
+                        $result['status'] = 2;
+                        $result['message'] = 'Solo se permite tener 3 existencias por producto';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al crear el registro';
+                    }
                 }
-            }
-            break;
-        case 'readAll':
-            if ($result['dataset'] = $producto->readAll()) {
-                $result['status'] = 1;
-                $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-            } else {
-                $result['error'] = ' No se encontraron registros';
-            }
-            break;
-        case 'readsubAll':
-            if (!$producto->setId($_SESSION['idmod'])) {
-                $result['error'] = $producto->getDataError();
-            } elseif ($result['dataset'] = $producto->readsubAll()) {
-                $result['status'] = 1;
-                $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-            } else {
-                $result['error'] = 'Tallas no registradas';
-            }
-            break;
+                break;
 
-        case 'readOne':
-            if (!$producto->setId($_POST['idPedido'])) {
-                $result['error'] = $producto->getDataError();
-            } elseif ($result['dataset'] = $producto->readOne()) {
-                $result['status'] = 1;
-            } else {
-                $result['error'] = 'Producto inexistente';
-            }
-            break;
-
-        case 'updateRow':
-            $_POST = Validator::validateForm($_POST);
-            if (
-                !$producto->setId($_POST['idProducto']) or
-                !$producto->setFilename() or
-                !$producto->setNombre($_POST['nombreProducto']) or
-                !$producto->setDescripcion($_POST['descripcionProducto']) or
-                !$producto->setPrecio($_POST['precioProducto']) or
-                !$producto->setCategoria($_POST['categoriaProducto']) or
-                !$producto->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) or
-                !$producto->setImagen($_FILES['imagenProducto'], $producto->getFilename())
-            ) {
-                $result['error'] = $producto->getDataError();
-            } elseif ($producto->updateRow()) {
-                $result['status'] = 1;
-                $result['message'] = 'Producto modificado correctamente';
-                // Se asigna el estado del archivo después de actualizar.
-                $result['fileStatus'] = Validator::changeFile($_FILES['imagenProducto'], $producto::RUTA_IMAGEN, $producto->getFilename());
-            } else {
-                $result['error'] = 'Ocurrió un problema al modificar el producto';
-            }
-            break;
-        case 'deleteRow':
-            if (
-                !$producto->setId($_POST['idProducto']) or
-                !$producto->setFilename()
-            ) {
-                $result['error'] = $producto->getDataError();
-            } elseif ($producto->deleteRow()) {
-                $result['status'] = 1;
-                $result['message'] = 'Producto eliminado correctamente';
-                // Se asigna el estado del archivo después de eliminar.
-                $result['fileStatus'] = Validator::deleteFile($producto::RUTA_IMAGEN, $producto->getFilename());
-            } else {
-                $result['error'] = 'Ocurrió un problema al eliminar el producto';
-            }
-            break;
-        case 'cantidadProductosCategoria':
-            if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
-                $result['status'] = 1;
-            } else {
-                $result['error'] = 'No hay datos disponibles';
-            }
-            break;
-        case 'porcentajeProductosCategoria':
-            if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
-                $result['status'] = 1;
-            } else {
-                $result['error'] = 'No hay datos disponibles';
-            }
-            break;
-        default:
-            $result['error'] = 'Acción no disponible dentro de la sesión';
+                // Acción para obtener los productos agregados en el carrito de compras.
+            case 'readDetail':
+                if (!$pedido->getOrder()) {
+                    $result['error'] = 'No ha agregado productos al carrito';
+                } elseif ($result['dataset'] = $pedido->readDetail()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = ' no existen registrosen el carrito';
+                }
+                break;
+            case 'searchRows':
+                if ($result['dataset'] = $pedido->searchRows($_POST['valor'])) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
+                } else {
+                }
+                break;
+                // Acción para actualizar la cantidad de un producto en el carrito de compras.
+            case 'updateDetail':
+                $_POST = Validator::validateForm($_POST);
+                if (
+                    !$pedido->setIdDetalle($_POST['idDetalle']) or
+                    !$pedido->setCantidad($_POST['cantidadModelo'])
+                ) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif ($pedido->updateDetail()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Cantidad modificada correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al modificar la cantidad';
+                }
+                break;
+                // Acción para remover un producto del carrito de compras.
+            case 'deleteDetail':
+                if (!$pedido->setIdDetalle($_POST['idDetalle'])) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif ($pedido->deleteDetail()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Producto removido correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al remover el producto';
+                }
+                break;
+                // Acción para finalizar el carrito de compras.
+            case 'finishOrder':
+                if ($pedido->finishOrder()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Pedido finalizado correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al finalizar el pedido';
+                }
+                break;
+            default:
+                $result['error'] = 'Acción no disponible dentro de la sesión';
+        }
+    } else {
+        // Se compara la acción a realizar cuando un cliente no ha iniciado sesión.
+        switch ($_GET['action']) {
+            case 'createDetail':
+                $result['error'] = 'Debe iniciar sesión para agregar el producto al carrito';
+                break;
+            case 'createDetailM':
+                $_POST = Validator::validateForm($_POST);
+                if (!$pedido->setCliente($_POST['idCliente'])) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif (!$pedido->startOrderM()) {
+                    $result['error'] = 'Ocurrió un problema al iniciar el pedido';
+                } elseif (
+                    !$pedido->setIdModeloTalla($_POST['idModeloTalla']) ||
+                    !$pedido->setCantidad($_POST['cantidadModelo'])
+                ) {
+                    $result['error'] = $pedido->getDataError();
+                } else {
+                    $respuesta = $pedido->createDetailM();
+                    if ($respuesta['status'] == 1) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Registro exitoso';
+                        $result['idPedido'] = $respuesta['idPedido'];
+                    } elseif ($respuesta['status'] == 2) {
+                        $result['status'] = 2;
+                        $result['message'] = 'Solo se permite tener 3 existencias por producto';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al crear el registro';
+                    }
+                }
+                break;
+            default:
+                $result['error'] = 'Acción no disponible fuera de la sesión';
+        }
     }
     // Se obtiene la excepción del servidor de base de datos por si ocurrió un problema.
     $result['exception'] = Database::getException();

@@ -27,7 +27,24 @@ class PedidoData extends PedidoHandler
             return false;
         }
     }
-
+    /*
+     *   Métodos para validar y establecer los datos.
+     */
+    public function setIdProducto($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->id_producto = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
+    public function setNota($value)
+    {
+        $this->nota = $value;
+        return true;
+    }
     public function setNombre($value, $min = 2, $max = 50)
     {
         if (!Validator::validateAlphabetic($value)) {
