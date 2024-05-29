@@ -130,30 +130,7 @@ class ProductoHandler
         ORDER BY id_producto DESC';
         return Database::getRows($sql);
     }
-    public function readDesc()
-    {
-        $sql = 'SELECT id_modelo, descripcion_modelo, foto_modelo, estado_modelo, descripcion_marca AS marca
-        FROM prc_modelos
-        INNER JOIN ctg_marcas USING(id_marca)
-        WHERE estado_marca=true AND estado_modelo=true
-        ORDER BY id_modelo DESC
-        LIMIT 8';
-        return Database::getRows($sql);
-    }
 
-
-    public function readsubAll()
-    {
-        $sql = 'select mt.id_modelo_talla,mt.id_talla,mt.id_modelo,
-        mt.stock_modelo_talla,mt.precio_modelo_talla,t.descripcion_talla as talla
-        from prc_modelo_tallas mt 
-        INNER JOIN ctg_tallas t USING(id_talla)
-        INNER JOIN prc_modelos m USING(id_modelo)
-        WHERE mt.id_modelo = ?
-        ORDER BY t.descripcion_talla';
-        $params = array($this->id);
-        return Database::getRows($sql, $params);
-    }
 
     public function readOne()
     {
@@ -169,76 +146,4 @@ class ProductoHandler
         return $data;
     }
 
-    public function readFilename()
-    {
-        $sql = 'SELECT foto
-                FROM prc_modelos
-                WHERE id_modelo = ?';
-        $params = array($this->id);
-        return Database::getRow($sql, $params);
-    }
-
-    public function updateRow()
-    {
-        $sql = 'UPDATE prc_modelos 
-                SET foto_modelo = ?, descripcion_modelo = ?,estado_modelo = ?, id_marca = ?
-                WHERE id_modelo = ?';
-        $params = array($this->url, $this->nombre, $this->estado, $this->id, $this->id);
-        return Database::executeRow($sql, $params);
-    }
-
-    public function deleteRow()
-    {
-        $sql = 'DELETE FROM prc_modelos
-                WHERE id_modelo = ?';
-        $params = array($this->id);
-        return Database::executeRow($sql, $params);
-    }
-
-    public function readProductosCategoria()
-    {
-        $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
-        FROM prc_modelos 
-        INNER JOIN ctg_marcas USING(id_marca)
-        WHERE estado_modelo=true and id_marca=?
-        ORDER BY descripcion_modelo';
-        $params = array($this->id);
-        return Database::getRows($sql, $params);
-    }
-
-    /*
-    *   Métodos para generar gráficos.
-    */
-    public function cantidadProductosCategoria()
-    {
-        $sql = 'SELECT descripcion_marca, COUNT(id_marca) cantidad
-        FROM prc_modelos
-        INNER JOIN ctg_marcas USING(id_marca)
-        GROUP BY descripcion_marca ORDER BY cantidad DESC LIMIT 5';
-        return Database::getRows($sql);
-    }
-
-    public function porcentajeProductosCategoria()
-    {
-        $sql = 'SELECT descripcion_marca, ROUND((COUNT(id_modelo) * 100.0 / (SELECT COUNT(id_modelo) FROM prc_modelos)), 2)
-        porcentaje
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        GROUP BY descripcion_marca ORDER BY porcentaje DESC';
-        return Database::getRows($sql);
-    }
-
-    /*
-    *   Métodos para generar reportes.
-    */
-    public function productosCategoria()
-    {
-        $sql = 'SELECT nombre_producto, precio_producto, estado_producto
-                FROM producto
-                INNER JOIN categoria USING(id_categoria)
-                WHERE id_categoria = ?
-                ORDER BY nombre_producto';
-        $params = array($this->id);
-        return Database::getRows($sql, $params);
-    }
 }
