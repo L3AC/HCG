@@ -58,39 +58,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         TIPO_PRODUCTO.textContent = "Tipo: " + ROW.tipo_producto;
         PRECIO_PRODUCTO.textContent = "Precio: " + ROW.precio_producto;
 
-        /*const agregarAlPedidoBtn = document.querySelector('#idGuardar button');
-        agregarAlPedidoBtn.addEventListener('click', () => {
-            const idProducto = ROW.id_producto;
-            //const cantidad = document.getElementById('cantidadProducto').value;
-            const cantidad = CANTIDAD_PRODUCTO.value;
-            const nota = NOTA_PRODUCTO.value;
-            
-            // Validar que la cantidad no esté vacía y sea mayor que cero
-            if (cantidad.trim() === '' || parseInt(cantidad) <= 0) {
-                alert('Por favor ingrese una cantidad válida.');
-                return;
-            }
-            // Obtener el carrito actual o crear uno vacío si no existe
-            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            // Buscar si el producto ya está en el carrito
-            const index = carrito.findIndex(item => item.idProducto === idProducto);
-            if (index !== -1) {
-                // Si el producto ya está en el carrito, sumar la cantidad
-                carrito[index].cantidad = parseInt(carrito[index].cantidad) + parseInt(cantidad);
-                carrito[index].nota = nota;
-            } else {
-                // Si el producto no está en el carrito, agregarlo con la nueva cantidad
-                carrito.push({ idProducto, cantidad,nota });
-            }
-            // Guardar el carrito en localStorage
-            localStorage.setItem('carrito', JSON.stringify(carrito));
-
-            sweetAlert(1, DATA.message, true,"cart.html");
-            // Limpiar el campo de cantidad
-            document.getElementById('cantidadProducto').value = '';
-        });*/
-
-
         const FORM2 = new FormData();
         FORM2.append('idProducto', ID_MODELO.value);
         const DATA2 = await fetchData(MODELOTALLAS_API, 'readByProducto', FORM2);
@@ -127,7 +94,7 @@ CANTIDAD.addEventListener('input', async function () {
             IDGUARDAR.disabled = true;
         }
         else if (CANTIDAD.value > cantidad){
-            MENSAJEDIV.textContent = `Solo puede escoger ${cantidad} existencias a la vez`;
+            MENSAJEDIV.textContent = `Solo puede escoger ${cantidad} a la vez`;
             MENSAJEDIV.style.display = 'block';
             IDGUARDAR.disabled = true;
         }

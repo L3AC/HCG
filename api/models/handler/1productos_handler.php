@@ -167,6 +167,18 @@ class ProductoHandler
         $params = array($this->id);
         return Database::getRows($sql, $params);
     }
+    public function searchProductos($value)
+    {
+        $value = !empty($value) ? '%' . $value . '%' : '%%';
+        
+        $sql = 'SELECT *
+        FROM tb_productos
+        WHERE estado_producto = 1 AND descripcion_producto LIKE ?';
+
+        $params = array($value);
+        return Database::getRows($sql, $params);
+    }
+
 
     public function readOne()
     {

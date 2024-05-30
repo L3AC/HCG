@@ -74,7 +74,7 @@ const loadTemplate = async () => {
                 <a class="nav-link" href="perfil.html" title="Perfil"><img src="../../../resources/img/user.png" height="40" alt=""></a>
                 </div>
                 <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="#" onclick="logOut()" title="Ir al carrito de compras"><img src="../../../resources/img/logout.png" height="40" alt=""></a>
+                <a class="nav-link" href="#" onclick="logOut()" title="Cerrar sesión"><img src="../../../resources/img/logout.png" height="40" alt=""></a>
                 </div>
             </div>
             <!-- Right elements -->
