@@ -2,11 +2,11 @@
 // Se incluye la clase para validar los datos de entrada.
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/4items_handler.php');
+require_once('../../models/handler/pedidos_handler.php');
 /*
  *	Clase para manejar el encapsulamiento de los datos de la tabla PRODUCTO.
  */
-class ItemData extends ItemHandler
+class PedidoData extends PedidoHandler
 {
     /*
      *  Atributos adicionales.
@@ -27,42 +27,8 @@ class ItemData extends ItemHandler
             return false;
         }
     }
-    public function setIdTipoItem($value)
-    {
-        if (Validator::validateNaturalNumber($value)) {
-            $this->idTipoItem = $value;
-            return true;
-        } else {
-            $this->data_error = 'El identificador es incorrecto';
-            return false;
-        }
-    }
-    public function setIdProducto($value)
-    {
-        if (Validator::validateNaturalNumber($value)) {
-            $this->idProducto = $value;
-            return true;
-        } else {
-            $this->data_error = 'El identificador es incorrecto';
-            return false;
-        }
-    }
 
     public function setNombre($value, $min = 2, $max = 50)
-    {
-        if (!Validator::validateAlphanumeric($value)) {
-            $this->data_error = 'El nombre debe ser un valor alfanumérico';
-            return false;
-        } elseif (Validator::validateLength($value, $min, $max)) {
-            $this->nombre = $value;
-            return true;
-        } else {
-            $this->data_error = 'El nombre debe tener una longitud entre ' . $min . ' y ' . $max;
-            return false;
-        }
-    }
-
-    public function setNombretalla($value, $min = 1, $max = 2)
     {
         if (!Validator::validateAlphanumeric($value)) {
             $this->data_error = 'El nombre debe ser un valor alfanumérico';
@@ -101,7 +67,7 @@ class ItemData extends ItemHandler
         }
     }
 
-    public function setTalla($value)
+    public function setExistencias($value)
     {
         if (Validator::validateNaturalNumber($value)) {
             $this->existencias = $value;
@@ -141,12 +107,12 @@ class ItemData extends ItemHandler
 
     public function setEstado($value)
     {
-        if (Validator::validateBoolean($value)) {
+        if (!Validator::validateAlphanumeric($value)) {
+            $this->data_error = 'El nombre debe ser un valor alfanumérico';
+            return false;
+        } else {
             $this->estado = $value;
             return true;
-        } else {
-            $this->data_error = 'Estado incorrecto';
-            return false;
         }
     }
 
@@ -160,6 +126,12 @@ class ItemData extends ItemHandler
             return false;
         }
     }
+    public function setSearch($value)
+    {
+        $this->search= $value;
+        return true;
+    }
+    
 
     /*
      *  Métodos para obtener los atributos adicionales.

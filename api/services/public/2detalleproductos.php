@@ -1,6 +1,6 @@
 <?php
 // Se incluye la clase del modelo.
-require_once('../../models/data/2detalleproductos_data.php');
+require_once('../../models/data/8detalleproductos_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
@@ -34,16 +34,6 @@ if (isset($_GET['action'])) {
                 $result['error'] = 'Ocurrió un problema al crear el registro';
             }
             break;
-            /*case 'readAll':
-                if (!$producto->setIdModelo($_SESSION['idmod'])) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($result['dataset'] = $producto->readAll()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-                } else {
-                    $result['error'] = ' No se encontraron registros';
-                }
-                break;*/
         case 'readByProducto':
             if (!$producto->setIdProducto($_POST['idProducto'])) {
                 $result['error'] = $producto->getDataError();

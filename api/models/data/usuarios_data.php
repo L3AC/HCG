@@ -2,11 +2,11 @@
 // Se incluye la clase para validar los datos de entrada.
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/5clientes_handler.php');
+require_once('../../models/handler/usuarios_handler.php');
 /*
  *  Clase para manejar el encapsulamiento de los datos de la tabla USUARIO.
  */
-class ClienteData extends ClienteHandler
+class UsuarioData extends UsuarioHandler
 {
     // Atributo genérico para manejo de errores.
     private $data_error = null;
@@ -18,6 +18,16 @@ class ClienteData extends ClienteHandler
     {
         if (Validator::validateNaturalNumber($value)) {
             $this->id = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador del administrador es incorrecto';
+            return false;
+        }
+    }
+    public function setIdRol($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->idRol = $value;
             return true;
         } else {
             $this->data_error = 'El identificador es incorrecto';
@@ -66,6 +76,21 @@ class ClienteData extends ClienteHandler
             return false;
         }
     }
+    public function setEstado($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->estado = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setSearch($value)
+    {
+        $this->search= $value;
+        return true;
+    }
 
     public function setAlias($value, $min = 6, $max = 25)
     {
@@ -90,19 +115,6 @@ class ClienteData extends ClienteHandler
             return true;
         } else {
             $this->data_error = 'El usuario tener una longitud entre ' . $min . ' y ' . $max;
-            return false;
-        }
-    }
-    public function setDireccion($value, $min = 2, $max = 250)
-    {
-        if (!Validator::validateString($value)) {
-            $this->data_error = 'La dirección contiene caracteres prohibidos';
-            return false;
-        } elseif(Validator::validateLength($value, $min, $max)) {
-            $this->direccion = $value;
-            return true;
-        } else {
-            $this->data_error = 'La dirección debe tener una longitud entre ' . $min . ' y ' . $max;
             return false;
         }
     }

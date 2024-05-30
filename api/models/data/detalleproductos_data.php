@@ -2,11 +2,12 @@
 // Se incluye la clase para validar los datos de entrada.
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/9detallepedidos_handler.php');
+require_once('../../models/handler/detalleproductos_handler.php');
+
 /*
  *	Clase para manejar el encapsulamiento de los datos de la tabla PRODUCTO.
  */
-class DetallePedidoData extends DetallePedidoHandler
+class DetalleProductoData extends DetalleProductoHandler
 {
     /*
      *  Atributos adicionales.
@@ -27,20 +28,20 @@ class DetallePedidoData extends DetallePedidoHandler
             return false;
         }
     }
-    public function setIdModelo($value)
+    public function setIdProducto($value)
     {
         if (Validator::validateNaturalNumber($value)) {
-            $this->idModelo = $value;
+            $this->idProducto= $value;
             return true;
         } else {
-            $this->data_error = 'El identificador del modelo es incorrecto';
+            $this->data_error = 'El identificador es incorrecto';
             return false;
         }
     }
-    public function setIdTalla($value)
+    public function setIdItem($value)
     {
         if (Validator::validateNaturalNumber($value)) {
-            $this->idTalla = $value;
+            $this->idItem = $value;
             return true;
         } else {
             $this->data_error = 'El identificador es incorrecto';
@@ -58,13 +59,13 @@ class DetallePedidoData extends DetallePedidoHandler
         }
     }
 
-    public function setExistencias($value)
+    public function setCantidad($value)
     {
         if (Validator::validateNaturalNumber($value)) {
-            $this->existencias = $value;
+            $this->cantidad = $value;
             return true;
         } else {
-            $this->data_error = 'El valor de las existencias debe ser numérico entero';
+            $this->data_error = 'El valor debe ser numérico entero';
             return false;
         }
     }

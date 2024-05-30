@@ -2,25 +2,25 @@
 // Se incluye la clase para validar los datos de entrada.
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/public/5clientes_handler.php');
+require_once('../../models/handler/clientes_handler.php');
 /*
-*	Clase para manejar el encapsulamiento de los datos de la tabla CLIENTE.
-*/
+ *  Clase para manejar el encapsulamiento de los datos de la tabla USUARIO.
+ */
 class ClienteData extends ClienteHandler
 {
     // Atributo genérico para manejo de errores.
     private $data_error = null;
 
     /*
-    *   Métodos para validar y establecer los datos.
-    */
+     *  Métodos para validar y asignar valores de los atributos.
+     */
     public function setId($value)
     {
         if (Validator::validateNaturalNumber($value)) {
             $this->id = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador del cliente es incorrecto';
+            $this->data_error = 'El identificador es incorrecto';
             return false;
         }
     }
@@ -32,20 +32,6 @@ class ClienteData extends ClienteHandler
             return false;
         } elseif (Validator::validateLength($value, $min, $max)) {
             $this->nombre = $value;
-            return true;
-        } else {
-            $this->data_error = 'El nombre debe tener una longitud entre ' . $min . ' y ' . $max;
-            return false;
-        }
-    }
-
-    public function setUsuario($value, $min = 2, $max = 50)
-    {
-        if (!Validator::validateAlphanumeric($value)) {
-            $this->data_error = 'El nombre debe ser un valor alfabético';
-            return false;
-        } elseif (Validator::validateLength($value, $min, $max)) {
-            $this->usuario = $value;
             return true;
         } else {
             $this->data_error = 'El nombre debe tener una longitud entre ' . $min . ' y ' . $max;
@@ -72,54 +58,41 @@ class ClienteData extends ClienteHandler
         if (!Validator::validateEmail($value)) {
             $this->data_error = 'El correo no es válido';
             return false;
-        } elseif (!Validator::validateLength($value, $min, $max)) {
-            $this->data_error = 'El correo debe tener una longitud entre ' . $min . ' y ' . $max;
-            return false;
-        } elseif($this->checkDuplicate($value)) {
-            $this->data_error = 'El correo ingresado ya existe';
-            return false;
-        } else {
+        } elseif (Validator::validateLength($value, $min, $max)) {
             $this->correo = $value;
             return true;
+        } else {
+            $this->data_error = 'El correo debe tener una longitud entre ' . $min . ' y ' . $max;
+            return false;
         }
     }
 
-    public function setTelefono($value)
+    public function setAlias($value, $min = 6, $max = 25)
     {
-        if (Validator::validatePhone($value)) {
-            $this->telefono = $value;
+        if (!Validator::validateAlphanumeric($value)) {
+            $this->data_error = 'El alias debe ser un valor alfanumérico';
+            return false;
+        } elseif (Validator::validateLength($value, $min, $max)) {
+            $this->alias = $value;
             return true;
         } else {
-            $this->data_error = 'El teléfono debe tener el formato (2, 6, 7)###-####';
+            $this->data_error = 'El alias debe tener una longitud entre ' . $min . ' y ' . $max;
             return false;
         }
     }
-
-    public function setDUI($value)
+    public function setUsuario($value, $min = 6, $max = 25)
     {
-        if (!Validator::validateDUI($value)) {
-            $this->data_error = 'El DUI debe tener el formato ########-#';
+        if (!Validator::validateAlphanumeric($value)) {
+            $this->data_error = 'El usuario debe ser un valor alfanumérico';
             return false;
-        } elseif($this->checkDuplicate($value)) {
-            $this->data_error = 'El DUI ingresado ya existe';
-            return false;
-        } else {
-            $this->dui = $value;
-            return true;
-        }
-    }
-
-    public function setNacimiento($value)
-    {
-        if (Validator::validateDate($value)) {
-            $this->nacimiento = $value;
+        } elseif (Validator::validateLength($value, $min, $max)) {
+            $this->usuario = $value;
             return true;
         } else {
-            $this->data_error = 'La fecha de nacimiento es incorrecta';
+            $this->data_error = 'El usuario tener una longitud entre ' . $min . ' y ' . $max;
             return false;
         }
     }
-
     public function setDireccion($value, $min = 2, $max = 250)
     {
         if (!Validator::validateString($value)) {
@@ -137,21 +110,12 @@ class ClienteData extends ClienteHandler
     public function setClave($value)
     {
         if (Validator::validatePassword($value)) {
+            //echo $value;
             $this->clave = password_hash($value, PASSWORD_DEFAULT);
+            //echo $this->clave.' ';
             return true;
         } else {
             $this->data_error = Validator::getPasswordError();
-            return false;
-        }
-    }
-
-    public function setEstado($value)
-    {
-        if (Validator::validateBoolean($value)) {
-            $this->estado = $value;
-            return true;
-        } else {
-            $this->data_error = 'Estado incorrecto';
             return false;
         }
     }
