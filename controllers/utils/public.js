@@ -34,7 +34,7 @@ const loadTemplate = async () => {
             <!-- Left elements -->
             <div class="col-md-2 d-flex justify-content-center justify-content-md-start mb-md-0">
                 <!-- Logo -->
-                <a class="navbar-brand" href="index.html"><img src="../../../resources/img/home.png" height="50"
+                <a class="navbar-brand" href="index.html"><img src="../../resources/img/home.png" height="50"
                         alt="YNWA"></a>
             </div>
             <!-- Left elements -->
@@ -65,16 +65,16 @@ const loadTemplate = async () => {
             </button>
             <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
                 <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="cart.html" title="Carrito"><img src="../../../resources/img/carrito.png" height="40" alt=""></a>
+                    <a class="nav-link" href="cart.html" title="Carrito"><img src="../../resources/img/carrito.png" height="40" alt=""></a>
                     </div>
                 <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="historial.html" title="Historial"><img src="../../../resources/img/historial.png" height="40" alt=""></a>
+                <a class="nav-link" href="historial.html" title="Historial"><img src="../../resources/img/historial.png" height="40" alt=""></a>
                 </div>
                 <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="perfil.html" title="Perfil"><img src="../../../resources/img/user.png" height="40" alt=""></a>
+                <a class="nav-link" href="perfil.html" title="Perfil"><img src="../../resources/img/user.png" height="40" alt=""></a>
                 </div>
                 <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="#" onclick="logOut()" title="Cerrar sesión"><img src="../../../resources/img/logout.png" height="40" alt=""></a>
+                <a class="nav-link" href="#" onclick="logOut()" title="Cerrar sesión"><img src="../../resources/img/logout.png" height="40" alt=""></a>
                 </div>
             </div>
             <!-- Right elements -->
@@ -106,7 +106,7 @@ const loadTemplate = async () => {
                 <!-- Left elements -->
                 <div class="col-md-2 d-flex justify-content-center justify-content-md-start mb-md-0">
                     <!-- Logo -->
-                    <a class="navbar-brand" href="index.html"><img src="../../../resources/img/home.png" height="60"
+                    <a class="navbar-brand" href="index.html"><img src="../../resources/img/home.png" height="60"
                             alt="YNWA"></a>
                 </div>
                 <!-- Left elements -->
@@ -137,7 +137,7 @@ const loadTemplate = async () => {
                 </button>
                 <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
                     <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="login.html" title="Inicio de sesion"><img src="../../../resources/img/ingresar.png" height="60" alt=""></a>
+                    <a class="nav-link" href="login.html" title="Inicio de sesion"><img src="../../resources/img/ingresar.png" height="60" alt=""></a>
                     </div>
                 </div>
                 <!-- Right elements -->

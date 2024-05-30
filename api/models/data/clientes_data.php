@@ -93,6 +93,16 @@ class ClienteData extends ClienteHandler
             return false;
         }
     }
+    public function setTelefono($value)
+    {
+        if (Validator::validatePhone($value)) {
+            $this->telefono = $value;
+            return true;
+        } else {
+            $this->data_error = 'El teléfono debe tener el formato (2, 6, 7)###-####';
+            return false;
+        }
+    }
     public function setDireccion($value, $min = 2, $max = 250)
     {
         if (!Validator::validateString($value)) {

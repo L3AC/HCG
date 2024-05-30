@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const CATEGORIA_API = 'services/public/1productos.php',
+const CATEGORIA_API = 'services/public/productos.php',
     //NOTICIA_API = 'services/public/noticia.php';
     CATEGORIAS = document.getElementById('conjuntos'),
     COMPLEMENTOS = document.getElementById('complementos')

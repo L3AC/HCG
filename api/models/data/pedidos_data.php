@@ -23,7 +23,27 @@ class PedidoData extends PedidoHandler
             $this->id = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador es incorrecto';
+            $this->data_error = 'El identificador del pedido es incorrecto';
+            return false;
+        }
+    }
+    public function setIdProducto($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->id_producto = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador del producto es incorrecto';
+            return false;
+        }
+    }
+    public function setIdCliente($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->id_cliente = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador del producto es incorrecto';
             return false;
         }
     }
@@ -63,6 +83,17 @@ class PedidoData extends PedidoHandler
             return true;
         } else {
             $this->data_error = 'El precio debe ser un valor numérico';
+            return false;
+        }
+    }
+
+    public function setCantidad($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->cantidad = $value;
+            return true;
+        } else {
+            $this->data_error = 'El valor de la cantidad debe ser numérico entero';
             return false;
         }
     }

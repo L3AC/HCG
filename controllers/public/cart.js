@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const PRODUCTO_API = 'services/public/1productos.php',
+const PRODUCTO_API = 'services/public/productos.php',
     PEDIDO_API = 'services/public/3pedidos.php',
     DETALLEPEDIDO_API = 'services/public/4detallepedidos.php';
 // Constante para establecer el cuerpo de la tabla.

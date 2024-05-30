@@ -25,8 +25,8 @@ if (isset($_GET['action'])) {
                 if (!$pedido->startOrder()) {
                     $result['error'] = 'Ocurrió un problema al iniciar el pedido';
                 } elseif (
-                    !$pedido->setIdModeloTalla($_POST['idModeloTalla']) or
-                    !$pedido->setCantidad($_POST['cantidadModelo'])
+                    !$pedido->setIdProducto($_POST['idProducto']) or
+                    !$pedido->setCantidad($_POST['cantidadProducto'])
                 ) {
                     $result['error'] = $pedido->getDataError();
                 } else {
@@ -67,11 +67,11 @@ if (isset($_GET['action'])) {
                 }
                 break;
                 // Acción para actualizar la cantidad de un producto en el carrito de compras.
-            case 'updateDetail':
+            /*case 'updateDetail':
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$pedido->setIdDetalle($_POST['idDetalle']) or
-                    !$pedido->setCantidad($_POST['cantidadModelo'])
+                    !$pedido->setCantidad($_POST['cantidadProducto'])
                 ) {
                     $result['error'] = $pedido->getDataError();
                 } elseif ($pedido->updateDetail()) {
@@ -91,7 +91,7 @@ if (isset($_GET['action'])) {
                 } else {
                     $result['error'] = 'Ocurrió un problema al remover el producto';
                 }
-                break;
+                break;*/
                 // Acción para finalizar el carrito de compras.
             case 'finishOrder':
                 if ($pedido->finishOrder()) {
@@ -112,12 +112,12 @@ if (isset($_GET['action'])) {
                 break;
             case 'createDetailM':
                 $_POST = Validator::validateForm($_POST);
-                if (!$pedido->setCliente($_POST['idCliente'])) {
+                if (!$pedido->setIdCliente($_POST['idCliente'])) {
                     $result['error'] = $pedido->getDataError();
                 } elseif (!$pedido->startOrderM()) {
                     $result['error'] = 'Ocurrió un problema al iniciar el pedido';
                 } elseif (
-                    !$pedido->setIdModeloTalla($_POST['idModeloTalla']) ||
+                    !$pedido->setIdProducto($_POST['idProducto']) ||
                     !$pedido->setCantidad($_POST['cantidadModelo'])
                 ) {
                     $result['error'] = $pedido->getDataError();
