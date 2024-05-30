@@ -10,19 +10,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
     <!-- Llamada al icono de la página web -->
-    <link type="image/png" rel="icon" href="../../resources/img/icon.png">
+    <link type="image/png" rel="icon" href="../../../resources/img/icon.png">
     <!-- ESTILOS DE CSS -->
-    <link rel="stylesheet" href="../../resources/css/detcar.css">
-    <link rel="stylesheet" href="../../resources/css/btn_e.css">
-    <link rel="stylesheet" href="../../resources/css/input_b.css">
-    <link rel="stylesheet" href="../../resources/css/busca.css">
-    <link rel="stylesheet" href="../../resources/css/univer.css">
-    <link rel="stylesheet" href="../../resources/css/card_2.css">
-    <link href="../../resources/css/stars.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../resources/css/navpub.css">
+    <link rel="stylesheet" href="../../../resources/css/detcar.css">
+    <link rel="stylesheet" href="../../../resources/css/btn_e.css">
+    <link rel="stylesheet" href="../../../resources/css/input_b.css">
+    <link rel="stylesheet" href="../../../resources/css/busca.css">
+    <link rel="stylesheet" href="../../../resources/css/univer.css">
+    <link rel="stylesheet" href="../../../resources/css/card_2.css">
+    <link href="../../../resources/css/stars.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../resources/css/navpub.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
-    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    <link type="text/css" rel="stylesheet" href="../../../resources/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../../../resources/css/bootstrap-icons.min.css">
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,12 +42,13 @@
 
             <div class="cardlard mb-3" id="detalle">
                 <div class="row">
-                    <div class="col-lg-4  ">
+                    <div class="col-lg-4 col-md-12">
                         <!-- Se muestra la imagen del Modelo -->
                         <img id="imagenProducto" class="imgSize">
                     </div>
                     <div class="col-md-1"></div>
-                    <div class="col-md-6">
+                    <div class="col-lg-6 col-md-12">
+                        <form class="" id="saveForm">
                         <div class="card-body">
                             <input type="hidden" id="idProducto" name="idProducto">
 
@@ -74,136 +75,44 @@
                                     </table>
                                 </div>
                             </div>
-
                             <div class="d-flex justify-content-center  m-4">
                                 <div class="input_box col-md-6">
-                                    <input required="" min="1" step="1" type="number" id="cantidadProducto"
-                                        name="cantidadProducto">
+                                    <input required="Q" min="1" step="1" type="number" id="cantidadProducto"
+                                        name="cantidadProducto" name="cantidadProducto" class="form-control">
+                                        
                                     <span>Cantidad :</span>
                                 </div>
                             </div>
+                            <div id="mensajeDiv" class="col-12 text-center" style="display: none;"></div>
                             <div class="col-12  mt-4 mb-4">
                                 <div class="input_box">
                                     <span>Nota :</span>
-                                    <textarea id="notaProducto" type="text" name="notaProducto" 
-                                    class="form-control"
-                                        rows="3"></textarea>
+                                    <textarea id="notaProducto" type="text" name="notaProducto" class="form-control"
+                                        rows="3" name="notaProducto" class="form-control"></textarea>
                                 </div>
                             </div>
-
                         </div>
                         <div class="d-flex justify-content-end pb-3" id="idGuardar">
                             <button type="submit" class="btnAgregar">Agregar al pedido</button>
                         </div>
+                        </form>
                     </div>
                     <div class="col-md-1"></div>
                 </div>
             </div>
         </div>
 
-
-        <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="modalTitle" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content ">
-                    <div class="modal-header">
-                        <!-- Título del modal -->
-                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
-                        <!-- Botón de cierre del modal -->
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <!-- Formulario para crear o actualizar un registro -->
-                    <form id="saveForm">
-                        <div class="modal-body row gx-5">
-                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                            <input type="hidden" id="idModeloTalla" name="idModeloTalla">
-                            <div class="row">
-                                <div class="col-12  d-flex justify-content-center">
-                                    <h1 class="pl-3 fs-5" id="stock"></h1>
-                                </div>
-                            </div>
-
-                            <!-- Campos del formulario -->
-                            <div class="col-md-6 col-sm-12">
-                                <div class="p-3">
-                                    <label for="cantidadModelo" class="form-label">Cantidad</label>
-                                    <input type="number" id="cantidadModelo" name="cantidadModelo" min="1" max="3"
-                                        class="form-control" placeholder="Ingrese cantidad" required>
-                                    <div id="mensajeDiv" style="display: none;"></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- Pie del modal con el botón de guardar -->
-                        <div class="modal-footer border-0">
-                            <button class="btn" type="submit" id="idGuardar">
-                                <span class="hover-underline-animation"> Comprar </span>
-                                <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30" height="10"
-                                    viewBox="0 0 46 16">
-                                    <path id="Path_10" data-name="Path 10"
-                                        d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-                                        transform="translate(30)"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Componente Modal para guardar un registro -->
-        <div class="modal fade" id="saveModal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="modalTitle2" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!-- Título del modal -->
-                        <h1 class="modal-title fs-5" id="modalTitle2">Comentarios</h1>
-                        <!-- Botón de cierre del modal -->
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <!-- Formulario para crear o actualizar un registro -->
-                    <form id="saveForm2">
-                        <div class="modal-body row g-3">
-                            <!-- Subtabla para modelos tallas -->
-                            <div id="subtable2">
-
-                                <!-- Formulario y botones para la subtabla -->
-                                <form class="col-sm-12 col-md-6" id="searchsubForm">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <!-- Campo de búsqueda en la subtabla -->
-                                            <input type="search" class="form-control" name="search" placeholder="Buscar"
-                                                required>
-                                        </div>
-                                    </div>
-                                </form>
-
-                                <!-- LISTA DE COMENTARIOS -->
-                                <div class="container mt-2">
-                                    <ul class="list-group overflow-auto" id="listComentario" style="max-height: 300px;">
-                                    </ul>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->
-    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../../../resources/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../../resources/js/sweetalert.min.js"></script>
     <!-- Llamada al controlador general de la aplicación -->
-    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <script type="text/javascript" src="../../../controllers/utils/components.js"></script>
     <!-- Llamada al controlador del sitio público -->
-    <script type="text/javascript" src="../../controllers/utils/public.js"></script>
+    <script type="text/javascript" src="../../../controllers/utils/logged/public.js"></script>
     <!-- Llamada al controlador de la página web -->
-    <script type="text/javascript" src="../../controllers/public/detail.js"></script>
+    <script type="text/javascript" src="../../../controllers/public/logged/detail.js"></script>
 </body>
 
 </html>

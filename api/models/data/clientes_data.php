@@ -59,7 +59,7 @@ class ClienteData extends ClienteHandler
             $this->data_error = 'El correo no es válido';
             return false;
         } elseif (Validator::validateLength($value, $min, $max)) {
-            $this->correo = $value;
+            $this->email= $value;
             return true;
         } else {
             $this->data_error = 'El correo debe tener una longitud entre ' . $min . ' y ' . $max;

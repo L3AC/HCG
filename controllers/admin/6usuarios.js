@@ -1,7 +1,7 @@
 
 // Constante para completar la ruta de la API.
-const USUARIO_API = 'services/admin/6usuarios.php',
-    ROL_API = 'services/admin/7roles.php';
+const USUARIO_API = 'services/admin/usuarios.php',
+    ROL_API = 'services/admin/roles.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer los elementos de la tabla.
