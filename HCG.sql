@@ -98,11 +98,18 @@ CREATE TABLE tb_pedidos(
     id_cliente INT UNSIGNED  NOT NULL,
     fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     codigo_pedido VARCHAR(30) NOT NULL,
-    estado_pedido enum('Pendiente','Confirmado','Finalizado') NOT NULL,
+    estado_pedido enum('No escogido','Pendiente','Finalizado') NOT NULL,
     PRIMARY KEY (id_pedido),
     CONSTRAINT fk_pedido_cliente 
     FOREIGN KEY(id_cliente) REFERENCES tb_clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE
 );
+/*delete from tb_pedidos where estado_pedido='No escogido' AND id_cliente = 11
+
+SELECT id_pedido FROM tb_pedidos
+         WHERE estado_pedido = ? AND id_cliente = ?
+select * from tb_clientes
+SELECT id_pedido FROM tb_pedidos
+         WHERE estado_pedido = 'No escogido' AND id_cliente = 11*/
 
 CREATE TABLE tb_detalle_pedidos (
   id_detalle_pedido INT UNSIGNED ,
@@ -114,6 +121,12 @@ CREATE TABLE tb_detalle_pedidos (
   FOREIGN KEY (id_pedido) REFERENCES tb_pedidos(id_pedido) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+select id_producto,id_cliente,id_pedido,precio_producto,cantidad_pedido,imagen_producto,descripcion_producto
+ from tb_detalle_pedidos
+ INNER JOIN tb_pedidos USING(id_pedido)
+ INNER JOIN tb_productos USING(id_producto)
+ where id_pedido=5 AND id_cliente=5
 
 
 

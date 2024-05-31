@@ -75,7 +75,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            case 'updateRow':
+            /*case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$producto->setId($_POST['idProducto']) or
@@ -96,7 +96,7 @@ if (isset($_GET['action'])) {
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el producto';
                 }
-                break;
+                break;*/
             case 'deleteRow':
                 if (
                     !$producto->setId($_POST['idPedido']) 
@@ -120,20 +120,6 @@ if (isset($_GET['action'])) {
                     } else {
                         $result['error'] = 'Ocurrió un problema al finalizar el pedido';
                     }
-                break;
-            case 'cantidadProductosCategoria':
-                if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'No hay datos disponibles';
-                }
-                break;
-            case 'porcentajeProductosCategoria':
-                if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'No hay datos disponibles';
-                }
                 break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';

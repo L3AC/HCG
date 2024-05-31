@@ -111,12 +111,12 @@ class ClienteHandler
     public function createRow()
     {
         //echo $this->clave.' ';
-        $sql = 'insert into prc_clientes(usuario_cliente,clave_cliente,nombre_cliente,
-        apellido_cliente,email_cliente,pin_cliente,estado_cliente,direccion_cliente) 
-        values(?,?,?,?,?,?,true,?)';
+        $sql = 'insert into tb_clientes(id_cliente,usuario_cliente,clave_cliente,nombre_cliente,
+        apellido_cliente,correo_cliente,pin_cliente,estado_cliente,telefono_cliente) 
+        values((SELECT get_next_id("tb_clientes")),?,?,?,?,?,?,true,?)';
         $params = array(
             $this->alias, $this->clave, $this->nombre,
-            $this->apellido, $this->email, $this->generarPin(), $this->direccion
+            $this->apellido, $this->email, $this->generarPin(), $this->telefono
         );
 
         return Database::executeRow($sql, $params);

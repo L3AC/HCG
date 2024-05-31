@@ -121,7 +121,7 @@ class PedidoHandler
 
     public function getOrder()
     {
-        $this->estado = 'Pendiente';
+        $this->estado = 'No escogido';
         $sql = 'SELECT id_pedido FROM tb_pedidos
          WHERE estado_pedido = ? AND id_cliente = ?';
 
@@ -142,7 +142,7 @@ class PedidoHandler
             return true;
         } else {
             $sql = 'INSERT INTO tb_pedidos(id_pedido,id_cliente,fecha_pedido,codigo_pedido,estado_pedido)
-                    VALUES((SELECT get_next_id("tb_pedidos")),?,now(),generar_codigo(),"Pendiente")';
+                    VALUES((SELECT get_next_id("tb_pedidos")),?,now(),generar_codigo(),"No escogido")';
             $params = array($_SESSION['idCliente']);
             // Se obtiene el ultimo valor insertado de la llave primaria en la tabla pedido.
             if ($_SESSION['idPedido'] = Database::getLastRow($sql, $params)) {
@@ -280,7 +280,7 @@ class PedidoHandler
     // Método para finalizar un pedido por parte del cliente.
     public function finishOrder()
     {
-        $this->estado = 'Finalizado';
+        $this->estado = 'Pendiente';
         $sql = 'UPDATE tb_pedidos
                 SET estado_pedido = ?
                 WHERE id_pedido = ?';

@@ -2,7 +2,6 @@
 const SIGNUP_FORM = document.getElementById('signupForm');
 // Llamada a la función para establecer la mascara del campo teléfono.
 
-
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
@@ -11,6 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     MAIN_TITLE.textContent = 'Crear cuenta';
     // LLamada a la función para asignar el token del reCAPTCHA al formulario.
     reCAPTCHA();
+});
+vanillaTextMask.maskInput({
+    inputElement: document.getElementById('telefonoCliente'),
+    mask: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 });
 
 // Método del evento para cuando se envía el formulario de registrar cliente.

@@ -52,7 +52,7 @@
                             <div class="col-1"></div>
                             <div class="col-5">
                                 <p class="text-end">
-                                    <button type="button" class="btnAgregar" onclick="openCliente()">
+                                    <button type="button" class="btnAgregar" onclick="finishOrder()">
                                         Finalizar
                                     </button>
                                 </p>
@@ -113,52 +113,7 @@
                 </div>
             </div>
 
-            <!-- Componente Modal para guardar un registro -->
-            <div class="modal fade" id="clienteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="modalTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <!-- Título del modal -->
-                            <h1 class="modal-title fs-5" id="cmodalTitle">Complete la infomación</h1>
-                            <!-- Botón de cierre del modal -->
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <!-- Formulario para guardar un registro -->
-                        <form id="clienteForm">
-                            <div class="modal-body row g-3">
-                                <!-- Campos del formulario -->
-                                <div class="col-sm-12 col-md-6">
-                                    <label for="nombreCliente" class="form-label">Nombre</label>
-                                    <input id="nombreCliente" type="text" name="nombreCliente" class="form-control"
-                                        required>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <label for="apellidoCliente" class="form-label">Apellido</label>
-                                    <input id="apellidoCliente" type="text" name="apellidoCliente" class="form-control"
-                                        required>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <label for="correoCliente" class="form-label">Correo</label>
-                                    <input id="correoCliente" type="email" name="correoCliente" class="form-control"
-                                        required>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <label for="telefonoCliente" class="form-label">Teléfono</label>
-                                    <input type="text" id="telefonoCliente" name="telefonoCliente"
-                                        placeholder="0000-0000" class="form-control" required>
-                                </div>
-
-                            </div>
-                            <!-- Pie del modal con botón de guardar -->
-                            <div class="modal-footer border-0">
-                                <button id="idGuardarC" type="submit" class="btn"
-                                    style="background-color: #CCC8AA;">Guardar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <!-- Inclusión de la librería de mascaras. Para más información https://github.com/text-mask/text-mask -->
         <script type="text/javascript" src="../../resources/js/vanillaTextMask.js"></script>
