@@ -29,6 +29,7 @@ class PedidoHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
+
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -47,7 +48,7 @@ class PedidoHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO prc_modelos(descripcion_modelo, id_marca, foto_modelo, estado_modelo)
+        $sql = 'INSERT INTO tb_modelos(descripcion_modelo, id_marca, foto_modelo, estado_modelo)
                 VALUES(?, ?, ?, ?)';
         $params = array($this->descripcion, $this->id, $this->imagen, $this->estado);
         return Database::executeRow($sql, $params);
@@ -68,9 +69,9 @@ class PedidoHandler
     {
         $sql = 'select mt.id_producto,mt.id_talla,mt.id_modelo,
         mt.stock_modelo_talla,mt.precio_modelo_talla,t.descripcion_talla as talla
-        from prc_modelo_tallas mt 
+        from tb_modelo_tallas mt 
         INNER JOIN ctg_tallas t USING(id_talla)
-        INNER JOIN prc_modelos m USING(id_modelo)
+        INNER JOIN tb_modelos m USING(id_modelo)
         WHERE mt.id_modelo = ?
         ORDER BY t.descripcion_talla';
         //echo $this->idModelo. ' que';
@@ -96,7 +97,7 @@ class PedidoHandler
     public function readFilename()
     {
         $sql = 'SELECT foto
-                FROM prc_modelos
+                FROM tb_modelos
                 WHERE id_modelo = ?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
@@ -121,7 +122,7 @@ class PedidoHandler
     public function getOrder()
     {
         $this->estado = 'Pendiente';
-        $sql = 'SELECT id_pedido FROM prc_pedidos
+        $sql = 'SELECT id_pedido FROM tb_pedidos
          WHERE estado_pedido = ? AND id_cliente = ?';
 
         $params = array($this->estado, $_SESSION['idCliente']);
@@ -140,9 +141,9 @@ class PedidoHandler
 
             return true;
         } else {
-            $sql = 'INSERT INTO prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido)
-                    VALUES(?,?,now(),"Pendiente")';
-            $params = array($_SESSION['idCliente'], "Efectivo");
+            $sql = 'INSERT INTO tb_pedidos(id_pedido,id_cliente,fecha_pedido,codigo_pedido,estado_pedido)
+                    VALUES((SELECT get_next_id("tb_pedidos")),?,now(),generar_codigo(),"Pendiente")';
+            $params = array($_SESSION['idCliente']);
             // Se obtiene el ultimo valor insertado de la llave primaria en la tabla pedido.
             if ($_SESSION['idPedido'] = Database::getLastRow($sql, $params)) {
                 return true;
@@ -157,18 +158,18 @@ class PedidoHandler
     {
         // Se realiza una subconsulta para obtener el precio del producto.
 
-        $sql = 'select * from prc_detalle_pedidos
+        $sql = 'select * from tb_detalle_pedidos
         WHERE id_pedido=? AND id_producto=?;';
         $params = array($_SESSION['idPedido'], $this->id_producto);
         $result = Database::getRow($sql, $params);
         $mensaje = null;
 
         if ($result) {
-            $this->cantidad = $this->cantidad + $result['cantidad_detalle_pedido'];
-            if ($this->cantidad < 4) {
-                $sql = 'UPDATE prc_detalle_pedidos 
-                SET cantidad_detalle_pedido= ? WHERE id_detalle=?';
-                $params = array($this->cantidad, $result['id_detalle']);
+            $this->cantidad = $this->cantidad + $result['cantidad_pedido'];
+            if ($this->cantidad < 7) {
+                $sql = 'UPDATE tb_detalle_pedidos 
+                SET cantidad_pedido= ? WHERE id_detalle_pedido=?';
+                $params = array($this->cantidad, $result['id_detalle_pedido']);
                 if (Database::executeRow($sql, $params)) {
                     $mensaje = 1;
                     //$mensaje = 'Registro exitoso';
@@ -179,7 +180,7 @@ class PedidoHandler
             }
         } else {
 
-            $sql = 'INSERT INTO prc_detalle_pedidos(id_producto, cantidad_detalle_pedido, id_pedido)
+            $sql = 'INSERT INTO tb_detalle_pedidos(id_producto, cantidad_pedido, id_pedido)
                 VALUES(?, ?, ?)';
             $params = array($this->id_producto, $this->cantidad, $_SESSION['idPedido']);
             if (Database::executeRow($sql, $params)) {
@@ -193,16 +194,11 @@ class PedidoHandler
     // Método para obtener los productos que se encuentran en el carrito de compras.
     public function readDetail()
     {
-        $sql = 'SELECT id_detalle, id_producto, foto_modelo,
-        descripcion_marca,descripcion_modelo,descripcion_talla,
-                precio_modelo_talla, cantidad_detalle_pedido
-                FROM prc_detalle_pedidos
-                INNER JOIN prc_pedidos USING(id_pedido)
-                INNER JOIN prc_modelo_tallas USING(id_producto)
-                INNER JOIN ctg_tallas USING(id_talla)
-                INNER JOIN prc_modelos USING(id_modelo)
-                INNER JOIN ctg_marcas USING(id_marca)
-                WHERE id_pedido = ?';
+        $sql = 'select id_producto,id_cliente,id_pedido,precio_producto,cantidad_pedido,imagen_producto,descripcion_producto
+        from tb_detalle_pedidos
+        INNER JOIN tb_pedidos USING(id_pedido)
+        INNER JOIN tb_productos USING(id_producto)
+        WHERE id_pedido = ?';
         $params = array($_SESSION['idPedido']);
         return Database::getRows($sql, $params);
     }
@@ -210,7 +206,7 @@ class PedidoHandler
     public function getOrderM()
     {
         $this->estado = 'Pendiente';
-        $sql = 'SELECT id_pedido FROM prc_pedidos
+        $sql = 'SELECT id_pedido FROM tb_pedidos
             WHERE estado_pedido = ? AND id_cliente = ?';
 
         $params = array($this->estado, $this->id_cliente);
@@ -228,7 +224,7 @@ class PedidoHandler
         if ($this->getOrderM()) {
             return true;
         } else {
-            $sql = 'INSERT INTO prc_pedidos(id_cliente, forma_pago_pedido, fecha_pedido, estado_pedido)
+            $sql = 'INSERT INTO tb_pedidos(id_cliente, forma_pago_pedido, fecha_pedido, estado_pedido)
                 VALUES (?, ?, now(), "Pendiente")';
             $params = array($this->id_cliente, "Efectivo");
 
@@ -250,7 +246,7 @@ class PedidoHandler
         $mensaje = null;
 
         if ($idPedido) {
-            $sql = 'SELECT * FROM prc_detalle_pedidos
+            $sql = 'SELECT * FROM tb_detalle_pedidos
                 WHERE id_pedido = ? AND id_producto = ?';
             $params = array($idPedido, $idProducto);
             $result = Database::getRow($sql, $params);
@@ -258,7 +254,7 @@ class PedidoHandler
             if ($result) {
                 $cantidad = $cantidadProducto + $result['cantidad_detalle_pedido'];
                 if ($cantidad < 4) {
-                    $sql = 'UPDATE prc_detalle_pedidos 
+                    $sql = 'UPDATE tb_detalle_pedidos 
                         SET cantidad_detalle_pedido = ? WHERE id_detalle = ?';
                     $params = array($cantidad, $result['id_detalle']);
                     if (Database::executeRow($sql, $params)) {
@@ -268,7 +264,7 @@ class PedidoHandler
                     $mensaje = array('status' => 2);
                 }
             } else {
-                $sql = 'INSERT INTO prc_detalle_pedidos(id_producto, cantidad_detalle_pedido, id_pedido)
+                $sql = 'INSERT INTO tb_detalle_pedidos(id_producto, cantidad_detalle_pedido, id_pedido)
                     VALUES (?, ?, ?)';
                 $params = array($idProducto, $cantidadProducto, $idPedido);
                 if (Database::executeRow($sql, $params)) {
@@ -285,7 +281,7 @@ class PedidoHandler
     public function finishOrder()
     {
         $this->estado = 'Finalizado';
-        $sql = 'UPDATE prc_pedidos
+        $sql = 'UPDATE tb_pedidos
                 SET estado_pedido = ?
                 WHERE id_pedido = ?';
         $params = array($this->estado, $_SESSION['idPedido']);
@@ -296,7 +292,7 @@ class PedidoHandler
     /*public function updateDetail()
     {
         //echo $this->cantidad." ".$this->id_detalle." ".$_SESSION['idPedido'];
-        $sql = 'UPDATE prc_detalle_pedidos
+        $sql = 'UPDATE tb_detalle_pedidos
                 SET cantidad_detalle_pedido = ?
                 WHERE id_detalle = ? AND id_pedido = ?';
         $params = array($this->cantidad, $this->id_detalle, $_SESSION['idPedido']);
@@ -306,7 +302,7 @@ class PedidoHandler
     // Método para eliminar un producto que se encuentra en el carrito de compras.
     public function deleteDetail()
     {
-        $sql = 'DELETE FROM prc_detalle_pedidos
+        $sql = 'DELETE FROM tb_detalle_pedidos
                 WHERE id_detalle = ? AND id_pedido = ?';
         $params = array($this->id_detalle, $_SESSION['idPedido']);
         return Database::executeRow($sql, $params);
