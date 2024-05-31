@@ -1,17 +1,17 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Search from './Search';
-import Producto from '../Producto'; 
+import Historial from '../screens/Logged/Historial';
+import Producto from '../screens/Producto'; 
 
 const Stack = createStackNavigator();
 
-const StackCart = () => {
+const StackHistorial = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Search" component={Search} options={{ headerShown: false }} />
+      <Stack.Screen name="Historial" component={Historial} options={{ headerShown: false }} />
       <Stack.Screen name="Producto" component={Producto} options={{ headerShown: false }} /> 
     </Stack.Navigator>
   );
 };
 
-export default StackCart;
+export default StackHistorial;

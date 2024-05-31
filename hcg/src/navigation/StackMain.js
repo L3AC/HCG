@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import StackHome from './Home/StackHome';
+import StackHome from '../screens/Home/StackHome';
 import StackSearch from './Search/StackSearch';
 import StackCart from './Cart/StackCart';
 
