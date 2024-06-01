@@ -115,7 +115,7 @@ class ClienteHandler
         apellido_cliente,correo_cliente,pin_cliente,estado_cliente,telefono_cliente) 
         values((SELECT get_next_id("tb_clientes")),?,?,?,?,?,?,true,?)';
         $params = array(
-            $this->alias, $this->clave, $this->nombre,
+            $this->usuario, $this->clave, $this->nombre,
             $this->apellido, $this->email, $this->generarPin(), $this->telefono
         );
 

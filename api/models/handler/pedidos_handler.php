@@ -122,74 +122,91 @@ class PedidoHandler
     public function getOrder()
     {
         $this->estado = 'No escogido';
-        $sql = 'SELECT id_pedido FROM tb_pedidos
-         WHERE estado_pedido = ? AND id_cliente = ?';
-
+        $sql = 'SELECT id_pedido FROM tb_pedidos WHERE estado_pedido = ? AND id_cliente = ?';
         $params = array($this->estado, $_SESSION['idCliente']);
-        if ($data = Database::getRow($sql, $params)) {
+    
+        $data = Database::getRow($sql, $params);
+        if ($data) {
             $_SESSION['idPedido'] = $data['id_pedido'];
             return true;
         } else {
+            error_log('No se encontró un pedido con el estado "No escogido" para el cliente con ID ' . $_SESSION['idCliente']);
             return false;
         }
     }
-
-    // Método para iniciar un pedido en proceso.
+    
+    
     public function startOrder()
-    {
-        if ($this->getOrder()) {
+{
+    // Verificar si existe un pedido actual en la sesión
+    if ($this->getOrder()) {
+        return true;
+    } else {
+        // Intentar crear un nuevo pedido
+        $sql = 'INSERT INTO tb_pedidos(id_pedido, id_cliente, fecha_pedido, codigo_pedido, estado_pedido)
+                VALUES((SELECT get_next_id("tb_pedidos")), ?, now(), generar_codigo(), "No escogido")';
+        $params = array($_SESSION['idCliente']);
 
-            return true;
-        } else {
-            $sql = 'INSERT INTO tb_pedidos(id_pedido,id_cliente,fecha_pedido,codigo_pedido,estado_pedido)
-                    VALUES((SELECT get_next_id("tb_pedidos")),?,now(),generar_codigo(),"No escogido")';
-            $params = array($_SESSION['idCliente']);
-            // Se obtiene el ultimo valor insertado de la llave primaria en la tabla pedido.
-            if ($_SESSION['idPedido'] = Database::getLastRow($sql, $params)) {
+        // Registrar el intento de inserción
+        error_log('Intentando insertar un nuevo pedido para el cliente con ID ' . $_SESSION['idCliente']);
+
+        // Verificar si la inserción fue exitosa
+        if (Database::executeRow($sql, $params)) {
+            // Obtener el último ID insertado utilizando la función propia de MariaDB/MySQL
+            $sql = 'SELECT LAST_INSERT_ID() as id_pedido';
+            $data = Database::getRow($sql);
+            if ($data && isset($data['id_pedido']) && $data['id_pedido'] != 0) {
+                $_SESSION['idPedido'] = $data['id_pedido'];
+                error_log('Nuevo pedido creado con ID ' . $_SESSION['idPedido']);
                 return true;
             } else {
+                error_log('Error al obtener el último ID insertado para el pedido. Datos devueltos: ' . print_r($data, true));
                 return false;
             }
+        } else {
+            error_log('Error al insertar el pedido en la base de datos. SQL: ' . $sql . ' Params: ' . print_r($params, true));
+            return false;
         }
     }
+}
 
-    // Método para agregar un producto al carrito de compras.
-    public function createDetail()
-    {
-        // Se realiza una subconsulta para obtener el precio del producto.
 
-        $sql = 'select * from tb_detalle_pedidos
-        WHERE id_pedido=? AND id_producto=?;';
-        $params = array($_SESSION['idPedido'], $this->id_producto);
-        $result = Database::getRow($sql, $params);
-        $mensaje = null;
+public function createDetail()
+{
+    // Verificar que idPedido está presente y válido
+    if (!isset($_SESSION['idPedido']) || $_SESSION['idPedido'] == 0) {
+        error_log('No hay un idPedido válido en la sesión');
+        return 'No hay un idPedido válido en la sesión';
+    }
 
-        if ($result) {
-            $this->cantidad = $this->cantidad + $result['cantidad_pedido'];
-            if ($this->cantidad < 7) {
-                $sql = 'UPDATE tb_detalle_pedidos 
-                SET cantidad_pedido= ? WHERE id_detalle_pedido=?';
-                $params = array($this->cantidad, $result['id_detalle_pedido']);
-                if (Database::executeRow($sql, $params)) {
-                    $mensaje = 1;
-                    //$mensaje = 'Registro exitoso';
-                }
-            } else {
-                $mensaje = 2;
-                //$mensaje = 'Solo se permite tener 3 existencias por producto';
-            }
-        } else {
+    $sql = 'SELECT * FROM tb_detalle_pedidos WHERE id_pedido = ? AND id_producto = ?';
+    $params = array($_SESSION['idPedido'], $this->id_producto);
+    $result = Database::getRow($sql, $params);
+    $mensaje = null;
 
-            $sql = 'INSERT INTO tb_detalle_pedidos(id_producto, cantidad_pedido, id_pedido)
-                VALUES(?, ?, ?)';
-            $params = array($this->id_producto, $this->cantidad, $_SESSION['idPedido']);
+    if ($result) {
+        $this->cantidad += $result['cantidad_pedido'];
+        if ($this->cantidad < 7) {
+            $sql = 'UPDATE tb_detalle_pedidos SET cantidad_pedido = ? WHERE id_detalle_pedido = ?';
+            $params = array($this->cantidad, $result['id_detalle_pedido']);
             if (Database::executeRow($sql, $params)) {
                 $mensaje = 1;
-                //$mensaje = 'Registro exitoso';
             }
+        } else {
+            $mensaje = 2;
         }
-        return $mensaje;
+    } else {
+        $sql = 'INSERT INTO tb_detalle_pedidos(id_detalle_pedido, id_producto, cantidad_pedido, id_pedido)
+                VALUES((SELECT get_next_id("tb_detalle_pedidos")), ?, ?, ?)';
+        $params = array($this->id_producto, $this->cantidad, $_SESSION['idPedido']);
+        if (Database::executeRow($sql, $params)) {
+            $mensaje = 1;
+        }
     }
+    return $mensaje;
+}
+
+    
 
     // Método para obtener los productos que se encuentran en el carrito de compras.
     public function readDetail()

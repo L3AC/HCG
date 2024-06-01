@@ -88,7 +88,7 @@ class Database
         // Se asigna el mensaje del error original por si se necesita.
         self::$error = $message . PHP_EOL;
         // Se compara el código del error para establecer un error personalizado.
-        switch ($code) {
+        /*switch ($code) {
             case '2002':
                 self::$error = 'Servidor desconocido';
                 break;
@@ -109,7 +109,7 @@ class Database
                 break;
             default:
                 self::$error = 'Ocurrió un problema en la base de datos';
-        }
+        }*/
     }
 
     /*
