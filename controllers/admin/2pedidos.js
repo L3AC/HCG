@@ -20,8 +20,6 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
     DETALLE_FORM = document.getElementById('detalleForm'),
-    BTN_PENDIENTE = document.getElementById('btnPendiente'),
-    BTN_FINALIZADO = document.getElementById('btnFinalizado'),
     INPUTSEARCH = document.getElementById('inputsearch'),
     SUBINPUTSEARCH = document.getElementById('subinputsearch'),
     ID_PEDIDO = document.getElementById('idPedido'),
@@ -131,6 +129,9 @@ const fillTable = async (estado=null) => {
                         
                         <button type="button" title="Detalle pedido" class="btnAgregar"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_pedido})">
                             <i class="bi bi-info-circle" ></i>
+                        </button>
+                        <button type="button" title="Eliminar pedido" class="btnAgregar" style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_pedido})">
+                            <i class="bi bi-trash-fill"></i>
                         </button>
                     </div>
                 </div>

@@ -149,20 +149,26 @@ const openUpdate = async (idProducto) => {
     }
 }
 
+// Método del evento para cuando se envía el formulario de cambiar cantidad de producto.
 ITEM_FORM.addEventListener('submit', async (event) => {
+    // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const index = parseInt(ITEM_FORM.dataset.index);
-    // Si el índice es válido, actualizar la cantidad del producto en el carrito
-    if (!isNaN(index) && index >= 0 && index < carrito.length) {
-        carrito[index].cantidad = CANTIDAD.value;
-        carrito[index].nota = NOTA_PRODUCTO.value;
-        // Guardar el carrito actualizado en localStorage
-        localStorage.setItem('carrito', JSON.stringify(carrito));
+    console.log(ID_DETALLE.value);
+    // Constante tipo objeto con los datos del formulario.
+    const FORM = new FormData(ITEM_FORM);
+    // Petición para actualizar la cantidad de producto.
+    const DATA = await fetchData(PEDIDO_API, 'updateDetail', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se actualiza la tabla para visualizar los cambios.
+        readDetail();
+        // Se cierra la caja de diálogo del formulario.
+        ITEM_MODAL.hide();
+        // Se muestra un mensaje de éxito.
+        sweetAlert(1, DATA.message, true);
+    } else {
+        sweetAlert(2, DATA.error, false);
     }
-
-    ITEM_MODAL.hide();
-    readDetail(); // Volver a cargar los detalles del carrito
 });
 
 async function openDelete(idProducto) {
