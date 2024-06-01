@@ -24,6 +24,30 @@ if (isset($_GET['action'])) {
                     $_POST = Validator::validateForm($_POST);
                     if (!$pedido->startOrder()) {
                         $result['error'] = 'Ocurrió un problema al iniciar el pedido';
+                    } elseif (
+                        !$pedido->setIdProducto($_POST['idProducto']) or
+                        !$pedido->setCantidad($_POST['cantidadProducto']) or 
+                        !$pedido->setNota($_POST['notaProducto'])
+                    ) {
+                        $result['error'] = $pedido->getDataError();
+                    } else {
+                        $respuesta = $pedido->createDetail();
+                        if ($respuesta == 1) {
+                            $result['status'] = 1;
+                            $result['message'] = 'Registro exitoso';
+                        }
+                        if ($respuesta == 2) {
+                            $result['status'] = 2;
+                            $result['message'] = 'Solo se permite tener 3 existencias por producto';
+                        } else {
+                            $result['error'] = 'Ocurrió un problema al crear el registro';
+                        }
+                    }
+                    break;
+                /*case 'createDetail':
+                    $_POST = Validator::validateForm($_POST);
+                    if (!$pedido->startOrder()) {
+                        $result['error'] = 'Ocurrió un problema al iniciar el pedido';
                     } elseif (!$pedido->setIdProducto($_POST['idProducto']) || !$pedido->setCantidad($_POST['cantidadProducto'])) {
                         $result['error'] = $pedido->getDataError();
                     } else {
@@ -38,7 +62,7 @@ if (isset($_GET['action'])) {
                             $result['error'] = 'Ocurrió un problema al crear el registro: ' . $respuesta;
                         }
                     }
-                    break;
+                    break;*/
                 
                 
 

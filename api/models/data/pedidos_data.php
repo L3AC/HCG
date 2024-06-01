@@ -27,6 +27,7 @@ class PedidoData extends PedidoHandler
             return false;
         }
     }
+
     public function setIdProducto($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -47,19 +48,10 @@ class PedidoData extends PedidoHandler
             return false;
         }
     }
-
-    public function setNombre($value, $min = 2, $max = 50)
+    public function setNota($value)
     {
-        if (!Validator::validateAlphanumeric($value)) {
-            $this->data_error = 'El nombre debe ser un valor alfanumérico';
-            return false;
-        } elseif (Validator::validateLength($value, $min, $max)) {
-            $this->nombre = $value;
-            return true;
-        } else {
-            $this->data_error = 'El nombre debe tener una longitud entre ' . $min . ' y ' . $max;
-            return false;
-        }
+        $this->nota = $value;
+        return true;
     }
 
     public function setDescripcion($value, $min = 2, $max = 250)
@@ -76,16 +68,6 @@ class PedidoData extends PedidoHandler
         }
     }
 
-    public function setPrecio($value)
-    {
-        if (Validator::validateMoney($value)) {
-            $this->precio = $value;
-            return true;
-        } else {
-            $this->data_error = 'El precio debe ser un valor numérico';
-            return false;
-        }
-    }
 
     public function setCantidad($value)
     {
@@ -98,32 +80,6 @@ class PedidoData extends PedidoHandler
         }
     }
 
-    public function setExistencias($value)
-    {
-        if (Validator::validateNaturalNumber($value)) {
-            $this->existencias = $value;
-            return true;
-        } else {
-            $this->data_error = 'El valor de las existencias debe ser numérico entero';
-            return false;
-        }
-    }
-
-    public function setImagen($file, $filename = null)
-    {
-        if (Validator::validateImageFile($file, 500, 500)) {
-            $this->imagen = Validator::getFileName();
-            return true;
-        } elseif (Validator::getFileError()) {
-            return false;
-        } elseif ($filename) {
-            $this->imagen = $filename;
-            return true;
-        } else {
-            $this->imagen = 'default.png';
-            return true;
-        }
-    }
 
     public function setCategoria($value)
     {
@@ -159,10 +115,10 @@ class PedidoData extends PedidoHandler
     }
     public function setSearch($value)
     {
-        $this->search= $value;
+        $this->search = $value;
         return true;
     }
-    
+
 
     /*
      *  Métodos para obtener los atributos adicionales.
