@@ -13,10 +13,10 @@ const Stack = createStackNavigator();
 const App = () => {
   const { isLoggedIn } = useAuth();
 
-  const [fontsLoaded] = useFonts({
+  /*const [fontsLoaded] = useFonts({
     QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
     QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
-  });
+  });*/
 
   return (
     <NavigationContainer>

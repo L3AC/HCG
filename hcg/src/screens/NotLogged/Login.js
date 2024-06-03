@@ -1,14 +1,91 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native'; // Cambiado Image por ImageBackground
-import { Button } from 'react-native-elements';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Alert,Button, TouchableOpacity,Image, ImageBackground, StyleSheet, KeyboardAvoidingView, Platform,RefreshControl } from 'react-native';
+import { useAuth } from '../../contexts/AuthContext';
+import { useUser } from '../../contexts/UserContext';
+import { SERVER } from '../../contexts/Network';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useFonts } from 'expo-font';
 
 const Login = () => {
-  const [fontsLoaded] = useFonts({
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false); 
+  //const [data, setData] = useState([]);
+  const [search, setSearch] = useState('');
+  const navigation = useNavigation();
+  const [usuario, setUsuario]=useState('')
+  const [clave, setClave] = useState('')
+
+
+  const onRefresh = () => {
+    setRefreshing(true);
+  };
+  const handleLogin = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('usu', usuario);
+      formData.append('clave', clave);
+      console.log(formData);
+      //utilizar la direccion IP del servidor y no localhost
+      const response = await fetch(`${SERVER}services/public/clientes.php?action=logIn`, {
+        method: 'POST',
+        body: formData
+      });
+      
+      const data = await response.json();
+      if (data.status) {
+          //setContrasenia('')
+        //setUsuario('')
+        Alert.alert('Correcto', data.message);
+          //navigation.navigate('Home');
+      } else {
+        console.log(data);
+        // Alert the user about the error
+        Alert.alert('Error sesion', data.error);
+      }
+    } catch (error) {
+      console.error(error, "Error desde Catch");
+      
+      Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
+    }
+  };
+  const handleCerrar = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('usu', usuario);
+      formData.append('clave', clave);
+      console.log(formData);
+      //utilizar la direccion IP del servidor y no localhost
+      const response = await fetch(`${SERVER}services/public/clientes.php?action=logOut`, {
+        method: 'POST',
+        body: formData
+      });
+      
+      const data = await response.json();
+      if (data.status) {
+          //setContrasenia('')
+        //setUsuario('')
+        Alert.alert('Correcto', data.message);
+          //navigation.navigate('Home');
+      } else {
+        console.log(data);
+        // Alert the user about the error
+        Alert.alert('Error sesion', data.error);
+      }
+    } catch (error) {
+      console.error(error, "Error desde Catch");
+      
+      Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
+    }
+  };
+
+  const irRegistrar = async () => {
+    navigation.navigate('SignUp');
+  };
+
+  /*const [fontsLoaded] = useFonts({
     QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
     QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
-  });
+  });*/
   
   return (
     <ImageBackground source={require('../../img/fondo.png')} style={styles.backgroundImage}>
@@ -19,12 +96,16 @@ const Login = () => {
           placeholder="Usuario"
           placeholderTextColor="#fff"
           style={styles.input}
+          onChangeText={setUsuario}
+            value={usuario}
         />
         <TextInput
           placeholder="Contraseña"
           placeholderTextColor="#fff"
           secureTextEntry
           style={styles.input}
+          onChangeText={setClave}
+            value={clave}
         />
         <TouchableOpacity>
           <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
@@ -33,6 +114,13 @@ const Login = () => {
           title="Confirmar"
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
+          onPress={handleLogin}
+        />
+        <Button
+          title="Cerrar"
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+          onPress={handleCerrar}
         />
         <TouchableOpacity>
           <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
@@ -73,7 +161,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 20,
     color: '#ffffff',
-    fontFamily: 'QuickSand'// Ajusta el color del texto según el fondo
+    //fontFamily: 'QuickSand'// Ajusta el color del texto según el fondo
   },
   forgotPassword: {
     color: '#ffffff', // Ajusta el color del texto según el fondo
