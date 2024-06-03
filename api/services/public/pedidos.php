@@ -20,52 +20,30 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un cliente ha iniciado sesión.
         switch ($_GET['action']) {
                 // Acción para agregar un producto al carrito de compras.
-                case 'createDetail':
-                    $_POST = Validator::validateForm($_POST);
-                    if (!$pedido->startOrder()) {
-                        $result['error'] = 'Ocurrió un problema al iniciar el pedido';
-                    } elseif (
-                        !$pedido->setIdProducto($_POST['idProducto']) or
-                        !$pedido->setCantidad($_POST['cantidadProducto']) or 
-                        !$pedido->setNota($_POST['notaProducto'])
-                    ) {
-                        $result['error'] = $pedido->getDataError();
-                    } else {
-                        $respuesta = $pedido->createDetail();
-                        if ($respuesta == 1) {
-                            $result['status'] = 1;
-                            $result['message'] = 'Registro exitoso';
-                        }
-                        if ($respuesta == 2) {
-                            $result['status'] = 2;
-                            $result['message'] = 'Solo se permite tener 3 existencias por producto';
-                        } else {
-                            $result['error'] = 'Ocurrió un problema al crear el registro';
-                        }
+            case 'createDetail':
+                $_POST = Validator::validateForm($_POST);
+                if (!$pedido->startOrder()) {
+                    $result['error'] = 'Ocurrió un problema al iniciar el pedido';
+                } elseif (
+                    !$pedido->setIdProducto($_POST['idProducto']) or
+                    !$pedido->setCantidad($_POST['cantidadProducto']) or
+                    !$pedido->setNota($_POST['notaProducto'])
+                ) {
+                    $result['error'] = $pedido->getDataError();
+                } else {
+                    $respuesta = $pedido->createDetail();
+                    if ($respuesta == 1) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Registro exitoso';
                     }
-                    break;
-                /*case 'createDetail':
-                    $_POST = Validator::validateForm($_POST);
-                    if (!$pedido->startOrder()) {
-                        $result['error'] = 'Ocurrió un problema al iniciar el pedido';
-                    } elseif (!$pedido->setIdProducto($_POST['idProducto']) || !$pedido->setCantidad($_POST['cantidadProducto'])) {
-                        $result['error'] = $pedido->getDataError();
+                    if ($respuesta == 2) {
+                        $result['status'] = 2;
+                        $result['message'] = 'Solo se permite tener 3 existencias por producto';
                     } else {
-                        $respuesta = $pedido->createDetail();
-                        if ($respuesta == 1) {
-                            $result['status'] = 1;
-                            $result['message'] = 'Registro exitoso';
-                        } elseif ($respuesta == 2) {
-                            $result['status'] = 2;
-                            $result['message'] = 'Solo se permite tener 3 existencias por producto';
-                        } else {
-                            $result['error'] = 'Ocurrió un problema al crear el registro: ' . $respuesta;
-                        }
+                        $result['error'] = 'Ocurrió un problema al crear el registro';
                     }
-                    break;*/
-                
-                
-
+                }
+                break;
                 // Acción para obtener los productos agregados en el carrito de compras.
             case 'readDetail':
                 if (!$pedido->getOrder()) {
@@ -78,18 +56,18 @@ if (isset($_GET['action'])) {
                 break;
             case 'searchRows':
                 if (
-                    !$pedido->setSearch($_POST['valor']) OR
-                    !$pedido->setEstado($_POST['estado']) 
+                    !$pedido->setSearch($_POST['valor']) or
+                    !$pedido->setEstado($_POST['estado'])
                 ) {
                     $result['error'] = $pedido->getDataError();
-                } elseif($result['dataset'] = $pedido->searchRows()) {
+                } elseif ($result['dataset'] = $pedido->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
                 }
                 break;
                 // Acción para actualizar la cantidad de un producto en el carrito de compras.
-            /*case 'updateDetail':
+                /*case 'updateDetail':
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$pedido->setIdDetalle($_POST['idDetalle']) or

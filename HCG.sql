@@ -54,6 +54,7 @@ CREATE TABLE tb_tipo_items(
   estado_tipo_item BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (id_tipo_item)
 );
+
 CREATE TABLE tb_items(
   id_item INT UNSIGNED,
   id_tipo_item INT UNSIGNED ,
@@ -108,8 +109,9 @@ CREATE TABLE tb_pedidos(
 SELECT id_pedido FROM tb_pedidos
          WHERE estado_pedido = ? AND id_cliente = ?
 select * from tb_clientes
-SELECT id_pedido FROM tb_pedidos
-         WHERE estado_pedido = 'No escogido' AND id_cliente = 11*/
+SELECT * FROM tb_pedidos
+         WHERE estado_pedido ='No escogido' AND id_cliente = 11*/
+select * from tb_detalle_pedidos
 
 CREATE TABLE tb_detalle_pedidos (
   id_detalle_pedido INT UNSIGNED ,
@@ -122,11 +124,18 @@ CREATE TABLE tb_detalle_pedidos (
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-select id_producto,id_cliente,id_pedido,precio_producto,cantidad_pedido,imagen_producto,descripcion_producto
- from tb_detalle_pedidos
- INNER JOIN tb_pedidos USING(id_pedido)
- INNER JOIN tb_productos USING(id_producto)
- where id_pedido=5 AND id_cliente=5
+
+SELECT id_detalle_pedido,id_pedido,descripcion_producto,descripcion_marca,
+        precio_modelo_talla,descripcion_talla,cantidad_detalle_pedido,fecha_pedido,foto_modelo
+        from prc_detalle_pedidos
+        INNER JOIN tb_pedidos USING (id_pedido)
+        INNER JOIN tb_detalle_pedidos USING (id_detalle_pedido)
+        INNER JOIN tb_productos USING (id_producto)
+        INNER JOIN ctg_marcas USING (id_marca)
+        INNER JOIN ctg_tallas USING (id_talla)
+        WHERE estado_pedido ="Finalizado" AND id_cliente=? AND (descripcion_modelo like ?
+        OR descripcion_marca like ? OR precio_modelo_talla like ?)
+        ORDER BY descripcion_modelo
 
 
 

@@ -21,6 +21,7 @@ if (isset($_GET['action'])) {
                 } else {
                 }
                 break;
+
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (

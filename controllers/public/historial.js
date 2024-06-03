@@ -1,6 +1,6 @@
 // Constante para completar la ruta de la API.
 const PEDIDO_API = 'services/public/pedidos.php',
-    DETALLESPEDIDOS_API = 'services/public/detallepedidos.php',
+    DETALLEPEDIDOS_API = 'services/public/detallepedidos.php',
     MODELOTALLAS_API = 'services/public/modelotallas.php',
     COMENTARIO_API = 'services/public/comentario.php';
 // Constante para establecer el cuerpo de la tabla.
@@ -11,10 +11,12 @@ const ID_DETALLE = document.getElementById('idDetalle'),
 
 const SAVE_MODAL2 = new bootstrap.Modal('#saveModal'),
     SAVE_FORM2 = document.getElementById('saveForm'),
+    INPUTSEARCH = document.getElementById('inputsearch'),
     MODAL_TITLE2 = document.getElementById('modalTitle'),
     COMENTARIO = document.getElementById('contenidoComentario'),
     FECHA_COMENTARIO = document.getElementById('fechaComentario'),
     DIVSTARS = document.getElementById('divstars');
+    let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -55,9 +57,12 @@ SAVE_FORM2.addEventListener('submit', async (event) => {
     }
 });
 
-
-
-
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(timeout_id);
+    timeout_id = setTimeout(async function () {
+        readDetail();
+    }, 50); // Delay de 50ms
+});
 /*
 *   Función para obtener el detalle del carrito de compras.
 *   Parámetros: ninguno.
@@ -66,102 +71,41 @@ SAVE_FORM2.addEventListener('submit', async (event) => {
 async function readDetail() {
     // Petición para obtener los datos del pedido en proceso.
     const FORM = new FormData();
-    FORM.append('valor', '');
-    FORM.append('valor', '');
+    FORM.append('valor', INPUTSEARCH.value);
 
-    const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);
+    const DATA = await fetchData(DETALLEPEDIDOS_API, 'searchHistorial', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se inicializa el cuerpo de la tabla.
         TABLE_BODY.innerHTML = '';
-        // Se declara e inicializa una variable para calcular el importe por cada producto.
-        let subtotal = 0;
-        // Se declara e inicializa una variable para sumar cada subtotal y obtener el monto final a pagar.
-        let total = 0;
+        
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
-        DATA.dataset.forEach(async row => {
-            subtotal = row.precio_modelo_talla * row.cantidad_detalle_pedido;
-            total += subtotal;
-
-            /*PARA VERIFICAR SI YA HAY UN COMENTARIO*/
-            btn_comentario = '';
-            const FORM3 = new FormData();
-            FORM3.append('idDetalle', row.id_detalle);
-            // Petición para obtener los datos del registro solicitado.
-            const DATA3 = await fetchData(COMENTARIO_API, 'readByIdDetalle', FORM3);
-            /*const ROW = DATA3.dataset;
-            console.log(ROW.id_comentario);*/
-            if (DATA3.dataset.length > 0) {
-                btn_comentario = `openRead(${DATA3.dataset[0].id_comentario})`;
-            } else {
-                btn_comentario = `openCreate(${row.id_detalle})`;
-            }
+        DATA.dataset.forEach(async ROW => {
+            let subtotal=parseFloat(ROW.subtotal);
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-
-                
-                    <div class="card mb-3 col-6" id="detalle" style="background-color: #F1EFEF;">
-                        <div class="row g-0" style="background-color: #F1EFEF;">
-                            <div class="col-lg-5 col-md-12 col-sm-12">
-                                <img height="80px" width="70%" src="${SERVER_URL}images/modelos/${row.foto_modelo}"
-                                    class="img-fluid rounded" alt="${row.descripcion_modelo}">
-                    
-                    
-                            </div>
-                            <div class="col-lg-7 col-md-12 col-sm-12">
-                                <div class="card-body">
-                                    <input type="hidden" id="idModelo" name="idModelo" value="${row.id_modelo}">
-                                    <h5 class="card-title" style="font-size: 30px;">${row.descripcion_modelo}</h5>
-
-                                        <div class="col-lg-6 col-md-12">
-                                            <p class="card-text" style="font-size: 20px;">
-                                                <strong>Marca:</strong> ${row.descripcion_marca}<br>
-                                            </p>
-                                        </div>
-                                        <div class="col-6 col-md-12">
-                                            <p class="card-text" style="font-size: 20px;">
-                                                <strong>Talla:</strong> ${row.descripcion_talla}<br>
-                                            </p>
-                                        </div>
-                                        <div class="col-6">
-                                            <p class="card-text" style="font-size: 20px;">
-                                                <strong>Precio:</strong> $${row.precio_modelo_talla}<br>
-                                            </p>
-                                        </div>
-                                        <div class="col-6">
-                                            <p class="card-text" style="font-size: 20px;">
-                                                <strong>Cantidad:</strong> ${row.cantidad_detalle_pedido}<br>
-                                            </p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="card-text" style="font-size: 20px;">
-                                                <strong>Fecha:</strong> ${row.fecha_pedido}<br>
-                                            </p>
-                                        </div>
-                                        
-
-                                    <!--<p class="card-text" style="font-size: 20px;">
-                                        <strong>Marca:</strong> ${row.descripcion_marca}<br>
-                                        <strong>Talla:</strong> ${row.descripcion_talla}<br>
-                                        <strong>Precio:</strong> $${row.precio_modelo_talla}<br>
-                                        <strong>Cantidad:</strong> ${row.cantidad_detalle_pedido}<br>
-                                        <strong>Fecha:</strong> ${row.fecha_pedido}<br>
-                                        <strong>Subtotal:</strong> $ ${subtotal.toFixed(2)}
-                                    </p>-->
-                                    <button type="button" class="btn3" onclick="${btn_comentario}">
-                                        <i class="bi bi-chat-dots"></i>
-                                    </button>
-                                </div>
+                <div class="cardlard mb-3" id="detalle" style="background-color: #F1EFEF;">
+                    <div class="row g-0 cardlard" style="background-color: #E3DECA;">
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                            <img height="80px" width="100%" src="${ROW.imagen_producto}"
+                                class="img-fluid" style="border-radius:20px;" alt="${ROW.descripcion_producto}">
+                        </div>
+                        <div class="col-lg-5 col-md-12 col-sm-12">
+                            <div class="card-body ">
+                                <input type="hidden" id="idModelo" name="idModelo" value="${ROW.id_producto}">
+                                <h5 class="card-title" style="font-size: 40px;">${ROW.descripcion_producto}</h5>
+                                <p class="card-text" style="font-size: 20px;">
+                                    <strong>Precio:</strong> $${ROW.precio_producto}<br>
+                                    <strong>Cantidad:</strong> ${ROW.cantidad_pedido}<br>
+                                    <strong>Subtotal:</strong> $ ${subtotal.toFixed(2)}<br> 
+                                    <strong>Fecha:</strong> ${ROW.fecha_pedido}<br>
+                                </p>
                             </div>
                         </div>
+                        
                     </div>
-
-
-            
+                </div>
             `;
-        });
-        document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {
-            element.disabled = false;
         });
     } else {
         sweetAlert(4, DATA.error, false, 'index.html');

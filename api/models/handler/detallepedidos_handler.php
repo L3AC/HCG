@@ -46,13 +46,18 @@ class DetallePedidoHandler
     public function searchHistorial()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
-        $sql = 'select id_producto,id_cliente,id_pedido,precio_producto,cantidad_pedido,imagen_producto,descripcion_producto
+
+        $sql = 'SELECT id_cliente,id_detalle_pedido,id_producto,id_pedido,cantidad_pedido, 
+        DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha_pedido,
+		descripcion_producto,precio_producto,cantidad_pedido,imagen_producto,
+		(precio_producto*cantidad_pedido) as subtotal
         from tb_detalle_pedidos
-        INNER JOIN tb_pedidos USING(id_pedido)
-        INNER JOIN tb_productos USING(id_producto)
-        WHERE id_pedido = ? AND (precio_ like ?
-        OR descripcion_marca like ? OR precio_modelo_talla like ?)';
-        $params = array($_SESSION['idPedido']);
+        INNER JOIN tb_pedidos USING (id_pedido)
+        INNER JOIN tb_productos USING (id_producto)
+        WHERE estado_pedido ="Finalizado" AND id_cliente=? AND (descripcion_producto like ?)
+        ORDER BY descripcion_producto';
+
+        $params = array($_SESSION['idCliente'],$this->search);
         return Database::getRows($sql, $params);
     }
 
