@@ -35,20 +35,20 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al cerrar la sesión';
                 }
                 break;
-                case 'readProfile':
-                    if ($result['dataset'] = $cliente->readProfile()) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['error'] = 'Ocurrió un problema al leer el perfil';
-                    }
-                    break;
+            case 'readProfile':
+                if ($result['dataset'] = $cliente->readProfile()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Ocurrió un problema al leer el perfil';
+                }
+                break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
     } else {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
         switch ($_GET['action']) {
-            /*case 'logInM':
+                /*case 'logInM':
                 $_POST = Validator::validateForm($_POST);
                 if (isset($_POST['usu']) && isset($_POST['clave'])) {
                     $userResult = $cliente->checkUserM($_POST['usu'], $_POST['clave']);
@@ -84,13 +84,14 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'logIn':
-                    $_POST = Validator::validateForm($_POST);
-                    if (isset($_POST['usu']) && isset($_POST['clave'])) {
+                 $_POST = Validator::validateForm($_POST);
+                    if (isset($_POST['usu']) && isset($_POST['clave'])) {        
                         if (!$cliente->checkUser($_POST['usu'], $_POST['clave'])) {
                             $result['error'] = 'Datos incorrectos';
                         } elseif ($cliente->checkStatus()) {
                             $result['status'] = 1;
                             $result['message'] = 'Autenticación correcta';
+                            $result['dataset'] = $_SESSION['idCliente'];
                         } else {
                             $result['error'] = 'La cuenta ha sido desactivada';
                         }

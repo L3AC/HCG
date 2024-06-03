@@ -8,10 +8,10 @@ export const useUser = () => useContext(UserContext);
 
 // Proveedor del contexto
 export const UserProvider = ({ children }) => {
-  const [usuario, setUsuario] = useState(null);
+  const [idUsuario, setIdUsuario] = useState(null);
 
   return (
-    <UserContext.Provider value={{ usuario, setUsuario }}>
+    <UserContext.Provider value={{ idUsuario, setIdUsuario }}>
       {children}
     </UserContext.Provider>
   );

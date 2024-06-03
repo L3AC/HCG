@@ -62,19 +62,7 @@ class ClienteHandler
             return false;
         }
     }
-    public function checkUserM($usuario, $password)
-    {
-        $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente
-            FROM tb_clientes
-            WHERE usuario_cliente = ?';
-        $params = array($usuario);
-        $data = Database::getRow($sql, $params);
-        if ($data && password_verify($password, $data['clave_cliente'])) {
-            return array('success' => true, 'idCliente' =>  $data['id_cliente']);
-        } else {
-            return array('success' => false);
-        }
-    }
+    
 
     public function readProfile()
     {

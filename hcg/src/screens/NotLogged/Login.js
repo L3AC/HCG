@@ -10,8 +10,10 @@ const Login = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false); 
   //const [data, setData] = useState([]);
+  const { setIsLoggedIn } = useAuth();
   const [search, setSearch] = useState('');
   const navigation = useNavigation();
+  const { setIdUsuario } = useUser();
   const [usuario, setUsuario]=useState('')
   const [clave, setClave] = useState('')
 
@@ -33,10 +35,10 @@ const Login = () => {
       
       const data = await response.json();
       if (data.status) {
-          //setContrasenia('')
-        //setUsuario('')
         Alert.alert('Correcto', data.message);
-          //navigation.navigate('Home');
+        setIsLoggedIn(true);
+        setIdUsuario(response.dataset);
+        navigation.navigate('Main');
       } else {
         console.log(data);
         // Alert the user about the error
@@ -54,7 +56,6 @@ const Login = () => {
       formData.append('usu', usuario);
       formData.append('clave', clave);
       console.log(formData);
-      //utilizar la direccion IP del servidor y no localhost
       const response = await fetch(`${SERVER}services/public/clientes.php?action=logOut`, {
         method: 'POST',
         body: formData
@@ -62,13 +63,9 @@ const Login = () => {
       
       const data = await response.json();
       if (data.status) {
-          //setContrasenia('')
-        //setUsuario('')
         Alert.alert('Correcto', data.message);
-          //navigation.navigate('Home');
       } else {
         console.log(data);
-        // Alert the user about the error
         Alert.alert('Error sesion', data.error);
       }
     } catch (error) {
