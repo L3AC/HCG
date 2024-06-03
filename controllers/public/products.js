@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         action='readProductosCategoria';
         console.log(2);
     }
-    if (PARAMS.has('modelo')) {
-        FORM.append('producto', PARAMS.get('modelo'));
+    if (PARAMS.has('producto')) {
+        FORM.append('producto', PARAMS.get('producto'));
         action='searchProductos';
         console.log(1);
     }

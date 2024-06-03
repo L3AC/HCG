@@ -26,6 +26,33 @@ const MenuScreen = () => {
     { id: '6', name: 'Aros de Cebolla', price: '$1', image: require('../../img/logo.png') },
   ];
 
+  const fetchData = async (query = '') => {
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append('modelo', query);
+
+      const response = await fetch(`${SERVER}services/public/producto.php?action=searchModelos`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const text = await response.text();
+      const responseData = JSON.parse(text);
+
+      if (response.ok && responseData.status === 1) {
+        setData(responseData.dataset);
+      } else {
+        console.error('Error fetching data:', responseData.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
   return (
     <ScrollView
     contentContainerStyle={[styles.container, { flexGrow: 1 }]}

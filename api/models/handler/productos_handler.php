@@ -169,7 +169,7 @@ class ProductoHandler
     }
     public function searchProductos($value)
     {
-        $value = !empty($value) ? '%' . $value . '%' : '%%';
+        $value = $value === '' ? '%%' : '%' . $value . '%';
         
         $sql = 'SELECT *
         FROM tb_productos
