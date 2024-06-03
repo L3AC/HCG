@@ -2,8 +2,14 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native'; // Cambiado Image por ImageBackground
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useFonts } from 'expo-font';
 
 const Login = () => {
+  const [fontsLoaded] = useFonts({
+    QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
+    QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
+  });
+  
   return (
     <ImageBackground source={require('../../img/fondo.png')} style={styles.backgroundImage}>
       <View style={styles.container}>
@@ -11,12 +17,12 @@ const Login = () => {
         <Text style={styles.title}>Inicio de sesión</Text>
         <TextInput
           placeholder="Usuario"
-          placeholderTextColor="#8e8e8e"
+          placeholderTextColor="#fff"
           style={styles.input}
         />
         <TextInput
           placeholder="Contraseña"
-          placeholderTextColor="#8e8e8e"
+          placeholderTextColor="#fff"
           secureTextEntry
           style={styles.input}
         />
@@ -61,11 +67,13 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    height: 40,
-    borderColor: '#ffffff', // Ajusta el color del borde según el fondo
-    borderBottomWidth: 1,
+    height: 50, // Ajusta la altura según sea necesario
+    borderRadius: 8, // Redondeo de los bordes
+    backgroundColor: '#AA6231', // Color de fondo del input
+    paddingHorizontal: 15,
     marginBottom: 20,
-    color: '#ffffff', // Ajusta el color del texto según el fondo
+    color: '#ffffff',
+    fontFamily: 'QuickSand'// Ajusta el color del texto según el fondo
   },
   forgotPassword: {
     color: '#ffffff', // Ajusta el color del texto según el fondo
