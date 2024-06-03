@@ -1,89 +1,99 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, StyleSheet, Image, RefreshControl } from 'react-native';
 
-const App = () => {
+const MenuScreen = () => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    // Simular una solicitud de red
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  };
+
+  const menuItems = [
+    { id: '1', name: 'Club Sandwich', price: '$3', image: require('../../img/logo.png') },
+    { id: '2', name: 'Hamburguesa', price: '$3', image: require('../../img/logo.png') },
+    { id: '3', name: 'Hamb de pollo', price: '$3', image: require('../../img/logo.png') },
+    { id: '4', name: 'Nachos', price: '$3', image: require('../../img/logo.png') },
+    { id: '5', name: 'Hamb de pollo', price: '$3', image: require('../../img/logo.png') },
+    { id: '6', name: 'Nachos', price: '$3', image: require('../../img/logo.png') },
+  ];
+
+  const complementItems = [
+    { id: '5', name: 'Papas Fritas', price: '$1', image: require('../../img/logo.png') },
+    { id: '6', name: 'Aros de Cebolla', price: '$1', image: require('../../img/logo.png') },
+  ];
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>HCG</Text>
-      <Text style={styles.title}>Menu del día</Text>
-      <View style={styles.grid}>
-        <View style={styles.card}>
-          <Image style={styles.image} source={{ uri: 'https://i.imgur.com/O1hRDdn.jpg' }} />
-          <Text style={styles.itemName}>Club Sandwich</Text>
-          <Text style={styles.price}>$3</Text>
-        </View>
-        <View style={styles.card}>
-          <Image style={styles.image} source={{ uri: 'https://i.imgur.com/3kdc1rT.jpg' }} />
-          <Text style={styles.itemName}>Hamburguesa</Text>
-          <Text style={styles.price}>$3</Text>
-        </View>
-        <View style={styles.card}>
-          <Image style={styles.image} source={{ uri: 'https://i.imgur.com/1WxHILm.jpg' }} />
-          <Text style={styles.itemName}>Hamb de pollo</Text>
-          <Text style={styles.price}>$3</Text>
-        </View>
-        <View style={styles.card}>
-          <Image style={styles.image} source={{ uri: 'https://i.imgur.com/7U1UHD8.jpg' }} />
-          <Text style={styles.itemName}>Nachos</Text>
-          <Text style={styles.price}>$3</Text>
-        </View>
+    <ScrollView
+    contentContainerStyle={[styles.container, { flexGrow: 1 }]}
+    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+  >
+      <Text style={styles.title}>Menú del Día</Text>
+      <View style={styles.menuContainer}>
+        {menuItems.map(item => (
+          <View key={item.id} style={styles.card}>
+            <Image source={item.image} style={styles.image} />
+            <Text style={styles.itemName}>{item.name}</Text>
+            <Text style={styles.itemPrice}>{item.price}</Text>
+          </View>
+        ))}
       </View>
-      <Text style={styles.subtitle}>Complementos</Text>
+      <Text style={styles.title}>Complementos</Text>
+      <View style={styles.menuContainer}>
+        {complementItems.map(item => (
+          <View key={item.id} style={styles.card}>
+            <Image source={item.image} style={styles.image} />
+            <Text style={styles.itemName}>{item.name}</Text>
+            <Text style={styles.itemPrice}>{item.price}</Text>
+          </View>
+        ))}
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
     padding: 16,
-    backgroundColor: '#D3A66A',
-    alignItems: 'center',
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    alignSelf: 'flex-end',
+    backgroundColor: '#d2a563',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 16,
   },
-  grid: {
+  menuContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   card: {
-    width: 150,
-    margin: 10,
-    padding: 10,
-    backgroundColor: '#F0E2B6',
-    borderRadius: 10,
+    backgroundColor: '#f4f4f4',
+    borderRadius: 8,
+    padding: 16,
+    marginVertical: 8,
     alignItems: 'center',
+    width: '48%',
   },
   image: {
-    width: 120,
+    width: 100,
     height: 100,
-    borderRadius: 10,
-    marginBottom: 10,
+    borderRadius: 8,
   },
   itemName: {
+    marginTop: 8,
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 5,
+    textAlign: 'center',
   },
-  price: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  subtitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginTop: 20,
+  itemPrice: {
+    fontSize: 14,
+    color: '#333',
+    textAlign: 'center',
   },
 });
 
-export default App;
+export default MenuScreen;
