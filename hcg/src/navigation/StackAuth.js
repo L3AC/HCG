@@ -2,11 +2,11 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from './src/screens/NotLogged/Login';
-import SignUp from './src/screens/NotLogged/SignUp';
-import NuevaClave from './src/screens/NotLogged/NuevaClave';
-import VerifCode from './src/screens/NotLogged/VerifCode';
-import VerifUs from './src/screens/NotLogged/VerifUs';
+import Login from '../screens/NotLogged/Login';
+import SignUp from '../screens/NotLogged/SignUp';
+import NuevaClave from '../screens/NotLogged/Recup/NuevaClave';
+import VerifCode from '../screens/NotLogged/Recup/VerifCode';
+import VerifUs from '../screens/NotLogged/Recup/VerifUs';
 
 const Stack = createStackNavigator();
 

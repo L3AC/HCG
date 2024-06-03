@@ -2,10 +2,10 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import StackHome from '../screens/Logged/Home/StackHome';
-import StackHistorial from './Search/Logged/StackHistorial';
-import StackCuenta from './Search/Logged/StackCuenta';
-import StackCart from './Cart/Logged/StackCart';
+import StackHome from '../navigation/StackHome';
+import StackHistorial from '../navigation/StackHistorial';
+import StackCuenta from '../navigation/StackCuenta';
+import StackCart from '../navigation/StackCart';
 
 const Tab = createBottomTabNavigator();
 

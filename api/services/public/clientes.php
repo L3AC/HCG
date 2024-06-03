@@ -48,6 +48,21 @@ if (isset($_GET['action'])) {
     } else {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
         switch ($_GET['action']) {
+            case 'logInM':
+                $_POST = Validator::validateForm($_POST);
+                if (isset($_POST['usu']) && isset($_POST['clave'])) {
+                    $userResult = $cliente->checkUserM($_POST['usu'], $_POST['clave']);
+                    if (!$userResult['success']) {
+                        $result['error'] = 'Datos incorrectos';
+                    } else {
+                        $result['status'] = 1;
+                        $result['message'] = 'Autenticación correcta';
+                        $result['dataset'] = $userResult['idCliente']; // Agregar el ID del cliente al resultado
+                    }
+                } else {
+                    $result['error'] = 'Usuario y/o contraseña no proporcionados';
+                }
+            break;
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);
                 if (
