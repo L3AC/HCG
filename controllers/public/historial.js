@@ -1,5 +1,6 @@
 // Constante para completar la ruta de la API.
 const PEDIDO_API = 'services/public/pedidos.php',
+    DETALLESPEDIDOS_API = 'services/public/detallepedidos.php',
     MODELOTALLAS_API = 'services/public/modelotallas.php',
     COMENTARIO_API = 'services/public/comentario.php';
 // Constante para establecer el cuerpo de la tabla.
@@ -65,6 +66,7 @@ SAVE_FORM2.addEventListener('submit', async (event) => {
 async function readDetail() {
     // Petición para obtener los datos del pedido en proceso.
     const FORM = new FormData();
+    FORM.append('valor', '');
     FORM.append('valor', '');
 
     const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);

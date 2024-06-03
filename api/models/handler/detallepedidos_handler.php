@@ -10,6 +10,7 @@ class DetallePedidoHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $search = null;
     protected $idModelo = null;
     protected $idTalla = null;
     protected $nombre = null;
@@ -39,6 +40,19 @@ class DetallePedidoHandler
         ORDER BY tipo_producto';
 
         $params = array($this->id,$value);
+        return Database::getRows($sql, $params);
+    }
+
+    public function searchHistorial()
+    {
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
+        $sql = 'select id_producto,id_cliente,id_pedido,precio_producto,cantidad_pedido,imagen_producto,descripcion_producto
+        from tb_detalle_pedidos
+        INNER JOIN tb_pedidos USING(id_pedido)
+        INNER JOIN tb_productos USING(id_producto)
+        WHERE id_pedido = ? AND (precio_ like ?
+        OR descripcion_marca like ? OR precio_modelo_talla like ?)';
+        $params = array($_SESSION['idPedido']);
         return Database::getRows($sql, $params);
     }
 

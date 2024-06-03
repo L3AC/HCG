@@ -24,6 +24,18 @@ if (isset($_GET['action'])) {
                     
                 }
                 break;
+                case 'searchHistorial':
+                    if (
+                        !$pedido->setSearch($_POST['valor'])
+                    ) {
+                        $result['error'] = $pedido->getDataError();
+                    } elseif ($result['dataset'] = $pedido->searchHistorial()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
+                    } else {
+                        $result['error'] = 'No hay coincidencias';
+                    }
+                    break;
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (

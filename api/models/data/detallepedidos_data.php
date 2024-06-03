@@ -21,7 +21,7 @@ class DetallePedidoData extends DetallePedidoHandler
     {
         if (Validator::validateNaturalNumber($value)) {
             $this->id = $value;
-            return true; 
+            return true;
         } else {
             $this->data_error = 'El identificador es incorrecto';
             return false;
@@ -135,6 +135,12 @@ class DetallePedidoData extends DetallePedidoHandler
             $this->data_error = 'Estado incorrecto';
             return false;
         }
+    }
+
+    public function setSearch($value)
+    {
+        $this->search = $value;
+        return true;
     }
 
     public function setFilename()
