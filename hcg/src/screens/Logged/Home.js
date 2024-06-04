@@ -1,82 +1,72 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, RefreshControl } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, StyleSheet, Image, RefreshControl, TextInput } from 'react-native';
 
 const MenuScreen = () => {
+  const [menuItems, setMenuItems] = useState([]);
+  const [complementItems, setComplementItems] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [search, setSearch] = useState('');
+  const [filteredMenuItems, setFilteredMenuItems] = useState([]);
+  const [filteredComplementItems, setFilteredComplementItems] = useState([]);
+
+  useEffect(() => {
+    fetchMenuData();
+  }, []);
+
+  useEffect(() => {
+    filterItems();
+  }, [search, menuItems, complementItems]);
+
+  const fetchMenuData = () => {
+    // Realiza la solicitud a tu API para obtener los datos
+    fetch('https://yourapiendpoint.com/menu')
+      .then(response => response.json())
+      .then(data => {
+        setMenuItems(data.menuItems);
+        setComplementItems(data.complementItems);
+      })
+      .catch(error => console.error(error));
+  };
 
   const onRefresh = () => {
     setRefreshing(true);
-    // Simular una solicitud de red
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 500);
+    fetchMenuData();
+    setRefreshing(false);
   };
 
-  const menuItems = [
-    { id: '1', name: 'Club Sandwich', price: '$3', image: require('../../img/logo.png') },
-    { id: '2', name: 'Hamburguesa', price: '$3', image: require('../../img/logo.png') },
-    { id: '3', name: 'Hamb de pollo', price: '$3', image: require('../../img/logo.png') },
-    { id: '4', name: 'Nachos', price: '$3', image: require('../../img/logo.png') },
-    { id: '5', name: 'Hamb de pollo', price: '$3', image: require('../../img/logo.png') },
-    { id: '6', name: 'Nachos', price: '$3', image: require('../../img/logo.png') },
-  ];
-
-  const complementItems = [
-    { id: '5', name: 'Papas Fritas', price: '$1', image: require('../../img/logo.png') },
-    { id: '6', name: 'Aros de Cebolla', price: '$1', image: require('../../img/logo.png') },
-  ];
-
-  const fetchData = async (query = '') => {
-    try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append('modelo', query);
-
-      const response = await fetch(`${SERVER}services/public/producto.php?action=searchModelos`, {
-        method: 'POST',
-        body: formData,
-      });
-
-      const text = await response.text();
-      const responseData = JSON.parse(text);
-
-      if (response.ok && responseData.status === 1) {
-        setData(responseData.dataset);
-      } else {
-        console.error('Error fetching data:', responseData.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
+  const filterItems = () => {
+    const filteredMenu = menuItems.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
+    const filteredComplement = complementItems.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
+    setFilteredMenuItems(filteredMenu);
+    setFilteredComplementItems(filteredComplement);
   };
+
+  const renderCard = (item) => (
+    <View key={item.id} style={styles.card}>
+      <Image source={{ uri: item.image }} style={styles.image} />
+      <Text style={styles.itemName}>{item.name}</Text>
+      <Text style={styles.itemPrice}>{item.price}</Text>
+    </View>
+  );
 
   return (
     <ScrollView
-    contentContainerStyle={[styles.container, { flexGrow: 1 }]}
-    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-  >
+      contentContainerStyle={[styles.container, { flexGrow: 1 }]}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    >
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Buscar..."
+        value={search}
+        onChangeText={text => setSearch(text)}
+      />
       <Text style={styles.title}>Menú del Día</Text>
       <View style={styles.menuContainer}>
-        {menuItems.map(item => (
-          <View key={item.id} style={styles.card}>
-            <Image source={item.image} style={styles.image} />
-            <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemPrice}>{item.price}</Text>
-          </View>
-        ))}
+        {filteredMenuItems.map(renderCard)}
       </View>
       <Text style={styles.title}>Complementos</Text>
       <View style={styles.menuContainer}>
-        {complementItems.map(item => (
-          <View key={item.id} style={styles.card}>
-            <Image source={item.image} style={styles.image} />
-            <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemPrice}>{item.price}</Text>
-          </View>
-        ))}
+        {filteredComplementItems.map(renderCard)}
       </View>
     </ScrollView>
   );
@@ -86,6 +76,16 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     backgroundColor: '#d2a563',
+    flexGrow: 1,
+  },
+  searchInput: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 16,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
