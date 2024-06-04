@@ -13,9 +13,9 @@ const StackMain = () => {
     return (
         <Tab.Navigator>
             <Tab.Screen name="StackHome" component={StackHome} options={{ headerShown: false }} />
+            <Tab.Screen name="StackCart" component={StackCart} options={{ headerShown: false }} />
             <Tab.Screen name="StackHistorial" component={StackHistorial} options={{ headerShown: false }} />
             <Tab.Screen name="StackCuenta" component={StackCuenta} options={{ headerShown: false }} />
-            <Tab.Screen name="StackCart" component={StackCart} options={{ headerShown: false }} />
         </Tab.Navigator>
     );
 };

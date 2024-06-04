@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, RefreshControl, TextInput, Alert } from 'react-native';
 import { SERVER } from '../../contexts/Network';
+import { Icon } from 'react-native-elements';
 
 const MenuScreen = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -68,12 +69,16 @@ const MenuScreen = () => {
       contentContainerStyle={[styles.container, { flexGrow: 1 }]}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
+      <View style={styles.searchBarContainer}>
       <TextInput
         style={styles.searchInput}
         placeholder="Buscar..."
         value={search}
         onChangeText={handleSearchChange}
       />
+        <Icon name="search" type="font-awesome" size={24} style={styles.searchIcon} />
+      </View>
+
       <Text style={styles.title}>Menú del Día</Text>
       <View style={styles.menuContainer}>
         {loading ? (
@@ -100,15 +105,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#d2a563',
     flexGrow: 1,
   },
+  searchBarContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F0E4CA',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 40,
+    marginTop: 40,
+  },
   searchInput: {
+    flex: 1,
+    fontSize: 18,
+    color: '#000',
+  },
+  /*searchInput: {
     height: 40,
     borderColor: '#ccc',
     borderWidth: 1,
-    marginBottom: 16,
+    marginTop: 40,
+    marginBottom: 30,
     paddingHorizontal: 8,
     borderRadius: 8,
     backgroundColor: '#fff',
-  },
+  },*/
   title: {
     fontSize: 24,
     fontWeight: 'bold',
