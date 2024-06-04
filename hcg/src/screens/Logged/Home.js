@@ -27,8 +27,8 @@ const MenuScreen = () => {
         body: formData,
       });
 
-      const text = await response.text();
-      const data = JSON.parse(text);
+      //const text = await response.text();
+      const data = await response.json();
 
       if (response.ok && data.status === 1) {
         setMenuItems(data.dataset.conjunto || []);
