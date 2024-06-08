@@ -20,7 +20,7 @@ if (isset($_GET['action'])) {
             } else {
             }
             break;
-        
+
         case 'createRow':
             $_POST = Validator::validateForm($_POST);
             if (
@@ -49,6 +49,16 @@ if (isset($_GET['action'])) {
             if (!$producto->setIdProducto($_POST['idProducto'])) {
                 $result['error'] = $producto->getDataError();
             } elseif ($result['dataset'] = $producto->readByProducto()) {
+                $result['status'] = 1;
+                $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+            } else {
+                $result['error'] = 'Tallas no registradas';
+            }
+            break;
+        case 'readByProducto2':
+            if (!$producto->setIdProducto($_POST['idProducto'])) {
+                $result['error'] = $producto->getDataError();
+            } elseif ($result['dataset'] = $producto->readByProducto2()) {
                 $result['status'] = 1;
                 $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
             } else {

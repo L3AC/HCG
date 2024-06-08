@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, RefreshControl, TextInput, Alert } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, RefreshControl, TextInput, Alert, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
 import { Icon } from 'react-native-elements';
 
@@ -9,6 +10,8 @@ const MenuScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     fetchMenuData(search);
@@ -28,7 +31,6 @@ const MenuScreen = () => {
         body: formData,
       });
 
-      //const text = await response.text();
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
@@ -57,11 +59,11 @@ const MenuScreen = () => {
   };
 
   const renderCard = (item) => (
-    <View key={item.id_producto} style={styles.card}>
+    <TouchableOpacity key={item.id_producto} style={styles.card} onPress={() => navigation.navigate('Producto', { idProducto: item.id_producto })}>
       <Image source={{ uri: item.imagen_producto }} style={styles.image} />
       <Text style={styles.itemName}>{item.descripcion_producto}</Text>
       <Text style={styles.itemPrice}>${item.precio_producto}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -70,15 +72,14 @@ const MenuScreen = () => {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
       <View style={styles.searchBarContainer}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Buscar..."
-        value={search}
-        onChangeText={handleSearchChange}
-      />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Buscar..."
+          value={search}
+          onChangeText={handleSearchChange}
+        />
         <Icon name="search" type="font-awesome" size={24} style={styles.searchIcon} />
       </View>
-
       <Text style={styles.title}>Menú del Día</Text>
       <View style={styles.menuContainer}>
         {loading ? (
@@ -119,22 +120,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
   },
-  /*searchInput: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    marginTop: 40,
-    marginBottom: 30,
-    paddingHorizontal: 8,
-    borderRadius: 8,
-    backgroundColor: '#fff',
-  },*/
+  searchIcon: {
+    marginLeft: 8,
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
   },
   menuContainer: {
+    paddingBottom: 40,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',

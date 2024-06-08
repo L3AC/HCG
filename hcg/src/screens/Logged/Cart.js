@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshControl, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshControl, Alert, ActivityIndicator } from 'react-native';
 import { SERVER } from '../../contexts/Network';
+import { Ionicons } from '@expo/vector-icons';
 
 const CartScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -12,19 +13,14 @@ const CartScreen = () => {
       setLoading(true);
       const formData = new FormData();
       formData.append('producto', query);
-
-      const response = await fetch(`${SERVER}services/public/productos.php?action=searchProductos`, {
+      const response = await fetch(`${SERVER}services/public/pedidos.php?action=readDetail`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
         body: formData,
       });
-
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        setCartItems(data.dataset.conjunto || []);
+        setCartItems(data.dataset|| []);
       } else {
         console.error('Error fetching data:', data.message);
         Alert.alert('Error', data.message);
@@ -46,7 +42,7 @@ const CartScreen = () => {
     fetchMenuData();
   };
 
-  const totalToPay = cartItems.reduce((total, item) => total + item.subtotal, 0);
+  const totalToPay = cartItems.reduce((total, item) => total + (item.precio_producto * item.cantidad_pedido), 0);
 
   return (
     <ScrollView
@@ -57,24 +53,30 @@ const CartScreen = () => {
       <TouchableOpacity style={styles.finalizeButton}>
         <Text style={styles.finalizeButtonText}>Finalizar</Text>
       </TouchableOpacity>
-      <Text style={styles.totalText}>Total a pagar: ${totalToPay}</Text>
+      <Text style={styles.totalText}>Total a pagar: ${totalToPay.toFixed(2)}</Text>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         cartItems.map((item) => (
-          <View key={item.id} style={styles.cartItem}>
-            <Text style={styles.itemName}>{item.name}</Text>
-            <Image source={{ uri: item.image }} style={styles.itemImage} />
-            <Text>Precio: ${item.price}</Text>
-            <Text>Cantidad: {item.quantity}</Text>
-            <Text>Subtotal: ${item.subtotal}</Text>
-            <View style={styles.iconsContainer}>
-              <TouchableOpacity>
-                <Text style={styles.icon}>✏️</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text style={styles.icon}>🗑️</Text>
-              </TouchableOpacity>
+          <View key={item.id_producto.toString()} style={styles.cartItem}>
+            <View style={styles.itemHeader}>
+              <Text style={styles.itemName}>{item.descripcion_producto}</Text>
+              <View style={styles.iconsContainer}>
+                <TouchableOpacity>
+                  <Ionicons name="pencil" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Ionicons name="trash" size={24} color="black" />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={styles.itemContent}>
+              <Image source={{ uri: item.imagen_producto }} style={styles.itemImage} />
+              <View style={styles.itemDetails}>
+                <Text>Precio: ${item.precio_producto}</Text>
+                <Text>Cantidad: {item.cantidad_pedido}</Text>
+                <Text>Subtotal: ${(item.precio_producto * item.cantidad_pedido).toFixed(2)}</Text>
+              </View>
             </View>
           </View>
         ))
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 16,
-    backgroundColor: '#d38b58',
+    backgroundColor: '#d2a563',
   },
   header: {
     fontSize: 24,
@@ -126,23 +128,32 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
+  itemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
   itemName: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
+  },
+  iconsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  itemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   itemImage: {
     width: 100,
     height: 100,
-    marginBottom: 10,
+    marginRight: 10,
+    borderRadius: 10,
   },
-  iconsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
-  },
-  icon: {
-    fontSize: 24,
+  itemDetails: {
+    flex: 1,
   },
 });
 
