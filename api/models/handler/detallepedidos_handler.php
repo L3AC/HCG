@@ -87,8 +87,8 @@ class DetallePedidoHandler
 
     public function readOne()
     {
-        $sql ='select * from tb_detalle_pedidos where id_detalle_pedido=?';
-        $params = array($this->id);
+        $sql ='select * from tb_detalle_pedidos ';
+        $params = array();
         return Database::getRow($sql, $params);
     }
 

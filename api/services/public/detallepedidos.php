@@ -30,6 +30,15 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'El historial esta vacío';
                 }
                 break;
+                case 'readOne':
+                    if (!$pedido->setId($_POST['idDetallePedido'])) {
+                        $result['error'] = $pedido->getDataError();
+                    } elseif ($result['dataset'] = $pedido->readOne()) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['error'] = 'Detalle inexistente';
+                    }
+                    break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshControl, Alert, ActivityIndicator } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshControl, Alert,TextInput, ActivityIndicator,Modal } from 'react-native';
 import { SERVER } from '../../contexts/Network';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -7,6 +7,9 @@ const CartScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [cantidad, setCantidad] = useState('');
+  const [nota, setNota] = useState('');
 
   const fetchMenuData = async (query = '') => {
     try {
@@ -14,6 +17,31 @@ const CartScreen = () => {
       const formData = new FormData();
       formData.append('producto', query);
       const response = await fetch(`${SERVER}services/public/pedidos.php?action=readDetail`, {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+
+      if (response.ok && data.status === 1) {
+        setCartItems(data.dataset|| []);
+      } else {
+        console.error('Error fetching data:', data.message);
+        Alert.alert('Error', data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const readOne = async (idDetalleProducto) => {
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append('idDetalleProducto', idDetalleProducto);
+      const response = await fetch(`${SERVER}services/public/detalleproductos.php?action=readOne`, {
         method: 'POST',
         body: formData,
       });
@@ -81,6 +109,35 @@ const CartScreen = () => {
           </View>
         ))
       )}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <TouchableOpacity style={styles.modalOverlay} onPress={() => setModalVisible(false)}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Agregar</Text>
+            <TextInput
+              style={styles.modalInput}
+              placeholder="Cantidad"
+              value={cantidad}
+              onChangeText={setCantidad}
+              keyboardType="numeric"
+            />
+            <TextInput
+              style={styles.modalTextArea}
+              placeholder="Nota"
+              value={nota}
+              onChangeText={setNota}
+              multiline
+            />
+            <TouchableOpacity style={styles.confirmButton} >
+              <Text style={styles.confirmButtonText}>Confirmar</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </ScrollView>
   );
 };
@@ -154,6 +211,56 @@ const styles = StyleSheet.create({
   },
   itemDetails: {
     flex: 1,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: 300,
+    backgroundColor: '#FFF',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  modalInput: {
+    width: '100%',
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 16,
+    paddingHorizontal: 8,
+    backgroundColor: '#F5D7A4',
+  },
+  modalTextArea: {
+    width: '100%',
+    height: 80,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 16,
+    paddingHorizontal: 8,
+    backgroundColor: '#F5D7A4',
+  },
+  confirmButton: {
+    backgroundColor: '#000',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  confirmButtonText: {
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

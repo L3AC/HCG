@@ -127,7 +127,7 @@ class DetalleProductoHandler
 
     public function readOne()
     {
-        $sql = 'SELECT id_detalle_producto,id_item,id_producto,cantidad_item
+        $sql = 'SELECT id_detalle_producto,id_item,id_producto,cantidad_item,nota_producto
         FROM tb_detalle_productos
         WHERE id_detalle_producto=?';
         $params = array($this->id);

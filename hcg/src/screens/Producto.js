@@ -50,7 +50,7 @@ const ProductoScreen = () => {
       formData.append('cantidadProducto', cantidad);
       formData.append('notaProducto', nota);
 
-      const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetail`, {
+      const response = await fetch(`${SERVER}services/public/pedidos.php?action=createDetail`, {
         method: 'POST',
         body: formData,
       });
@@ -155,20 +155,21 @@ const ProductoScreen = () => {
 const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 1,
-    backgroundColor: '#F5D7A4',
+    backgroundColor: '#d2a563',
   },
   container: {
     padding: 16,
     alignItems: 'center',
-    backgroundColor: '#F5D7A4',
+    backgroundColor: '#d2a563',
   },
   backButton: {
     position: 'absolute',
-    top: 16,
+    top: 50,
     left: 16,
     zIndex: 1,
   },
   title: {
+    paddingTop:45,
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 16,
