@@ -10,6 +10,8 @@ const CartScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [cantidad, setCantidad] = useState('');
   const [nota, setNota] = useState('');
+  const [currentItemId, setCurrentItemId] = useState(null);
+  const [loadingModal, setLoadingModal] = useState(false);
 
   const fetchMenuData = async (query = '') => {
     try {
@@ -35,23 +37,52 @@ const CartScreen = () => {
       setRefreshing(false);
     }
   };
-
-  const readOne = async (idDetalleProducto) => {
+  const readOne = async (idDetallePedido) => {
     try {
-      setLoading(true);
+      setLoadingModal(true);
       const formData = new FormData();
-      formData.append('idDetalleProducto', idDetalleProducto);
-      const response = await fetch(`${SERVER}services/public/detalleproductos.php?action=readOne`, {
+      formData.append('idDetallePedido', idDetallePedido);
+      const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=readOne`, {
         method: 'POST',
         body: formData,
       });
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        setCartItems(data.dataset|| []);
+        setCantidad(data.dataset.cantidad_pedido.toString() || '1');
+        setNota(data.dataset.nota_pedido || 'Nota vacía');
+        setCurrentItemId(idDetallePedido);
+        setModalVisible(true);
       } else {
-        console.error('Error fetching data:', data.message);
-        Alert.alert('Error', data.message);
+        console.error('Error fetching data:', data.error);
+        Alert.alert('Error', data.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoadingModal(false);
+    }
+  };
+
+  const updateDetalle = async (idDetallePedido) => {
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append('idDetallePedido', idDetallePedido);
+      formData.append('cantidad_pedido', cantidad);
+      formData.append('nota_pedido', nota);
+      const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=update`, {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+
+      if (response.ok && data.status === 1) {
+        fetchMenuData(); // Refresh the cart items after update
+        setModalVisible(false);
+      } else {
+        console.error('Error updating data:', data.error);
+        Alert.alert('Error', data.error);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -90,7 +121,7 @@ const CartScreen = () => {
             <View style={styles.itemHeader}>
               <Text style={styles.itemName}>{item.descripcion_producto}</Text>
               <View style={styles.iconsContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => readOne(item.id_producto)}>
                   <Ionicons name="pencil" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -117,30 +148,38 @@ const CartScreen = () => {
       >
         <TouchableOpacity style={styles.modalOverlay} onPress={() => setModalVisible(false)}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Agregar</Text>
-            <TextInput
-              style={styles.modalInput}
-              placeholder="Cantidad"
-              value={cantidad}
-              onChangeText={setCantidad}
-              keyboardType="numeric"
-            />
-            <TextInput
-              style={styles.modalTextArea}
-              placeholder="Nota"
-              value={nota}
-              onChangeText={setNota}
-              multiline
-            />
-            <TouchableOpacity style={styles.confirmButton} >
-              <Text style={styles.confirmButtonText}>Confirmar</Text>
-            </TouchableOpacity>
+            {loadingModal ? ( // Mostrar círculo de carga mientras se está cargando el modal
+              <ActivityIndicator size="large" color="#0000ff" />
+            ) : (
+              <>
+                <Text style={styles.modalTitle}>Editar Producto</Text>
+                <TextInput
+                  style={styles.modalInput}
+                  placeholder="Cantidad"
+                  value={cantidad}
+                  onChangeText={setCantidad}
+                  keyboardType="numeric"
+                />
+                <TextInput
+                  style={styles.modalTextArea}
+                  placeholder="Nota"
+                  value={nota}
+                  onChangeText={setNota}
+                  multiline
+                />
+                <TouchableOpacity style={styles.confirmButton} onPress={() => updateDetalle(currentItemId)}>
+                  <Text style={styles.confirmButtonText}>Confirmar</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         </TouchableOpacity>
       </Modal>
     </ScrollView>
   );
 };
+
+  
 
 const styles = StyleSheet.create({
   container: {
