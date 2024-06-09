@@ -114,8 +114,8 @@ class DetallePedidoHandler
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM prc_modelos
-                WHERE id_modelo = ?';
+        $sql = 'DELETE FROM tb_detalle_pedidos
+                WHERE id_detalle_pedido = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }

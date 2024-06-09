@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshControl, Alert,TextInput, ActivityIndicator,Modal } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshControl, Alert, TextInput, ActivityIndicator, Modal } from 'react-native';
 import { SERVER } from '../../contexts/Network';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -25,7 +25,7 @@ const CartScreen = () => {
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        setCartItems(data.dataset|| []);
+        setCartItems(data.dataset || []);
       } else {
         console.error('Error fetching data:', data.message);
         Alert.alert('Error', data.message);
@@ -52,7 +52,7 @@ const CartScreen = () => {
         setCantidad(data.dataset.cantidad_pedido.toString() || '1');
         setNota(data.dataset.nota_pedido || 'Nota vacía');
         setCurrentItemId(idDetallePedido);
-        console.log( cantidad+' '+nota+idDetallePedido );
+        console.log(cantidad + ' ' + nota + idDetallePedido);
         setModalVisible(true);
       } else {
         console.error('Error fetching data:', data.error);
@@ -66,6 +66,76 @@ const CartScreen = () => {
   };
 
   const updateDetalle = async (idDetallePedido) => {
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append('idDetallePedido', idDetallePedido);
+      formData.append('cantidadPedido', cantidad);
+      formData.append('notaPedido', nota);
+      const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=updateRow`, {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+
+      if (response.ok && data.status === 1) {
+        fetchMenuData(); // Refresh the cart items after update
+        setModalVisible(false);
+      } else {
+        console.error('Error updating data:', data.error);
+        Alert.alert('Error', data.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+  const deleteDetalle = async (idDetallePedido) => {
+    Alert.alert(
+      "Confirmar eliminación",
+      "¿Estás seguro de que deseas eliminar este producto?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Eliminación cancelada"),
+          style: "cancel"
+        },
+        {
+          text: "Eliminar",
+          onPress: async () => {
+            try {
+              setLoading(true);
+              const formData = new FormData();
+              formData.append('idDetallePedido', idDetallePedido);
+              const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=deleteRow`, {
+                method: 'POST',
+                body: formData,
+              });
+              const data = await response.json();
+
+              if (response.ok && data.status === 1) {
+                fetchMenuData(); // Refresh the cart items after update
+                setModalVisible(false);
+              } else {
+                console.error('Error delete data:', data.error);
+                Alert.alert('Error', data.error);
+              }
+            } catch (error) {
+              console.error('Error:', error);
+            } finally {
+              setLoading(false);
+              setRefreshing(false);
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const finishOrder = async (idDetallePedido) => {
     try {
       setLoading(true);
       const formData = new FormData();
@@ -125,7 +195,7 @@ const CartScreen = () => {
                 <TouchableOpacity onPress={() => readOne(item.id_detalle_pedido)}>
                   <Ionicons name="pencil" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => deleteDetalle(item.id_detalle_pedido)}>
                   <Ionicons name="trash" size={24} color="black" />
                 </TouchableOpacity>
               </View>
@@ -180,7 +250,7 @@ const CartScreen = () => {
   );
 };
 
-  
+
 
 const styles = StyleSheet.create({
   container: {

@@ -30,37 +30,49 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'El historial esta vacío';
                 }
                 break;
-                case 'updateRow':
-                    $_POST = Validator::validateForm($_POST);
-                    if (
-                        !$pedido->setId($_POST['idDetallePedido']) or
-                        !$pedido->setCantidad($_POST['cantidadPedido']) or
-                        !$pedido->setNota($_POST['notaPedido'])
-                    ) {
-                        $result['error'] = $pedido->getDataError();
-                    } elseif ($pedido->updateRow()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Registro modificado correctamente';
-                    } else {
-                        $result['error'] = 'Ocurrió un problema al modificar el registro';
-                    }
-                    break;
-                case 'readOne':
-                    if (!$pedido->setId($_POST['idDetallePedido'])) {
-                        $result['error'] = $pedido->getDataError();
-                    } elseif ($result['dataset'] = $pedido->readOne()) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['error'] = 'Detalle inexistente';
-                    }
-                    break;
+            case 'updateRow':
+                $_POST = Validator::validateForm($_POST);
+                if (
+                    !$pedido->setId($_POST['idDetallePedido']) or
+                    !$pedido->setCantidad($_POST['cantidadPedido']) or
+                    !$pedido->setNota($_POST['notaPedido'])
+                ) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif ($pedido->updateRow()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Registro modificado correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al modificar el registro';
+                }
+                break;
+            case 'readOne':
+                if (!$pedido->setId($_POST['idDetallePedido'])) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif ($result['dataset'] = $pedido->readOne()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Detalle inexistente';
+                }
+                break;
+            case 'deleteRow':
+                if (
+                    !$pedido->setId($_POST['idDetallePedido'])
+                ) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif ($pedido->deleteRow()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Registro eliminado correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al eliminar el registro';
+                }
+                break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
     } else {
         // Se compara la acción a realizar cuando un cliente no ha iniciado sesión.
         switch ($_GET['action']) {
-            
+
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';
         }
