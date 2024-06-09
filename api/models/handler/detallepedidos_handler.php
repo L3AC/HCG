@@ -10,6 +10,8 @@ class DetallePedidoHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $cantidad = null;
+    protected $nota = null;
     protected $search = null;
     protected $idModelo = null;
     protected $idTalla = null;
@@ -87,8 +89,8 @@ class DetallePedidoHandler
 
     public function readOne()
     {
-        $sql ='select * from tb_detalle_pedidos ';
-        $params = array();
+        $sql ='select * from tb_detalle_pedidos where id_detalle_pedido=?';
+        $params = array($this->id);
         return Database::getRow($sql, $params);
     }
 
@@ -103,10 +105,10 @@ class DetallePedidoHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE prc_modelo 
-                SET foto = ?, descripcion = ?,estado = ?, id_marca = ?
-                WHERE id_modelo = ?';
-        $params = array($this->imagen, $this->nombre,$this->estado, $this->categoria, $this->id);
+        $sql = 'UPDATE tb_detalle_pedidos 
+                SET cantidad_pedido = ?, nota_pedido = ?
+                WHERE id_detalle_pedido = ?';
+        $params = array($this->cantidad, $this->nota,$this->id);
         return Database::executeRow($sql, $params);
     }
 

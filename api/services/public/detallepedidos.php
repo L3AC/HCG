@@ -30,6 +30,21 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'El historial esta vacío';
                 }
                 break;
+                case 'updateRow':
+                    $_POST = Validator::validateForm($_POST);
+                    if (
+                        !$pedido->setId($_POST['idDetallePedido']) or
+                        !$pedido->setCantidad($_POST['cantidadPedido']) or
+                        !$pedido->setNota($_POST['notaPedido'])
+                    ) {
+                        $result['error'] = $pedido->getDataError();
+                    } elseif ($pedido->updateRow()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Registro modificado correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al modificar el registro';
+                    }
+                    break;
                 case 'readOne':
                     if (!$pedido->setId($_POST['idDetallePedido'])) {
                         $result['error'] = $pedido->getDataError();

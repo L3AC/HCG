@@ -27,6 +27,37 @@ class DetallePedidoData extends DetallePedidoHandler
             return false;
         }
     }
+    public function setCantidad($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->cantidad = $value;
+            return true;
+        } else {
+            $this->data_error = 'La cantidad debe ser un numero entero';
+            return false;
+        }
+    }
+    public function setNota($value, $min = 2, $max = 250)
+    {
+        if(empty($value)){
+            $value='Nota vacía';
+            $this->nota = $value;
+            return true;
+        }
+        elseif (!Validator::validateString($value)) {
+            $this->data_error = 'La nota contiene caracteres prohibidos';
+            return false;
+        } elseif (!Validator::validateLength($value, $min, $max)) {
+            $this->data_error = 'La nota debe tener una longitud entre ' . $min . ' y ' . $max;
+            return false;
+        }  elseif (!Validator::validateWord($value)) {
+            $this->data_error = 'La nota contiene palabras prohibidas';
+            return false;
+        }else {
+            $this->nota = $value;
+            return true;
+        }
+    }
     public function setIdModelo($value)
     {
         if (Validator::validateNaturalNumber($value)) {

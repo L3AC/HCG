@@ -159,6 +159,41 @@ class Validator
             return false;
         }
     }
+    private static $forbiddenWords = [
+        'puta',
+        'mierda',
+        'perra',
+        'pendejo',
+        'imbecil',
+        'malparido',
+        // Añade aquí las palabras soeces o no permitidas
+    ];
+    private static function normalize($string) {
+        $replacements = [
+            'á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u',
+            'à' => 'a', 'è' => 'e', 'ì' => 'i', 'ò' => 'o', 'ù' => 'u',
+            'ä' => 'a', 'ë' => 'e', 'ï' => 'i', 'ö' => 'o', 'ü' => 'u',
+            'â' => 'a', 'ê' => 'e', 'î' => 'i', 'ô' => 'o', 'û' => 'u',
+            'ã' => 'a', 'õ' => 'o', 'ñ' => 'n', 'ç' => 'c',
+            '0' => 'o', '1' => 'i', '2' => 'z', '3' => 'e', '4' => 'a',
+            '5' => 's', '6' => 'b', '7' => 't', '8' => 'b', '9' => 'g',
+            '@' => 'a', '$' => 's', '!' => 'i'
+        ];
+        $string = strtolower($string); // Convertir a minúsculas
+        return strtr($string, $replacements); // Reemplazar caracteres
+    }
+
+    public static function validateWord($value)
+    {
+        $normalizedValue = self::normalize($value);
+        foreach (self::$forbiddenWords as $word) {
+            $normalizedWord = self::normalize($word);
+            if (strpos($normalizedValue, $normalizedWord) !== false) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /*
     *   Método para validar un dato alfabético (letras y espacios en blanco).

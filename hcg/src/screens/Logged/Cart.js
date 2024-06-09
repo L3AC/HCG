@@ -52,6 +52,7 @@ const CartScreen = () => {
         setCantidad(data.dataset.cantidad_pedido.toString() || '1');
         setNota(data.dataset.nota_pedido || 'Nota vacía');
         setCurrentItemId(idDetallePedido);
+        console.log( cantidad+' '+nota+idDetallePedido );
         setModalVisible(true);
       } else {
         console.error('Error fetching data:', data.error);
@@ -69,9 +70,9 @@ const CartScreen = () => {
       setLoading(true);
       const formData = new FormData();
       formData.append('idDetallePedido', idDetallePedido);
-      formData.append('cantidad_pedido', cantidad);
-      formData.append('nota_pedido', nota);
-      const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=update`, {
+      formData.append('cantidadPedido', cantidad);
+      formData.append('notaPedido', nota);
+      const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=updateRow`, {
         method: 'POST',
         body: formData,
       });
@@ -121,7 +122,7 @@ const CartScreen = () => {
             <View style={styles.itemHeader}>
               <Text style={styles.itemName}>{item.descripcion_producto}</Text>
               <View style={styles.iconsContainer}>
-                <TouchableOpacity onPress={() => readOne(item.id_producto)}>
+                <TouchableOpacity onPress={() => readOne(item.id_detalle_pedido)}>
                   <Ionicons name="pencil" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity>
