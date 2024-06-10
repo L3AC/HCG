@@ -2,8 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { ScrollView, RefreshControl, StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SERVER } from '../../contexts/Network';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 const PerfilScreen = () => {
+  const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [profileData, setProfileData] = useState({
     nombre_cliente: '',
@@ -45,7 +47,7 @@ const PerfilScreen = () => {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
       <View style={styles.header}>
-        <Ionicons name="arrow-back" size={35} color="black" />
+        <Ionicons name="arrow-back" size={35} color="black" onPress={() => navigation.goBack()}/>
         <Text style={styles.title}>Perfil</Text>
         <Ionicons name="pencil" size={35} color="black" />
       </View>
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 16,
-    backgroundColor: '#D59141',
+    backgroundColor: '#d2a563',
   },
   header: {
     flexDirection: 'row',

@@ -104,7 +104,7 @@ const Login = () => {
           onChangeText={setClave}
             value={clave}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('VerifUs')}>
           <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
         </TouchableOpacity>
         <Button
@@ -119,7 +119,7 @@ const Login = () => {
           titleStyle={styles.buttonTitle}
           onPress={handleCerrar}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
         </TouchableOpacity>
       </View>
