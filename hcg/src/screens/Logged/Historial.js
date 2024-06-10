@@ -1,17 +1,62 @@
-import React, { useState, useCallback } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, RefreshControl, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, RefreshControl, StyleSheet, Alert } from 'react-native';
+import { Icon } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
+import { SERVER } from '../../contexts/Network';
 
-const PurchaseHistoryScreen = () => {
+const Historial = () => {
   const [refreshing, setRefreshing] = useState(false);
+  const [search, setSearch] = useState('');
+  const [estado, setEstado] = useState('Pendiente');
+  const [orders, setOrders] = useState([]);
+  const navigation = useNavigation();
+
+  const fetchData = async (query = '', estado = 'Pendiente') => {
+    try {
+      setRefreshing(true);
+      const formData = new FormData();
+      formData.append('valor', query);
+      formData.append('estado', estado);
+
+      const response = await fetch(`${SERVER}services/public/pedidos.php?action=searchRows`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === 1) {
+        setOrders(data.dataset);  // Asegúrate de que `data.dataset` contiene la lista de pedidos
+      } else {
+        console.error('Error fetching data:', data.message);
+        Alert.alert('Error', data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [estado]);
 
   const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    // Aquí iría la lógica para refrescar los datos.
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
+    fetchData(search, estado);
+  }, [search, estado]);
+
+  const handleSearchChange = (text) => {
+    setSearch(text);
+    fetchData(text, estado);
+  };
+
+  const handleOrderPress = (orderId) => {
+    navigation.navigate('OrderDetails', { orderId });  // Asegúrate de que tienes una pantalla 'OrderDetails' configurada en tu navegador
+  };
 
   return (
     <ScrollView
@@ -21,28 +66,30 @@ const PurchaseHistoryScreen = () => {
       }
     >
       <Text style={styles.title}>Historial de compras</Text>
-      <View style={styles.searchContainer}>
-        <TextInput style={styles.searchInput} placeholder="Buscar" />
-        <Ionicons name="search" size={24} color="black" />
+      <View style={styles.searchBarContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Buscar..."
+          value={search}
+          onChangeText={handleSearchChange}
+        />
+        <Icon name="search" type="font-awesome" size={24} style={styles.searchIcon} />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={[styles.button, estado === 'Pendiente' && styles.activeButton]} onPress={() => setEstado('Pendiente')}>
           <Text>Pendiente</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={[styles.button, estado === 'Finalizado' && styles.activeButton]} onPress={() => setEstado('Finalizado')}>
           <Text>Finalizado</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.card}>
-        <Text style={styles.cardText}>Pedido: HJD902</Text>
-        <Text style={styles.cardText}>Fecha: 8/6/2024</Text>
-        <Text style={styles.cardText}>Total: $3</Text>
-      </View>
-      <View style={styles.card}>
-        <Text style={styles.cardText}>Pedido: HJD902</Text>
-        <Text style={styles.cardText}>Fecha: 8/6/2024</Text>
-        <Text style={styles.cardText}>Total: $3</Text>
-      </View>
+      {orders.map(order => (
+        <TouchableOpacity key={order.id} style={styles.card} onPress={() => handleOrderPress(order.id)}>
+          <Text style={styles.cardText}>Pedido: {order.id}</Text>
+          <Text style={styles.cardText}>Fecha: {order.fecha}</Text>
+          <Text style={styles.cardText}>Total: ${order.total}</Text>
+        </TouchableOpacity>
+      ))}
     </ScrollView>
   );
 };
@@ -51,29 +98,28 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 16,
-    backgroundColor: '#F4A261',
+    backgroundColor: '#d2a563',
   },
   title: {
     fontSize: 24,
     marginBottom: 16,
+    marginTop: 50,
     textAlign: 'center',
     fontWeight: 'bold',
   },
-  searchContainer: {
+  searchBarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
-    backgroundColor: '#EDE8C9',
-    borderRadius: 25,
-    paddingHorizontal: 10,
+    backgroundColor: '#F0E4CA',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 40,
+    marginTop: 40,
   },
   searchInput: {
     flex: 1,
-    height: 40,
-    borderColor: 'transparent',
-    borderWidth: 1,
-    paddingHorizontal: 8,
-    borderRadius: 25,
+    fontSize: 18,
+    color: '#000',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -84,6 +130,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#EDE8C9',
     padding: 10,
     borderRadius: 25,
+  },
+  activeButton: {
+    backgroundColor: '#C4B393',
   },
   card: {
     backgroundColor: '#F1E0C5',
@@ -97,4 +146,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PurchaseHistoryScreen;
+export default Historial;

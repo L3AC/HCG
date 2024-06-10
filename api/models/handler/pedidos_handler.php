@@ -43,7 +43,21 @@ class PedidoHandler
         return Database::getRows($sql, $params);
     }
 
+    public function searchByCliente()
+    {
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
+        $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        id_cliente,correo_cliente,codigo_pedido,
+        DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha,estado_pedido
+        FROM tb_pedidos 
+        INNER JOIN tb_clientes USING(id_cliente)
+        WHERE estado_pedido = ? AND
+        CONCAT(nombre_cliente," ",apellido_cliente) LIKE ? AND id_cliente = ?
+        ORDER BY fecha_pedido DESC';
+        $params = array($this->estado, $this->search,$_SESSION['idCliente']);
+        return Database::getRows($sql, $params);
+    }
 
     public function readAll()
     {

@@ -66,6 +66,19 @@ if (isset($_GET['action'])) {
                 } else {
                 }
                 break;
+                case 'searchByCliente':
+                    if (
+                        !$pedido->setSearch($_POST['valor']) or
+                        !$pedido->setEstado($_POST['estado'])
+                    ) {
+                        $result['error'] = $pedido->getDataError();
+                    } elseif ($result['dataset'] = $pedido->searchByCliente()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
+                    } else {
+                    }
+                    break;
+            
                 // Acción para actualizar la cantidad de un producto en el carrito de compras.
                 /*case 'updateDetail':
                 $_POST = Validator::validateForm($_POST);
