@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, RefreshControl, StyleSheet, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import { SERVER } from '../../contexts/Network';
+import { SERVER } from '../../contexts/Network'; // Reemplaza con la URL de tu servidor
 
 const Historial = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -18,11 +18,8 @@ const Historial = () => {
       formData.append('valor', query);
       formData.append('estado', estado);
 
-      const response = await fetch(`${SERVER}services/public/pedidos.php?action=searchRows`, {
+      const response = await fetch(`${SERVER}services/public/pedidos.php?action=searchByCliente`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
         body: formData,
       });
 
