@@ -14,7 +14,7 @@ class PedidoHandler
     protected $id_producto = null;
     protected $cantidad = null;
     protected $nota = null;
-
+    protected $clave = null;
     protected $descripcion = null;
     protected $categoria = null;
     protected $estado = null;
@@ -58,6 +58,7 @@ class PedidoHandler
         $params = array($this->estado, $this->search,$_SESSION['idCliente']);
         return Database::getRows($sql, $params);
     }
+
 
     public function readAll()
     {

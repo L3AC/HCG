@@ -42,6 +42,21 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al leer el perfil';
                 }
                 break;
+            case 'changePassword':
+                $_POST = Validator::validateForm($_POST);
+                if (!$usuario->checkPassword($_POST['claveActual'])) {
+                    $result['error'] = 'Contraseña actual incorrecta';
+                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                    $result['error'] = 'Confirmación de contraseña diferente';
+                } elseif (!$usuario->setClave($_POST['claveNueva'])) {
+                    $result['error'] = $usuario->getDataError();
+                } elseif ($usuario->changePassword()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Contraseña cambiada correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
+                }
+                break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
@@ -84,20 +99,20 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'logIn':
-                 $_POST = Validator::validateForm($_POST);
-                    if (isset($_POST['usu']) && isset($_POST['clave'])) {        
-                        if (!$cliente->checkUser($_POST['usu'], $_POST['clave'])) {
-                            $result['error'] = 'Datos incorrectos';
-                        } elseif ($cliente->checkStatus()) {
-                            $result['status'] = 1;
-                            $result['message'] = 'Autenticación correcta';
-                            $result['dataset'] = $_SESSION['idCliente'];
-                        } else {
-                            $result['error'] = 'La cuenta ha sido desactivada';
-                        }
+                $_POST = Validator::validateForm($_POST);
+                if (isset($_POST['usu']) && isset($_POST['clave'])) {
+                    if (!$cliente->checkUser($_POST['usu'], $_POST['clave'])) {
+                        $result['error'] = 'Datos incorrectos';
+                    } elseif ($cliente->checkStatus()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Autenticación correcta';
+                        $result['dataset'] = $_SESSION['idCliente'];
                     } else {
-                        $result['error'] = 'Usuario y/o contraseña no proporcionados';
+                        $result['error'] = 'La cuenta ha sido desactivada';
                     }
+                } else {
+                    $result['error'] = 'Usuario y/o contraseña no proporcionados';
+                }
                 break;
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';

@@ -78,6 +78,7 @@ if (isset($_GET['action'])) {
                     } else {
                     }
                     break;
+
             
                 // Acción para actualizar la cantidad de un producto en el carrito de compras.
                 /*case 'updateDetail':
