@@ -39,7 +39,7 @@ const Historial = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(search, estado);
   }, [estado]);
 
   const onRefresh = useCallback(() => {
@@ -53,6 +53,11 @@ const Historial = () => {
 
   const handleOrderPress = (orderId) => {
     navigation.navigate('OrderDetails', { orderId });  // Asegúrate de que tienes una pantalla 'OrderDetails' configurada en tu navegador
+  };
+
+  const handleEstadoChange = (nuevoEstado) => {
+    setEstado(nuevoEstado);
+    fetchData(search, nuevoEstado);
   };
 
   return (
@@ -73,18 +78,17 @@ const Historial = () => {
         <Icon name="search" type="font-awesome" size={24} style={styles.searchIcon} />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, estado === 'Pendiente' && styles.activeButton]} onPress={() => setEstado('Pendiente')}>
+        <TouchableOpacity style={[styles.button, estado === 'Pendiente' && styles.activeButton]} onPress={() => handleEstadoChange('Pendiente')}>
           <Text>Pendiente</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, estado === 'Finalizado' && styles.activeButton]} onPress={() => setEstado('Finalizado')}>
+        <TouchableOpacity style={[styles.button, estado === 'Finalizado' && styles.activeButton]} onPress={() => handleEstadoChange('Finalizado')}>
           <Text>Finalizado</Text>
         </TouchableOpacity>
       </View>
       {orders.map(order => (
         <TouchableOpacity key={order.id} style={styles.card} onPress={() => handleOrderPress(order.id)}>
-          <Text style={styles.cardText}>Pedido: {order.id}</Text>
+          <Text style={styles.cardText}>Pedido: {order.codigo_pedido}</Text>
           <Text style={styles.cardText}>Fecha: {order.fecha}</Text>
-          <Text style={styles.cardText}>Total: ${order.total}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>

@@ -18,17 +18,6 @@ const App = () => {
     QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
   });
   
-      const menuItems = [
-    { id: '1', name: 'Club Sandwich', price: '$3', image: require('../../img/logo.png') },
-    { id: '2', name: 'Hamburguesa', price: '$3', image:   require('../../img/logo.png') },
-    { id: '3', name: 'Hamb de pollo', price: '$3', image: require('../../img/logo.png') },
-    { id: '4', name: 'Nachos', price: '$3', image:        require('../../img/logo.png') },
-  ];
-
-  const complementItems = [
-    { id: '5', name: 'Papas Fritas', price: '$1', image: require('../../img/logo.png') },
-    { id: '6', name: 'Aros de Cebolla', price: '$1', image: require('../../img/logo.png') },
-  ];
   */
 
   return (

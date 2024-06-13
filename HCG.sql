@@ -2,7 +2,6 @@ DROP DATABASE IF EXISTS db_hcg;
 CREATE DATABASE IF NOT EXISTS db_hcg;
 USE db_hcg;
 
-
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED,
   descripcion_rol VARCHAR(100) NOT NULL,
@@ -125,17 +124,14 @@ CREATE TABLE tb_detalle_pedidos (
 );
 
 
-SELECT id_detalle_pedido,id_pedido,descripcion_producto,descripcion_marca,
-        precio_modelo_talla,descripcion_talla,cantidad_detalle_pedido,fecha_pedido,foto_modelo
-        from prc_detalle_pedidos
+		SELECT id_cliente,id_detalle_pedido,id_producto,id_pedido,cantidad_pedido,fecha_pedido,
+		descripcion_producto,precio_producto,cantidad_pedido, 
+		(precio_producto*cantidad_pedido) as total
+        from tb_detalle_pedidos
         INNER JOIN tb_pedidos USING (id_pedido)
-        INNER JOIN tb_detalle_pedidos USING (id_detalle_pedido)
         INNER JOIN tb_productos USING (id_producto)
-        INNER JOIN ctg_marcas USING (id_marca)
-        INNER JOIN ctg_tallas USING (id_talla)
-        WHERE estado_pedido ="Finalizado" AND id_cliente=? AND (descripcion_modelo like ?
-        OR descripcion_marca like ? OR precio_modelo_talla like ?)
-        ORDER BY descripcion_modelo
+        WHERE estado_pedido ="Pendiente" AND id_cliente=11 AND (descripcion_producto like '%%')
+        ORDER BY descripcion_producto
 
 
 

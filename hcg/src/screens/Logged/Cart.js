@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshControl, Alert, TextInput, ActivityIndicator, Modal } from 'react-native';
 import { SERVER } from '../../contexts/Network';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
 const CartScreen = () => {
@@ -12,6 +13,8 @@ const CartScreen = () => {
   const [nota, setNota] = useState('');
   const [currentItemId, setCurrentItemId] = useState(null);
   const [loadingModal, setLoadingModal] = useState(false);
+  const navigation = useNavigation();
+
 
   const fetchMenuData = async (query = '') => {
     try {
@@ -27,8 +30,8 @@ const CartScreen = () => {
       if (response.ok && data.status === 1) {
         setCartItems(data.dataset || []);
       } else {
-        console.error('Error fetching data:', data.message);
-        Alert.alert('Error', data.message);
+        Alert.alert('No hay ningún producto agregado');
+        navigation.navigate('StackHome');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -119,7 +122,6 @@ const CartScreen = () => {
                 fetchMenuData(); // Refresh the cart items after update
                 setModalVisible(false);
               } else {
-                console.error('Error delete data:', data.error);
                 Alert.alert('Error', data.error);
               }
             } catch (error) {
@@ -138,21 +140,16 @@ const CartScreen = () => {
   const finishOrder = async (idDetallePedido) => {
     try {
       setLoading(true);
-      const formData = new FormData();
-      formData.append('idDetallePedido', idDetallePedido);
-      formData.append('cantidadPedido', cantidad);
-      formData.append('notaPedido', nota);
-      const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=updateRow`, {
-        method: 'POST',
-        body: formData,
+      const response = await fetch(`${SERVER}services/public/pedidos.php?action=finishOrder`, {
+        method: 'POST'
       });
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        fetchMenuData(); // Refresh the cart items after update
-        setModalVisible(false);
+        Alert.alert('Error', data.error);
+        navigation.navigate('Home');
       } else {
-        console.error('Error updating data:', data.error);
+        console.error('Error:', data.error);
         Alert.alert('Error', data.error);
       }
     } catch (error) {
