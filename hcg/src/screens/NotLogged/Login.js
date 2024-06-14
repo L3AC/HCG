@@ -27,7 +27,6 @@ const Login = () => {
       formData.append('usu', usuario);
       formData.append('clave', clave);
       console.log(formData);
-      //utilizar la direccion IP del servidor y no localhost
       const response = await fetch(`${SERVER}services/public/clientes.php?action=logIn`, {
         method: 'POST',
         body: formData

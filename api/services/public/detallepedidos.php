@@ -30,6 +30,18 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'El historial esta vacío';
                 }
                 break;
+                case 'searchByPedido':
+                    if (
+                        !$pedido->setIdPedido($_POST['idPedido'])
+                    ) {
+                        $result['error'] = $pedido->getDataError();
+                    } elseif ($result['dataset'] = $pedido->searchByPedido()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
+                    } else {
+                        $result['error'] = 'El historial esta vacío';
+                    }
+                    break;
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (

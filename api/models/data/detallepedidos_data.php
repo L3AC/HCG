@@ -27,6 +27,16 @@ class DetallePedidoData extends DetallePedidoHandler
             return false;
         }
     }
+    public function setIdPedido($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->id_pedido = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
     public function setCantidad($value)
     {
         if (Validator::validateNaturalNumber($value)) {

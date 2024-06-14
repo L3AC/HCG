@@ -52,7 +52,7 @@ const Historial = () => {
   };
 
   const handleOrderPress = (orderId) => {
-    navigation.navigate('OrderDetails', { orderId });  // Asegúrate de que tienes una pantalla 'OrderDetails' configurada en tu navegador
+    navigation.navigate('DetallePedido', { orderId });  // Asegúrate de que tienes una pantalla 'OrderDetails' configurada en tu navegador
   };
 
   const handleEstadoChange = (nuevoEstado) => {
@@ -86,7 +86,7 @@ const Historial = () => {
         </TouchableOpacity>
       </View>
       {orders.map(order => (
-        <TouchableOpacity key={order.id} style={styles.card} onPress={() => handleOrderPress(order.id)}>
+        <TouchableOpacity key={order.id_pedido.toString()} style={styles.card} onPress={() => handleOrderPress(order.id_pedido)}>
           <Text style={styles.cardText}>Pedido: {order.codigo_pedido}</Text>
           <Text style={styles.cardText}>Fecha: {order.fecha}</Text>
         </TouchableOpacity>

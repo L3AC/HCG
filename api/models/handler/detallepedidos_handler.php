@@ -10,6 +10,7 @@ class DetallePedidoHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $id_pedido = null;
     protected $cantidad = null;
     protected $nota = null;
     protected $search = null;
@@ -62,7 +63,23 @@ class DetallePedidoHandler
         $params = array($_SESSION['idCliente'],$this->search);
         return Database::getRows($sql, $params);
     }
+    public function searchByPedido()
+    {
+        //$this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
+        $sql = 'SELECT id_cliente,id_detalle_pedido,id_producto,id_pedido,cantidad_pedido, 
+        DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha_pedido,
+		descripcion_producto,precio_producto,cantidad_pedido,imagen_producto,
+		(precio_producto*cantidad_pedido) as subtotal
+        from tb_detalle_pedidos
+        INNER JOIN tb_pedidos USING (id_pedido)
+        INNER JOIN tb_productos USING (id_producto)
+        WHERE id_pedido=?
+        ORDER BY descripcion_producto';
+
+        $params = array($this->id_pedido/*,$this->search*/);
+        return Database::getRows($sql, $params);
+    }
     public function createRow()
     {
         $sql = 'INSERT INTO prc_modelo_tallas(id_talla, id_modelo, stock_modelo_talla, precio_modelo_talla)
