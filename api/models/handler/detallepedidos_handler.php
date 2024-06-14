@@ -73,7 +73,7 @@ class DetallePedidoHandler
 		(precio_producto*cantidad_pedido) as subtotal
         from tb_detalle_pedidos
         INNER JOIN tb_pedidos USING (id_pedido)
-        INNER JOIN tb_productos USING (id_producto)
+        INNER JOIN tb_productos USING (id_producto) 
         WHERE id_pedido=?
         ORDER BY descripcion_producto';
 
