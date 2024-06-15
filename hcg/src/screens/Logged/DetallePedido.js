@@ -1,58 +1,66 @@
+// Importación de librerías y componentes necesarios
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, RefreshControl, Alert, TouchableOpacity } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import { SERVER } from '../../contexts/Network'; 
-import Ionicons from 'react-native-vector-icons/Ionicons'; 
+import { useRoute, useNavigation } from '@react-navigation/native'; // Hooks de react-navigation
+import { SERVER } from '../../contexts/Network'; // URL del servidor
+import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 
+// Componente funcional OrderDetailScreen
 const OrderDetailScreen = () => {
-    const route = useRoute();
-    const navigation = useNavigation();
-    const { orderId } = route.params;
-    const [refreshing, setRefreshing] = useState(false);
-    const [orderItems, setOrderItems] = useState([]);
+    const route = useRoute(); // Obtiene la ruta actual
+    const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
+    const { orderId } = route.params; // Obtiene el orderId de los parámetros de la ruta
+    const [refreshing, setRefreshing] = useState(false); // Estado para el control de la actualización
+    const [orderItems, setOrderItems] = useState([]); // Estado para almacenar los items del pedido
   
+    // Función para obtener los detalles del pedido desde el servidor
     const fetchOrderDetails = async () => {
       try {
-        setRefreshing(true);
+        setRefreshing(true); // Activa el estado de actualización
         const formData = new FormData();
-        formData.append('idPedido', orderId);
+        formData.append('idPedido', orderId); // Añade el idPedido al FormData
   
         const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=searchByPedido`, {
           method: 'POST',
           body: formData,
         });
   
-        const data = await response.json();
+        const data = await response.json(); // Convierte la respuesta a JSON
   
         if (response.ok && data.status === 1) {
-          setOrderItems(data.dataset);
+          setOrderItems(data.dataset); // Actualiza los items del pedido
         } else {
           console.error('Error fetching data:', data.message);
-          Alert.alert('Error', data.message);
+          Alert.alert('Error', data.message); // Muestra una alerta en caso de error
         }
       } catch (error) {
         console.error('Error:', error);
-        Alert.alert('Error', 'Failed to fetch order details');
+        Alert.alert('Error', 'Failed to fetch order details'); // Muestra una alerta en caso de error
       } finally {
-        setRefreshing(false);
+        setRefreshing(false); // Desactiva el estado de actualización
       }
     };
   
+    // useEffect para obtener los detalles del pedido al montar el componente
     useEffect(() => {
       fetchOrderDetails();
     }, []);
   
+    // Renderizado del componente
     return (
       <ScrollView
         contentContainerStyle={styles.container}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchOrderDetails} />}
       >
+        {/* Contenedor del encabezado */}
         <View style={styles.headerContainer}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Ionicons name="arrow-back" size={40} color="#000" />
           </TouchableOpacity>
+          {/* Título del encabezado */}
           <Text style={styles.header}>Detalle del pedido</Text>
         </View>
+        {/* Mapeo de los items del pedido */}
         {orderItems.map((item) => (
           <View key={item.id_detalle_pedido} style={styles.card}>
             <Image source={{ uri: item.imagen_producto }} style={styles.image} />
@@ -68,15 +76,16 @@ const OrderDetailScreen = () => {
     );
   };
   
+  // Estilos del componente
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
       padding: 16,
-      backgroundColor: '#d2a563', // Background color of the screen
+      backgroundColor: '#d2a563', // Color de fondo del screen
     },
     headerContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: 'row', // Coloca los elementos en una fila
+      alignItems: 'center', // Alinea los elementos verticalmente al centro
       marginBottom: 40,
       marginTop: 60,
     },
@@ -90,26 +99,26 @@ const OrderDetailScreen = () => {
       flex: 1,
     },
     card: {
-      flexDirection: 'row',
-      backgroundColor: '#F4F0E4', // Background color of the cards
+      flexDirection: 'row', // Coloca los elementos en una fila
+      backgroundColor: '#F4F0E4', // Color de fondo de las tarjetas
       padding: 16,
-      borderRadius: 10,
+      borderRadius: 10, // Bordes redondeados
       marginBottom: 16,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.3,
-      shadowRadius: 5,
-      elevation: 5,
+      shadowColor: '#000', // Color de la sombra
+      shadowOffset: { width: 0, height: 2 }, // Offset de la sombra
+      shadowOpacity: 0.3, // Opacidad de la sombra
+      shadowRadius: 5, // Radio de la sombra
+      elevation: 5, // Elevación de la sombra
     },
     image: {
       width: 80,
       height: 80,
-      borderRadius: 10,
+      borderRadius: 10, // Bordes redondeados de la imagen
       marginRight: 16,
     },
     textContainer: {
-      flex: 1,
-      justifyContent: 'center',
+      flex: 1, // Ocupa todo el espacio disponible
+      justifyContent: 'center', // Alinea los elementos verticalmente al centro
     },
     title: {
       fontSize: 18,
@@ -118,4 +127,4 @@ const OrderDetailScreen = () => {
     },
   });
   
-  export default OrderDetailScreen;
+  export default OrderDetailScreen; // Exporta el componente OrderDetailScreen
