@@ -5,14 +5,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../contexts/AuthContext';
 import { SERVER } from '../../contexts/Network';
 
+// Función de espera para simular una operación asíncrona
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
+// Componente funcional CuentaScreen
 const CuentaScreen = () => {
-  const navigation = useNavigation();
-  const [refreshing, setRefreshing] = useState(false);
-  const { setIsLoggedIn } = useAuth();
+  const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
+  const [refreshing, setRefreshing] = useState(false); // Estado para controlar la actualización
+  const { setIsLoggedIn } = useAuth(); // Extrae setIsLoggedIn del contexto de autenticación
 
+  // Función para realizar el cierre de sesión
   const logOut = async () => {
     Alert.alert(
       "Confirmar",
@@ -34,18 +37,16 @@ const CuentaScreen = () => {
               
               const data = await response.json();
               if (data.status) {
-                Alert.alert(data.message);
-                setIsLoggedIn(false);
-                navigation.navigate('Login');
+                Alert.alert(data.message); // Muestra una alerta con el mensaje de éxito
+                setIsLoggedIn(false); // Actualiza el estado de autenticación
+                navigation.navigate('Login'); // Redirige a la pantalla de inicio de sesión
               } else {
                 console.log(data);
-                // Alert the user about the error
-                Alert.alert('Error sesion', data.error);
+                Alert.alert('Error sesion', data.error); // Muestra una alerta con el mensaje de error
               }
             } catch (error) {
-              console.error(error, "Error desde Catch");
-              
-              Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
+              console.error(error, "Error en el catch"); // Registra el error en la consola
+              Alert.alert('Error', 'Ocurrió un error al cerrar sesión'); // Muestra una alerta en caso de error
             }
           },
         },
@@ -55,11 +56,13 @@ const CuentaScreen = () => {
     
   };
 
+  // Función para manejar la acción de actualización
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(500).then(() => setRefreshing(false));
   }, []);
 
+  // Renderizado del componente
   return (
     <ScrollView
       contentContainerStyle={styles.container}
@@ -72,16 +75,19 @@ const CuentaScreen = () => {
         <Ionicons name="log-out-outline" size={60} color="black" onPress={() => logOut()} />
       </View>
 
+      {/* Tarjeta para navegar al perfil */}
       <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Perfil')}>
         <Ionicons name="person-circle-outline" size={50} color="black" />
         <Text style={styles.cardText}>Perfil</Text>
       </TouchableOpacity>
 
+      {/* Tarjeta para navegar a la pantalla de cambio de clave */}
       <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Clave')}>
         <Ionicons name="lock-closed-outline" size={50} color="black" />
         <Text style={styles.cardText}>Clave</Text>
       </TouchableOpacity>
 
+      {/* Tarjeta para navegar a la pantalla "Sobre Nosotros" */}
       <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('SobreNosotros')}>
         <Ionicons name="people-circle-outline" size={50} color="black" />
         <Text style={styles.cardText}>Sobre nosotros</Text>
@@ -90,38 +96,39 @@ const CuentaScreen = () => {
   );
 }
 
+// Estilos del componente
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#d2a563',
+    backgroundColor: '#d2a563', // Color de fondo del screen
     alignItems: 'center',
     paddingVertical: 20,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '90%',
-    marginTop: 60,
-    marginBottom: 60,
+    flexDirection: 'row', // Coloca los elementos en una fila
+    justifyContent: 'space-between', // Distribuye los elementos horizontalmente
+    alignItems: 'center', // Alinea los elementos verticalmente al centro
+    width: '90%', // Ancho del contenedor
+    marginTop: 60, // Margen superior
+    marginBottom: 60, // Margen inferior
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
   },
   card: {
-    backgroundColor: '#e8e8e8',
-    width: '90%',
-    height: '20%',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: 20,
+    backgroundColor: '#e8e8e8', // Color de fondo de las tarjetas
+    width: '90%', // Ancho de las tarjetas
+    height: '20%', // Altura de las tarjetas
+    padding: 20, // Padding interno
+    borderRadius: 10, // Bordes redondeados
+    alignItems: 'center', // Alinea los elementos al centro horizontalmente
+    marginBottom: 20, // Margen inferior
   },
   cardText: {
-    marginTop: 10,
-    fontSize: 18,
+    marginTop: 10, // Margen superior del texto
+    fontSize: 18, // Tamaño de fuente del texto
   },
 });
 
-export default CuentaScreen;
+export default CuentaScreen; // Exporta el componente CuentaScreen
