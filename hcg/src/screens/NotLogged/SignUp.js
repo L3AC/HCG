@@ -1,43 +1,53 @@
+// Importación de librerías y componentes necesarios
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native'; // Hook de navegación
+import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 
+// Componente de función SignUp
 const SignUp = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
 
   return (
     <View style={styles.container}>
+      {/* Botón para volver a la pantalla anterior */}
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
-      <Text style={styles.title}>Registro</Text>
+      <Text style={styles.title}>Registro</Text> {/* Título de la pantalla de registro */}
 
+      {/* Contenedor para el input de Nombre */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Nombre</Text>
         <TextInput style={styles.input} placeholder="Nombre" placeholderTextColor="#000" />
       </View>
+      {/* Contenedor para el input de Apellido */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Apellido</Text>
         <TextInput style={styles.input} placeholder="Apellido" placeholderTextColor="#000" />
       </View>
+      {/* Contenedor para el input de Correo */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Correo</Text>
         <TextInput style={styles.input} placeholder="Correo" placeholderTextColor="#000" />
       </View>
+      {/* Contenedor para el input de Teléfono */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Telefono</Text>
         <TextInput style={styles.input} placeholder="Telefono" placeholderTextColor="#000" />
       </View>
+      {/* Contenedor para el input de Usuario */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Usuario</Text>
         <TextInput style={styles.input} placeholder="Usuario" placeholderTextColor="#000" />
       </View>
+      {/* Contenedor para el input de Contraseña */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Contraseña</Text>
         <TextInput style={styles.input} placeholder="Contraseña" placeholderTextColor="#000" secureTextEntry={true} />
       </View>
 
+      {/* Botón de confirmación */}
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Confirmar</Text>
       </TouchableOpacity>
@@ -45,6 +55,7 @@ const SignUp = () => {
   );
 };
 
+// Estilos del componente
 const styles = StyleSheet.create({
   container: {
     flex: 1,
