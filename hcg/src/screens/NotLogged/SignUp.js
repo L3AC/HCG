@@ -14,7 +14,8 @@ const SignUp = () => {
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
-      <Text style={styles.title}>Registro</Text> {/* Título de la pantalla de registro */}
+      {/* Título de la pantalla de registro */}
+      <Text style={styles.title}>Registro</Text>
 
       {/* Contenedor para el input de Nombre */}
       <View style={styles.inputContainer}>
