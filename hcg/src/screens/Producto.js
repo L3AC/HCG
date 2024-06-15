@@ -4,74 +4,89 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { SERVER } from '../contexts/Network';
 
+// Estados para manejar la interfaz y los datos del producto
 const ProductoScreen = () => {
-  const [refreshing, setRefreshing] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [productInfo, setProductInfo] = useState({});
-  const [details, setDetails] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [cantidad, setCantidad] = useState('');
-  const [nota, setNota] = useState('');
-  const route = useRoute();
-  const navigation = useNavigation();
-  const { idProducto } = route.params;
+  const [refreshing, setRefreshing] = useState(false); // Estado para el control de refresco
+  const [loading, setLoading] = useState(false); // Estado para el control de carga
+  const [productInfo, setProductInfo] = useState({}); // Estado para la información del producto
+  const [details, setDetails] = useState([]); // Estado para los detalles del producto
+  const [modalVisible, setModalVisible] = useState(false); // Estado para controlar la visibilidad del modal
+  const [cantidad, setCantidad] = useState(''); // Estado para la cantidad del producto a agregar
+  const [nota, setNota] = useState(''); // Estado para la nota del producto a agregar
 
+// Hooks de navegación y rutas
+  const route = useRoute();
+  const navigation = useNavigation(); // Hook para la navegación
+  const { idProducto } = route.params; // Obtener el ID del producto desde los parámetros de la ruta
+
+// Función para obtener datos del producto desde el servidor
   const fetchMenuData = async () => {
     try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append('idProducto', idProducto);
+      setLoading(true); // Activar estado de carga
+      const formData = new FormData(); // Crear un nuevo objeto FormData
+      formData.append('idProducto', idProducto); // Agregar el ID del producto a los datos del formulario
 
+      // Hacer una solicitud a la API para obtener los datos del producto
       const response = await fetch(`${SERVER}services/public/detalleproductos.php?action=readByProducto2`, {
         method: 'POST',
         body: formData,
       });
 
-      const data = await response.json();
+      const data = await response.json(); // Parsear la respuesta a JSON
       if (response.ok && data.status === 1) {
+        // Si la respuesta es exitosa y el estado es 1, actualizar los estados de producto y detalles
         setProductInfo(data.dataset.info || {});
         setDetails(data.dataset.detalles || []);
       } else {
+        // Si hay un error en la respuesta, mostrar un mensaje de error
         console.error('Error fetching data:', data.message);
         Alert.alert('Error', data.message);
       }
     } catch (error) {
+      // Manejo de errores en la solicitud
       console.error('Error:', error);
     } finally {
       /*setLoading(false);
       setRefreshing(false);*/
     }
   };
+
+// Función para agregar el producto al carrito
   const addToCart = async () => {
     try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append('idProducto', idProducto);
-      formData.append('cantidadProducto', cantidad);
-      formData.append('notaProducto', nota);
+      setLoading(true); // Activar estado de carga
+      const formData = new FormData(); // Crear un nuevo objeto FormData
+      formData.append('idProducto', idProducto); // Agregar el ID del producto a los datos del formulario
+      formData.append('cantidadProducto', cantidad); // Agregar la cantidad del producto
+      formData.append('notaProducto', nota); // Agregar la nota del producto
 
+      // Hacer una solicitud a la API para agregar el producto al carrito
       const response = await fetch(`${SERVER}services/public/pedidos.php?action=createDetail`, {
         method: 'POST',
         body: formData,
       });
 
-      const data = await response.json();
+      const data = await response.json(); // Parsear la respuesta a JSON
       if (response.ok && data.status === 1) {
+        // Si la respuesta es exitosa y el estado es 1, mostrar una alerta y navegar al carrito
         Alert.alert('Producto añadido', 'Se ha añadido el producto al carrito.');
         setModalVisible(false);
         navigation.navigate('Carrito');
       }
       else if(response.ok && data.status ===2) {
+        // Si la respuesta es exitosa y el estado es 2, mostrar un mensaje de alerta
         console.error(data.message);
         setModalVisible(false);
         Alert.alert('Alerta', data.message);
       }
       else{
+        // Si hay un error en la respuesta, mostrar un mensaje de error
         console.error(data.error);
         setModalVisible(false);
         Alert.alert('Alerta', data.error);
       }
     } catch (error) {
+      // Manejo de errores en la solicitud
       console.error('Error:', error);
     } finally {
       /*setLoading(false);
@@ -79,10 +94,12 @@ const ProductoScreen = () => {
     }
   };
 
+// Efecto para cargar datos del producto al montar el componente
   useEffect(() => {
     fetchMenuData();
   }, []);
 
+// Función de refresco de datos
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     fetchMenuData();
@@ -91,21 +108,26 @@ const ProductoScreen = () => {
   return (
     <ScrollView
       contentContainerStyle={styles.scrollView}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} // Control de refresco
     >
       <View style={styles.container}>
+        {/* Botón para volver a la pantalla anterior */}
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" type="font-awesome" size={24} color="#000" />
         </TouchableOpacity>
+        {/* Título del producto */}
         <Text style={styles.title}>{productInfo.descripcion_producto || 'Producto'}</Text>
+        {/* Imagen del producto */}
         <Image
           source={{ uri: productInfo.imagen_producto || 'https://example.com/placeholder.jpg' }}
           style={styles.image}
         />
+        {/* Información del producto */}
         <View style={styles.infoRow}>
           <Text style={styles.infoText}>Tipo: {productInfo.tipo_producto || 'N/A'}</Text>
           <Text style={styles.infoText}>Precio: ${productInfo.precio_producto || '0.00'}</Text>
         </View>
+        {/* Lista de detalles del producto */}
         <Text style={styles.itemsTitle}>Items</Text>
         {details.map((item, index) => (
           <View key={index} style={styles.itemRow}>
@@ -114,11 +136,13 @@ const ProductoScreen = () => {
             <Text style={styles.itemText}>{item.cantidad_item}</Text>
           </View>
         ))}
+        {/* Botón para abrir el modal de agregar al carrito */}
         <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
           <Text style={styles.addButtonText}>Agregar</Text>
         </TouchableOpacity>
       </View>
-
+      
+        {/* Modal para agregar el producto al carrito */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -152,6 +176,7 @@ const ProductoScreen = () => {
   );
 };
 
+// Estilos del componente
 const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 1,
