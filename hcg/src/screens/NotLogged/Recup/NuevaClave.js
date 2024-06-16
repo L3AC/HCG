@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 const Producto = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>¡Hola, mundo!</Text>
+      <Text style={styles.text}>¡Hola, pato!</Text>
     </View>
   );
 };

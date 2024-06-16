@@ -25,9 +25,9 @@ const VerifUs = () => {
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={40} color="black" />
       </TouchableOpacity>
-      {/* Título de la pantalla de registro */}
+      {/* Título de la pantalla de recuperación */}
       <Text style={styles.title}>Recuperación</Text>
-      {/* Imagen alusiva a la pantalla*/}
+      {/* Imagen alusiva a la pantalla recuperación*/}
       <Image
         style={styles.imagen}
         source={require('../../../img/Recup1.png')}
