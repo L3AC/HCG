@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -7,6 +8,8 @@ import { UserProvider } from './src/contexts/UserContext';
 import StackMain from './src/navigation/StackMain';
 import StackAuth from './src/navigation/StackAuth';
 import { useFonts } from 'expo-font';
+import SplashScreen from './src/screens/SplashScreen'; // Asegúrate de importar tu SplashScreen personalizado
+
 
 const Stack = createStackNavigator();
 
@@ -24,6 +27,12 @@ const App = () => {
     <NavigationContainer>
       <UserProvider>
         <Stack.Navigator>
+           {/* Asegúrate de incluir tu SplashScreen personalizado como la primera pantalla */}
+           <Stack.Screen
+            name="Splash"
+            component={SplashScreen}
+            options={{ headerShown: false }}
+          />
           {isLoggedIn ? (
             <Stack.Screen
               name="Main"
@@ -53,5 +62,3 @@ const AppWrapper = () => {
 };
 
 export default AppWrapper;
-
- 
