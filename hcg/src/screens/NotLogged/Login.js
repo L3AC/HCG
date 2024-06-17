@@ -6,6 +6,8 @@ import { useUser } from '../../contexts/UserContext'; // Hook del contexto de us
 import { SERVER } from '../../contexts/Network'; // URL del servidor para realizar solicitudes
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Icon from 'react-native-vector-icons/FontAwesome'; // Iconos de FontAwesome
+import Boton from '../../components/elementos/Boton';
+
 
 // Componente de función Login
 const Login = () => {
@@ -117,18 +119,10 @@ const Login = () => {
         <TouchableOpacity onPress={() => navigation.navigate('VerifUs')}>
           <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
         </TouchableOpacity>
-        <Button
-          title="Confirmar"
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          onPress={handleLogin}
-        />
-        <Button
-          title="Cerrar"
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          onPress={handleCerrar}
-        />
+        <Boton
+        textoBoton='Confirmar' accionBoton={handleLogin}/>
+        <Boton
+        textoBoton='Cerrar' accionBoton={handleCerrar}/>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
         </TouchableOpacity>
@@ -174,16 +168,6 @@ const styles = StyleSheet.create({
   forgotPassword: {
     color: '#ffffff', // Ajusta el color del texto según el fondo
     marginBottom: 20,
-  },
-  button: {
-    backgroundColor: '#ffffff', // Ajusta el color del botón según el fondo
-    width: '100%',
-    paddingVertical: 10,
-    borderRadius: 5,
-  },
-  buttonTitle: {
-    color: '#000000', // Ajusta el color del texto según el fondo
-    fontSize: 16,
   },
   signUp: {
     color: '#ffffff', // Ajusta el color del texto según el fondo
