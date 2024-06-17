@@ -6,7 +6,7 @@ import { useUser } from '../../contexts/UserContext'; // Hook del contexto de us
 import { SERVER } from '../../contexts/Network'; // URL del servidor para realizar solicitudes
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Icon from 'react-native-vector-icons/FontAwesome'; // Iconos de FontAwesome
-import Boton from '../../components/elementos/Boton';
+import Boton from '../../components/Button/Boton';
 
 
 // Componente de función Login
