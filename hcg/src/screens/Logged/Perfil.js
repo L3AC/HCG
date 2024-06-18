@@ -4,6 +4,8 @@ import { ScrollView, RefreshControl, StyleSheet, View, Text, TextInput, Touchabl
 import { Ionicons } from '@expo/vector-icons'; // Iconos de Ionicons
 import { SERVER } from '../../contexts/Network'; // URL del servidor
 import { useRoute, useNavigation } from '@react-navigation/native'; // Hook de navegación
+import Input from '../../components/inputs/Input' // Llama a la plantilla para los input
+import InputCorreo from '../../components/inputs/InputCorreo' // Llama a la plantilla para los input
 
 // Componente de función PerfilScreen
 const PerfilScreen = () => {
@@ -62,49 +64,42 @@ const PerfilScreen = () => {
       <View style={styles.form}>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Nombre</Text>
-          <TextInput 
-            style={styles.input} 
-            placeholder="Nombre" 
-            value={profileData.nombre_cliente} 
-            onChangeText={(text) => setProfileData({ ...profileData, nombre_cliente: text })}
+          <Input
+          placeHolder='Nombre'
+          setValor={profileData.nombre_cliente}
+          onChangeText={(text) => setTextChange({ ...profileData, nombre_cliente: text })}
           />
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Apellido</Text>
-          <TextInput 
-            style={styles.input} 
-            placeholder="Apellido" 
-            value={profileData.apellido_cliente} 
-            onChangeText={(text) => setProfileData({ ...profileData, apellido_cliente: text })}
+          <Input
+          placeHolder='Apellido'
+          setValor={profileData.apellido_cliente}
+          onChangeText={(text) => setTextChange({ ...profileData, apellido_cliente: text })}
           />
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Correo</Text>
-          <TextInput 
-            style={styles.input} 
-            placeholder="Correo" 
-            value={profileData.correo_cliente} 
-            onChangeText={(text) => setProfileData({ ...profileData, correo_cliente: text })}
-            keyboardType="email-address" // Teclado específico para direcciones de correo
+          <InputCorreo
+          placeHolder='Correo'
+          setValor={profileData.correo_cliente}
+          onChangeText={(text) => setTextChange({ ...profileData, correo_cliente: text })}
           />
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Usuario</Text>
-          <TextInput 
-            style={styles.input} 
-            placeholder="Usuario" 
-            value={profileData.usuario_cliente} 
-            onChangeText={(text) => setProfileData({ ...profileData, usuario_cliente: text })}
+          <Input
+          placeHolder='Usuario'
+          setValor={profileData.usuario_cliente}
+          onChangeText={(text) => setTextChange({ ...profileData, usuario_cliente: text })}
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Telefono</Text>
-          <TextInput 
-            style={styles.input} 
-            placeholder="Telefono" 
-            value={profileData.telefono_cliente} 
-            onChangeText={(text) => setProfileData({ ...profileData, telefono_cliente: text })}
-            keyboardType="phone-pad" // Teclado específico para números de teléfono
+          <Text style={styles.label}>Teléfono</Text>
+          <Input
+          placeHolder='Telefono'
+          setValor={profileData.telefono_cliente}
+          onChangeText={(text) => setTextChange({ ...profileData, telefono_cliente: text })}
           />
         </View>
       </View>
