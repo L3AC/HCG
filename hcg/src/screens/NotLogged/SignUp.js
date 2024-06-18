@@ -1,12 +1,15 @@
 // Importación de librerías y componentes necesarios
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
+import Input from '../../components/inputs/Input' // Llama a la plantilla para los input
+import InputCorreo from '../../components/inputs/InputCorreo' // Llama a la plantilla para los input
 
 // Componente de función SignUp
 const SignUp = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
+  const [isContra, setIsContra] = useState(true) 
 
   return (
     <View style={styles.container}>
@@ -20,32 +23,32 @@ const SignUp = () => {
       {/* Contenedor para el input de Nombre */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Nombre</Text>
-        <TextInput style={styles.input} placeholder="Nombre" placeholderTextColor="#000" />
+        <Input placeHolder='Nombre'/>
       </View>
       {/* Contenedor para el input de Apellido */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Apellido</Text>
-        <TextInput style={styles.input} placeholder="Apellido" placeholderTextColor="#000" />
+        <Input placeHolder='Apellido'/>
       </View>
       {/* Contenedor para el input de Correo */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Correo</Text>
-        <TextInput style={styles.input} placeholder="Correo" placeholderTextColor="#000" />
+        <InputCorreo placeHolder='Correo'/>
       </View>
       {/* Contenedor para el input de Teléfono */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Telefono</Text>
-        <TextInput style={styles.input} placeholder="Telefono" placeholderTextColor="#000" />
+        <Input placeHolder='Telefono'/>
       </View>
       {/* Contenedor para el input de Usuario */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Usuario</Text>
-        <TextInput style={styles.input} placeholder="Usuario" placeholderTextColor="#000" />
+        <Input placeHolder='Usuario'/>
       </View>
       {/* Contenedor para el input de Contraseña */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Contraseña</Text>
-        <TextInput style={styles.input} placeholder="Contraseña" placeholderTextColor="#000" secureTextEntry={true} />
+        <Input placeHolder='Contraseña' clave={isContra} />
       </View>
 
       {/* Botón de confirmación */}

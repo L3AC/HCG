@@ -9,7 +9,7 @@ return (
     style={styles.Input}
     placeholder={placeHolder}
     value={setValor}
-    placeholderTextColor={'#FFF'}
+    placeholderTextColor={'#000'}
     secureTextEntry={clave} 
     onChangeText={setTextChange}
     />
@@ -19,15 +19,14 @@ return (
 
 const styles = StyleSheet.create({
     Input: {
-        width: '100%',
-        color: "#fff", fontWeight:'800',
-        height: 50, // Ajusta la altura según sea necesario
-        borderRadius: 8, // Redondeo de los bordes
-        backgroundColor: '#AA6231', // Color de fondo del input
-        paddingHorizontal: 15,
-        marginBottom: 20,
-        color: '#ffffff',
-        //fontFamily: 'QuickSand'// Ajusta el color del texto según el fondo
+        marginBottom: 6,
+        marginTop: 6,
+        height: 40,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        paddingHorizontal: 8,
+        borderRadius: 8,
+        backgroundColor: '#F2E7CF'
     },
 
 });

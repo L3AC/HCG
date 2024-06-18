@@ -7,7 +7,7 @@ import { SERVER } from '../../contexts/Network'; // URL del servidor para realiz
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Icon from 'react-native-vector-icons/FontAwesome'; // Iconos de FontAwesome
 import Boton from '../../components/Button/Boton'; // Llamar al la plantilla para boton
-import Input from '../../components/inputs/Input' // Llama a la plantilla para los input
+import Input from '../../components/inputs/InputLogin' // Llama a la plantilla para los input
 
 
 // Componente de función Login
