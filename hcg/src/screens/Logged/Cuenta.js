@@ -23,7 +23,7 @@ const CuentaScreen = () => {
       [
         {
           text: "Cancelar",
-          onPress: () => console.log("Eliminación cancelada"),
+          //onPress: () => console.log("Eliminación cancelada"),
           style: "cancel"
         },
         {
@@ -53,7 +53,6 @@ const CuentaScreen = () => {
       ],
       { cancelable: false }
     );
-    
   };
 
   // Función para manejar la acción de actualización
