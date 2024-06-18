@@ -6,7 +6,8 @@ import { useUser } from '../../contexts/UserContext'; // Hook del contexto de us
 import { SERVER } from '../../contexts/Network'; // URL del servidor para realizar solicitudes
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Icon from 'react-native-vector-icons/FontAwesome'; // Iconos de FontAwesome
-import Boton from '../../components/Button/Boton';
+import Boton from '../../components/Button/Boton'; // Llamar al la plantilla para boton
+import Input from '../../components/inputs/Input' // Llama a la plantilla para los input
 
 
 // Componente de función Login
@@ -21,6 +22,7 @@ const Login = () => {
   const { setIdUsuario } = useUser(); // Método para establecer el ID del usuario
   const [usuario, setUsuario]=useState('') // Estado para el nombre de usuario
   const [clave, setClave] = useState('') // Estado para la contraseña
+  const [isContra, setIsContra] = useState(true) 
 
   // Función para manejar la actualización de la pantalla
   const onRefresh = () => {
@@ -101,20 +103,16 @@ const Login = () => {
       <View style={styles.container}>
         <Image source={require('../../img/logo2.png')} style={styles.logo} />
         <Text style={styles.title}>Inicio de sesión</Text>
-        <TextInput
-          placeholder="Usuario"
-          placeholderTextColor="#fff"
-          style={styles.input}
-          onChangeText={setUsuario}
-            value={usuario}
+        <Input
+          placeHolder='Usuario'
+          setValor={usuario}
+          setTextChange={setUsuario}  
         />
-        <TextInput
-          placeholder="Contraseña"
-          placeholderTextColor="#fff"
-          secureTextEntry
-          style={styles.input}
-          onChangeText={setClave}
-            value={clave}
+        <Input
+          placeHolder='Contraseña'
+          setValor={clave}
+          setTextChange={setClave}
+          clave={isContra}    
         />
         <TouchableOpacity onPress={() => navigation.navigate('VerifUs')}>
           <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
