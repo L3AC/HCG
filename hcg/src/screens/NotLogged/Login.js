@@ -118,9 +118,11 @@ const Login = () => {
           <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
         </TouchableOpacity>
         <Boton
-        textoBoton='Confirmar' accionBoton={handleLogin}/>
+        textoBoton='Confirmar' accionBoton={handleLogin}
+        />
         <Boton
-        textoBoton='Cerrar' accionBoton={handleCerrar}/>
+        textoBoton='Cerrar' accionBoton={handleCerrar}
+        />
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
         </TouchableOpacity>

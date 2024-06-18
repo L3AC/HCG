@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 import Input from '../../components/inputs/Input' // Llama a la plantilla para los input
 import InputCorreo from '../../components/inputs/InputCorreo' // Llama a la plantilla para los input
+import Boton from '../../components/Button/Boton'; // Llamar al la plantilla para boton
 
 // Componente de función SignUp
 const SignUp = () => {
@@ -52,9 +53,9 @@ const SignUp = () => {
       </View>
 
       {/* Botón de confirmación */}
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Confirmar</Text>
-      </TouchableOpacity>
+      <Boton
+        textoBoton='Confirmar'
+        />
     </View>
   );
 };
