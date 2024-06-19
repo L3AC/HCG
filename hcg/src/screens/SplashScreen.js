@@ -23,7 +23,7 @@ export default function SplashScreen() {
     // Animación de humo 
     Animated.timing(positionValue, {
       toValue: -100,  // Mueve el humo hacia arriba
-      duration: 3000, // Duración de la animación en milisegundos
+      duration: 2000, // Duración de la animación en milisegundos
       easing: Easing.linear, // Tipo de animación
       useNativeDriver: true,
     }).start();

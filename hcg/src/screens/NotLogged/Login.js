@@ -120,9 +120,6 @@ const Login = () => {
         <Boton
         textoBoton='Confirmar' accionBoton={handleLogin}
         />
-        <Boton
-        textoBoton='Cerrar' accionBoton={handleCerrar}
-        />
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
         </TouchableOpacity>

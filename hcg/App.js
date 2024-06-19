@@ -1,39 +1,53 @@
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthProvider, useAuth } from './src/contexts/AuthContext';
 import { UserProvider } from './src/contexts/UserContext';
 import StackMain from './src/navigation/StackMain';
 import StackAuth from './src/navigation/StackAuth';
-import { useFonts } from 'expo-font';
-import SplashScreen from './src/screens/SplashScreen'; // Asegúrate de importar tu SplashScreen personalizado
-
+import SplashScreen from './src/screens/SplashScreen';
+import { SERVER } from './src/contexts/Network';
 
 const Stack = createStackNavigator();
 
 const App = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const [isLoading, setIsLoading] = useState(true); // Estado para manejar la pantalla de carga
 
-  /*const [fontsLoaded] = useFonts({
-    QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
-    QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
-  });
-  
-  */
+  const getSession = async () => {
+    try {
+      const response = await fetch(`${SERVER}services/public/clientes.php?action=getUser`, {
+        method: 'POST',
+      });
+      const data = await response.json();
+      if (data.status) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setIsLoggedIn(false); // Manejo de error: Se asume que la sesión no está iniciada
+    } finally {
+      setIsLoading(false); // Deja de mostrar la pantalla de carga
+    }
+  };
+
+  useEffect(() => {
+    getSession();
+  }, []);
 
   return (
     <NavigationContainer>
       <UserProvider>
         <Stack.Navigator>
-           {/* Asegúrate de incluir tu SplashScreen personalizado como la primera pantalla */}
-           <Stack.Screen
-            name="Splash"
-            component={SplashScreen}
-            options={{ headerShown: false }}
-          />
-          {isLoggedIn ? (
+          {isLoading ? (
+            <Stack.Screen
+              name="Splash"
+              component={SplashScreen}
+              options={{ headerShown: false }}
+            />
+          ) : isLoggedIn ? (
             <Stack.Screen
               name="Main"
               component={StackMain}
@@ -45,7 +59,6 @@ const App = () => {
               component={StackAuth}
               options={{ headerShown: false }}
             />
-
           )}
         </Stack.Navigator>
       </UserProvider>
