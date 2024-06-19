@@ -53,7 +53,7 @@ class PedidoHandler
         FROM tb_pedidos 
         INNER JOIN tb_clientes USING(id_cliente)
         WHERE estado_pedido = ? AND
-        CONCAT(nombre_cliente," ",apellido_cliente) LIKE ? AND id_cliente = ?
+        codigo_pedido LIKE ? AND id_cliente = ?
         ORDER BY fecha_pedido DESC';
         $params = array($this->estado, $this->search,$_SESSION['idCliente']);
         return Database::getRows($sql, $params);
