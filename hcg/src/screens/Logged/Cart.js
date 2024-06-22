@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshControl, Alert, TextInput, ActivityIndicator, Modal } from 'react-native';
 import { SERVER } from '../../contexts/Network';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
 const CartScreen = () => {
@@ -169,6 +169,12 @@ const CartScreen = () => {
   useEffect(() => {
     fetchMenuData(); // Carga inicial de los datos del carrito al montar el componente
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchMenuData();
+    }, [])
+  );
 
   // Función para manejar el evento de refresco
   const onRefresh = () => {
