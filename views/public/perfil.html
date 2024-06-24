@@ -10,6 +10,7 @@
     <meta name="author" content=" ">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../resources/css/navpub.css">
+    <link rel="stylesheet" href="../../resources/css/univer.css">
     <link rel="stylesheet" href="../../resources/css/busca.css">
     <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
     <!-- Llamada al icono de la página web -->
@@ -19,7 +20,7 @@
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
 </head>
 
-<body>
+<body class="bodyp">
     <!-- Contenido principal del documento -->
     <main>
         <div id="mainTitle"></div>
@@ -40,9 +41,9 @@
                 <input id="apellidoCliente" type="text" name="apellidoCliente" class="form-control" required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                <!--Se muestra su correo-->
-                <label for="correoCliente" class="form-label">Correo</label>
-                <input id="correoCliente" type="email" name="correoCliente" class="form-control" required>
+                <!--Se muestra su usuario-->
+                <label for="telefonoCliente" class="form-label">Teléfono</label>
+                <input type="text" id="telefonoCliente" name="telefonoCliente" placeholder="0000-0000" class="form-control" required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <!--Se muestra su usuario-->
@@ -50,11 +51,11 @@
                 <input id="aliasCliente" type="text" name="aliasCliente" class="form-control" required>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-8 offset-lg-2 mb-3">
-                <!--Se muestra su usuario-->
-                <label for="direccionCliente" class="form-label">Dirección</label>
-                <input id="direccionCliente" type="text" name="direccionCliente" class="form-control" required>
+                <!--Se muestra su correo-->
+                <label for="correoCliente" class="form-label">Correo</label>
+                <input id="correoCliente" type="email" name="correoCliente" class="form-control" required>
             </div>
-            <div >
+            <div class="text-center">
                 <button type="submit" class="btn" style="background-color: #CCC8AA;"><i class="bi bi-save"></i>
                     Guardar</button>
             </div>
@@ -109,6 +110,7 @@
             </div>
         </div>
     </main>
+    <script type="text/javascript" src="../../resources/js/vanillaTextMask.js"></script>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>

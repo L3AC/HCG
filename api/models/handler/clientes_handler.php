@@ -16,7 +16,6 @@ class ClienteHandler
     protected $email = null;
     protected $direccion = null;
     protected $usuario = null;
-    protected $alias = null;
     protected $clave = null;
     protected $estado = null;
 
@@ -37,7 +36,7 @@ class ClienteHandler
     }
     public function checkUser($usuario, $password)
     {
-        $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente
+        $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente,correo_cliente
                 FROM tb_clientes
                 WHERE usuario_cliente = ?';
         $params = array($usuario);
@@ -46,6 +45,7 @@ class ClienteHandler
             $this->id = $data['id_cliente'];
             $this->usuario = $data['usuario_cliente'];
             $this->estado = $data['estado_cliente'];
+            $this->email = $data['correo_cliente'];
             return true;
         } else {
             return false;
@@ -57,6 +57,7 @@ class ClienteHandler
         if ($this->estado) {
             $_SESSION['idCliente'] = $this->id;
             $_SESSION['usuarioc'] = $this->usuario;
+            $_SESSION['correo'] = $this->email;
             return true;
         } else {
             return false;
@@ -84,10 +85,10 @@ class ClienteHandler
 
     public function editProfile()
     {
-        $sql = 'UPDATE cliente
-                SET nombre_cliente = ?, apellido_cliente = ?, email_cliente = ?, alias_cliente = ?
+        $sql = 'UPDATE tb_clientes
+                SET nombre_cliente = ?, apellido_cliente = ?, correo_cliente = ?, usuario_cliente = ?,telefono_cliente = ?
                 WHERE id_cliente = ?';
-        $params = array($this->nombre, $this->apellido, $this->email, $this->alias, $_SESSION['idcliente']);
+        $params = array($this->nombre, $this->apellido, $this->email, $this->usuario, $this->telefono, $_SESSION['idCliente']);
         return Database::executeRow($sql, $params);
     }
 
@@ -122,7 +123,7 @@ class ClienteHandler
     public function readAll()
     {
         $sql = 'SELECT id_cliente,nombre_cliente,apellido_cliente,
-                telefono_cliente,correo_cliente
+                telefono_cliente,correo_cliente,estado_cliente
                 FROM tb_clientes; 
                 ORDER BY apellido_cliente';
         return Database::getRows($sql);
@@ -144,10 +145,11 @@ class ClienteHandler
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
+
     public function readExist($username)
     {
-        $sql = 'SELECT usuario_cliente, clave_cliente, nombre_cliente, apellido_cliente, email_cliente, estado_cliente
-        FROM prc_clientes
+        $sql = 'SELECT usuario_cliente
+        FROM tb_clientes
         WHERE usuario_cliente = ?';
         $params = array($username);
         $data = Database::getRow($sql, $params);
@@ -158,6 +160,22 @@ class ClienteHandler
             return true;
         }
     }
+    public function readExistMail($username)
+    {
+        $sql = 'SELECT correo_cliente
+        FROM tb_clientes
+        WHERE correo_cliente = ?';
+        $params = array($username);
+        $data = Database::getRow($sql, $params);
+
+        if (empty($data['correo_cliente'])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
 
 
     public function updateRow()

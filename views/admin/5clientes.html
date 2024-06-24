@@ -11,15 +11,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
     <!-- Llamada al icono de la página web -->
-    <link href="../../resources/css/nav.css" rel="stylesheet">
+    <link href="../../resources/css/nav.css" rel="stylesheet">  
     <link rel="stylesheet" href="../../resources/css/estado.css">
     <link rel="stylesheet" href="../../resources/css/card_2.css">
+    <link rel="stylesheet" href="../../resources/css/btn_e.css">
+    <link rel="stylesheet" href="../../resources/css/univer.css">
     <link rel="stylesheet" href="../../resources/css/busca.css">
+    <link rel="stylesheet" href="../../resources/css/input_b.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../../resources/css/univer.css">
-    <link rel="stylesheet" href="../../resources/css/btn_e.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
 <body class="bodyp">
@@ -51,21 +55,32 @@
             </form>
         </div>
 
-        <div colspan="6" id="rowsFound" class="text-white d-flex justify-content-center m-5"></div>
+        <!-- Botones de la parte derecha -->
+        <div class="col-sm-12 col-md-12 d-flex justify-content-end pb-3 pt-3">
+            <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
+            <button type="button" class="btnAgregar3" onclick="openCreate()">
+                <i class="bi bi-plus-square-fill"></i> Agregar
+            </button>
+        </div>
+
+        <div colspan="6" id="rowsFound" class="text-white d-flex justify-content-center mb-4"></div>
         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
         <div class="apa">
-            <div class="row row-md-12">
-                <div class="col-2 m-4">
-                    <p style="font-weight: bold; color: white;">APELLIDOS</p>
+            <div class="row">
+                <div class="col-md-2">
+                    <p class="elemtoCampoTabla">APELLIDOS</p>
                 </div>
-                <div class="col-2 m-4">
-                    <p style="font-weight: bold; color: white;">NOMBRE</p>
+                <div class="col-md-2 ">
+                    <p class="elemtoCampoTabla">NOMBRES</p>
                 </div>
-                <div class="col-2 m-4">
-                    <p style="font-weight: bold; color: white;">TELÉFONO</p>
+                <div class="col-md-2 ">
+                    <p class="elemtoCampoTabla">TELÉFONO</p>
                 </div>
-                <div class="col-2 m-4">
-                    <p style="font-weight: bold; color: white;">CORREO</p>
+                <div class="col-md-3">
+                    <p class="elemtoCampoTabla">CORREO</p>
+                </div>
+                <div class="col-md-2 "> <!-- El css de estado-column esta en el archivo card_2.css-->
+                    <p class="elemtoCampoTabla">ESTADO</p>
                 </div>
             </div>
         </div>

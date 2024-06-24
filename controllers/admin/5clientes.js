@@ -95,23 +95,26 @@ const fillTable = async (form = null) => {
         // Se recorre el conjunto de registros fila por fila.
         DATA.dataset.forEach(row => {
              // Se establece un icono para el estado 
+             (row.estado_cliente) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-            <div class="cardlar row col-12 " style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
-                <div class="col-lg-2 col-md-12 col-sm-12 m-4" 
-                style="display: flex; align-items: center; font-size: 17px;">
-                <div class="texto-antes">Apellido: </div>${row.apellido_cliente}</div>
-                <div class="col-lg-2 col-md-12 col-sm-12 m-4" 
-                style="display: flex; align-items: center; font-size: 17px;">
-                <div class="texto-antes">Nombre: </div>${row.nombre_cliente}</div>
-                <div class="col-lg-2 col-md-12 col-sm-12 m-4" 
-                style="display: flex; align-items: center; font-size: 17px;">
-                <div class="texto-antes">Teléfono: </div>${row.telefono_cliente}</div>
-                <div class="col-lg-3 col-md-12 col-sm-12 m-4" 
-                style="display: flex; align-items: center; font-size: 17px;">
-                <div class="texto-antes">Correo: </div>${row.correo_cliente}</div>
-                
-            </div>
+             <div class="cardlar row col-12" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
+            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Apellido: </div>${row.apellido_cliente}</div>
+            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.nombre_cliente}</div>
+            <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Teléfono: </div><div>${row.telefono_cliente}</div></div>
+            <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Correo: </div>${row.correo_cliente}</div>
+            
+                <div class="col-lg-1 col-md-12 col-sm-12" style="display: flex; align-items: center;font-size: 30px;"><div class="texto-antes" style="font-size: 17px;">Estado: </div><i  class="${icon}"></i></div>
+                <div class="col-lg-2 col-md-12 col-sm-12 d-flex justify-content-end">
+                <button type="button" title="Detalle pedido" class="btnAgregar btnMargin"  
+                style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_cliente})">
+                    <i class="bi bi-pencil-fill"></i>
+                </button>
+                <button type="button" title="Eliminar pedido" class="btnAgregar" 
+                style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_cliente})">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </div>   
         </div>
             `;
         });

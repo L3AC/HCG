@@ -4,12 +4,16 @@ const PROFILE_FORM = document.getElementById('profileForm'),
     APELLIDO_CLIENTE = document.getElementById('apellidoCliente'),
     CORREO_CLIENTE = document.getElementById('correoCliente'),
     ALIAS_CLIENTE = document.getElementById('aliasCliente');
-    DIR_CLIENTE = document.getElementById('direccionCliente');
+    TEL_CLIENTE = document.getElementById('telefonoCliente');
 // Constante para establecer la modal de cambiar contraseña.
 const PASSWORD_MODAL = new bootstrap.Modal('#passwordModal');
 // Constante para establecer el formulario de cambiar contraseña.
 const PASSWORD_FORM = document.getElementById('passwordForm');
 
+vanillaTextMask.maskInput({
+    inputElement:TEL_CLIENTE,
+    mask: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+});
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
@@ -25,9 +29,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log (ROW.nombre_cliente);
         NOMBRE_CLIENTE.value = ROW.nombre_cliente;
         APELLIDO_CLIENTE.value = ROW.apellido_cliente;
-        CORREO_CLIENTE.value = ROW.email_cliente;
+        CORREO_CLIENTE.value = ROW.correo_cliente;
         ALIAS_CLIENTE.value = ROW.usuario_cliente;
-        DIR_CLIENTE.value = ROW.direccion_cliente;
+        TEL_CLIENTE.value = ROW.telefono_cliente;
     } else {
         sweetAlert(2, DATA.error, null);
     }
