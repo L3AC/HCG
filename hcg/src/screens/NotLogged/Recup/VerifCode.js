@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 60,
     padding: 30,
-    backgroundColor: '#d29c65', // Color de fondo
+    backgroundColor: '#d2a563', // Color de fondo
   },
   text: {
     marginTop: 40,
