@@ -28,8 +28,7 @@ const Historial = () => {
       if (response.ok && data.status === 1) {
         setOrders(data.dataset);  // Asegúrate de que `data.dataset` contiene la lista de pedidos
       } else {
-        console.error('Error fetching data:', data.message);
-        Alert.alert('Error', data.message);
+        Alert.alert('No existen pedidos registrados');
       }
     } catch (error) {
       console.error('Error:', error);

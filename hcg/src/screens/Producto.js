@@ -71,7 +71,7 @@ const ProductoScreen = () => {
         // Si la respuesta es exitosa y el estado es 1, mostrar una alerta y navegar al carrito
         Alert.alert('Producto añadido', 'Se ha añadido el producto al carrito.');
         setModalVisible(false);
-        navigation.navigate('Carrito');
+        navigation.navigate('Cart');
       }
       else if(response.ok && data.status ===2) {
         // Si la respuesta es exitosa y el estado es 2, mostrar un mensaje de alerta
