@@ -8,8 +8,6 @@ const VerifUs = () => {
   const [text, setText] = useState(''); // Estado para el texto del input
   const [placeholderVisible, setPlaceholderVisible] = useState(true); // Estado para controlar la visibilidad del placeholder
 
-
-
   const onChangeTextHandler = (inputText) => { // pequeña constante para validar cuando el placeholder se muestre y cuando no 
     setText(inputText);
     if (inputText.length > 0) {

@@ -67,9 +67,6 @@ const sweetAlert = async (type, text, timer, url = null) => {
             text: 'Aceptar'
         }
     };
-
-
-
     // Se verifica el uso del temporizador.
     (timer) ? options.timer = 3000 : options.timer = null;
     // Se muestra el mensaje.

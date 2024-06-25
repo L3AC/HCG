@@ -143,7 +143,7 @@ const CartScreen = () => {
   };
 
   // Función para finalizar el pedido
-  const finishOrder = async (idDetallePedido) => {
+  const finishOrder = async () => {
     try {
       setLoading(true); // Indica que se está cargando
       const response = await fetch(`${SERVER}services/public/pedidos.php?action=finishOrder`, {
@@ -152,7 +152,7 @@ const CartScreen = () => {
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        Alert.alert('Error', data.error); // Muestra una alerta con el mensaje de error
+        Alert.alert(data.message);
         navigation.navigate('Home'); // Navega a la pantalla de inicio
       } else {
         console.error('Error:', data.error); // Muestra un error en la consola en caso de fallo
@@ -191,7 +191,7 @@ const CartScreen = () => {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} // Componente RefreshControl para actualizar la lista
     >
       <Text style={styles.header}>Carrito de compras</Text>
-      <TouchableOpacity style={styles.finalizeButton}>
+      <TouchableOpacity style={styles.finalizeButton} onPress={() => finishOrder()} >
         <Text style={styles.finalizeButtonText}>Finalizar</Text>
       </TouchableOpacity>
       <Text style={styles.totalText}>Total a pagar: ${totalToPay.toFixed(2)}</Text>
