@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, RefreshControl,Alert } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../contexts/AuthContext';
 import { SERVER } from '../../contexts/Network';
+import SweetAlert from '../../components/alerts/SimpleAlert';
 
 // Función de espera para simular una operación asíncrona
 const wait = (timeout) => {
@@ -11,6 +12,44 @@ const wait = (timeout) => {
 }
 // Componente funcional CuentaScreen
 const CuentaScreen = () => {
+
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertType, setAlertType] = useState(3);
+  const [confirmVisible, setConfirmVisible] = useState(false);
+
+  const handleDelete = () => {
+    setAlertMessage('¿Está seguro que desea eliminar esto?');
+    setConfirmVisible(true);
+  };
+
+
+  const handleConfirm = async (result) => {
+    setAlertVisible(false);
+    if (result) {
+      try {
+        //utilizar la direccion IP del servidor y no localhost
+        const response = await fetch(`${SERVER}services/public/clientes.php?action=logOut`, {
+          method: 'POST'
+        });
+        const data = await response.json();
+        if (data.status) {
+          Alert.alert(data.message); // Muestra una alerta con el mensaje de éxito
+          setIsLoggedIn(false); // Actualiza el estado de autenticación
+          navigation.navigate('Login'); // Redirige a la pantalla de inicio de sesión
+        } else {
+          console.log(data);
+          Alert.alert('Error sesion', data.error); // Muestra una alerta con el mensaje de error
+        }
+      } catch (error) {
+        console.error(error, "Error en el catch"); // Registra el error en la consola
+        Alert.alert('Error', 'Ocurrió un error al cerrar sesión'); // Muestra una alerta en caso de error
+      }
+    } else {}
+    setConfirmVisible(false);
+  };
+
+
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
   const [refreshing, setRefreshing] = useState(false); // Estado para controlar la actualización
   const { setIsLoggedIn } = useAuth(); // Extrae setIsLoggedIn del contexto de autenticación
@@ -34,7 +73,7 @@ const CuentaScreen = () => {
               const response = await fetch(`${SERVER}services/public/clientes.php?action=logOut`, {
                 method: 'POST'
               });
-              
+
               const data = await response.json();
               if (data.status) {
                 Alert.alert(data.message); // Muestra una alerta con el mensaje de éxito
@@ -71,7 +110,7 @@ const CuentaScreen = () => {
     >
       <View style={styles.header}>
         <Text style={styles.title}>Cuenta</Text>
-        <Ionicons name="log-out-outline" size={60} color="black" onPress={() => logOut()} />
+        <Ionicons name="log-out-outline" size={60} color="black" onPress={() => handleConfirm('¿Desea cerrar sesión?', 5000)} />
       </View>
 
       {/* Tarjeta para navegar al perfil */}
@@ -91,6 +130,14 @@ const CuentaScreen = () => {
         <Ionicons name="people-circle-outline" size={50} color="black" />
         <Text style={styles.cardText}>Sobre nosotros</Text>
       </TouchableOpacity>
+      <SweetAlert 
+                isVisible={confirmVisible} 
+                type={alertType} 
+                text={alertMessage} 
+                onClose={() => setConfirmVisible(false)}
+                onConfirm={handleConfirm}
+                confirm
+      />
     </ScrollView>
   );
 }

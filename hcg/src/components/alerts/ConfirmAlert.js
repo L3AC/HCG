@@ -1,8 +1,9 @@
+// ConfirmAlert.js
 import React, { useRef, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, Animated, Easing } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const SweetAlert = ({ isVisible, type, text, timer, onClose }) => {
+const ConfirmAlert = ({ isVisible, type, text, onClose, onConfirm }) => {
     const translateY = useRef(new Animated.Value(-100)).current;
     const opacity = useRef(new Animated.Value(0)).current;
 
@@ -21,12 +22,6 @@ const SweetAlert = ({ isVisible, type, text, timer, onClose }) => {
                     useNativeDriver: true,
                 }),
             ]).start();
-
-            if (timer) {
-                setTimeout(() => {
-                    hideAlert();
-                }, timer);
-            }
         } else {
             hideAlert();
         }
@@ -48,25 +43,32 @@ const SweetAlert = ({ isVisible, type, text, timer, onClose }) => {
         ]).start(() => onClose());
     };
 
+    const handleConfirm = (result) => {
+        hideAlert();
+        if (onConfirm) {
+            onConfirm(result);
+        }
+    };
+
     let title, iconName, iconColor;
 
     switch (type) {
-        case 1:
+        case 'success':
             title = 'Éxito';
             iconName = 'check-circle';
             iconColor = 'green';
             break;
-        case 2:
+        case 'error':
             title = 'Error';
             iconName = 'times-circle';
             iconColor = 'red';
             break;
-        case 3:
+        case 'warning':
             title = 'Advertencia';
             iconName = 'exclamation-circle';
             iconColor = 'orange';
             break;
-        case 4:
+        case 'info':
             title = 'Aviso';
             iconName = 'info-circle';
             iconColor = 'blue';
@@ -78,20 +80,25 @@ const SweetAlert = ({ isVisible, type, text, timer, onClose }) => {
     }
 
     return (
-        <Animated.View
-            style={[
-                styles.container,
-                { transform: [{ translateY: translateY }], opacity: opacity }
-            ]}
-        >
-            <Icon name={iconName} size={40} color={iconColor} />
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.text}>{text}</Text>
-           
-        </Animated.View>
+        isVisible && (
+            <Animated.View
+                style={[
+                    styles.container,
+                    { transform: [{ translateY: translateY }], opacity: opacity }
+                ]}
+            >
+                <Icon name={iconName} size={40} color={iconColor} />
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.text}>{text}</Text>
+                <View style={styles.buttonContainer}>
+                    <Button title="No" onPress={() => handleConfirm(false)} />
+                    <Button title="Sí" onPress={() => handleConfirm(true)} />
+                </View>
+            </Animated.View>
+        )
     );
 };
-/* <Button title="Aceptar" onPress={hideAlert} />*/ 
+
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
@@ -118,6 +125,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 20,
     },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '80%',
+    },
 });
 
-export default SweetAlert;
+export default ConfirmAlert;

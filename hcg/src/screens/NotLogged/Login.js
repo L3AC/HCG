@@ -1,87 +1,64 @@
 // Importación de librerías y componentes necesarios
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Alert, Button, TouchableOpacity, Image, ImageBackground, StyleSheet, KeyboardAvoidingView, Platform, RefreshControl } from 'react-native';
+import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext'; // Hook del contexto de autenticación
 import { useUser } from '../../contexts/UserContext'; // Hook del contexto de usuario
 import { SERVER } from '../../contexts/Network'; // URL del servidor para realizar solicitudes
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
-import Icon from 'react-native-vector-icons/FontAwesome'; // Iconos de FontAwesome
-import Boton from '../../components/Button/Boton'; // Llamar al la plantilla para boton
-import Input from '../../components/inputs/InputLogin' // Llama a la plantilla para los input
-import SweetAlert from '../../components/alerts/Alert';
-
+import Boton from '../../components/Button/Boton'; // Llamar a la plantilla para botón
+import Input from '../../components/inputs/InputLogin'; // Llama a la plantilla para los input
+import SimpleAlert from '../../components/alerts/SimpleAlert'; // Importa la alerta simple
 
 // Componente de función Login
 const Login = () => {
   // Estados locales
-  const [loading, setLoading] = useState(true); // Estado de carga
-  const [refreshing, setRefreshing] = useState(false); // Estado de actualización
-  //const [data, setData] = useState([]);
+  const [usuario, setUsuario] = useState(''); // Estado para el nombre de usuario
+  const [clave, setClave] = useState(''); // Estado para la contraseña
+  const [isContra, setIsContra] = useState(true); // Estado para mostrar/ocultar contraseña
+
   const { setIsLoggedIn } = useAuth(); // Método para establecer si el usuario está logueado
-  const [search, setSearch] = useState(''); // Estado para el término de búsqueda
-  const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
   const { setIdUsuario } = useUser(); // Método para establecer el ID del usuario
-  const [usuario, setUsuario] = useState('') // Estado para el nombre de usuario
-  const [clave, setClave] = useState('') // Estado para la contraseña
-  const [isContra, setIsContra] = useState(true);
+  const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
 
-  const [isVisible, setIsVisible] = useState(false);
-  const [alertType, setAlertType] = useState(1);
-  const [alertText, setAlertText] = useState('');
-  const showAlert = (type, text, timer) => {
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertType, setAlertType] = useState('info');
+
+  const handleShowSimpleAlert = (message, type = 'info', timer = 2000) => {
+    setAlertMessage(message);
     setAlertType(type);
-    setAlertText(text);
-    setIsVisible(true);
-    if (timer) {
-      setTimeout(() => {
-        setIsVisible(false);
-      }, timer);
-    }
-  };
-
-  // Función para manejar la actualización de la pantalla
-  const onRefresh = () => {
-    setRefreshing(true);
+    setAlertVisible(true);
+    setTimeout(() => setAlertVisible(false), timer);
   };
 
   // Función para manejar el inicio de sesión
   const handleLogin = async () => {
     try {
-      const formData = new FormData(); // Crea un nuevo objeto FormData para enviar los datos
-      formData.append('usu', usuario); // Agrega el nombre de usuario al formulario
-      formData.append('clave', clave); // Agrega la contraseña al formulario
-      console.log(formData);
-      // Realiza una solicitud POST al servidor para iniciar sesión
+      const formData = new FormData();
+      formData.append('usu', usuario);
+      formData.append('clave', clave);
+
       const response = await fetch(`${SERVER}services/public/clientes.php?action=logIn`, {
         method: 'POST',
-        body: formData
+        body: formData,
       });
 
-      const data = await response.json(); // Convierte la respuesta en formato JSON
-      if (data.status) { // Si el inicio de sesión es exitoso
-        showAlert(1, data.message, 1000) // Muestra una alerta con el mensaje de éxito
-        setIsLoggedIn(true); // Establece el estado de logueado en verdadero
-        setIdUsuario(response.dataset); // Guarda el ID del usuario
-        navigation.navigate('Main'); // Navega a la pantalla principal
+      const data = await response.json();
+      if (data.status) {
+        handleShowSimpleAlert('Login exitoso', 'success');
+        setTimeout(() => {
+          setIsLoggedIn(true);
+          setIdUsuario(data.dataset);
+          navigation.navigate('Main');
+        }, 2000);
       } else {
-        showAlert(2, data.error, 1000)
+        handleShowSimpleAlert(data.error, 'error', 3000);
       }
     } catch (error) {
-      console.error(error, "Error desde Catch");
-
+      console.error(error);
       Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
     }
   };
-
-  // Función para navegar a la pantalla de registro
-  const irRegistrar = async () => {
-    navigation.navigate('SignUp');
-  };
-
-  /*const [fontsLoaded] = useFonts({
-    QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
-    QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
-  });*/
 
   // Elementos que se muestran en la pantalla
   return (
@@ -103,20 +80,18 @@ const Login = () => {
         <TouchableOpacity onPress={() => navigation.navigate('VerifUs')}>
           <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
         </TouchableOpacity>
-        <Boton
-          textoBoton='Confirmar' accionBoton={handleLogin}
-        />
+        <Boton textoBoton='Confirmar' accionBoton={handleLogin} />
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
         </TouchableOpacity>
-        <SweetAlert
-          isVisible={isVisible}
+        <SimpleAlert
+          isVisible={alertVisible}
           type={alertType}
-          text={alertText}
-          onClose={() => setIsVisible(false)}
+          text={alertMessage}
+          timer={2000}
+          onClose={() => setAlertVisible(false)}
         />
       </View>
-
     </ImageBackground>
   );
 };
@@ -153,7 +128,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 20,
     color: '#ffffff',
-    //fontFamily: 'QuickSand'// Ajusta el color del texto según el fondo
   },
   forgotPassword: {
     color: '#ffffff', // Ajusta el color del texto según el fondo
