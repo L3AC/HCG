@@ -94,33 +94,78 @@
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="background-color: #5C2C0C;">
                         <!-- Título del modal -->
-                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <h1 class="modal-title fs-5 text-white" id="modalTitle"></h1>
                         <!-- Botón de cierre del modal -->
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para guardar un registro -->
-                    <form id="saveForm">
+                    <form id="saveForm" style="background-color: #DDA35D;">
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idCliente" name="idCliente">
 
                             <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
-                                <label for="nombreCliente" class="form-label">Nombre</label>
-                                <input id="nombreCliente" type="text" name="nombreCliente" class="form-control"
-                                    required>
+                                <div class="input_box py-3">
+                                    <input id="nombreCliente" type="text" name="nombreCliente"
+                                        class="fw-bold text-white" required>
+                                    <span>Nombre :</span>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="apellidoCliente" class="form-label">Apellido</label>
-                                <input id="apellidoCliente" type="text" name="apellidoCliente" class="form-control"
-                                    required>
+                                <div class="input_box py-3">
+                                    <input id="apellidoCliente" type="text" name="apellidoCliente"
+                                        class="fw-bold text-white" required>
+                                    <span>Apellido :</span>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="correoCliente" class="form-label">Correo</label>
-                                <input id="correoCliente" type="text" name="correoCliente" class="form-control"
-                                    required>
+                                <div class="input_box py-3">
+                                    <input id="correoCliente" type="email" name="correoCliente"
+                                        class="fw-bold text-white" required>
+                                    <span>Correo :</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="input_box py-3">
+                                    <input id="telefonoCliente" type="email" name="telefonoCliente"
+                                        class="fw-bold text-white" placeholder="0000-0000" required>
+                                    <span>Teléfono :</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6" id="divAlias">
+                                <div class="input_box py-3">
+                                    <input id="aliasCliente" type="text" name="aliasCliente" class="fw-bold text-white"
+                                        required>
+                                    <span>Alias :</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6" id="divClave">
+                                <div class="input_box py-3">
+                                    <input id="claveCliente" type="password" name="claveCliente"
+                                        class="fw-bold text-white" required>
+                                    <span>Contraseña :</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6" id="divConfirmar">
+                                <div class="input_box py-3">
+                                    <input id="confirmarClave" type="password" name="confirmarClave"
+                                        class="fw-bold text-white" required>
+                                    <span>Confirmar contraseña :</span>
+                                </div>
+                            </div>
+                            <div class="col-6 d-flex align-items-end">
+                                <div class="p-3">
+                                    <!-- Interruptor para el estado del registro -->
+                                    <div class="switch-button">
+                                        <p id="">Estado</p>
+                                        <input type="checkbox" name="estadoCliente" id="estadoCliente"
+                                            class="switch-button__checkbox form-control">
+                                        <label for="estadoCliente" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- Pie del modal con botón de guardar -->
@@ -133,7 +178,7 @@
             </div>
         </div>
     </main>
-
+    <script type="text/javascript" src="../../resources/js/vanillaTextMask.js"></script>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>

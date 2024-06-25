@@ -139,7 +139,7 @@ class ClienteHandler
 
     public function readOne()
     {
-        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente ,telefono_cliente
+        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente,telefono_cliente,usuario_cliente,correo_cliente,estado_cliente
                  from tb_clientes 
                 WHERE id_cliente = ?';
         $params = array($this->id);
