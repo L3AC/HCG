@@ -9,7 +9,7 @@ Luis Eduardo Alvarenga Claros 20220298
 
 Francisco Javier Guadrón Vasquez 20220332
 
-Rodrigo Alejandro Alvarenga Claros 20220495
+Rodrigo Alejandro Alvarado Rodriguez 20220495
 
 Jeremy Leandro Castro Moreno 20220638
  
