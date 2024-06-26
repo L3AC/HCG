@@ -67,7 +67,7 @@ const StackMain = () => {
                     } else if (route.name === 'StackHistorial') {
                         iconName = focused ? 'history' : 'history'; // Elige el icono que prefieras
                     } else if (route.name === 'StackCuenta') {
-                        iconName = focused ? 'account' : 'account-outline'; // Elige el icono que prefieras
+                        iconName = focused ? 'account' : 'account'; // Elige el icono que prefieras
                     }
 
                     return <AnimatedIcon name={iconName} focused={focused} size={size} color={color} />;
@@ -108,13 +108,8 @@ const StackMain = () => {
 const styles = StyleSheet.create({
     tabBar: {
         position: 'absolute',
-        bottom: 20,
-        left: 10,
-        right: 10,
-        elevation: 0,
         backgroundColor: '#5C2C0C',
-        borderRadius: 15,
-        height: 60, // Ajusta la altura para acomodar iconos más grandes
+        height: 75, // Ajusta la altura para acomodar iconos más grandes
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.25,
@@ -123,6 +118,7 @@ const styles = StyleSheet.create({
     },
     tabBarItem: {
         margin: 5,
+        
     },
 });
 
