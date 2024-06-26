@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         marginBottom: 20,
         color: '#ffffff',
+        fontFamily: 'QuickSand',
         //fontFamily: 'QuickSand'// Ajusta el color del texto según el fondo
     },
 

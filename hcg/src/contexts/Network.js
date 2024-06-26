@@ -1,4 +1,4 @@
-export const SERVER = "http://192.168.137.174:80//HCG/api/";
+export const SERVER = "http://192.168.137.1:80//HCG/api/";
 
 
 
