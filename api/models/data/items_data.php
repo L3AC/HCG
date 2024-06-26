@@ -27,6 +27,11 @@ class ItemData extends ItemHandler
             return false;
         }
     }
+    public function setSearch($value)
+    {
+        $this->search= $value;
+        return true;
+    }
     public function setIdTipoItem($value)
     {
         if (Validator::validateNaturalNumber($value)) {

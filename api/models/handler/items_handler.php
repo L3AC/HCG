@@ -19,6 +19,7 @@ class ItemHandler
     protected $imagen = null;
     protected $categoria = null;
     protected $estado = null;
+    protected $search = null;
 
     // Constante para establecer la ruta de las imágenes.
     const RUTA_IMAGEN = '../../images/modelos/';
@@ -26,16 +27,17 @@ class ItemHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows($value)
+    public function searchRows()
     {
-        $value = ($value === '') ? '%%' : '%' . $value . '%';
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
-        $sql = 'SELECT id_item, descripcion_item, estado_item
-                FROM tb_items
-                WHERE descripcion_item LIKE  ? 
-                ORDER BY CAST(descripcion_item AS UNSIGNED)';
+        $sql = 'SELECT id_item,id_tipo_item,descripcion_item,descripcion_tipo_item,estado_item
+        FROM tb_items 
+        INNER JOIN tb_tipo_items USING (id_tipo_item)
+        WHERE descripcion_item like ?
+        ORDER BY descripcion_tipo_item;';
 
-        $params = array($value);
+        $params = array($this->search);
         return Database::getRows($sql, $params);
     }
 

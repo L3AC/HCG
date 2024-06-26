@@ -1,5 +1,5 @@
 // Constantes para completar las rutas de la API.
-const PRODUCTO_API = 'services/admin/items.php',
+const ITEM_API = 'services/admin/items.php',
     TIPOITEM_API = 'services/admin/tipoitems.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
@@ -11,6 +11,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
+INPUTSEARCH = document.getElementById('inputsearch'),
     ID_PRODUCTO = document.getElementById('idItem'),
     NOMBRE_PRODUCTO = document.getElementById('nombreItem'),
     //PRECIO_PRODUCTO = document.getElementById('precioProducto'),
@@ -46,7 +47,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
     // Petición para guardar los datos del formulario.
-    const DATA = await fetchData(PRODUCTO_API, action, FORM);
+    const DATA = await fetchData(ITEM_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se cierra la caja de diálogo.
@@ -60,16 +61,19 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
-
+INPUTSEARCH.addEventListener('input', async function () {
+    fillTable();
+});
 //Función asíncrona para llenar la tabla con los registros disponibles.
-const fillTable = async (form=null) => {
+const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(PRODUCTO_API, action, form);
+    const DATA = await fetchData(ITEM_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
@@ -118,7 +122,7 @@ const openUpdate = async (id) => {
     const FORM = new FormData();
     FORM.append('idItem', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(PRODUCTO_API, 'readOne', FORM);
+    const DATA = await fetchData(ITEM_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
@@ -146,7 +150,7 @@ const openDelete = async (id) => {
         const FORM = new FormData();
         FORM.append('idItem', id);
         // Petición para eliminar el registro seleccionado.
-        const DATA = await fetchData(PRODUCTO_API, 'deleteRow', FORM);
+        const DATA = await fetchData(ITEM_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se muestra un mensaje de éxito.

@@ -10,6 +10,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
+    INPUTSEARCH = document.getElementById('inputsearch'),
     ID_CLIENTE = document.getElementById('idCliente'),
     NOMBRE_CLIENTE = document.getElementById('nombreCliente'),
     APELLIDO_CLIENTE = document.getElementById('apellidoCliente'),
@@ -74,17 +75,19 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
-
-
+INPUTSEARCH.addEventListener('input', async function () {
+    fillTable();
+});
 //Función asíncrona para llenar la tabla con los registros disponibles.
-const fillTable = async (form = null) => {
+const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(CLIENTE_API, action, form);
+    const DATA = await fetchData(CLIENTE_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.

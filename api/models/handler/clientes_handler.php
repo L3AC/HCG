@@ -18,7 +18,7 @@ class ClienteHandler
     protected $usuario = null;
     protected $clave = null;
     protected $estado = null;
-
+    protected $search = null;
     /*
      *  Métodos para gestionar la cuenta del cliente.
      */
@@ -51,7 +51,6 @@ class ClienteHandler
             return false;
         }
     }
-
     public function checkStatus()
     {
         if ($this->estado) {
@@ -71,9 +70,6 @@ class ClienteHandler
         $params = array($this->clave, $_SESSION['idCliente']);
         return Database::executeRow($sql, $params);
     }
-
-
-
     public function readProfile()
     {
         $sql = 'SELECT *
@@ -82,7 +78,6 @@ class ClienteHandler
         $params = array($_SESSION['idCliente']);
         return Database::getRow($sql, $params);
     }
-
     public function editProfile()
     {
         $sql = 'UPDATE tb_clientes
@@ -91,18 +86,19 @@ class ClienteHandler
         $params = array($this->nombre, $this->apellido, $this->email, $this->usuario, $this->telefono, $_SESSION['idCliente']);
         return Database::executeRow($sql, $params);
     }
-
     /*
      *  Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
      */
     public function searchRows()
     {
-        $value = '%' . Validator::getSearchValue() . '%';
-        $sql = 'SELECT id_cliente,id_rol, nombre_cliente, apellido_cliente, email_cliente, alias_cliente
-                FROM cliente
-                WHERE apellido_cliente LIKE ? OR nombre_cliente LIKE ?
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
+        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente, 
+        correo_cliente, usuario_cliente,estado_cliente,telefono_cliente
+                FROM tb_clientes
+                WHERE apellido_cliente LIKE ? OR nombre_cliente LIKE ? 
+                OR correo_cliente like ? OR telefono_cliente LIKE ?
                 ORDER BY apellido_cliente';
-        $params = array($value, $value);
+        $params = array($this->search, $this->search, $this->search, $this->search);
         return Database::getRows($sql, $params);
     }
 

@@ -7,7 +7,7 @@ if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     session_start();
     // Se instancia la clase correspondiente.
-    $producto = new ItemData;
+    $item = new ItemData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'fileStatus' => null);
     // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
@@ -15,22 +15,27 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
-                if ($result['dataset'] = $producto->searchRows($_POST['valor'])) {
+                if (
+                    !$item->setSearch($_POST['valor'])
+                ) {
+                    $result['error'] = $item->getDataError();
+                } 
+                elseif ($result['dataset'] = $item->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
-                    
+                    $result['error'] = 'No hay coincidencias';
                 }
                 break;
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setNombre($_POST['nombreItem']) or
-                    !$producto->setIdTipoItem($_POST['tipoItem']) or
-                    !$producto->setEstado(isset($_POST['estadoItem']) ? 1 : 0) 
+                    !$item->setNombre($_POST['nombreItem']) or
+                    !$item->setIdTipoItem($_POST['tipoItem']) or
+                    !$item->setEstado(isset($_POST['estadoItem']) ? 1 : 0) 
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->createRow()) {
+                    $result['error'] = $item->getDataError();
+                } elseif ($item->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Producto creado correctamente';
                     // Se asigna el estado del archivo después de insertar.
@@ -39,7 +44,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAll':
-                if ($result['dataset'] = $producto->readAll()) {
+                if ($result['dataset'] = $item->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
@@ -47,7 +52,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAllActive':
-                    if ($result['dataset'] = $producto->readAllActive()) {
+                    if ($result['dataset'] = $item->readAllActive()) {
                         $result['status'] = 1;
                         $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                     } else {
@@ -56,9 +61,9 @@ if (isset($_GET['action'])) {
                 break;
             case 'readAllNot':
                     //echo $_POST['idTalla'];
-                    if (!$producto->setIdProducto($_POST['idProducto'])) {
-                        $result['error'] = $producto->getDataError();
-                    } elseif ($result['dataset'] = $producto->readAllNot($_POST['busqueda'])) {
+                    if (!$item->setIdProducto($_POST['idProducto'])) {
+                        $result['error'] = $item->getDataError();
+                    } elseif ($result['dataset'] = $item->readAllNot($_POST['busqueda'])) {
                         $result['status'] = 1;
                     } else {
                         $result['error'] = 'Registros inexistentes';
@@ -66,9 +71,9 @@ if (isset($_GET['action'])) {
                     break;
             case 'readOne':
                 //echo $_POST['idTalla'];
-                if (!$producto->setId($_POST['idItem'])) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($result['dataset'] = $producto->readOne()) {
+                if (!$item->setId($_POST['idItem'])) {
+                    $result['error'] = $item->getDataError();
+                } elseif ($result['dataset'] = $item->readOne()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'Producto inexistente';
@@ -77,13 +82,13 @@ if (isset($_GET['action'])) {
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setId($_POST['idItem']) or
-                    !$producto->setNombre($_POST['nombreItem']) or
-                    !$producto->setIdTipoItem($_POST['tipoItem']) or
-                    !$producto->setEstado(isset($_POST['estadoItem']) ? 1 : 0) 
+                    !$item->setId($_POST['idItem']) or
+                    !$item->setNombre($_POST['nombreItem']) or
+                    !$item->setIdTipoItem($_POST['tipoItem']) or
+                    !$item->setEstado(isset($_POST['estadoItem']) ? 1 : 0) 
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->updateRow()) {
+                    $result['error'] = $item->getDataError();
+                } elseif ($item->updateRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Registro modificado correctamente';
                     // Se asigna el estado del archivo después de actualizar.
@@ -93,10 +98,10 @@ if (isset($_GET['action'])) {
                 break;
             case 'deleteRow':
                 if (
-                    !$producto->setId($_POST['idItem']) 
+                    !$item->setId($_POST['idItem']) 
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->deleteRow()) {
+                    $result['error'] = $item->getDataError();
+                } elseif ($item->deleteRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Registro eliminado correctamente';
                 } else {
@@ -104,14 +109,14 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'cantidadProductosCategoria':
-                if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
+                if ($result['dataset'] = $item->cantidadProductosCategoria()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
             case 'porcentajeProductosCategoria':
-                if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
+                if ($result['dataset'] = $item->porcentajeProductosCategoria()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'No hay datos disponibles';

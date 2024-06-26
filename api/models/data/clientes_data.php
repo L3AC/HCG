@@ -24,7 +24,11 @@ class ClienteData extends ClienteHandler
             return false;
         }
     }
-
+    public function setSearch($value)
+    {
+        $this->search= $value;
+        return true;
+    }
     public function setNombre($value, $min = 2, $max = 50)
     {
         if (!Validator::validateAlphabetic($value)) {
