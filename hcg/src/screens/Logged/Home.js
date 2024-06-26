@@ -1,4 +1,3 @@
-// Importación de librerías y componentes necesarios
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, RefreshControl, TextInput, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -11,6 +10,8 @@ const MenuScreen = () => {
   const [refreshing, setRefreshing] = useState(false); // Estado para el control de la actualización
   const [search, setSearch] = useState(''); // Estado para el control de la búsqueda
   const [loading, setLoading] = useState(true); // Estado para el control de la carga
+  const [isMenuOdd, setIsMenuOdd] = useState(false); // Estado para controlar si el número de items del menú es impar
+  const [isComplementOdd, setIsComplementOdd] = useState(false); // Estado para controlar si el número de complementos es impar
 
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
 
@@ -37,8 +38,12 @@ const MenuScreen = () => {
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        setMenuItems(data.dataset.conjunto || []); // Actualiza los items del menú
-        setComplementItems(data.dataset.complementario || []); // Actualiza los items complementarios
+        const menuItems = data.dataset.conjunto || [];
+        const complementItems = data.dataset.complementario || [];
+        setMenuItems(menuItems); // Actualiza los items del menú
+        setComplementItems(complementItems); // Actualiza los items complementarios
+        setIsMenuOdd(menuItems.length % 2 !== 0); // Verifica si el número de items del menú es impar
+        setIsComplementOdd(complementItems.length % 2 !== 0); // Verifica si el número de complementos es impar
       } else {
         console.error('Error fetching data:', data.message);
         Alert.alert('Error', data.message); // Muestra un alerta en caso de error
@@ -64,8 +69,25 @@ const MenuScreen = () => {
   };
 
   // Función para renderizar cada tarjeta del menú
-  const renderCard = (item) => (
-    <TouchableOpacity key={item.id_producto} style={styles.card} onPress={() => navigation.navigate('Producto', { idProducto: item.id_producto })}>
+  const renderCard = (item, index, isLastOdd) => (
+    <TouchableOpacity
+      key={item.id_producto}
+      style={[styles.card, isLastOdd && index === menuItems.length - 1 && styles.lastOddCard]}
+      onPress={() => navigation.navigate('Producto', { idProducto: item.id_producto })}
+    >
+      <Image source={{ uri: item.imagen_producto }} style={styles.image} />
+      <Text style={styles.itemName}>{item.descripcion_producto}</Text>
+      <Text style={styles.itemPrice}>${item.precio_producto}</Text>
+    </TouchableOpacity>
+  );
+
+  // Función para renderizar cada tarjeta de los complementos
+  const renderComplementCard = (item, index, isLastOdd) => (
+    <TouchableOpacity
+      key={item.id_producto}
+      style={[styles.card, isLastOdd && index === complementItems.length - 1 && styles.lastOddCard]}
+      onPress={() => navigation.navigate('Producto', { idProducto: item.id_producto })}
+    >
       <Image source={{ uri: item.imagen_producto }} style={styles.image} />
       <Text style={styles.itemName}>{item.descripcion_producto}</Text>
       <Text style={styles.itemPrice}>${item.precio_producto}</Text>
@@ -85,7 +107,7 @@ const MenuScreen = () => {
           value={search}
           onChangeText={handleSearchChange}
         />
-        <Icon name="search" type="font-awesome" size={24} style={styles.searchIcon} />
+        <Icon name="microphone" type="font-awesome" size={24} style={styles.searchIcon} />
       </View>
       {/* Título del menú del día */}
       <Text style={styles.title}>Menú del Día</Text>
@@ -94,7 +116,7 @@ const MenuScreen = () => {
         {loading ? (
           <Text>Cargando...</Text>
         ) : (
-          menuItems.map(renderCard)
+          menuItems.map((item, index) => renderCard(item, index, isMenuOdd))
         )}
       </View>
       {/* Título de los complementos */}
@@ -104,7 +126,7 @@ const MenuScreen = () => {
         {loading ? (
           <Text>Cargando...</Text>
         ) : (
-          complementItems.map(renderCard)
+          complementItems.map((item, index) => renderComplementCard(item, index, isComplementOdd))
         )}
       </View>
     </ScrollView>
@@ -139,6 +161,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
+    textAlign: 'center',
+    fontFamily: 'QuickSand'
   },
   menuContainer: {
     paddingBottom: 40, // Padding inferior
@@ -147,12 +171,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Distribuye el espacio equitativamente entre los elementos
   },
   card: {
-    backgroundColor: '#f4f4f4', // Color de fondo de la tarjeta
+    backgroundColor: '#E3DECA', // Color de fondo de la tarjeta
     borderRadius: 8, // Bordes redondeados
     padding: 16,
     marginVertical: 8,
     alignItems: 'center', // Alinea los elementos horizontalmente al centro
     width: '48%', // Ancho de la tarjeta
+  },
+  lastOddCard: {
+    width: '100%', // Ancho completo para centrar la última tarjeta impar
   },
   image: {
     width: 100,
@@ -164,11 +191,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center', // Alinea el texto al centro
+    fontFamily: 'QuickSand',
   },
   itemPrice: {
     fontSize: 14,
     color: '#333', // Color del texto del precio
     textAlign: 'center', // Alinea el texto al centro
+    fontFamily: 'QuickSand',
   },
 });
 

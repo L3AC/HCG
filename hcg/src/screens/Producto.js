@@ -113,7 +113,7 @@ const ProductoScreen = () => {
       <View style={styles.container}>
         {/* Botón para volver a la pantalla anterior */}
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" type="font-awesome" size={24} color="#000" />
+          <Text style={styles.flechita}>←</Text>
         </TouchableOpacity>
         {/* Título del producto */}
         <Text style={styles.title}>{productInfo.descripcion_producto || 'Producto'}</Text>
@@ -200,6 +200,9 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     textAlign: 'center',
     color: '#000',
+    fontFamily: 'QuickSand',
+    textShadowColor: '#000',
+
   },
   image: {
     width: 300,
@@ -298,6 +301,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  flechita:{
+    fontSize:30,
+  }
 });
 
 export default ProductoScreen;
