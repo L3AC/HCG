@@ -24,6 +24,7 @@ class UsuarioData extends UsuarioHandler
             return false;
         }
     }
+
     public function setIdRol($value)
     {
         if (Validator::validateNaturalNumber($value)) {

@@ -17,7 +17,11 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un Usuario ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
-                if ($result['dataset'] = $Usuario->searchRows($_SESSION['idRol'], $_POST['valor']/*,$_POST['valor2'],$_POST['valor3'],*/)) {
+                if (
+                    !$Usuario->setSearch($_POST['valor'])
+                ) {
+                    $result['error'] = $Usuario->getDataError();
+                } elseif ($result['dataset'] = $Usuario->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {

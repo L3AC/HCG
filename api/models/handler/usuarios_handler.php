@@ -111,19 +111,19 @@ class UsuarioHandler
     /*
      *  Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
      */
-    public function searchRows($idrol, $value/*,$value2,$value3*/)
+    public function searchRows()
     {
-        $value = ($value === '') ? '' : 'AND nombre_usuario like %' . $value . '%';
-        /*$value2 = ($value2 === '') ? '%%' : '%' . $value2 . '%';
-        $value3 = ($value3 === '') ? '%%' : '%' . $value3 . '%';*/
-
-        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
-        FROM sec_usuarios
-        WHERE id_usuario != idmin("sec_usuarios") 
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
+        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, 
+        email_usuario, alias_usuario,estado_usuario
+        FROM tb_usuarios
+        WHERE id_usuario !=  (SELECT MIN(id_usuario) FROM tb_usuarios) 
+        AND nombre_usuario like ? OR apellido_usuario like ? OR email_usuario like ? 
+        OR alias_usuario like ? 
         AND id_rol!=?
         ORDER BY apellido_usuario';
 
-        $params = array($idrol);
+        $params = array($this->search,$this->search,$this->search,$this->search,$_SESSION['idRol']);
         return Database::getRows($sql, $params);
     }
     public function fillTab($idrol)
