@@ -47,6 +47,10 @@ if (isset($_GET['action'])) {
                     !$Usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
                     $result['error'] = $Usuario->getDataError();
+                }  elseif ($cliente->readExist($_POST['aliasUsuario'])) {
+                    $result['error'] = 'El nombre de usuario ya está en uso';
+                } elseif ($cliente->readExistMail($_POST['correoUsuario'])) {
+                    $result['error'] = 'El correo electrónico ya está en uso';
                 } elseif ($_POST['claveUsuario'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($Usuario->createRow()) {

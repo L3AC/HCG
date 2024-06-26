@@ -24,6 +24,17 @@ class ClienteData extends ClienteHandler
             return false;
         }
     }
+    public function setEstado($value)
+    {
+        // Validación del estado.
+        if (Validator::validateBoolean($value)) {
+            $this->estado = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
     public function setSearch($value)
     {
         $this->search= $value;
@@ -64,6 +75,19 @@ class ClienteData extends ClienteHandler
             return false;
         } elseif (Validator::validateLength($value, $min, $max)) {
             $this->email= $value;
+            return true;
+        } else {
+            $this->data_error = 'El correo debe tener una longitud entre ' . $min . ' y ' . $max;
+            return false;
+        }
+    }
+    public function setCorreoNew($value, $min = 8, $max = 100)
+    {
+        if (!Validator::validateEmail($value)) {
+            $this->data_error = 'El correo no es válido';
+            return false;
+        } elseif (Validator::validateLength($value, $min, $max)) {
+            $this->newemail= $value;
             return true;
         } else {
             $this->data_error = 'El correo debe tener una longitud entre ' . $min . ' y ' . $max;

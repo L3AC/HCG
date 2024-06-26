@@ -19,6 +19,7 @@ class ClienteHandler
     protected $clave = null;
     protected $estado = null;
     protected $search = null;
+    protected $newemail = null;
     /*
      *  Métodos para gestionar la cuenta del cliente.
      */
@@ -176,10 +177,12 @@ class ClienteHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE prc_clientes 
-                SET nombre_cliente = ?, apellido_cliente = ?, email_cliente = ?
+        $sql = 'UPDATE tb_clientes 
+                SET nombre_cliente = ?, apellido_cliente = ?, 
+                correo_cliente = ?,telefono_cliente = ?,estado_cliente = ?,
                 WHERE id_cliente = ?';
-        $params = array($this->nombre, $this->apellido, $this->email, $this->id);
+        $params = array($this->nombre, $this->apellido, $this->email,
+        $this->telefono,$this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
 

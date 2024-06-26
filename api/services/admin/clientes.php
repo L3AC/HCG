@@ -12,7 +12,7 @@ if (isset($_GET['action'])) {
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'session' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'username' => null);
     // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
-    if (isset($_SESSION['idUsuario'])) {
+    if (isset($_SESSION['idCliente'])) {
         $result['session'] = 1;
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
@@ -21,8 +21,7 @@ if (isset($_GET['action'])) {
                     !$cliente->setSearch($_POST['valor'])
                 ) {
                     $result['error'] = $cliente->getDataError();
-                } 
-                elseif ($result['dataset'] = $cliente->searchRows()) {
+                } elseif ($result['dataset'] = $cliente->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -40,6 +39,10 @@ if (isset($_GET['action'])) {
                     !$cliente->setClave($_POST['claveCliente'])
                 ) {
                     $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->readExist($_POST['aliasCliente'])) {
+                    $result['error'] = 'El nombre de usuario ya está en uso';
+                } elseif ($cliente->readExistMail($_POST['correoCliente'])) {
+                    $result['error'] = 'El correo electrónico ya está en uso';
                 } elseif ($_POST['claveCliente'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($cliente->createRow()) {
@@ -73,32 +76,37 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Registro inexistente';
                 }
                 break;
-            case 'updateRow':
-                $_POST = Validator::validateForm($_POST);
-                if (
-                    !$cliente->setId($_POST['idCliente']) or
-                    !$cliente->setNombre($_POST['nombreCliente']) or
-                    !$cliente->setApellido($_POST['apellidoCliente']) or
-                    !$cliente->setCorreo($_POST['correoCliente'])
-                ) {
-                    $result['error'] = $cliente->getDataError();
-                } elseif ($cliente->updateRow()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Registro modificado correctamente';
-                } else {
-                    $result['error'] = 'Ocurrió un problema al modificar el registro';
-                }
-                break;
-            case 'deleteRow':
-                if (!$cliente->setId($_POST['idCliente'])) {
-                    $result['error'] = $cliente->getDataError();
-                } elseif ($cliente->deleteRow()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Registro eliminado correctamente';
-                } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el administrador';
-                }
-                break;
+                case 'updateRow':
+                    $_POST = Validator::validateForm($_POST);
+                    if (
+                        !$cliente->setId($_POST['idCliente']) or
+                        !$cliente->setNombre($_POST['nombreCliente']) or
+                        !$cliente->setApellido($_POST['apellidoCliente']) or
+                        !$cliente->setCorreoNew($_POST['correoClienteNew']) or
+                        !$cliente->setCorreo($_POST['correoCliente']) or
+                        !$cliente->setTelefono($_POST['telefonoCliente']) or
+                        !$cliente->setEstado(isset($_POST['estadoCliente']) ? 1 : 0)
+                    ) {
+                        $result['error'] = $cliente->getDataError();
+                    }  elseif ($_POST['correoClienteVerif']!=$_POST['correoCliente'] && $cliente->readExistMail($_POST['correoCliente'])) {
+                        $result['error'] = 'El correo electrónico ya está en uso';
+                    }elseif ($cliente->updateRow()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Registro modificado correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al modificar el registro';
+                    }
+                    break;
+                case 'deleteRow':
+                    if (!$cliente->setId($_POST['idCliente'])) {
+                        $result['error'] = $cliente->getDataError();
+                    } elseif ($cliente->deleteRow()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Registro eliminado correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al eliminar el cliente';
+                    }
+                    break;
             case 'getUser':
                 if (isset($_SESSION['usuarion'])) {
                     $result['status'] = 1;
@@ -139,7 +147,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
                 break;
-            /*case 'changePassword':
+                /*case 'changePassword':
                 $_POST = Validator::validateForm($_POST);
                 if (!$cliente->checkPassword($_POST['claveActual'])) {
                     $result['error'] = 'Contraseña actual incorrecta';
@@ -175,10 +183,15 @@ if (isset($_GET['action'])) {
                     !$cliente->setApellido($_POST['apellido']) or
                     !$cliente->setCorreo($_POST['correo']) or
                     !$cliente->setUsuario($_POST['usuario']) or
+                    !$cliente->setTelefono($_POST['telefono']) or
                     !$cliente->setClave($_POST['clave'])
                 ) {
                     $result['error'] = $cliente->getDataError();
-                } elseif ($_POST['clave'] != $_POST['confirmarClave']) {
+                } elseif ($cliente->readExist($_POST['usuarioCliente'])) {
+                    $result['error'] = 'El nombre de usuario ya está en uso';
+                } elseif ($cliente->readExistMail($_POST['correoCliente'])) {
+                    $result['error'] = 'El correo electrónico ya está en uso';
+                }elseif ($_POST['clave'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($cliente->createRow()) {
                     $result['status'] = 1;
