@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Boton from '../../components/Button/Boton'; // Llamar a la plantilla para botón
 import Input from '../../components/inputs/InputLogin'; // Llama a la plantilla para los input
 import SimpleAlert from '../../components/alerts/SimpleAlert'; // Importa la alerta simple
+import { useFonts } from 'expo-font';
 
 // Componente de función Login
 const Login = () => {
@@ -23,6 +24,11 @@ const Login = () => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [alertType, setAlertType] = useState('info');
+  
+  const [fontsLoaded] = useFonts({
+    QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
+    QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
+  });
 
   const handleShowSimpleAlert = (message, type = 'info', timer = 2000) => {
     setAlertMessage(message);
@@ -64,10 +70,11 @@ const Login = () => {
   return (
     <ImageBackground source={require('../../img/fondo.png')} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <Image source={require('../../img/logo2.png')} style={styles.logo} />
+        <Image source={require('../../img/logo3.png')} style={styles.logo} />
         <Text style={styles.title}>Inicio de sesión</Text>
         <Input
           placeHolder='Usuario'
+          style={styles.input}
           setValor={usuario}
           setTextChange={setUsuario}
         />
@@ -80,7 +87,9 @@ const Login = () => {
         <TouchableOpacity onPress={() => navigation.navigate('VerifUs')}>
           <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
         </TouchableOpacity>
-        <Boton textoBoton='Confirmar' accionBoton={handleLogin} />
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Confirmar</Text>
+          </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
         </TouchableOpacity>
@@ -116,9 +125,10 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     marginBottom: 20,
     color: '#ffffff', // Ajusta el color del texto según el fondo
+    fontFamily: 'QuickSandBold',
   },
   input: {
     width: '100%',
@@ -127,15 +137,32 @@ const styles = StyleSheet.create({
     backgroundColor: '#AA6231', // Color de fondo del input
     paddingHorizontal: 15,
     marginBottom: 20,
+    fontFamily: 'QuickSand',
     color: '#ffffff',
   },
   forgotPassword: {
     color: '#ffffff', // Ajusta el color del texto según el fondo
-    marginBottom: 20,
+    marginBottom: 23,
+    fontFamily: 'QuickSand',
   },
   signUp: {
     color: '#ffffff', // Ajusta el color del texto según el fondo
-    marginTop: 20,
+    marginTop: 23,
+    fontFamily: 'QuickSand',
+  },
+  button: {
+    width: '80%',
+    paddingVertical: 10,
+    backgroundColor: '#2F2C2C',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontFamily: 'QuickSandBold',
   },
 });
 
