@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   contenedorTexto:{
-    backgroundColor: '#DDA35D',
+    backgroundColor: '#E3DECA',
     borderRadius: 10,
     marginLeft: 30
   },

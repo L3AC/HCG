@@ -115,19 +115,19 @@ const CuentaScreen = () => {
 
       {/* Tarjeta para navegar al perfil */}
       <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Perfil')}>
-        <Ionicons name="person-circle-outline" size={50} color="black" />
+        <Ionicons name="person-circle-outline" size={50} color="white" />
         <Text style={styles.cardText}>Perfil</Text>
       </TouchableOpacity>
 
       {/* Tarjeta para navegar a la pantalla de cambio de clave */}
       <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Clave')}>
-        <Ionicons name="lock-closed-outline" size={50} color="black" />
+        <Ionicons name="lock-closed-outline" size={50} color="white" />
         <Text style={styles.cardText}>Clave</Text>
       </TouchableOpacity>
 
       {/* Tarjeta para navegar a la pantalla "Sobre Nosotros" */}
       <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('SobreNosotros')}>
-        <Ionicons name="people-circle-outline" size={50} color="black" />
+        <Ionicons name="people-circle-outline" size={50} color="white" />
         <Text style={styles.cardText}>Sobre nosotros</Text>
       </TouchableOpacity>
       <SweetAlert 
@@ -161,9 +161,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
+    fontFamily: 'QuickSandBold'
   },
   card: {
-    backgroundColor: '#e8e8e8', // Color de fondo de las tarjetas
+    backgroundColor: '#AA6231', // Color de fondo de las tarjetas
     width: '90%', // Ancho de las tarjetas
     height: '20%', // Altura de las tarjetas
     padding: 20, // Padding interno
@@ -173,7 +174,9 @@ const styles = StyleSheet.create({
   },
   cardText: {
     marginTop: 10, // Margen superior del texto
-    fontSize: 18, // Tamaño de fuente del texto
+    fontSize: 22, // Tamaño de fuente del texto
+    color: '#fff',
+    fontFamily: 'QuickSand'
   },
 });
 
