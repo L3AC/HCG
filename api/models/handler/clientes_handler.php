@@ -179,7 +179,7 @@ class ClienteHandler
     {
         $sql = 'UPDATE tb_clientes 
                 SET nombre_cliente = ?, apellido_cliente = ?, 
-                correo_cliente = ?,telefono_cliente = ?,estado_cliente = ?,
+                correo_cliente = ?,telefono_cliente = ?,estado_cliente = ?
                 WHERE id_cliente = ?';
         $params = array($this->nombre, $this->apellido, $this->email,
         $this->telefono,$this->estado, $this->id);

@@ -16,7 +16,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     APELLIDO_CLIENTE = document.getElementById('apellidoCliente'),
     TEL_CLIENTE = document.getElementById('telefonoCliente'),
     CORREO_CLIENTE = document.getElementById('correoCliente'),
-    DIRECCION_CLIENTE = document.getElementById('direccionCliente'),
+    ESTADO_CLIENTE = document.getElementById('estadoCliente'),
     ALIAS_CLIENTE = document.getElementById('aliasCliente'),
     CLAVE_CLIENTE = document.getElementById('claveCliente'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
@@ -26,6 +26,8 @@ const SAVE_FORM = document.getElementById('saveForm'),
 
 const MENSAJE_DIV = document.getElementById('MENSAJE_DIV'),
     IDGUARDAR = document.getElementById('idGuardar');
+
+let new_correo = '';
 
 vanillaTextMask.maskInput({
         inputElement: TEL_CLIENTE,
@@ -60,6 +62,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     (ID_CLIENTE.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
+    (ID_CLIENTE.value) ? FORM.append('correoClienteNew', new_correo) : FORM.append('n', 'n');
     // Petición para guardar los datos del formulario.
     const DATA = await fetchData(CLIENTE_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -151,23 +154,26 @@ const openUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_CLIENTE.value = ROW.id_cliente;
+        console.log(ID_CLIENTE.value);
         NOMBRE_CLIENTE.value = ROW.nombre_cliente;
         APELLIDO_CLIENTE.value = ROW.apellido_cliente;
         CORREO_CLIENTE.value = ROW.correo_cliente;
+        new_correo = ROW.correo_cliente;
         TEL_CLIENTE.value = ROW.telefono_cliente;
         ALIAS_CLIENTE.value = ROW.usuario_cliente;
+        ESTADO_CLIENTE.checked=ROW.estado_cliente;
 
     } else {
         sweetAlert(2, DATA.error, false);
     }
 }
 const hideElements= async(bool)=>{
-    DIV_ALIAS.hidden = bool;
-    ALIAS_CLIENTE.hidden = bool;
-    DIV_CLAVE.hidden = bool;
-    CLAVE_CLIENTE.hidden = bool;
-    DIV_CONFIRMAR.hidden = bool;
-    CONFIRMAR_CLAVE.hidden = bool;
+    //DIV_ALIAS.hidden = bool;
+    ALIAS_CLIENTE.disabled = bool;
+    //DIV_CLAVE.hidden = bool;
+    CLAVE_CLIENTE.disabled = bool;
+    //DIV_CONFIRMAR.hidden = bool;
+    CONFIRMAR_CLAVE.disabled = bool;
 }
 
 //Función asíncrona para eliminar un registro.
