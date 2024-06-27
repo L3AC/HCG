@@ -1,9 +1,9 @@
 // Importación de librerías y componentes necesarios
 import React, { useState, useEffect, useCallback } from 'react';
-import { ScrollView, RefreshControl, StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { ScrollView, RefreshControl, StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Iconos de Ionicons
 import { SERVER } from '../../contexts/Network'; // URL del servidor
-import { useRoute, useNavigation } from '@react-navigation/native'; // Hook de navegación
+import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Input from '../../components/inputs/Input' // Llama a la plantilla para los input
 import InputCorreo from '../../components/inputs/InputCorreo' // Llama a la plantilla para los input
 
@@ -54,59 +54,66 @@ const PerfilScreen = () => {
       contentContainerStyle={styles.container}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
+      {/* Vista adicional para el color de fondo en la parte superior */}
+      <View style={styles.topBackground}></View>
+
       {/* Encabezado con íconos de retroceso y edición */}
       <View style={styles.header}>
-        <Ionicons name="arrow-back" size={35} color="black" onPress={() => navigation.goBack()}/>
+        <Ionicons style={styles.iconoHeader} name="arrow-back" size={35} color="white" onPress={() => navigation.goBack()} />
         <Text style={styles.title}>Perfil</Text>
-        <Ionicons name="pencil" size={35} color="black" />
+        <Ionicons style={styles.iconoHeader} name="pencil" size={35} color="white" />
       </View>
+      <View style={styles.linea}></View>
+
       {/* Formulario para los datos del perfil */}
       <View style={styles.form}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Nombre</Text>
-          <Input
-          placeHolder='Nombre'
-          setValor={profileData.nombre_cliente}
-          onChangeText={(text) => setTextChange({ ...profileData, nombre_cliente: text })}
-          />
+        <View style={styles.contenedor2}>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Nombre</Text>
+            <Input
+              placeHolder='Nombre'
+              setValor={profileData.nombre_cliente}
+              onChangeText={(text) => setProfileData({ ...profileData, nombre_cliente: text })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Apellido</Text>
+            <Input
+              placeHolder='Apellido'
+              setValor={profileData.apellido_cliente}
+              onChangeText={(text) => setProfileData({ ...profileData, apellido_cliente: text })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Correo</Text>
+            <InputCorreo
+              placeHolder='Correo'
+              setValor={profileData.correo_cliente}
+              onChangeText={(text) => setProfileData({ ...profileData, correo_cliente: text })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Usuario</Text>
+            <Input
+              placeHolder='Usuario'
+              setValor={profileData.usuario_cliente}
+              onChangeText={(text) => setProfileData({ ...profileData, usuario_cliente: text })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Teléfono</Text>
+            <Input
+              placeHolder='Telefono'
+              setValor={profileData.telefono_cliente}
+              onChangeText={(text) => setProfileData({ ...profileData, telefono_cliente: text })}
+            />
+          </View>
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Apellido</Text>
-          <Input
-          placeHolder='Apellido'
-          setValor={profileData.apellido_cliente}
-          onChangeText={(text) => setTextChange({ ...profileData, apellido_cliente: text })}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Correo</Text>
-          <InputCorreo
-          placeHolder='Correo'
-          setValor={profileData.correo_cliente}
-          onChangeText={(text) => setTextChange({ ...profileData, correo_cliente: text })}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Usuario</Text>
-          <Input
-          placeHolder='Usuario'
-          setValor={profileData.usuario_cliente}
-          onChangeText={(text) => setTextChange({ ...profileData, usuario_cliente: text })}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Teléfono</Text>
-          <Input
-          placeHolder='Telefono'
-          setValor={profileData.telefono_cliente}
-          onChangeText={(text) => setTextChange({ ...profileData, telefono_cliente: text })}
-          />
-        </View>
+        {/* Botón para guardar los cambios */}
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Guardar</Text>
+        </TouchableOpacity>
       </View>
-      {/* Botón para guardar los cambios */}
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Guardar</Text>
-      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -115,31 +122,55 @@ const PerfilScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1, // Permite que el contenido se expanda y se desplace
-    padding: 16,
+    padding: 0,
     backgroundColor: '#d2a563', // Color de fondo
+    justifyContent: 'center', // Centra el contenido verticalmente
+  },
+  contenedor2:{
+    backgroundColor: '#AA6231',
+    width: '100%',
+    padding:20,
+    borderRadius:20
+  },
+  topBackground: {
+    height: 100, // Ajusta esta altura según sea necesario
+    backgroundColor: '#5C2C0C', // Color de fondo para la parte superior
+  },
+  iconoHeader: {
+    paddingBottom: 5,
+    paddingLeft: 16,
+    paddingRight: 16,
+
   },
   header: {
     flexDirection: 'row', // Coloca los elementos en una fila
     justifyContent: 'space-between', // Espacia los elementos de manera equitativa
     alignItems: 'center', // Alinea los elementos verticalmente al centro
-    marginBottom: 30,
-    marginTop: 45,
+    marginBottom: 10,
+    marginTop: -50, // Ajusta este valor según sea necesario
+    backgroundColor: 'transparent'
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'black', // Color del texto del título
+    color: 'white', // Color del texto del título
+    fontFamily: 'QuickSand'
   },
   form: {
     flex: 1,
+    padding: 20,
+    marginTop: 20,
+    alignItems: 'center', // Centra el contenido horizontalmente
   },
   inputContainer: {
     marginBottom: 25, // Margen inferior entre los contenedores de entrada
+    width: '100%', // Asegura que los inputs ocupen el ancho completo del contenedor
   },
   label: {
     fontSize: 16,
-    color: 'black', // Color del texto de las etiquetas
-    marginBottom: 15,
+    color: '#fff', // Color del texto de las etiquetas
+    marginBottom: 1,
+    fontFamily: 'QuickSand'
   },
   input: {
     height: 40,
@@ -151,16 +182,19 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 50,
-    width: 100,
+    width: '50%', // Ajusta el ancho del botón
     justifyContent: 'center', // Centra el contenido verticalmente
     alignItems: 'center', // Centra el contenido horizontalmente
-    backgroundColor: 'black', // Color de fondo del botón
+    backgroundColor: '#2F2C2C', // Color de fondo del botón
     borderRadius: 8, // Bordes redondeados del botón
-    marginTop: 0, // Margen superior del botón
+    marginTop: 20, // Margen superior del botón
+    marginBottom: 70,
   },
   buttonText: {
     color: 'white', // Color del texto del botón
-    fontWeight: 'bold', // Peso de la fuente (negrita)
+    fontFamily: 'QuickSandBold',
+    fontSize: 16
+
   },
 });
 

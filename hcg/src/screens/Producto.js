@@ -14,12 +14,12 @@ const ProductoScreen = () => {
   const [cantidad, setCantidad] = useState(''); // Estado para la cantidad del producto a agregar
   const [nota, setNota] = useState(''); // Estado para la nota del producto a agregar
 
-// Hooks de navegación y rutas
+  // Hooks de navegación y rutas
   const route = useRoute();
   const navigation = useNavigation(); // Hook para la navegación
   const { idProducto } = route.params; // Obtener el ID del producto desde los parámetros de la ruta
 
-// Función para obtener datos del producto desde el servidor
+  // Función para obtener datos del producto desde el servidor
   const fetchMenuData = async () => {
     try {
       setLoading(true); // Activar estado de carga
@@ -51,7 +51,7 @@ const ProductoScreen = () => {
     }
   };
 
-// Función para agregar el producto al carrito
+  // Función para agregar el producto al carrito
   const addToCart = async () => {
     try {
       setLoading(true); // Activar estado de carga
@@ -73,13 +73,13 @@ const ProductoScreen = () => {
         setModalVisible(false);
         navigation.navigate('Cart');
       }
-      else if(response.ok && data.status ===2) {
+      else if (response.ok && data.status === 2) {
         // Si la respuesta es exitosa y el estado es 2, mostrar un mensaje de alerta
         console.error(data.message);
         setModalVisible(false);
         Alert.alert('Alerta', data.message);
       }
-      else{
+      else {
         // Si hay un error en la respuesta, mostrar un mensaje de error
         console.error(data.error);
         setModalVisible(false);
@@ -94,12 +94,12 @@ const ProductoScreen = () => {
     }
   };
 
-// Efecto para cargar datos del producto al montar el componente
+  // Efecto para cargar datos del producto al montar el componente
   useEffect(() => {
     fetchMenuData();
   }, []);
 
-// Función de refresco de datos
+  // Función de refresco de datos
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     fetchMenuData();
@@ -118,17 +118,23 @@ const ProductoScreen = () => {
         {/* Título del producto */}
         <Text style={styles.title}>{productInfo.descripcion_producto || 'Producto'}</Text>
         {/* Imagen del producto */}
-        <Image
-          source={{ uri: productInfo.imagen_producto || 'https://example.com/placeholder.jpg' }}
-          style={styles.image}
-        />
-        {/* Información del producto */}
-        <View style={styles.infoRow}>
-          <Text style={styles.infoText}>Tipo: {productInfo.tipo_producto || 'N/A'}</Text>
-          <Text style={styles.infoText}>Precio: ${productInfo.precio_producto || '0.00'}</Text>
+        <View style={styles.contendor2}>
+          <Image
+            source={{ uri: productInfo.imagen_producto || 'https://example.com/placeholder.jpg' }}
+            style={styles.image}
+          />
+          {/* Información del producto */}
+          <View style={styles.infoRow}>
+            <View style={styles.contenedorTexto}>
+              <Text style={styles.infoText}> {productInfo.tipo_producto || 'N/A'}</Text>
+            </View>
+            <View style={styles.contenedorTexto}>
+              <Text style={styles.infoText}> ${productInfo.precio_producto || '0.00'}</Text>
+            </View>
+          </View>
         </View>
         {/* Lista de detalles del producto */}
-        <Text style={styles.itemsTitle}>Items</Text>
+        <Text style={styles.itemsTitle}>Extra</Text>
         {details.map((item, index) => (
           <View key={index} style={styles.itemRow}>
             <Text style={styles.itemText}>{item.descripcion_item}</Text>
@@ -141,8 +147,8 @@ const ProductoScreen = () => {
           <Text style={styles.addButtonText}>Agregar</Text>
         </TouchableOpacity>
       </View>
-      
-        {/* Modal para agregar el producto al carrito */}
+
+      {/* Modal para agregar el producto al carrito */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -187,6 +193,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#d2a563',
   },
+  contendor2: {
+    backgroundColor: '#AA6231',
+    borderRadius: 20,
+    width: '100%'
+  },
+  contenedorTexto:{
+    backgroundColor: '#E3DECA',
+    borderRadius: 10,
+    marginLeft: 30
+  },
   backButton: {
     position: 'absolute',
     top: 50,
@@ -194,7 +210,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   title: {
-    paddingTop:45,
+    paddingTop: 45,
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 16,
@@ -209,6 +225,9 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 16,
     marginVertical: 16,
+    alignSelf: 'center',
+    borderColor: '#fff',
+    borderWidth: 3,
   },
   infoRow: {
     flexDirection: 'row',
@@ -219,17 +238,21 @@ const styles = StyleSheet.create({
   infoText: {
     fontSize: 18,
     color: '#000',
+    padding: 10,
+    fontFamily: 'QuickSand'
   },
   itemsTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
     color: '#000',
+    fontFamily: 'QuickSandBold',
+    marginTop: 10
   },
   itemRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#FFF0E3',
+    backgroundColor: '#AA6231',
     padding: 8,
     borderRadius: 8,
     marginBottom: 8,
@@ -237,10 +260,11 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 16,
-    color: '#000',
+    color: '#fff',
+    fontFamily: 'QuickSand'
   },
   addButton: {
-    backgroundColor: '#000',
+    backgroundColor: '#2F2C2C',
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
@@ -249,7 +273,7 @@ const styles = StyleSheet.create({
   addButtonText: {
     color: '#FFF',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'QuickSand'
   },
   modalOverlay: {
     flex: 1,
@@ -301,8 +325,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  flechita:{
-    fontSize:30,
+  flechita: {
+    fontSize: 30,
   }
 });
 
