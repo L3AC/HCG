@@ -6,7 +6,7 @@ export default function Input({ placeHolder, setValor, clave, setTextChange }) {
       style={styles.input}
       placeholder={placeHolder}
       value={setValor}
-      placeholderTextColor={'#000'}
+      placeholderTextColor={'#fff'}
       secureTextEntry={clave}
       onChangeText={setTextChange}
     />

@@ -162,7 +162,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     textAlign: 'center',
-    fontFamily: 'QuickSand'
+    fontFamily: 'QuickSand',
+    color: '#fff'
   },
   menuContainer: {
     paddingBottom: 40, // Padding inferior
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Distribuye el espacio equitativamente entre los elementos
   },
   card: {
-    backgroundColor: '#E3DECA', // Color de fondo de la tarjeta
+    backgroundColor: '#AA6231', // Color de fondo de la tarjeta
     borderRadius: 8, // Bordes redondeados
     padding: 16,
     marginVertical: 8,
@@ -192,10 +193,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center', // Alinea el texto al centro
     fontFamily: 'QuickSand',
+    color: '#fff'
   },
   itemPrice: {
     fontSize: 14,
-    color: '#333', // Color del texto del precio
+    color: '#fff', // Color del texto del precio
     textAlign: 'center', // Alinea el texto al centro
     fontFamily: 'QuickSand',
   },

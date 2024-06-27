@@ -6,7 +6,7 @@ export default function InputEmail({ placeHolder, setValor, setTextChange }) {
       style={styles.input}
       placeholder={placeHolder}
       value={setValor}
-      placeholderTextColor={'#000'}
+      placeholderTextColor={'#fff'}
       onChangeText={setTextChange}
       keyboardType="email-address"
     />

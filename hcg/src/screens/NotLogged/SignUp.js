@@ -10,7 +10,7 @@ import Boton from '../../components/Button/Boton'; // Llamar al la plantilla par
 // Componente de función SignUp
 const SignUp = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
-  const [isContra, setIsContra] = useState(true) 
+  const [isContra, setIsContra] = useState(true)
 
   return (
     <View style={styles.container}>
@@ -20,42 +20,37 @@ const SignUp = () => {
       </TouchableOpacity>
       {/* Título de la pantalla de registro */}
       <Text style={styles.title}>Registro</Text>
-
-      {/* Contenedor para el input de Nombre */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Nombre</Text>
-        <Input placeHolder='Nombre'/>
-      </View>
-      {/* Contenedor para el input de Apellido */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Apellido</Text>
-        <Input placeHolder='Apellido'/>
-      </View>
-      {/* Contenedor para el input de Correo */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Correo</Text>
-        <InputCorreo placeHolder='Correo'/>
-      </View>
-      {/* Contenedor para el input de Teléfono */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Telefono</Text>
-        <Input placeHolder='Telefono'/>
-      </View>
-      {/* Contenedor para el input de Usuario */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Usuario</Text>
-        <Input placeHolder='Usuario'/>
-      </View>
-      {/* Contenedor para el input de Contraseña */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Contraseña</Text>
-        <Input placeHolder='Contraseña' clave={isContra} />
+      <View style={styles.contendor2}>
+        {/* Contenedor para el input de Nombre */}
+        <View style={styles.inputContainer}>
+          <Input placeHolder='Nombre' />
+        </View>
+        {/* Contenedor para el input de Apellido */}
+        <View style={styles.inputContainer}>
+          <Input placeHolder='Apellido' />
+        </View>
+        {/* Contenedor para el input de Correo */}
+        <View style={styles.inputContainer}>
+          <InputCorreo placeHolder='Correo' />
+        </View>
+        {/* Contenedor para el input de Teléfono */}
+        <View style={styles.inputContainer}>
+          <Input placeHolder='Telefono' />
+        </View>
+        {/* Contenedor para el input de Usuario */}
+        <View style={styles.inputContainer}>
+          <Input placeHolder='Usuario' />
+        </View>
+        {/* Contenedor para el input de Contraseña */}
+        <View style={styles.inputContainer}>
+          <Input placeHolder='Contraseña' clave={isContra} />
+        </View>
       </View>
 
       {/* Botón de confirmación */}
       <Boton
-        textoBoton='Confirmar'
-        />
+         textoBoton='Confirmar'
+      />
     </View>
   );
 };
@@ -68,12 +63,20 @@ const styles = StyleSheet.create({
     padding: 30,
     backgroundColor: '#d29c65', // Background color
   },
+  contendor2:{
+    backgroundColor: '#AA6231',
+    padding:20,
+    borderRadius: 20,
+    borderColor: '#fff',
+    borderWidth: 1
+  },
   title: {
-    fontSize: 32,
+    fontSize: 26,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 20,
     textAlign: 'center',
     color: 'black', // Text color
+    fontFamily: 'QuickSand'
   },
   subtitle: {
     fontSize: 16,
@@ -86,8 +89,8 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: 'black', // Text color
-    marginBottom: 4,
+    color: '#fff', // Text color
+    
   },
   input: {
     marginBottom: 6,
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
   button: {
     height: 60,
     width: 170,
-    backgroundColor: 'black',
+    backgroundColor: '#2F2C2C',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
@@ -110,6 +113,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
+    fontFamily: 'QuickSand',
     fontSize: 16,
   },
 });
