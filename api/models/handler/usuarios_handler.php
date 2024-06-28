@@ -16,6 +16,7 @@ class UsuarioHandler
     protected $nombre = null;
     protected $apellido = null;
     protected $correo = null;
+    protected $new_correo = null;
     protected $usuario = null;
     protected $alias = null;
     protected $clave = null;
@@ -197,7 +198,7 @@ class UsuarioHandler
                 SET nombre_usuario = ?, apellido_usuario= ?, email_usuario = ?,
                 id_rol = ?,estado_usuario = ?
                 WHERE id_usuario = ?';
-        $params = array($this->nombre, $this->apellido, $this->correo,
+        $params = array($this->nombre, $this->apellido, $this->new_correo,
         $this->idRol,$this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
@@ -210,5 +211,20 @@ class UsuarioHandler
                 WHERE id_usuario = ?';*/
         $params = array($this->id);
         return Database::executeRow($sql, $params);
+    }
+
+    public function readExistMail($username)
+    {
+        $sql = 'SELECT email_usuario
+        FROM tb_usuarios
+        WHERE email_usuario= ?';
+        $params = array($username);
+        $data = Database::getRow($sql, $params);
+
+        if (empty($data['email_usuario'])) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

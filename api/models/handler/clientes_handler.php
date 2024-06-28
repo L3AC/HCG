@@ -172,9 +172,6 @@ class ClienteHandler
         }
     }
 
-
-
-
     public function updateRow()
     {
         $sql = 'UPDATE tb_clientes 
@@ -188,7 +185,7 @@ class ClienteHandler
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM prc_clientes
+        $sql = 'DELETE FROM tb_clientes
                 WHERE id_cliente = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);

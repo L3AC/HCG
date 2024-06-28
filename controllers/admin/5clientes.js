@@ -26,8 +26,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
 
 const MENSAJE_DIV = document.getElementById('MENSAJE_DIV'),
     IDGUARDAR = document.getElementById('idGuardar');
-
-let new_correo = '';
+let new_correo = '',timeout_id;
 
 vanillaTextMask.maskInput({
         inputElement: TEL_CLIENTE,
@@ -78,8 +77,11 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
-INPUTSEARCH.addEventListener('input', async function () {
-    fillTable();
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(timeout_id);
+    timeout_id = setTimeout(async function () {
+        fillTable();
+    }, 50); // Delay de 50ms
 });
 //Función asíncrona para llenar la tabla con los registros disponibles.
 const fillTable = async () => {

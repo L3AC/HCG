@@ -28,6 +28,8 @@ const SAVE_FORM = document.getElementById('saveForm'),
     FECHA_PEDIDO = document.getElementById('fechaPedido'),
     ESTADO_PEDIDO = document.getElementById('estadoPedido');
 let ESTADO_BUSQUEDA = "Pendiente";
+//Variable para poner un tiempo de espera
+let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {

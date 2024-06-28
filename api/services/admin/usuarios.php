@@ -47,9 +47,9 @@ if (isset($_GET['action'])) {
                     !$Usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
                     $result['error'] = $Usuario->getDataError();
-                }  elseif ($cliente->readExist($_POST['aliasUsuario'])) {
+                }  elseif ($Usuario->readExist($_POST['aliasUsuario'])) {
                     $result['error'] = 'El nombre de usuario ya está en uso';
-                } elseif ($cliente->readExistMail($_POST['correoUsuario'])) {
+                } elseif ($Usuario->readExistMail($_POST['correoUsuario'])) {
                     $result['error'] = 'El correo electrónico ya está en uso';
                 } elseif ($_POST['claveUsuario'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
@@ -93,10 +93,13 @@ if (isset($_GET['action'])) {
                     !$Usuario->setNombre($_POST['nombreUsuario']) or
                     !$Usuario->setApellido($_POST['apellidoUsuario']) or
                     !$Usuario->setCorreo($_POST['correoUsuario']) or
+                    !$Usuario->setCorreoNew($_POST['correoUsuarioNew']) or
                     !$Usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
                     $result['error'] = $Usuario->getDataError();
-                } elseif ($Usuario->updateRow()) {
+                }  elseif ($_POST['correoUsuarioNew']!=$_POST['correoUsuario'] && $Usuario->readExistMail($_POST['correoUsuario'])) {
+                    $result['error'] = 'El correo electrónico ya está en uso';
+                }elseif ($Usuario->updateRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Usuario modificado correctamente';
                 } else {

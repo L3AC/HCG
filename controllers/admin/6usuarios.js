@@ -25,6 +25,8 @@ const SAVE_FORM = document.getElementById('saveForm'),
 const mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
 
+    let new_correo, timeout_id;
+
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
@@ -43,6 +45,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     (ID_USUARIO.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
+    (ID_USUARIO.value) ? FORM.append('correoUsuarioNew', CORREO_Usuario.value) : FORM.append('n', 'n');
     // Petición para guardar los datos del formulario.
     const DATA = await fetchData(USUARIO_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -59,11 +62,14 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 
-INPUTSEARCH.addEventListener('input', async function () {
-    fillTable();
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(timeout_id);
+    timeout_id = setTimeout(async function () {
+        fillTable();
+    }, 50); // Delay de 50ms
 });
 
-ALIAS_Usuario.addEventListener('input', async function () {
+/*ALIAS_Usuario.addEventListener('input', async function () {
     const FORM = new FormData();
     FORM.append('usuario', ALIAS_Usuario.value);
     // Petición para obtener los datos del registro solicitado.
@@ -77,7 +83,7 @@ ALIAS_Usuario.addEventListener('input', async function () {
         mensajeDiv.textContent = "";
         IDGUARDAR.disabled = false;
     }
-});
+});*/
 //Función asíncrona para llenar la tabla con los registros disponibles.
 const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
@@ -136,7 +142,6 @@ const openCreate = () => {
     ALIAS_Usuario.disabled = false;
     CLAVE_Usuario.disabled = false;
     CONFIRMAR_CLAVE.disabled = false;
-
     fillSelect(ROL_API, 'fillSelect', 'rolUsuario');
 }
 
@@ -163,6 +168,7 @@ const openUpdate = async (id) => {
         NOMBRE_Usuario.value = ROW.nombre_usuario;
         APELLIDO_Usuario.value = ROW.apellido_usuario;
         CORREO_Usuario.value = ROW.email_usuario;
+        new_correo = ROW.email_usuario;
         ALIAS_Usuario.value = ROW.alias_usuario;
         ESTADO_USUARIO.checked = ROW.estado_usuario;
         fillSelect(ROL_API, 'fillSelect', 'rolUsuario', ROW.id_rol);

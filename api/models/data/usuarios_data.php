@@ -77,6 +77,19 @@ class UsuarioData extends UsuarioHandler
             return false;
         }
     }
+    public function setCorreoNew($value, $min = 8, $max = 100)
+    {
+        if (!Validator::validateEmail($value)) {
+            $this->data_error = 'El correo no es válido';
+            return false;
+        } elseif (Validator::validateLength($value, $min, $max)) {
+            $this->new_correo= $value;
+            return true;
+        } else {
+            $this->data_error = 'El correo debe tener una longitud entre ' . $min . ' y ' . $max;
+            return false;
+        }
+    }
     public function setEstado($value)
     {
         if (Validator::validateBoolean($value)) {

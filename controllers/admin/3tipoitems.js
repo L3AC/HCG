@@ -18,6 +18,8 @@ const SAVE_FORM = document.getElementById('saveForm'),
     ID_PRODUCTO = document.getElementById('idTipoItem'),
     NOMBRE_PRODUCTO = document.getElementById('nombreTipoItem'),
     ESTADO_PRODUCTO = document.getElementById('estadoTipoItem');
+//Variable para poner un tiempo de espera
+let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -62,8 +64,11 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
-INPUTSEARCH.addEventListener('input', async function () {
-    fillTable();
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(timeout_id);
+    timeout_id = setTimeout(async function () {
+        fillTable();
+    }, 50); // Delay de 50ms
 });
 //Función asíncrona para llenar la tabla con los registros disponibles.
 const fillTable = async () => {

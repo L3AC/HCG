@@ -19,7 +19,6 @@ const SUBTABLE_HEAD = document.getElementById('subheaderT'),
     TABLE_BODYU = document.getElementById('tableBodyU'),
     ROWS_FOUNDU = document.getElementById('rowsFoundU'),
     SUBROWS_FOUNDU = document.getElementById('subrowsFoundU');
-
 // Constantes para establecer los elementos  del componente Modal.
 const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     INPUTSEARCH = document.getElementById('inputsearch'),
@@ -42,8 +41,6 @@ const SAVE_FORM = document.getElementById('saveForm'),
     MIERCOLES_ER = document.getElementById('miercolesER'), JUEVES_ER = document.getElementById('juevesER'),
     VIERNES_ER = document.getElementById('viernesER'), SABADO_ER = document.getElementById('sabadoER'),
     DOMINGO_ER = document.getElementById('domingoER');
-
-
 //CONSTANTES PARA EL FORMULARIO DE ACTUALIZAR
 const SAVE_FORMU = document.getElementById('saveFormU'),
     ID_PRODUCTOU = document.getElementById('idProductoU'),
@@ -68,6 +65,8 @@ const SAVE_TREFORM = document.getElementById('savetreForm'),
     ID_DETALLEPRODUCTO = document.getElementById('idDetalleProducto'),
     ID_ITEM = document.getElementById('idItem'),
     CANTIDAD_ITEM = document.getElementById('cantidadItem');
+//Variable para poner un tiempo de espera
+let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -146,8 +145,11 @@ SAVE_FORMU.addEventListener('submit', async (event) => {
     }
 });
 /*BUSQUEDA EN TIEMPO REAL*/
-INPUTSEARCH.addEventListener('input', async function () {
-    fillTable();
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(timeout_id);
+    timeout_id = setTimeout(async function () {
+        fillTable();
+    }, 50); // Delay de 50ms
 });
 //Función asíncrona para llenar la tabla con los registros disponibles.
 const fillTable = async () => {

@@ -25,6 +25,9 @@ const SAVE_FORM = document.getElementById('saveForm'),
     CLIENTE_OPC = document.getElementById('estadoCliente'),
     USUARIO_OPC = document.getElementById('estadoUsuario'),
     ROL_OPC = document.getElementById('estadoRol');
+//Variable para poner un tiempo de espera
+let timeout_id;
+
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
