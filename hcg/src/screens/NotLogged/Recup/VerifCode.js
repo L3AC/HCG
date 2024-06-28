@@ -33,8 +33,6 @@ const Producto = () => {
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={40} color="black" />
       </TouchableOpacity>
-      {/* Título de la pantalla de recuperación */}
-      <Text style={styles.title}>Recuperación</Text>
 
       {/* Imagen alusiva a la pantalla recuperación*/}
       <Ionicons style={styles.icono} name="shield-checkmark-sharp" size={140} color="black" />
@@ -108,7 +106,8 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 40,
     fontSize: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'QuickSand'
   },
   title: {
     fontSize: 30,
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
   },
   icono:{ // estilo para el icono del escudo
     textAlign: 'center',
-    marginTop: 60,
+    marginTop: 20,
   },
   input: { // apartado de input
     marginTop: 30,
@@ -150,8 +149,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    color: '#B3B3B3',
+    color: '#fff',
     fontSize: 18,
+    fontFamily: 'QuickSand'
   },
   containerButton: {
     marginTop: 20,
