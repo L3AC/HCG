@@ -19,6 +19,7 @@ class RolHandler
     protected $clientes = null;
     protected $usuarios = null;
     protected $roles = null;
+    protected $search = null;
 
     // Constante para establecer la ruta de las imágenes.
     const RUTA_IMAGEN = '../../images/modelos/';
@@ -26,22 +27,17 @@ class RolHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows($value)
+    public function searchRows()
     {
-        if ($value === '') {
-            $value = '%%';
-        } else {
-            $value = '%' . $value . '%';
-        }
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
-        $sql = 'SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
-        tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
-        comentarios_opc, clientes_opc, usuarios_opc, roles_opc
-        FROM sec_roles
-        WHERE id_rol != idmin("sec_roles")  AND descripcion_opc like ?
-        ORDER BY descripcion_opc';
+        $sql = 'SELECT id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, 
+        tipo_items_opc, items_opc, clientes_opc, usuarios_opc, roles_opc
+        FROM tb_roles
+        WHERE id_rol != (SELECT MIN(id_rol) as id_rol FROM tb_roles)  AND descripcion_rol like ?
+        ORDER BY descripcion_rol';
 
-        $params = array($value);
+        $params = array($this->search);
         return Database::getRows($sql, $params);
     }
 

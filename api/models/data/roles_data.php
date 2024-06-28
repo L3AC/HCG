@@ -27,6 +27,11 @@ class RolData extends RolHandler
             return false;
         }
     }
+    public function setSearch($value)
+    {
+        $this->search= $value;
+        return true;
+    }
 
     public function setDescripcion($value, $min = 2, $max = 250)
     {

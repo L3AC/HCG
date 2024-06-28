@@ -214,7 +214,7 @@ const fillTable = async () => {
         // Se muestra un mensaje de acuerdo con el resultado.
         ROWS_FOUND.textContent = DATA.message;
     } else {
-        sweetAlert(4, DATA.error, true);
+        sweetAlert(4, 'No se encontraron coincidencias', true);
     }
 }
 
