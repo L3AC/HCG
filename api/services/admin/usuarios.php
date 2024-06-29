@@ -25,6 +25,7 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
+                    $result['error']='No hay coincidencias';
                 }
                 break;
             case 'fillTab':

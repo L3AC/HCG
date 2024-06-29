@@ -85,7 +85,7 @@ class UsuarioHandler
 
     public function changePassword()
     {
-        $sql = 'UPDATE sec_usuarios
+        $sql = 'UPDATE tb_usuarios
                 SET clave_usuario = ?
                 WHERE id_usuario = ?';
         $params = array($this->clave, $_SESSION['idUsuario']);

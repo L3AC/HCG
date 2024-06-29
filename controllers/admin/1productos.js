@@ -35,7 +35,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     TIPO_PRODUCTO = document.getElementById('tipoProducto'),
     HORARIO_PRODUCTO = document.getElementById('horarioProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoProducto');
-    IMAGEN_PRODUCTO = document.getElementById('imagenProducto'),
+IMAGEN_PRODUCTO = document.getElementById('imagenProducto'),
     IMAGEN_PRE = document.getElementById('imgPre'),
     LUNES_ER = document.getElementById('lunesER'), MARTES_ER = document.getElementById('martesER'),
     MIERCOLES_ER = document.getElementById('miercolesER'), JUEVES_ER = document.getElementById('juevesER'),
@@ -66,7 +66,7 @@ const SAVE_TREFORM = document.getElementById('savetreForm'),
     ID_ITEM = document.getElementById('idItem'),
     CANTIDAD_ITEM = document.getElementById('cantidadItem');
 //Variable para poner un tiempo de espera
-let timeout_id;
+let timeout_id, dataT, selectedItems = [];
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -92,38 +92,40 @@ SEARCH_FORM.addEventListener('submit', (event) => {
 SAVE_FORM.addEventListener('submit', async (event) => {
     event.preventDefault();
     const FORM = new FormData(SAVE_FORM);
-    // Petición para guardar los datos del formulario.
-    const DATA = await fetchData(PRODUCTO_API, 'createRow', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        if (selectedItems.length === 0) {
-            return;
-        }
-        // Recorre los elementos seleccionados
-        for (const item of selectedItems) {
-            const FORM2 = new FormData();
-            FORM2.append('idItem', item.id_item);
-            FORM2.append('cantidadItem', item.cantidad);
-            // Petición para guardar los datos del formulario.
-            const DATA2 = await fetchData(DETALLEPRODUCTO_API, 'createRow', FORM2);
-            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-            if (DATA2.status) {
-                console.log( item.id_item, item.cantidad);
-                sweetAlert(1, DATA2.message, true);
-            } else {
-                console.log( "que");
-                sweetAlert(2, DATA2.error, false);
+    if (selectedItems.length <= 0) {
+        sweetAlert(2, 'Tiene que escoger un item', false);
+    }
+    else {
+        // Petición para guardar los datos del formulario.
+        const DATA = await fetchData(PRODUCTO_API, 'createRow', FORM);
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA.status) {
+
+            // Recorre los elementos seleccionados
+            for (const item of selectedItems) {
+                const FORM2 = new FormData();
+                FORM2.append('idItem', item.id_item);
+                FORM2.append('cantidadItem', item.cantidad);
+                // Petición para guardar los datos del formulario.
+                const DATA2 = await fetchData(DETALLEPRODUCTO_API, 'createRow', FORM2);
+                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+                if (DATA2.status) {
+                    console.log(item.id_item, item.cantidad);
+                    sweetAlert(1, DATA2.message, true);
+                } else {
+                    console.log("que");
+                    sweetAlert(2, DATA2.error, false);
+                }
             }
+            // Se cierra la caja de diálogo.
+            SAVE_MODAL.hide();
+            // Se muestra un mensaje de éxito.
+            sweetAlert(1, DATA.message, true);
+            fillTable();
+
+        } else {
+            sweetAlert(2, DATA.error, false);
         }
-
-        // Se cierra la caja de diálogo.
-        SAVE_MODAL.hide();
-        // Se muestra un mensaje de éxito.
-        sweetAlert(1, DATA.message, true);
-        fillTable();
-
-    } else {
-        sweetAlert(2, DATA.error, false);
     }
 });
 // Método del evento para cuando se envía el formulario de guardar.
@@ -166,7 +168,6 @@ const fillTable = async () => {
         DATA.dataset.forEach(row => {
             // Se establece un icono para el estado del producto.
             (row.estado_producto) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
-
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 20px; margin-right: 30px;margin-left: 30px;">
@@ -188,7 +189,6 @@ const fillTable = async () => {
                             </div>
                         </div>
                     </div>
-                    
                     <div class="row">
                         <div class="action">
                         <div class="col-lg-4 col-md-6 col-sm-6">
@@ -253,9 +253,7 @@ const openDelete = async (id) => {
         }
     }
 }
-//Función asíncrona para llenar la tabla con los registros disponibles.
-let DATA;
-let selectedItems = [];
+
 
 const fillSubTable = async (form = null) => {
     // Limpiar tablas y reiniciar variables
@@ -265,23 +263,23 @@ const fillSubTable = async (form = null) => {
     selectedItems = [];
 
     // Se inicializa el contenido de la tabla.
-    DATA = undefined;
+    dataT = undefined;
 
     // Se verifica la acción a realizar.
     (form) ? action = 'searchRows' : action = 'readAllActive';
     // Petición para obtener los resistros disponibles.
-    DATA = await fetchData(ITEM_API, action, form);
+    dataT = await fetchData(ITEM_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
+    if (dataT.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
-        DATA.dataset.forEach(row => {
+        dataT.dataset.forEach(row => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             const item = document.createElement("tr");
             item.setAttribute('data-id', row.id_item); // Añadimos el atributo data-id
             item.innerHTML = `
             <center>
                 <div class="row carditem" style="margin-bottom: 10px;">
-                    <div class="col-6">${row.descripcion_item}</div>
+                    <div class="col-5">${row.descripcion_item}</div>
                     <div class="col-3">${row.descripcion_tipo_item}</div>
                     <div class="col-1">
                         <button type="button" class="btnAgregarItem" onclick="selectItem(${row.id_item})">
@@ -295,7 +293,7 @@ const fillSubTable = async (form = null) => {
             SUBTABLE_BODY.appendChild(item);
         });
         // Se muestra un mensaje de acuerdo con el resultado.
-        SUBROWS_FOUND.textContent = DATA.message;
+        SUBROWS_FOUND.textContent = dataT.message;
     } else {
         //sweetAlert(4, DATA.error, true);
     }
@@ -304,7 +302,7 @@ const fillSubTable = async (form = null) => {
 
 const selectItem = (id) => {
     // Buscar el item seleccionado en los datos obtenidos
-    const selectedItem = DATA.dataset.find(item => item.id_item === id);
+    const selectedItem = dataT.dataset.find(item => item.id_item === id);
 
     // Verificar si el item ya está seleccionado
     const existingItemIndex = selectedItems.findIndex(item => item.id_item === id);
@@ -362,7 +360,7 @@ const removeItem = (id) => {
     if (index !== -1) {
         // Guardar una referencia al item a eliminar
         const removedItem = selectedItems.splice(index, 1)[0];
-        
+
         // Actualizar la tabla de items seleccionados
         updateSelectedItemsTable();
 
@@ -370,19 +368,21 @@ const removeItem = (id) => {
         const item = document.createElement("tr");
         item.setAttribute('data-id', removedItem.id_item); // Añadimos el atributo data-id
         item.innerHTML = `
-            <td>${removedItem.descripcion_item}</td>
-            <td>${removedItem.descripcion_tipo_item}</td>
-            <td>
-                <button type="button" class="btn btn-primary" onclick="selectItem(${removedItem.id_item})">
-                    <i class="bi bi-plus-square-fill"></i>
-                </button>
-            </td>
+            <center>
+                <div class="row carditem" style="margin-bottom: 10px;">
+                    <div class="col-6">${removedItem.descripcion_item}</div>
+                    <div class="col-3">${removedItem.descripcion_tipo_item}</div>
+                    <div class="col-1">
+                        <button type="button" class="btnAgregarItem" onclick="selectItem(${removedItem.id_item})">
+                            <i class="bi bi-plus-square-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </center>
         `;
         SUBTABLE_BODY.appendChild(item);
     }
 };
-
-
 
 const subClose = () => {
     SAVE_MODALU.show();
@@ -414,7 +414,7 @@ const openUpdate = async (id) => {
         VIERNES_EU.checked = ROW.viernes_producto;
         SABADO_EU.checked = ROW.sabado_producto;
         DOMINGO_EU.checked = ROW.domingo_producto;
-        PRECIO_PRODUCTOU.value=ROW.precio_producto;
+        PRECIO_PRODUCTOU.value = ROW.precio_producto;
 
         for (var i = 0; i < TIPO_PRODUCTOU.options.length; i++) {
             // Si el valor de la opción es igual al valor que quieres seleccionar
