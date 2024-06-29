@@ -24,19 +24,21 @@ const VerifUs = () => {
         <Ionicons name="arrow-back" size={40} color="black" />
       </TouchableOpacity>
       {/* Título de la pantalla de recuperación */}
-      <Text style={styles.title}>Recuperación</Text>
       {/* Imagen alusiva a la pantalla recuperación*/}
       <Image
         style={styles.imagen}
-        source={require('../../../img/Recup1.png')}
+        source={require('../../../img/lock.png')}
       />
+      <View style={styles.contenedor2}>
+        <Text style={styles.indi}>Ingresa tu nombre de usuario y te enviaremos un enlace para recuperar el acceso a tu cuenta.</Text>
+      </View>
 
       <Text style={styles.text}>Ingrese su usuario</Text>
 
       {/* Input para escribir el usuario a recuperar*/}
       <TextInput
         style={styles.input}
-        onChangeText={onChangeTextHandler} 
+        onChangeText={onChangeTextHandler}
         value={text}
         placeholder={placeholderVisible ? 'usuario' : ''}
       />
@@ -44,7 +46,7 @@ const VerifUs = () => {
       {/* Contenedor para alinear solo el botón al centro de la pantalla*/}
       <View style={styles.containerButton}>
         {/* Botón de confirmación y agregado para al precionar mandar a la ventana de verificación de codigo */}
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('VerifCode')}> 
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('VerifCode')}>
           <Text style={styles.buttonText}>Confirmar</Text>
         </TouchableOpacity>
       </View>
@@ -59,19 +61,37 @@ const styles = StyleSheet.create({
     padding: 30,
     backgroundColor: '#d2a563', // Color de fondo
   },
+  contenedor2:{
+    backgroundColor: '#AA6231',
+    paddingBottom: 20,
+    borderRadius:20,
+    borderColor: '#fff',
+    borderWidth: 1
+  },
   text: {
     marginTop: 40,
     fontSize: 24,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'QuickSand',
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'QuickSand'
+  },
+  indi: {
+    fontFamily: 'QuickSand',
+    fontSize: 14,
+    textAlign: 'center',
+    marginTop: 20
   },
   imagen: {
-    marginTop: 60,
-    marginStart: 80,
+    marginTop: 20,
+    alignSelf: 'center',
+    width: 100,
+    marginBottom: 10,
+    height: 110,
   },
   input: {
     marginTop: 30,
@@ -80,7 +100,8 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     paddingHorizontal: 10,
     marginBottom: 20,
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: 'QuickSand'
   },
   button: {
     height: 50,
@@ -88,14 +109,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#2F2C2C',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 30
+    borderRadius: 25
   },
   buttonText: {
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    color: '#B3B3B3',
+    color: '#fff',
     fontSize: 18,
+    fontFamily: 'QuickSand'
   },
   containerButton: {
     marginTop: 20,
