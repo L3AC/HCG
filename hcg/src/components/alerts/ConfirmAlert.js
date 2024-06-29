@@ -87,7 +87,7 @@ const ConfirmAlert = ({ isVisible, type, text, onClose, onConfirm }) => {
                     { transform: [{ translateY: translateY }], opacity: opacity }
                 ]}
             >
-                <Icon name={iconName} size={40} color={iconColor} />
+                <Icon name={iconName} size={30} color={iconColor} />
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.text}>{text}</Text>
                 <View style={styles.buttonContainer}>
@@ -102,11 +102,11 @@ const ConfirmAlert = ({ isVisible, type, text, onClose, onConfirm }) => {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
+        top: 20,
+        left: 20,
+        right: 20,
         backgroundColor: 'white',
-        padding: 20,
+        padding: 15,
         alignItems: 'center',
         zIndex: 1000,
         shadowColor: '#000',
@@ -114,21 +114,22 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowRadius: 2,
         elevation: 5,
+        borderRadius: 16,
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
-        marginVertical: 10,
+        marginVertical: 5,
     },
     text: {
-        fontSize: 16,
+        fontSize: 14,
         textAlign: 'center',
-        marginBottom: 20,
+        marginBottom: 15,
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '80%',
+        width: '60%',
     },
 });
 

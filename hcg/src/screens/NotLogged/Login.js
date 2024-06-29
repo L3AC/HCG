@@ -24,13 +24,13 @@ const Login = () => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [alertType, setAlertType] = useState('info');
-  
+
   const [fontsLoaded] = useFonts({
     QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
     QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
   });
 
-  const handleShowSimpleAlert = (message, type = 'info', timer = 2000) => {
+  const handleShowSimpleAlert = (message, type = 'info', timer = 1500) => {
     setAlertMessage(message);
     setAlertType(type);
     setAlertVisible(true);
@@ -88,8 +88,8 @@ const Login = () => {
           <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Confirmar</Text>
-          </TouchableOpacity>
+          <Text style={styles.buttonText}>Confirmar</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
         </TouchableOpacity>
