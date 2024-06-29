@@ -59,10 +59,55 @@
     <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
     <!-- Llamada al controlador general de la aplicación -->
     <script type="text/javascript" src="../../controllers/utils/components.js"></script>
-    <!-- Llamada al controlador del sitio público -->
-    <script type="text/javascript" src="../../controllers/utils/public.js"></script>
     <!-- Llamada al controlador de la página web -->
     <script type="text/javascript" src="../../controllers/public/index.js"></script>
 </body>
+</html>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Productos</title>
+    <style>
+        /* Estilos básicos para el menú */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+        .producto {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            width: 200px;
+            text-align: center;
+        }
+        .producto img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .producto h3 {
+            font-size: 1.2em;
+            margin: 0.5em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="titulo"></h1>
+    <div class="menu" id="menu"></div>
+
+    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <!-- Llamada al controlador general de la aplicación -->
+    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <!-- Llamada al controlador de la página web -->
+    <script type="text/javascript" src="../../controllers/public/menu.js"></script>
+</body>
 </html>

@@ -97,9 +97,10 @@ class RolHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE ctg_tallas
-                SET descripcion_talla = ?,estado_talla = ?
-                WHERE id_talla = ?';
+        $sql = 'UPDATE tb_roles
+                SET descripcion_rol = ?,estado_rol = ?,productos_opc = ?, pedidos_opc = ?, tipo_items_opc = ?,
+                 items_opc = ?, clientes_opc= ?,usuarios_opc= ?
+                WHERE id_rol = ?';
         $params = array($this->descripcion, $this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }

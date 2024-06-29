@@ -79,7 +79,7 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$producto->setId($_POST['idRol']) or
-                    !$producto->setDescripcion($_POST['descripcionRol']) or
+                    !$producto->setDescripcion($_POST['nombreRol']) or
                     !$producto->setEstado(isset($_POST['estadoRol']) ? 1 : 0)  or
                     !$producto->setProducto(isset($_POST['estadoProducto']) ? 1 : 0)  or
                     !$producto->setPedido(isset($_POST['estadoPedido']) ? 1 : 0)  or

@@ -1,27 +1,25 @@
 // Constante para completar la ruta de la API.
-const PRODUCTO_API = 'services/admin/productos.php';
+const PRODUCTO_API = 'services/public/productos.php';
+const MENU = document.getElementById('menu');
+const TITULO = document.getElementById('titulo');
 
-// Método del evento para cuando el documento ha cargado.
-document.addEventListener('DOMContentLoaded', () => {
-    // Constante para obtener el número de horas.
+document.addEventListener('DOMContentLoaded', async () => {
+    loadMenu();
     const HOUR = new Date().getHours();
     // Se define una variable para guardar un saludo.
     let greeting = '';
     // Dependiendo del número de horas transcurridas en el día, se asigna un saludo para el usuario.
-    if (HOUR < 12) {
-        greeting = 'Buenos días';
-    } else if (HOUR < 19) {
-        greeting = 'Buenas tardes';
-    } else if (HOUR <= 23) {
-        greeting = 'Buenas noches';
+    if (HOUR >= 6 || HOUR < 11) {
+        greeting = '- Desayuno';
+    } else if (HOUR >=11  || HOUR < 15) {
+        greeting = '- Almuerzo';
+    } else if (HOUR >= 15 || HOUR < 18) {
+        greeting = '- Típico';
+    }else if (HOUR >= 18 || HOUR < 22) {
+        greeting = '- Cena';
     }
-    // Llamada a la función para mostrar el encabezado y pie del documento.
-    loadTemplate();
-    // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = `${greeting}, bienvenido`;
-    // Llamada a la funciones que generan los gráficos en la página web.
-    graficoBarrasCategorias();
-    graficoPastelCategorias();
+    TITULO.textContent = `Menu ${greeting}`;
+
 });
 
 /*
@@ -29,51 +27,29 @@ document.addEventListener('DOMContentLoaded', () => {
 *   Parámetros: ninguno.
 *   Retorno: ninguno.
 */
-const graficoBarrasCategorias = async () => {
-    // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(PRODUCTO_API, 'cantidadProductosCategoria');
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
-    if (DATA.status) {
-        // Se declaran los arreglos para guardar los datos a graficar.
-        let categorias = [];
-        let cantidades = [];
-        // Se recorre el conjunto de registros fila por fila a través del objeto row.
-        DATA.dataset.forEach(row => {
-            // Se agregan los datos a los arreglos.
-            categorias.push(row.descripcion_producto);
-            cantidades.push(row.precio_producto);
-        });
-        // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        barGraph('chart1', categorias, cantidades, 'Cantidad de productos', 'Cantidad de modelos por marca');
-    } else {
-        document.getElementById('chart1').remove();
-        console.log(DATA.error);
-    }
-}
+const loadMenu = async () => {
+    const FORM = new FormData();
+    FORM.append('producto', '');
+    // Función fetchData que ya tienes programada
+    const DATA = await fetchData(PRODUCTO_API, 'searchProductos', FORM);
+    // Función para crear el HTML de un producto
+    const crearProductoHTML = (producto) => {
+        return `
+            <div class="producto">
+                <img src="${producto.imagen}" alt="${producto.nombre}">
+                <h3>${producto.nombre}</h3>
+                <p>${producto.descripcion}</p>
+                <p><strong>${producto.precio}</strong></p>
+            </div>
+        `;
+    };
 
-/*
-*   Función asíncrona para mostrar un gráfico de pastel con el porcentaje de productos por categoría.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
-const graficoPastelCategorias = async () => {
-    // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(PRODUCTO_API, 'porcentajeProductosCategoria');
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
-    if (DATA.status) {
-        // Se declaran los arreglos para guardar los datos a gráficar.
-        let categorias = [];
-        let porcentajes = [];
-        // Se recorre el conjunto de registros fila por fila a través del objeto row.
-        DATA.dataset.forEach(row => {
-            // Se agregan los datos a los arreglos.
-            categorias.push(row.descripcion_producto);
-            porcentajes.push(row.porcentaje);
+    // Insertar los productos en el menú
+    if (DATA && DATA.dataset.productos) {
+        DATA.dataset.productos.forEach(producto => {
+            MENU.innerHTML += crearProductoHTML(producto);
         });
-        // Llamada a la función para generar y mostrar un gráfico de pastel. Se encuentra en el archivo components.js
-        pieGraph('chart2', categorias, porcentajes, '5 Productos más pedidos');
     } else {
-        document.getElementById('chart2').remove();
-        console.log(DATA.error);
+        MENU.innerHTML = '<p>No hay productos disponibles.</p>';
     }
 }
