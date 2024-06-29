@@ -1,93 +1,41 @@
 <!DOCTYPE html>
-<!-- Declaración del idioma para el documento -->
-<html lang="es">
-
-<head>
-    <!-- Título del documento -->
-    <title></title>
-    <!-- Metadatos de la página web -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
-    <!-- Llamada al icono de la página web -->
-    <link type="image/png" rel="icon" href="../../resources/img/icon.png">
-    <!-- Llamada a las hojas de estilos del framework e iconos -->
-    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
-    <!-- ESTILOS DE CSS -->
-    <link rel="stylesheet" href="../../resources/css/navpub.css">
-    <link rel="stylesheet" href="../../resources/css/tarjeta.css">
-    <link rel="stylesheet" href="../../resources/css/univer.css">
-    <link rel="stylesheet" href="../../resources/css/btn_e.css">
-    <link rel="stylesheet" href="../../resources/css/busca.css">
-
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-</head>
-
-<body class="bodyp">
-
-    <!-- Contenido principal del documento -->
-    <main>
-        <!-- Componente Carousel con reproducción automática e indicadores 
-        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-            <div class="carousel-indicators" id="btnSlide"></div>
-            <div class="carousel-inner" id="cardSlide"></div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>-->
-        <!-- Título del contenido principal -->
-        <h4 id="mainTitle" class="m-5" style="color: white; font-size: 35px;"></h4>
-        <!-- Contenedor para mostrar las categorías disponibles -->
-        <div class="row" id="conjuntos"></div>
-        <h4 id="submainTitle" class="m-5"></h4>
-        <div class="row" id="complementos"></div>
-    </main>
-    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
-    <!-- Llamada al framework y librería de mensajes -->
-    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
-    <!-- Llamada al controlador general de la aplicación -->
-    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
-    <!-- Llamada al controlador de la página web -->
-    <script type="text/javascript" src="../../controllers/public/index.js"></script>
-</body>
-</html>
-
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú de Productos</title>
     <style>
-        /* Estilos básicos para el menú */
         body {
             font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #f4a261;
+            margin-bottom: 40px;
         }
         .menu {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
-            padding: 20px;
         }
         .producto {
-            border: 1px solid #ccc;
+            background-color: #444;
             border-radius: 8px;
             padding: 16px;
             width: 200px;
             text-align: center;
+            transition: transform 0.3s;
+        }
+        .producto:hover {
+            transform: scale(1.05);
         }
         .producto img {
             max-width: 100%;
@@ -96,12 +44,21 @@
         .producto h3 {
             font-size: 1.2em;
             margin: 0.5em 0;
+            color: #e9c46a;
+        }
+        .producto p {
+            margin: 0.5em 0;
+        }
+        .producto p strong {
+            color: #f4a261;
         }
     </style>
 </head>
 <body>
-    <h1 id="titulo"></h1>
-    <div class="menu" id="menu"></div>
+    <div class="container">
+        <h1 id="titulo"></h1>
+        <div class="menu" id="menu"></div>
+    </div>
 
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
