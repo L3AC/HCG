@@ -3,6 +3,7 @@ import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshCon
 import { SERVER } from '../../contexts/Network';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import SimpleAlert from '../../components/alerts/SimpleAlert'; // Importa la alerta simple
 
 const CartScreen = () => {
   const [refreshing, setRefreshing] = useState(false); // Estado para indicar si se está refrescando la pantalla
@@ -14,6 +15,17 @@ const CartScreen = () => {
   const [currentItemId, setCurrentItemId] = useState(null); // Estado para almacenar el ID del elemento actual del modal
   const [loadingModal, setLoadingModal] = useState(false); // Estado para indicar si se está cargando el modal
   const navigation = useNavigation(); // Hook de navegación para acceder a la navegación
+
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertType, setAlertType] = useState('info');
+
+  const handleShowSimpleAlert = (message, type = 'info', timer = 1500) => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setAlertVisible(true);
+    setTimeout(() => setAlertVisible(false), timer);
+  };
 
   // Función para obtener los datos del carrito desde el servidor
   const fetchMenuData = async (query = '') => {
@@ -30,8 +42,10 @@ const CartScreen = () => {
       if (response.ok && data.status === 1) {
         setCartItems(data.dataset || []); // Actualiza los elementos del carrito
       } else {
-        Alert.alert('No hay ningún producto agregado'); // Muestra una alerta si no hay productos
-        navigation.navigate('StackHome'); // Navega a la pantalla principal (home)
+        handleShowSimpleAlert('No hay ningún producto agregado', 'warning');
+        setTimeout(() => {
+          navigation.navigate('StackHome'); // Navega a la pantalla principal (home) después de 1.5 segundos
+        }, 1500);
       }
     } catch (error) {
       console.error('Error:', error); // Muestra un error en la consola en caso de fallo
@@ -45,7 +59,7 @@ const CartScreen = () => {
   const readOne = async (idDetallePedido) => {
     try {
       setLoadingModal(true); // Indica que se está cargando el modal
-      const formData = new FormData(); 
+      const formData = new FormData();
       formData.append('idDetallePedido', idDetallePedido);
       const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=readOne`, {
         method: 'POST',
@@ -74,7 +88,7 @@ const CartScreen = () => {
   const updateDetalle = async (idDetallePedido) => {
     try {
       setLoading(true); // Indica que se está cargando
-      const formData = new FormData(); 
+      const formData = new FormData();
       formData.append('idDetallePedido', idDetallePedido);
       formData.append('cantidadPedido', cantidad);
       formData.append('notaPedido', nota);
@@ -265,6 +279,13 @@ const CartScreen = () => {
           </View>
         </TouchableOpacity>
       </Modal>
+      <SimpleAlert
+        isVisible={alertVisible}
+        type={alertType}
+        text={alertMessage}
+        timer={1500}
+        onClose={() => setAlertVisible(false)}
+      />
     </ScrollView>
   );
 };
