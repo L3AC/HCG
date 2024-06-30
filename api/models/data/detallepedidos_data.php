@@ -11,14 +11,15 @@ class DetallePedidoData extends DetallePedidoHandler
     /*
      *  Atributos adicionales.
      */
-    private $data_error = null;
-    private $filename = null;
+    private $data_error = null; // Para almacenar errores de validación.
+    private $filename = null; // Para almacenar el nombre del archivo de imagen.
 
     /*
      *   Métodos para validar y establecer los datos.
      */
     public function setId($value)
     {
+        // Valida que el ID sea un número natural.
         if (Validator::validateNaturalNumber($value)) {
             $this->id = $value;
             return true;
@@ -29,6 +30,7 @@ class DetallePedidoData extends DetallePedidoHandler
     }
     public function setIdPedido($value)
     {
+        // Valida que el ID del pedido sea un número natural.
         if (Validator::validateNaturalNumber($value)) {
             $this->id_pedido = $value;
             return true;
@@ -39,6 +41,7 @@ class DetallePedidoData extends DetallePedidoHandler
     }
     public function setCantidad($value)
     {
+        // Valida que la cantidad sea un número entero.
         if (Validator::validateNaturalNumber($value)) {
             $this->cantidad = $value;
             return true;
@@ -49,6 +52,7 @@ class DetallePedidoData extends DetallePedidoHandler
     }
     public function setNota($value, $min = 2, $max = 250)
     {
+        // Valida que la nota cumpla con los requisitos de formato y longitud.
         if(empty($value)){
             $value='Nota vacía';
             $this->nota = $value;
@@ -70,6 +74,7 @@ class DetallePedidoData extends DetallePedidoHandler
     }
     public function setIdModelo($value)
     {
+        // Valida que el ID del modelo sea un número natural.
         if (Validator::validateNaturalNumber($value)) {
             $this->idModelo = $value;
             return true;
@@ -80,6 +85,7 @@ class DetallePedidoData extends DetallePedidoHandler
     }
     public function setIdTalla($value)
     {
+        // Valida que el ID de la talla sea un número natural.
         if (Validator::validateNaturalNumber($value)) {
             $this->idTalla = $value;
             return true;
@@ -90,6 +96,7 @@ class DetallePedidoData extends DetallePedidoHandler
     }
     public function setPrecio($value)
     {
+        // Valida que el precio sea un valor numérico adecuado.
         if (Validator::validateMoney($value)) {
             $this->precio = $value;
             return true;
@@ -101,6 +108,7 @@ class DetallePedidoData extends DetallePedidoHandler
 
     public function setExistencias($value)
     {
+        // Valida que el valor de existencias sea un número entero.
         if (Validator::validateNaturalNumber($value)) {
             $this->existencias = $value;
             return true;
@@ -113,6 +121,7 @@ class DetallePedidoData extends DetallePedidoHandler
 
     public function setNombre($value, $min = 2, $max = 50)
     {
+        // Valida que el nombre sea alfanumérico y tenga la longitud correcta.
         if (!Validator::validateAlphanumeric($value)) {
             $this->data_error = 'El nombre debe ser un valor alfanumérico';
             return false;
@@ -127,6 +136,7 @@ class DetallePedidoData extends DetallePedidoHandler
 
     public function setDescripcion($value, $min = 2, $max = 250)
     {
+        // Valida que la descripción no tenga caracteres prohibidos y tenga la longitud correcta.
         if (!Validator::validateString($value)) {
             $this->data_error = 'La descripción contiene caracteres prohibidos';
             return false;
@@ -142,6 +152,7 @@ class DetallePedidoData extends DetallePedidoHandler
 
     public function setImagen($file, $filename = null)
     {
+        // Valida y maneja la carga de la imagen.
         if (Validator::validateImageFile($file, 500, 500)) {
             $this->imagen = Validator::getFileName();
             return true;
@@ -158,6 +169,7 @@ class DetallePedidoData extends DetallePedidoHandler
 
     public function setCategoria($value)
     {
+        // Valida que la categoría sea un número natural.
         if (Validator::validateNaturalNumber($value)) {
             $this->categoria = $value;
             return true;
@@ -169,6 +181,7 @@ class DetallePedidoData extends DetallePedidoHandler
 
     public function setEstado($value)
     {
+        // Valida que el estado sea un booleano.
         if (Validator::validateBoolean($value)) {
             $this->estado = $value;
             return true;
@@ -180,12 +193,14 @@ class DetallePedidoData extends DetallePedidoHandler
 
     public function setSearch($value)
     {
+        // Asigna el valor de búsqueda.
         $this->search = $value;
         return true;
     }
 
     public function setFilename()
     {
+        // Obtiene el nombre del archivo de imagen si el producto existe.
         if ($data = $this->readFilename()) {
             $this->filename = $data['imagen_producto'];
             return true;

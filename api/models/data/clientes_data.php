@@ -16,6 +16,7 @@ class ClienteData extends ClienteHandler
      */
     public function setId($value)
     {
+        // Valida que el ID sea un número natural.
         if (Validator::validateNaturalNumber($value)) {
             $this->id = $value;
             return true;
@@ -26,7 +27,7 @@ class ClienteData extends ClienteHandler
     }
     public function setEstado($value)
     {
-        // Validación del estado.
+        // Valida que el estado sea un booleano.
         if (Validator::validateBoolean($value)) {
             $this->estado = $value;
             return true;
@@ -37,11 +38,13 @@ class ClienteData extends ClienteHandler
     }
     public function setSearch($value)
     {
+        // Asigna el valor de búsqueda.
         $this->search= $value;
         return true;
     }
     public function setNombre($value, $min = 2, $max = 50)
     {
+        // Valida que el nombre sea alfabético y tenga la longitud correcta.
         if (!Validator::validateAlphabetic($value)) {
             $this->data_error = 'El nombre debe ser un valor alfabético';
             return false;
@@ -56,6 +59,7 @@ class ClienteData extends ClienteHandler
 
     public function setApellido($value, $min = 2, $max = 50)
     {
+        // Valida que el apellido sea alfabético y tenga la longitud correcta.
         if (!Validator::validateAlphabetic($value)) {
             $this->data_error = 'El apellido debe ser un valor alfabético';
             return false;
@@ -70,6 +74,7 @@ class ClienteData extends ClienteHandler
 
     public function setCorreo($value, $min = 8, $max = 100)
     {
+        // Valida que el correo tenga el formato adecuado y la longitud correcta.
         if (!Validator::validateEmail($value)) {
             $this->data_error = 'El correo no es válido';
             return false;
@@ -83,6 +88,7 @@ class ClienteData extends ClienteHandler
     }
     public function setCorreoNew($value, $min = 8, $max = 100)
     {
+        // Valida que el nuevo correo tenga el formato adecuado y la longitud correcta.
         if (!Validator::validateEmail($value)) {
             $this->data_error = 'El correo no es válido';
             return false;
@@ -97,6 +103,7 @@ class ClienteData extends ClienteHandler
 
     public function setUsuario($value, $min = 6, $max = 25)
     {
+        // Valida que el nuevo correo tenga el formato adecuado y la longitud correcta.
         if (!Validator::validateAlphanumeric($value)) {
             $this->data_error = 'El usuario debe ser un valor alfanumérico';
             return false;
@@ -110,6 +117,7 @@ class ClienteData extends ClienteHandler
     }
     public function setTelefono($value)
     {
+        // Valida que el teléfono tenga el formato correcto.
         if (Validator::validatePhone($value)) {
             $this->telefono = $value;
             return true;
@@ -120,6 +128,7 @@ class ClienteData extends ClienteHandler
     }
     public function setDireccion($value, $min = 2, $max = 250)
     {
+        // Valida que la dirección no tenga caracteres prohibidos y tenga la longitud correcta.
         if (!Validator::validateString($value)) {
             $this->data_error = 'La dirección contiene caracteres prohibidos';
             return false;
@@ -134,6 +143,7 @@ class ClienteData extends ClienteHandler
 
     public function setClave($value)
     {
+        // Valida y encripta la clave si es válida.
         if (Validator::validatePassword($value)) {
             //echo $value;
             $this->clave = password_hash($value, PASSWORD_DEFAULT);
