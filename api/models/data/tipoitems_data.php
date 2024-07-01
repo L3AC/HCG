@@ -47,8 +47,8 @@ class TipoItemData extends TipoItemHandler
     }
 
     /*
- * Establece la descripción de la marca.
- */
+        * Establece la descripción de la marca.
+    */
     public function setDescripcion($value, $min = 2, $max = 250)
     {
         // Validación de la descripción.
@@ -65,8 +65,8 @@ class TipoItemData extends TipoItemHandler
     }
 
     /*
- * Establece el precio de la marca.
- */
+        * Establece el precio de la marca.
+    */
     public function setPrecio($value)
     {
         // Validación del precio.
@@ -80,8 +80,8 @@ class TipoItemData extends TipoItemHandler
     }
 
     /*
- * Establece las existencias de la marca.
- */
+        * Establece las existencias de la marca.
+    */
     public function setExistencias($value)
     {
         // Validación de las existencias.
@@ -95,8 +95,8 @@ class TipoItemData extends TipoItemHandler
     }
 
     /*
- * Establece la imagen de la marca.
- */
+        * Establece la imagen de la marca.
+    */
     public function setImagen($file, $filename = null)
     {
         // Validación de la imagen.
@@ -115,8 +115,8 @@ class TipoItemData extends TipoItemHandler
     }
 
     /*
- * Establece la categoría de la marca.
- */
+        * Establece la categoría de la marca.
+    */
     public function setCategoria($value)
     {
         // Validación del identificador de la categoría.
@@ -130,8 +130,8 @@ class TipoItemData extends TipoItemHandler
     }
 
     /*
- * Establece el estado de la marca.
- */
+        * Establece el estado de la marca.
+    */
     public function setEstado($value)
     {
         // Validación del estado.
@@ -150,8 +150,8 @@ class TipoItemData extends TipoItemHandler
     }
 
     /*
- * Establece el nombre de archivo.
- */
+        * Establece el nombre de archivo.
+    */
     public function setFilename()
     {
         // Obtiene el nombre de archivo desde la lectura.
@@ -166,7 +166,7 @@ class TipoItemData extends TipoItemHandler
 
 
     /*
-     *  Métodos para obtener los atributos adicionales.
+        *  Métodos para obtener los atributos adicionales.
      */
     public function getDataError()
     {

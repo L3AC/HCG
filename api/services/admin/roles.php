@@ -1,4 +1,5 @@
 <?php
+
 // Se incluye la clase del modelo.
 require_once('../../models/data/roles_data.php');
 
@@ -14,39 +15,41 @@ if (isset($_GET['action'])) {
     if (isset($_SESSION['idUsuario'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
+            // Buscar filas que coincidan con un valor de búsqueda.
             case 'searchRows':
-                if (
-                    !$producto->setSearch($_POST['valor']) 
-                ) {
+                if (!$producto->setSearch($_POST['valor'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($result['dataset'] = $producto->searchRows($_POST['valor'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
-                    $result['error']='No hay coincidencias';
+                    $result['error'] = 'No hay coincidencias';
                 }
                 break;
+
+            // Crear un nuevo registro de rol.
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$producto->setDescripcion($_POST['nombreRol']) or
-                    !$producto->setEstado(isset($_POST['estadoRol']) ? 1 : 0)  or
-                    !$producto->setProducto(isset($_POST['estadoProducto']) ? 1 : 0)  or
-                    !$producto->setPedido(isset($_POST['estadoPedido']) ? 1 : 0)  or
-                    !$producto->setTipoItem(isset($_POST['estadoTipoItem']) ? 1 : 0)  or
-                    !$producto->setItem(isset($_POST['estadoItem']) ? 1 : 0)  or
-                    !$producto->setCliente(isset($_POST['estadoCliente']) ? 1 : 0)  or
-                    !$producto->setUsuario(isset($_POST['estadoUsuario']) ? 1 : 0) 
+                    !$producto->setEstado(isset($_POST['estadoRol']) ? 1 : 0) or
+                    !$producto->setProducto(isset($_POST['estadoProducto']) ? 1 : 0) or
+                    !$producto->setPedido(isset($_POST['estadoPedido']) ? 1 : 0) or
+                    !$producto->setTipoItem(isset($_POST['estadoTipoItem']) ? 1 : 0) or
+                    !$producto->setItem(isset($_POST['estadoItem']) ? 1 : 0) or
+                    !$producto->setCliente(isset($_POST['estadoCliente']) ? 1 : 0) or
+                    !$producto->setUsuario(isset($_POST['estadoUsuario']) ? 1 : 0)
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Registro creado correctamente';
-                    // Se asigna el estado del archivo después de insertar.
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear el registro';
                 }
                 break;
+
+            // Leer todos los registros de roles.
             case 'readAll':
                 if ($result['dataset'] = $producto->readAll()) {
                     $result['status'] = 1;
@@ -55,8 +58,9 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen registros';
                 }
                 break;
+
+            // Leer un registro específico de rol.
             case 'readOne':
-                //echo $_POST['idTalla'];
                 if (!$producto->setId($_POST['idRol'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($result['dataset'] = $producto->readOne()) {
@@ -65,52 +69,55 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Registro inexistente';
                 }
                 break;
-                case 'fillSelect':
-                    //echo $_POST['idTalla'];
-                    if (!$producto->setId($_SESSION['idRol'])) {
-                        $result['error'] = $producto->getDataError();
-                    } elseif ($result['dataset'] = $producto->fillSelect()) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['error'] = 'Registro inexistente';
-                    }
-                    break;
+
+            // Llenar un select con roles.
+            case 'fillSelect':
+                if (!$producto->setId($_SESSION['idRol'])) {
+                    $result['error'] = $producto->getDataError();
+                } elseif ($result['dataset'] = $producto->fillSelect()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Registro inexistente';
+                }
+                break;
+
+            // Actualizar un registro de rol.
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$producto->setId($_POST['idRol']) or
                     !$producto->setDescripcion($_POST['nombreRol']) or
-                    !$producto->setEstado(isset($_POST['estadoRol']) ? 1 : 0)  or
-                    !$producto->setProducto(isset($_POST['estadoProducto']) ? 1 : 0)  or
-                    !$producto->setPedido(isset($_POST['estadoPedido']) ? 1 : 0)  or
-                    !$producto->setTipoItem(isset($_POST['estadoTipoItem']) ? 1 : 0)  or
-                    !$producto->setItem(isset($_POST['estadoItem']) ? 1 : 0)  or
-                    !$producto->setCliente(isset($_POST['estadoCliente']) ? 1 : 0)  or
-                    !$producto->setUsuario(isset($_POST['estadoUsuario']) ? 1 : 0) 
+                    !$producto->setEstado(isset($_POST['estadoRol']) ? 1 : 0) or
+                    !$producto->setProducto(isset($_POST['estadoProducto']) ? 1 : 0) or
+                    !$producto->setPedido(isset($_POST['estadoPedido']) ? 1 : 0) or
+                    !$producto->setTipoItem(isset($_POST['estadoTipoItem']) ? 1 : 0) or
+                    !$producto->setItem(isset($_POST['estadoItem']) ? 1 : 0) or
+                    !$producto->setCliente(isset($_POST['estadoCliente']) ? 1 : 0) or
+                    !$producto->setUsuario(isset($_POST['estadoUsuario']) ? 1 : 0)
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->updateRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Registro modificado correctamente';
-                    // Se asigna el estado del archivo después de actualizar.
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el producto';
                 }
                 break;
+
+            // Eliminar un registro de rol.
             case 'deleteRow':
-                if (
-                    !$producto->setId($_POST['idRol']) 
-                ) {
+                if (!$producto->setId($_POST['idRol'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->deleteRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Producto eliminado correctamente';
-                    // Se asigna el estado del archivo después de eliminar.
                     $result['fileStatus'] = Validator::deleteFile($producto::RUTA_IMAGEN, $producto->getFilename());
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar el producto';
                 }
                 break;
+
+            // Obtener la cantidad de productos por categoría (asociado a roles).
             case 'cantidadProductosCategoria':
                 if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
                     $result['status'] = 1;
@@ -118,6 +125,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+
+            // Obtener el porcentaje de productos por categoría (asociado a roles).
             case 'porcentajeProductosCategoria':
                 if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
                     $result['status'] = 1;
@@ -125,6 +134,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+
+            // Acción no disponible dentro de la sesión.
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
@@ -140,3 +151,4 @@ if (isset($_GET['action'])) {
 } else {
     print(json_encode('Recurso no disponible'));
 }
+?>

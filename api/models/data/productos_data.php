@@ -17,8 +17,11 @@ class ProductoData extends ProductoHandler
     /*
      *   Métodos para validar y establecer los datos.
      */
+    
+    // Método para establecer el ID del producto.
     public function setId($value)
     {
+        // Validar si el valor es un número natural.
         if (Validator::validateNaturalNumber($value)) {
             $this->id = $value;
             return true;
@@ -29,8 +32,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
- * Establece el nombre del modelo.
- */
+        * Establece el nombre del modelo.
+    */
     public function setNombre($value, $min = 2, $max = 50)
     {
         // Validación del nombre.
@@ -45,18 +48,22 @@ class ProductoData extends ProductoHandler
             return false;
         }
     }
+
+    // Método para establecer el tipo de producto.
     public function setTipoProducto($value)
     {
         $this->tipoproducto = $value;
         return true;
     }
 
+    // Método para establecer el horario del producto.
     public function setHorario($value)
     {
         $this->horario = $value;
         return true;
     }
 
+    // Método para establecer la URL del producto.
     public function setURL($value)
     {
         $this->url = $value;
@@ -64,8 +71,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
- * Establece la descripción del modelo.
- */
+        * Establece la descripción del modelo.
+    */
     public function setDescripcion($value, $min = 2, $max = 250)
     {
         // Validación de la descripción.
@@ -82,8 +89,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
- * Establece el precio del modelo.
- */
+        * Establece el precio del modelo.
+    */
     public function setPrecio($value)
     {
         // Validación del precio.
@@ -97,8 +104,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
- * Establece las existencias del modelo.
- */
+        * Establece las existencias del modelo.
+    */
     public function setExistencias($value)
     {
         // Validación de las existencias.
@@ -112,8 +119,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
- * Establece la imagen del modelo.
- */
+        * Establece la imagen del modelo.
+    */
     public function setImagen($file, $filename = null)
     {
         // Validación de la imagen.
@@ -132,8 +139,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
- * Establece la categoría del modelo.
- */
+        * Establece la categoría del modelo.
+    */
     public function setCategoria($value)
     {
         // Validación del identificador de la categoría.
@@ -147,8 +154,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
- * Establece el estado del modelo.
- */
+        * Establece el estado del modelo.
+    */
     public function setEstado($value)
     {
         // Validación del estado.
@@ -160,6 +167,8 @@ class ProductoData extends ProductoHandler
             return false;
         }
     }
+
+    // Métodos para establecer los días de disponibilidad del producto con validación.
     public function setLunes($value)
     {
         // Validación del estado.
@@ -260,11 +269,14 @@ class ProductoData extends ProductoHandler
     /*
      *  Métodos para obtener los atributos adicionales.
      */
+
+    // Método para obtener el mensaje de error.
     public function getDataError()
     {
         return $this->data_error;
     }
 
+    // Método para obtener el nombre del archivo de la imagen.
     public function getFilename()
     {
         return $this->filename;

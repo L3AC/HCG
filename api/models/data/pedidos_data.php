@@ -17,8 +17,11 @@ class PedidoData extends PedidoHandler
     /*
      *   Métodos para validar y establecer los datos.
      */
+
+    // Método para establecer el ID del pedido.
     public function setId($value)
     {
+        // Validar si el valor es un número natural.
         if (Validator::validateNaturalNumber($value)) {
             $this->id = $value;
             return true;
@@ -28,6 +31,7 @@ class PedidoData extends PedidoHandler
         }
     }
 
+    // Método para establecer el ID del producto.
     public function setIdProducto($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -38,6 +42,8 @@ class PedidoData extends PedidoHandler
             return false;
         }
     }
+
+    // Método para establecer el ID del cliente.
     public function setIdCliente($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -48,12 +54,15 @@ class PedidoData extends PedidoHandler
             return false;
         }
     }
+
+    // Método para establecer una nota del pedido.
     public function setNota($value)
     {
         $this->nota = $value;
         return true;
     }
 
+    // Método para establecer la descripción del pedido con validación de longitud.
     public function setDescripcion($value, $min = 2, $max = 250)
     {
         if (!Validator::validateString($value)) {
@@ -68,7 +77,7 @@ class PedidoData extends PedidoHandler
         }
     }
 
-
+    // Método para establecer la cantidad de productos en el pedido.
     public function setCantidad($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -80,7 +89,7 @@ class PedidoData extends PedidoHandler
         }
     }
 
-
+    // Método para establecer la categoría del pedido.
     public function setCategoria($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -92,6 +101,7 @@ class PedidoData extends PedidoHandler
         }
     }
 
+    // Método para establecer el estado del pedido.
     public function setEstado($value)
     {
         if (!Validator::validateAlphanumeric($value)) {
@@ -103,6 +113,7 @@ class PedidoData extends PedidoHandler
         }
     }
 
+    // Método para establecer el nombre del archivo de la imagen.
     public function setFilename()
     {
         if ($data = $this->readFilename()) {
@@ -113,6 +124,8 @@ class PedidoData extends PedidoHandler
             return false;
         }
     }
+
+    // Método para establecer el término de búsqueda.
     public function setSearch($value)
     {
         $this->search = $value;
@@ -123,11 +136,14 @@ class PedidoData extends PedidoHandler
     /*
      *  Métodos para obtener los atributos adicionales.
      */
+
+    // Método para obtener el mensaje de error.
     public function getDataError()
     {
         return $this->data_error;
     }
 
+    // Método para obtener el nombre del archivo de la imagen.
     public function getFilename()
     {
         return $this->filename;

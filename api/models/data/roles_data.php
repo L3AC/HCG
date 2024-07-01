@@ -17,8 +17,11 @@ class RolData extends RolHandler
     /*
      *   Métodos para validar y establecer los datos.
      */
+
+     // Método para establecer el ID del rol.
     public function setId($value)
     {
+        // Validar si el valor es un número natural.
         if (Validator::validateNaturalNumber($value)) {
             $this->id = $value;
             return true;
@@ -27,12 +30,15 @@ class RolData extends RolHandler
             return false;
         }
     }
+
+    // Método para establecer el término de búsqueda.
     public function setSearch($value)
     {
         $this->search= $value;
         return true;
     }
 
+    // Método para establecer la descripción del rol con validación de longitud.
     public function setDescripcion($value, $min = 2, $max = 250)
     {
         if (!Validator::validateString($value)) {
@@ -47,7 +53,7 @@ class RolData extends RolHandler
         }
     }
 
-
+    // Método para establecer el estado del rol.
     public function setEstado($value)
     {
         if (Validator::validateBoolean($value)) {
@@ -58,6 +64,8 @@ class RolData extends RolHandler
             return false;
         }
     }
+
+    // Método para establecer el permiso de acceso a productos.
     public function setProducto($value)
     {
         if (Validator::validateBoolean($value)) {
@@ -68,6 +76,8 @@ class RolData extends RolHandler
             return false;
         }
     }
+
+    // Método para establecer el permiso de acceso a pedidos.
     public function setPedido($value)
     {
         if (Validator::validateBoolean($value)) {
@@ -78,6 +88,8 @@ class RolData extends RolHandler
             return false;
         }
     }
+
+    // Método para establecer el permiso de acceso a tipos de ítems.
     public function setTipoItem($value)
     {
         if (Validator::validateBoolean($value)) {
@@ -88,6 +100,8 @@ class RolData extends RolHandler
             return false;
         }
     }
+
+    // Método para establecer el permiso de acceso a ítems.
     public function setItem($value)
     {
         if (Validator::validateBoolean($value)) {
@@ -98,6 +112,8 @@ class RolData extends RolHandler
             return false;
         }
     }
+
+    // Método para establecer el permiso de acceso a clientes.
     public function setCliente($value)
     {
         if (Validator::validateBoolean($value)) {
@@ -108,6 +124,8 @@ class RolData extends RolHandler
             return false;
         }
     }
+    
+    // Método para establecer el permiso de acceso a usuarios.
     public function setUsuario($value)
     {
         if (Validator::validateBoolean($value)) {
@@ -118,6 +136,8 @@ class RolData extends RolHandler
             return false;
         }
     }
+
+    // Método para establecer el permiso de acceso a roles.
     public function setRol($value)
     {
         if (Validator::validateBoolean($value)) {
@@ -129,7 +149,7 @@ class RolData extends RolHandler
         }
     }
 
-
+    // Método para establecer el nombre del archivo de la imagen.
     public function setFilename()
     {
         if ($data = $this->readFilename()) {
@@ -144,11 +164,14 @@ class RolData extends RolHandler
     /*
      *  Métodos para obtener los atributos adicionales.
      */
+
+     // Método para obtener el mensaje de error.
     public function getDataError()
     {
         return $this->data_error;
     }
 
+    // Método para obtener el nombre del archivo de la imagen.
     public function getFilename()
     {
         return $this->filename;

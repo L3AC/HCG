@@ -1,4 +1,5 @@
 <?php
+
 // Se incluye la clase del modelo.
 require_once('../../models/data/productos_data.php');
 
@@ -14,22 +15,21 @@ if (isset($_GET['action'])) {
     if (isset($_SESSION['idUsuario'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
+            // Buscar filas que coincidan con un valor de búsqueda.
             case 'searchRows':
-                if (
-                    !$producto->setSearch($_POST['valor'])
-                ) {
+                if (!$producto->setSearch($_POST['valor'])) {
                     $result['error'] = $producto->getDataError();
-                } 
-                elseif ($result['dataset'] = $producto->searchRows()) {
+                } elseif ($result['dataset'] = $producto->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
                     $result['error'] = 'No hay coincidencias';
                 }
                 break;
+
+            // Crear un nuevo registro de producto.
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
-                
                 if (
                     !$producto->setTipoProducto($_POST['tipoProducto']) or
                     !$producto->setNombre($_POST['nombreProducto']) or
@@ -43,7 +43,7 @@ if (isset($_GET['action'])) {
                     !$producto->setJueves(isset($_POST['juevesER']) ? 1 : 0) or
                     !$producto->setViernes(isset($_POST['viernesER']) ? 1 : 0) or
                     !$producto->setSabado(isset($_POST['sabadoER']) ? 1 : 0) or
-                    !$producto->setDomingo(isset($_POST['domingoER']) ? 1 : 0) 
+                    !$producto->setDomingo(isset($_POST['domingoER']) ? 1 : 0)
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {
@@ -53,14 +53,18 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al crear el producto';
                 }
                 break;
+
+            // Leer todos los registros de productos.
             case 'readAll':
                 if ($result['dataset'] = $producto->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
-                    $result['error'] = ' No se encontraron registros';
+                    $result['error'] = 'No se encontraron registros';
                 }
                 break;
+
+            // Leer un registro específico de producto.
             case 'readOne':
                 if (!$producto->setId($_POST['idProducto'])) {
                     $result['error'] = $producto->getDataError();
@@ -70,10 +74,10 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Producto inexistente';
                 }
                 break;
-            
+
+            // Actualizar un registro de producto.
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
-                //echo $_POST['idProductoU'];
                 if (
                     !$producto->setId($_POST['idProductoU']) or
                     !$producto->setTipoProducto($_POST['tipoProductoU']) or
@@ -88,7 +92,7 @@ if (isset($_GET['action'])) {
                     !$producto->setJueves(isset($_POST['juevesEU']) ? 1 : 0) or
                     !$producto->setViernes(isset($_POST['viernesEU']) ? 1 : 0) or
                     !$producto->setSabado(isset($_POST['sabadoEU']) ? 1 : 0) or
-                    !$producto->setDomingo(isset($_POST['domingoEU']) ? 1 : 0) 
+                    !$producto->setDomingo(isset($_POST['domingoEU']) ? 1 : 0)
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->updateRow()) {
@@ -98,19 +102,20 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al modificar el producto';
                 }
                 break;
+
+            // Eliminar un registro de producto.
             case 'deleteRow':
-                if (
-                    !$producto->setId($_POST['idProducto']) 
-                ) {
+                if (!$producto->setId($_POST['idProducto'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->deleteRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Producto eliminado correctamente';
-                    
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar el producto';
                 }
                 break;
+
+            // Obtener la cantidad de productos por categoría.
             case 'cantidadProductosCategoria':
                 if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
                     $result['status'] = 1;
@@ -118,6 +123,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+
+            // Obtener el porcentaje de productos por categoría.
             case 'porcentajeProductosCategoria':
                 if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
                     $result['status'] = 1;
@@ -125,6 +132,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+
+            // Acción no disponible dentro de la sesión.
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
@@ -140,3 +149,4 @@ if (isset($_GET['action'])) {
 } else {
     print(json_encode('Recurso no disponible'));
 }
+?>

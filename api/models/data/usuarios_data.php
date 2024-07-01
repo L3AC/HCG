@@ -14,6 +14,8 @@ class UsuarioData extends UsuarioHandler
     /*
      *  Métodos para validar y asignar valores de los atributos.
      */
+
+    // Método para establecer el ID del usuario.
     public function setId($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -25,6 +27,7 @@ class UsuarioData extends UsuarioHandler
         }
     }
 
+    // Método para establecer el ID del rol del usuario.
     public function setIdRol($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -36,6 +39,7 @@ class UsuarioData extends UsuarioHandler
         }
     }
 
+    // Método para establecer el nombre del usuario.
     public function setNombre($value, $min = 2, $max = 50)
     {
         if (!Validator::validateAlphabetic($value)) {
@@ -50,6 +54,7 @@ class UsuarioData extends UsuarioHandler
         }
     }
 
+    // Método para establecer el apellido del usuario.
     public function setApellido($value, $min = 2, $max = 50)
     {
         if (!Validator::validateAlphabetic($value)) {
@@ -64,6 +69,7 @@ class UsuarioData extends UsuarioHandler
         }
     }
 
+    // Método para establecer el correo del usuario.
     public function setCorreo($value, $min = 8, $max = 100)
     {
         if (!Validator::validateEmail($value)) {
@@ -77,6 +83,8 @@ class UsuarioData extends UsuarioHandler
             return false;
         }
     }
+
+    // Método para establecer un nuevo correo para el usuario.
     public function setCorreoNew($value, $min = 8, $max = 100)
     {
         if (!Validator::validateEmail($value)) {
@@ -90,6 +98,8 @@ class UsuarioData extends UsuarioHandler
             return false;
         }
     }
+
+    // Método para establecer el estado del usuario.
     public function setEstado($value)
     {
         if (Validator::validateBoolean($value)) {
@@ -100,12 +110,15 @@ class UsuarioData extends UsuarioHandler
             return false;
         }
     }
+
+    // Método para establecer el término de búsqueda del usuario.
     public function setSearch($value)
     {
         $this->search= $value;
         return true;
     }
 
+    // Método para establecer el alias del usuario.
     public function setAlias($value, $min = 6, $max = 25)
     {
         if (!Validator::validateAlphanumeric($value)) {
@@ -119,6 +132,8 @@ class UsuarioData extends UsuarioHandler
             return false;
         }
     }
+
+    // Método para establecer el usuario.
     public function setUsuario($value, $min = 6, $max = 25)
     {
         if (!Validator::validateAlphanumeric($value)) {
@@ -133,6 +148,7 @@ class UsuarioData extends UsuarioHandler
         }
     }
 
+    // Método para establecer la clave del usuario.
     public function setClave($value)
     {
         if (Validator::validatePassword($value)) {
