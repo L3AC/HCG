@@ -18,8 +18,11 @@ class DetalleProductoData extends DetalleProductoHandler
     /*
      *   Métodos para validar y establecer los datos.
      */
+
+     // Método para establecer el ID del producto.
     public function setId($value)
     {
+        // Validar si el valor es un número natural.
         if (Validator::validateNaturalNumber($value)) {
             $this->id = $value;
             return true; 
@@ -28,6 +31,7 @@ class DetalleProductoData extends DetalleProductoHandler
             return false;
         }
     }
+    // Método para establecer el ID del producto asociado.
     public function setIdProducto($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -38,6 +42,7 @@ class DetalleProductoData extends DetalleProductoHandler
             return false;
         }
     }
+    // Método para establecer el ID del ítem.
     public function setIdItem($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -48,6 +53,7 @@ class DetalleProductoData extends DetalleProductoHandler
             return false;
         }
     }
+    // Método para establecer el precio del producto.
     public function setPrecio($value)
     {
         if (Validator::validateMoney($value)) {
@@ -58,7 +64,7 @@ class DetalleProductoData extends DetalleProductoHandler
             return false;
         }
     }
-
+    // Método para establecer la cantidad del producto.
     public function setCantidad($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -69,8 +75,7 @@ class DetalleProductoData extends DetalleProductoHandler
             return false;
         }
     }
-
-
+    // Método para establecer el nombre del producto con validación de longitud.
     public function setNombre($value, $min = 2, $max = 50)
     {
         if (!Validator::validateAlphanumeric($value)) {
@@ -84,7 +89,7 @@ class DetalleProductoData extends DetalleProductoHandler
             return false;
         }
     }
-
+    // Método para establecer la descripción del producto con validación de longitud.
     public function setDescripcion($value, $min = 2, $max = 250)
     {
         if (!Validator::validateString($value)) {
@@ -98,8 +103,7 @@ class DetalleProductoData extends DetalleProductoHandler
             return false;
         }
     }
-
-
+    // Método para establecer la imagen del producto.
     public function setImagen($file, $filename = null)
     {
         if (Validator::validateImageFile($file, 500, 500)) {
@@ -115,7 +119,7 @@ class DetalleProductoData extends DetalleProductoHandler
             return true;
         }
     }
-
+    // Método para establecer la categoría del producto.
     public function setCategoria($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -126,7 +130,7 @@ class DetalleProductoData extends DetalleProductoHandler
             return false;
         }
     }
-
+    // Método para establecer el estado del producto.
     public function setEstado($value)
     {
         if (Validator::validateBoolean($value)) {
@@ -137,7 +141,7 @@ class DetalleProductoData extends DetalleProductoHandler
             return false;
         }
     }
-
+    // Método para establecer el nombre del archivo de la imagen.
     public function setFilename()
     {
         if ($data = $this->readFilename()) {
@@ -152,11 +156,14 @@ class DetalleProductoData extends DetalleProductoHandler
     /*
      *  Métodos para obtener los atributos adicionales.
      */
+
+     // Método para obtener el mensaje de error.
     public function getDataError()
     {
         return $this->data_error;
     }
 
+    // Método para obtener el nombre del archivo de la imagen.
     public function getFilename()
     {
         return $this->filename;
