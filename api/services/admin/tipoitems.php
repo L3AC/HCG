@@ -1,4 +1,5 @@
 <?php
+
 // Se incluye la clase del modelo.
 require_once('../../models/data/tipoitems_data.php');
 
@@ -14,36 +15,35 @@ if (isset($_GET['action'])) {
     if (isset($_SESSION['idUsuario'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
+            // Buscar filas que coincidan con un valor de búsqueda.
             case 'searchRows':
-                if (
-                    !$categoria->setSearch($_POST['valor'])
-                ) {
+                if (!$categoria->setSearch($_POST['valor'])) {
                     $result['error'] = $categoria->getDataError();
-                } 
-                elseif ($result['dataset'] = $categoria->searchRows()) {
+                } elseif ($result['dataset'] = $categoria->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
                     $result['error'] = 'No hay coincidencias';
                 }
                 break;
+
+            // Crear un nuevo registro de tipo de ítem.
             case 'createRow':
-                
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$categoria->setNombre($_POST['nombreTipoItem'])or
-                    !$categoria->setEstado(isset($_POST['estadoTipoItem']) ? 1 : 0) 
+                    !$categoria->setNombre($_POST['nombreTipoItem']) or
+                    !$categoria->setEstado(isset($_POST['estadoTipoItem']) ? 1 : 0)
                 ) {
                     $result['error'] = $categoria->getDataError();
                 } elseif ($categoria->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Categoría creada correctamente';
-                    // Se asigna el estado del archivo después de insertar.
-                    
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear la categoría';
                 }
                 break;
+
+            // Leer todos los registros de tipos de ítems.
             case 'readAll':
                 if ($result['dataset'] = $categoria->readAll()) {
                     $result['status'] = 1;
@@ -52,14 +52,18 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen categorías registradas';
                 }
                 break;
+
+            // Leer todos los registros activos de tipos de ítems.
             case 'readAllActive':
-                    if ($result['dataset'] = $categoria->readAllActive()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-                    } else {
-                        $result['error'] = 'No existen categorías registradas';
-                    }
+                if ($result['dataset'] = $categoria->readAllActive()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'No existen categorías registradas';
+                }
                 break;
+
+            // Leer un registro específico de tipo de ítem.
             case 'readOne':
                 if (!$categoria->setId($_POST['idTipoItem'])) {
                     $result['error'] = $categoria->getDataError();
@@ -69,12 +73,14 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Registro inexistente';
                 }
                 break;
+
+            // Actualizar un registro de tipo de ítem.
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$categoria->setId($_POST['idTipoItem']) or
                     !$categoria->setNombre($_POST['nombreTipoItem']) or
-                    !$categoria->setEstado(isset($_POST['estadoTipoItem']) ? 1 : 0)  
+                    !$categoria->setEstado(isset($_POST['estadoTipoItem']) ? 1 : 0)
                 ) {
                     $result['error'] = $categoria->getDataError();
                 } elseif ($categoria->updateRow()) {
@@ -84,19 +90,20 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al modificar la categoría';
                 }
                 break;
+
+            // Eliminar un registro de tipo de ítem.
             case 'deleteRow':
-                if (
-                    !$categoria->setId($_POST['idTipoItem']) 
-                ) {
+                if (!$categoria->setId($_POST['idTipoItem'])) {
                     $result['error'] = $categoria->getDataError();
                 } elseif ($categoria->deleteRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Categoría eliminada correctamente';
-                    
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar la categoría';
                 }
                 break;
+
+            // Acción no disponible dentro de la sesión.
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
@@ -112,3 +119,4 @@ if (isset($_GET['action'])) {
 } else {
     print(json_encode('Recurso no disponible'));
 }
+?>
