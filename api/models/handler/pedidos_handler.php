@@ -27,6 +27,7 @@ class PedidoHandler
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
 
+    // Método para buscar pedidos basado en criterios de búsqueda.
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -43,6 +44,7 @@ class PedidoHandler
         return Database::getRows($sql, $params);
     }
 
+    // Método para buscar pedidos por cliente.
     public function searchByCliente()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -59,7 +61,7 @@ class PedidoHandler
         return Database::getRows($sql, $params);
     }
 
-
+    // Método para obtener todos los pedidos pendientes.
     public function readAll()
     {
         $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
@@ -71,6 +73,8 @@ class PedidoHandler
         ORDER BY fecha_pedido DESC;';
         return Database::getRows($sql);
     }
+
+    // Método para obtener todos los detalles de un pedido específico.
     public function readsubAll()
     {
         $sql = 'select mt.id_producto,mt.id_talla,mt.id_modelo,
@@ -86,6 +90,7 @@ class PedidoHandler
         return Database::getRows($sql, $params);
     }
 
+    // Método para obtener un pedido específico por su ID.
     public function readOne()
     {
         $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
@@ -100,6 +105,7 @@ class PedidoHandler
         return $data;
     }
 
+    // Método para obtener el nombre de un archivo asociado a un pedido (actualmente no usado en el código proporcionado).
     public function readFilename()
     {
         $sql = 'SELECT foto
@@ -109,7 +115,7 @@ class PedidoHandler
         return Database::getRow($sql, $params);
     }
 
-
+    // Método para eliminar un pedido por su ID.
     public function deleteRow()
     {
         $sql = 'DELETE FROM tb_pedidos
@@ -117,6 +123,8 @@ class PedidoHandler
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
+
+    // Método para confirmar la finalización de un pedido.
     public function confirmRow()
     {
         $sql = 'UPDATE tb_pedidos SET estado_pedido = "Finalizado"
@@ -124,6 +132,8 @@ class PedidoHandler
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
+
+    // Método para obtener el ID de un pedido en curso.
     public function getOrder()
     {
         $this->estado = 'No escogido';
@@ -305,6 +315,7 @@ public function createDetail()
         return Database::getRows($sql, $params);
     }
 
+    // Método para obtener un pedido pendiente por parte del cliente.
     public function getOrderM()
     {
         $this->estado = 'Pendiente';
@@ -321,6 +332,7 @@ public function createDetail()
         }
     }
 
+    // Método para iniciar un nuevo pedido por parte del cliente si no hay uno pendiente.
     public function startOrderM()
     {
         if ($this->getOrderM()) {
@@ -338,6 +350,7 @@ public function createDetail()
         }
     }
 
+    // Método para crear un detalle de pedido más complejo (actualmente no se usa en el código proporcionado).
     public function createDetailM()
     {
         $clientId = $this->id_cliente;

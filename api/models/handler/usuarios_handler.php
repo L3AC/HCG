@@ -37,6 +37,8 @@ class UsuarioHandler
 
         return $pin;
     }
+
+    // Método para verificar las credenciales del usuario al iniciar sesión.
     public function checkUser($username, $password)
     {
         $sql = 'SELECT id_usuario ,id_rol, alias_usuario, clave_usuario, 
@@ -68,6 +70,7 @@ class UsuarioHandler
         }
     }
 
+    // Método para verificar si la contraseña actual del usuario es correcta.
     public function checkPassword($password)
     {
         $sql = 'SELECT clave_usuario
@@ -83,6 +86,7 @@ class UsuarioHandler
         }
     }
 
+    // Método para cambiar la contraseña del usuario.
     public function changePassword()
     {
         $sql = 'UPDATE tb_usuarios
@@ -92,6 +96,7 @@ class UsuarioHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para leer el perfil del usuario actual.
     public function readProfile()
     {
         $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, alias_usuario
@@ -101,10 +106,11 @@ class UsuarioHandler
         return Database::getRow($sql, $params);
     }
 
+    // Método para actualizar el perfil del usuario actual.
     public function editProfile()
     {
-        $sql = 'UPDATE sec_usuarios
-                SET nombre_usuario = ?, apellido_usuario = ?, email_usuario = ?, usuario_usuario = ?
+        $sql = 'UPDATE tb_usuarios
+                SET nombre_usuario = ?, apellido_usuario = ?, email_usuario = ?, alias_usuario = ?
                 WHERE id_usuario = ?';
         $params = array($this->nombre, $this->apellido, $this->correo, $this->alias, $_SESSION['idUsuario']);
         return Database::executeRow($sql, $params);
@@ -112,6 +118,8 @@ class UsuarioHandler
     /*
      *  Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
      */
+
+    // Método para buscar usuarios en la tabla de usuarios.
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -127,6 +135,8 @@ class UsuarioHandler
         $params = array($this->search,$this->search,$this->search,$this->search,$_SESSION['idRol']);
         return Database::getRows($sql, $params);
     }
+
+    // Método para llenar una tabla con usuarios basados en el rol proporcionado.
     public function fillTab($idrol)
     {
         $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, alias_usuario,estado_usuario
@@ -139,6 +149,7 @@ class UsuarioHandler
         return Database::getRows($sql, $params);
     }
 
+    // Método para crear un nuevo usuario en la tabla de usuarios.
     public function createRow()
     {
         //echo $this->clave.' ';
@@ -152,6 +163,7 @@ class UsuarioHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para leer todos los usuarios de la tabla de usuarios.
     public function readAll()
     {
         $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario,
@@ -159,6 +171,8 @@ class UsuarioHandler
         FROM tb_usuarios';
         return Database::getRows($sql);
     }
+
+    // Método para leer todos los usuarios activos de la tabla de usuarios.
     public function readAllA()
     {
         $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario,
@@ -168,6 +182,7 @@ class UsuarioHandler
         return Database::getRows($sql);
     }
 
+    // Método para leer un usuario específico por su ID.
     public function readOne()
     {
         $sql = 'SELECT id_usuario,id_rol, nombre_usuario, apellido_usuario,
@@ -177,6 +192,8 @@ class UsuarioHandler
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
+
+    // Método para verificar la existencia de un alias de usuario específico.
     public function readExist($username)
     {
         $sql = 'SELECT alias_usuario
@@ -192,6 +209,7 @@ class UsuarioHandler
         }
     }
 
+    // Método para actualizar los datos de un usuario específico.
     public function updateRow()
     {
         $sql = 'UPDATE tb_usuarios
@@ -203,6 +221,7 @@ class UsuarioHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para eliminar un usuario de la tabla de usuarios.
     public function deleteRow()
     {
         $sql = 'DELETE sec_usuarios
@@ -213,6 +232,7 @@ class UsuarioHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para verificar la existencia de un correo electrónico específico.
     public function readExistMail($username)
     {
         $sql = 'SELECT email_usuario

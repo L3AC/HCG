@@ -30,6 +30,8 @@ class DetallePedidoHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
+
+    // Método para buscar filas que coincidan con el valor de búsqueda.
     public function searchRows($value)
     {
         $value = $value === '' ? '%%' : '%' . $value . '%';
@@ -46,6 +48,7 @@ class DetallePedidoHandler
         return Database::getRows($sql, $params);
     }
 
+    // Método para buscar el historial de pedidos finalizados.
     public function searchHistorial()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -63,6 +66,8 @@ class DetallePedidoHandler
         $params = array($_SESSION['idCliente'],$this->search);
         return Database::getRows($sql, $params);
     }
+
+    // Método para buscar detalles de pedido por ID de pedido.
     public function searchByPedido()
     {
         //$this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -80,6 +85,8 @@ class DetallePedidoHandler
         $params = array($this->id_pedido/*,$this->search*/);
         return Database::getRows($sql, $params);
     }
+
+    // Método para crear un nuevo registro.
     public function createRow()
     {
         $sql = 'INSERT INTO prc_modelo_tallas(id_talla, id_modelo, stock_modelo_talla, precio_modelo_talla)
@@ -88,6 +95,7 @@ class DetallePedidoHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para leer todas las filas de la tabla.
     public function readAll()
     {
         $sql = 'select mt.id_modelo_talla,mt.id_talla,mt.id_modelo,mt.stock_modelo_talla,
@@ -103,7 +111,7 @@ class DetallePedidoHandler
         return Database::getRows($sql, $params);
     }
     
-
+    // Método para leer una fila específica de detalle_pedidos.
     public function readOne()
     {
         $sql ='select * from tb_detalle_pedidos where id_detalle_pedido=?';
@@ -111,6 +119,7 @@ class DetallePedidoHandler
         return Database::getRow($sql, $params);
     }
 
+    // Método para leer el nombre de archivo de la imagen de un modelo.
     public function readFilename()
     {
         $sql = 'SELECT foto
@@ -120,6 +129,7 @@ class DetallePedidoHandler
         return Database::getRow($sql, $params);
     }
 
+    // Método para actualizar una fila de detalle_pedidos.
     public function updateRow()
     {
         $sql = 'UPDATE tb_detalle_pedidos 
@@ -129,6 +139,7 @@ class DetallePedidoHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para eliminar una fila de detalle_pedidos.
     public function deleteRow()
     {
         $sql = 'DELETE FROM tb_detalle_pedidos
@@ -137,6 +148,7 @@ class DetallePedidoHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para leer productos por categoría.
     public function readProductosCategoria()
     {
         $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
@@ -156,6 +168,8 @@ class DetallePedidoHandler
     /*
     *   Métodos para generar gráficos.
     */
+
+    // Método para obtener la cantidad de productos por categoría.
     public function cantidadProductosCategoria()
     {
         $sql = 'SELECT nombre_categoria, COUNT(id_producto) cantidad
@@ -165,6 +179,7 @@ class DetallePedidoHandler
         return Database::getRows($sql);
     }
 
+    // Método para obtener el porcentaje de productos por categoría.
     public function porcentajeProductosCategoria()
     {
         $sql = 'SELECT nombre_categoria, ROUND((COUNT(id_producto) * 100.0 / (SELECT COUNT(id_producto) FROM producto)), 2) porcentaje
@@ -177,6 +192,8 @@ class DetallePedidoHandler
     /*
     *   Métodos para generar reportes.
     */
+
+    // Método para obtener productos por categoría.
     public function productosCategoria()
     {
         $sql = 'SELECT nombre_producto, precio_producto, estado_producto

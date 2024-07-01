@@ -27,6 +27,8 @@ class ItemHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
+
+    // Método para buscar filas en la base de datos.
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -41,6 +43,7 @@ class ItemHandler
         return Database::getRows($sql, $params);
     }
 
+    // Método para insertar una nueva fila en la base de datos.
     public function createRow()
     {
         $sql = 'INSERT INTO tb_items(id_item,id_tipo_item,descripcion_item, estado_item)
@@ -49,6 +52,7 @@ class ItemHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para leer todas las filas de la tabla tb_items.
     public function readAll()
     {
         $sql = 'SELECT id_item,id_tipo_item,descripcion_item,descripcion_tipo_item,estado_item
@@ -57,6 +61,8 @@ class ItemHandler
         ORDER BY descripcion_tipo_item;';
         return Database::getRows($sql);
     }
+
+    // Método para leer todas las filas activas de la tabla tb_items.
     public function readAllActive()
     {
         $sql = 'SELECT id_item, descripcion_tipo_item,descripcion_item, estado_item
@@ -66,6 +72,8 @@ class ItemHandler
         ORDER BY CAST(descripcion_tipo_item AS UNSIGNED)';
         return Database::getRows($sql);
     }
+
+    // Método para leer filas que no están asociadas a un valor específico.
     public function readAllNot($value)
     {
         $value = ($value === '') ? '%%' : '%' . $value . '%';
@@ -84,6 +92,7 @@ class ItemHandler
         return Database::getRows($sql, $params);
     }
 
+    // Método para leer una sola fila basada en el ID.
     public function readOne()
     {
         $sql ='SELECT id_item,id_tipo_item,descripcion_item,descripcion_tipo_item,estado_item
@@ -94,6 +103,7 @@ class ItemHandler
         return Database::getRow($sql, $params);
     }
 
+    // Método para leer el nombre de archivo de un registro específico.
     public function readFilename()
     {
         $sql = 'SELECT foto
@@ -103,6 +113,7 @@ class ItemHandler
         return Database::getRow($sql, $params);
     }
 
+    // Método para actualizar una fila en la base de datos.
     public function updateRow()
     {
         $sql = 'UPDATE tb_items
@@ -112,6 +123,7 @@ class ItemHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para eliminar una fila de la base de datos.
     public function deleteRow()
     {
         $sql = 'DELETE FROM tb_items
@@ -120,6 +132,7 @@ class ItemHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para leer productos basados en una categoría específica.
     public function readProductosCategoria()
     {
         $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
@@ -139,6 +152,8 @@ class ItemHandler
     /*
     *   Métodos para generar gráficos.
     */
+
+    // Método para obtener la cantidad de productos por categoría.
     public function cantidadProductosCategoria()
     {
         $sql = 'SELECT nombre_categoria, COUNT(id_producto) cantidad
@@ -148,6 +163,7 @@ class ItemHandler
         return Database::getRows($sql);
     }
 
+    // Método para obtener el porcentaje de productos por categoría.
     public function porcentajeProductosCategoria()
     {
         $sql = 'SELECT nombre_categoria, ROUND((COUNT(id_producto) * 100.0 / (SELECT COUNT(id_producto) FROM producto)), 2) porcentaje
@@ -160,6 +176,7 @@ class ItemHandler
     /*
     *   Métodos para generar reportes.
     */
+    // Método para obtener detalles de productos por categoría.
     public function productosCategoria()
     {
         $sql = 'SELECT nombre_producto, precio_producto, estado_producto

@@ -35,6 +35,8 @@ class ClienteHandler
 
         return $pin;
     }
+
+    // Método para verificar el usuario y contraseña.
     public function checkUser($usuario, $password)
     {
         $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente,correo_cliente
@@ -52,6 +54,8 @@ class ClienteHandler
             return false;
         }
     }
+
+    // Método para verificar el estado del cliente.
     public function checkStatus()
     {
         if ($this->estado) {
@@ -63,6 +67,8 @@ class ClienteHandler
             return false;
         }
     }
+
+    // Método para cambiar la contraseña del cliente.
     public function changePassword()
     {
         $sql = 'UPDATE tb_clientes
@@ -71,6 +77,8 @@ class ClienteHandler
         $params = array($this->clave, $_SESSION['idCliente']);
         return Database::executeRow($sql, $params);
     }
+
+    // Método para leer el perfil del cliente.
     public function readProfile()
     {
         $sql = 'SELECT *
@@ -79,6 +87,8 @@ class ClienteHandler
         $params = array($_SESSION['idCliente']);
         return Database::getRow($sql, $params);
     }
+
+    // Método para editar el perfil del cliente.
     public function editProfile()
     {
         $sql = 'UPDATE tb_clientes
@@ -90,6 +100,8 @@ class ClienteHandler
     /*
      *  Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
      */
+
+    // Método para buscar filas que coincidan con el término de búsqueda.
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -103,6 +115,7 @@ class ClienteHandler
         return Database::getRows($sql, $params);
     }
 
+    // Método para crear una nueva fila en la tabla clientes.
     public function createRow()
     {
         //echo $this->clave.' ';
@@ -117,6 +130,7 @@ class ClienteHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para leer todos los clientes.
     public function readAll()
     {
         $sql = 'SELECT id_cliente,nombre_cliente,apellido_cliente,
@@ -125,6 +139,8 @@ class ClienteHandler
                 ORDER BY apellido_cliente';
         return Database::getRows($sql);
     }
+
+    // Método para leer todos los clientes activos.
     public function readAllActive()
     {
         $sql = 'SELECT id_cliente,usuario_cliente, clave_cliente, 
@@ -134,6 +150,7 @@ class ClienteHandler
         return Database::getRows($sql);
     }
 
+    // Método para leer un solo cliente por su ID.
     public function readOne()
     {
         $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente,telefono_cliente,usuario_cliente,correo_cliente,estado_cliente
@@ -143,6 +160,7 @@ class ClienteHandler
         return Database::getRow($sql, $params);
     }
 
+    // Método para verificar si existe un usuario con un nombre específico.
     public function readExist($username)
     {
         $sql = 'SELECT usuario_cliente
@@ -157,6 +175,8 @@ class ClienteHandler
             return true;
         }
     }
+
+    // Método para verificar si existe un cliente con un correo específico.
     public function readExistMail($username)
     {
         $sql = 'SELECT correo_cliente
@@ -172,6 +192,7 @@ class ClienteHandler
         }
     }
 
+    // Método para actualizar los datos de un cliente.
     public function updateRow()
     {
         $sql = 'UPDATE tb_clientes 
@@ -183,6 +204,7 @@ class ClienteHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para eliminar un cliente.
     public function deleteRow()
     {
         $sql = 'DELETE FROM tb_clientes

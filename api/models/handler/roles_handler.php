@@ -27,6 +27,8 @@ class RolHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
+
+    // Método para buscar filas en la tabla de roles.
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -41,6 +43,7 @@ class RolHandler
         return Database::getRows($sql, $params);
     }
 
+    // Método para crear una nueva fila en la tabla de roles.
     public function createRow()
     {
         $sql = 'insert into tb_roles (id_rol, descripcion_rol, estado_rol, 
@@ -53,6 +56,8 @@ class RolHandler
         );
         return Database::executeRow($sql, $params);
     }
+
+    // Método para llenar un select con opciones de roles activos.
     public function fillSelect()
     {
         $sql = 'SELECT id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, 
@@ -65,7 +70,7 @@ class RolHandler
         return Database::getRows($sql, $params);
     }
 
-
+    // Método para leer todos los roles de la tabla.
     public function readAll()
     {
         $sql = 'SELECT id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, 
@@ -76,6 +81,7 @@ class RolHandler
         return Database::getRows($sql);
     }
 
+    // Método para leer un único rol por su ID.
     public function readOne()
     {
         $sql = 'SELECT id_rol, descripcion_rol, estado_rol, productos_opc, pedidos_opc, 
@@ -86,6 +92,7 @@ class RolHandler
         return Database::getRow($sql, $params);
     }
 
+    
     public function readFilename()
     {
         $sql = 'SELECT foto
@@ -95,6 +102,7 @@ class RolHandler
         return Database::getRow($sql, $params);
     }
 
+    // Método para actualizar los datos de un rol específico.
     public function updateRow()
     {
         $sql = 'UPDATE tb_roles
@@ -105,6 +113,7 @@ class RolHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para eliminar un rol de la tabla.
     public function deleteRow()
     {
         $sql = 'DELETE FROM tb_roles

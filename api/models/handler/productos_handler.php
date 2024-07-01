@@ -31,6 +31,8 @@ class ProductoHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
+
+    // Método para buscar productos según un criterio de búsqueda.
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -44,6 +46,8 @@ class ProductoHandler
         $params = array($this->search);
         return Database::getRows($sql, $params);
     }
+
+    // Método para buscar modelos de productos según un valor específico.
     public function searchModelos($value)
     {
         $value = !empty($value) ? '%' . $value . '%' : '%%';
@@ -58,7 +62,7 @@ class ProductoHandler
         return Database::getRows($sql, $params);
     }
 
-
+    // Método para crear un nuevo producto en la base de datos.
     public function createRow()
     {
         $sql = '
@@ -74,6 +78,7 @@ class ProductoHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para leer conjuntos de productos activos y disponibles según el día y horario actual.
     public function readConjunto()
     {
         $sql = 'SELECT *
@@ -104,6 +109,8 @@ class ProductoHandler
         ORDER BY id_producto DESC';
         return Database::getRows($sql);
     }
+
+    // Método para leer complementos de productos activos y disponibles según el día y horario actual.
     public function readComplemento()
     {
         $sql = 'SELECT *
@@ -135,6 +142,7 @@ class ProductoHandler
         return Database::getRows($sql);
     }
 
+    // Método para leer todos los productos activos en la base de datos.
     public function readAll()
     {
         $sql = 'SELECT id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
@@ -143,6 +151,8 @@ class ProductoHandler
         ORDER BY id_producto DESC';
         return Database::getRows($sql);
     }
+
+    // Método para leer los últimos 8 modelos de productos activos junto con su marca asociada.
     public function readDesc()
     {
         $sql = 'SELECT id_modelo, descripcion_modelo, foto_modelo, estado_modelo, descripcion_marca AS marca
@@ -154,7 +164,7 @@ class ProductoHandler
         return Database::getRows($sql);
     }
 
-
+    // Método para leer todas las tallas y stock disponibles para un modelo específico.
     public function readsubAll()
     {
         $sql = 'select mt.id_modelo_talla,mt.id_talla,mt.id_modelo,
@@ -167,6 +177,8 @@ class ProductoHandler
         $params = array($this->id);
         return Database::getRows($sql, $params);
     }
+
+    // Método para buscar productos "Conjunto" y "Complementario" según un valor de búsqueda y las condiciones de día y horario actuales.
     public function searchProductos($value)
     {
         $value = $value === '' ? '%%' : '%' . $value . '%';
@@ -227,7 +239,7 @@ class ProductoHandler
         return array('conjunto' => Database::getRows($sql, $params), 'complementario' => Database::getRows($sql2, $params));
     }
 
-
+    // Método para leer un producto específico según su ID.
     public function readOne()
     {
         $sql = 'SELECT id_producto,tipo_producto,descripcion_producto,horario_producto,precio_producto,
@@ -242,6 +254,7 @@ class ProductoHandler
         return $data;
     }
 
+    // Método para leer el nombre de archivo de imagen de un modelo específico.
     public function readFilename()
     {
         $sql = 'SELECT foto
@@ -251,6 +264,7 @@ class ProductoHandler
         return Database::getRow($sql, $params);
     }
 
+    // Método para actualizar un producto en la base de datos.
     public function updateRow()
     {
         $sql = 'UPDATE tb_productos SET
@@ -264,6 +278,7 @@ class ProductoHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para eliminar un producto de la base de datos según su ID.
     public function deleteRow()
     {
         $sql = 'DELETE FROM tb_productos
@@ -272,6 +287,7 @@ class ProductoHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para leer todos los productos de una categoría específica ordenados por nombre.
     public function readProductosCategoria()
     {
         $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
@@ -286,6 +302,8 @@ class ProductoHandler
     /*
     *   Métodos para generar gráficos.
     */
+
+    // Método para obtener la cantidad de modelos por marca más frecuentes.
     public function cantidadProductosCategoria()
     {
         $sql = 'SELECT descripcion_marca, COUNT(id_marca) cantidad
@@ -295,6 +313,7 @@ class ProductoHandler
         return Database::getRows($sql);
     }
 
+    // Método para calcular el porcentaje de veces que se han pedido cada producto en comparación con el total de pedidos.
     public function porcentajeProductosCategoria()
     {
         $sql = '
@@ -311,6 +330,8 @@ class ProductoHandler
     /*
     *   Métodos para generar reportes.
     */
+
+    // Método para leer todos los productos de una categoría específica ordenados por nombre.
     public function productosCategoria()
     {
         $sql = 'SELECT nombre_producto, precio_producto, estado_producto
