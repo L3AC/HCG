@@ -25,6 +25,8 @@ class TipoItemHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
+
+    // Método para buscar filas en la tabla de tipo_items.
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -36,6 +38,7 @@ class TipoItemHandler
         return Database::getRows($sql, $params);
     }
 
+    // Método para crear una nueva fila en la tabla de tipo_items.
     public function createRow()
     {
         $sql = 'INSERT INTO tb_tipo_items(id_tipo_item,descripcion_tipo_item,estado_tipo_item)
@@ -44,6 +47,7 @@ class TipoItemHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para leer todos los registros de tipo_items.
     public function readAll()
     {
         $sql = 'SELECT id_tipo_item, descripcion_tipo_item,estado_tipo_item
@@ -51,6 +55,8 @@ class TipoItemHandler
                 ORDER BY estado_tipo_item DESC, descripcion_tipo_item;' ;
         return Database::getRows($sql);
     }
+
+    // Método para leer todos los registros activos de tipo_items.
     public function readAllActive()
     {
         $sql = 'SELECT id_tipo_item, descripcion_tipo_item,estado_tipo_item
@@ -58,6 +64,7 @@ class TipoItemHandler
         return Database::getRows($sql);
     }
 
+    // Método para leer un único registro de tipo_item por su ID.
     public function readOne()
     {
         $sql = 'SELECT id_tipo_item, descripcion_tipo_item,estado_tipo_item
@@ -76,6 +83,7 @@ class TipoItemHandler
         return Database::getRow($sql, $params);
     }
 
+    // Método para actualizar los datos de un registro de tipo_item específico.
     public function updateRow()
     {
         $sql = 'UPDATE tb_tipo_items
@@ -85,6 +93,7 @@ class TipoItemHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para eliminar un registro de tipo_item de la tabla.
     public function deleteRow()
     {
         $sql = 'DELETE FROM tb_tipo_items 
@@ -93,6 +102,7 @@ class TipoItemHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para leer productos relacionados con una categoría específica de tipo_item.
     public function readProductosCategoria()
     {
         $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
