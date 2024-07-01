@@ -1,4 +1,5 @@
 <?php
+
 // Se incluye la clase del modelo.
 require_once('../../models/data/detalleproductos_data.php');
 
@@ -14,21 +15,23 @@ if (isset($_GET['action'])) {
     if (isset($_SESSION['idUsuario'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
+                // Buscar filas que coincidan con un valor de búsqueda.
             case 'searchRows':
                 if ($result['dataset'] = $producto->searchRows($_POST['valor'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
-                    $result['error']='No hay coincidencias';
+                    $result['error'] = 'No hay coincidencias';
                 }
                 break;
 
+                // Crear un nuevo registro de producto.
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setIdItem($_POST['idItem'])or 
-                    !$producto->setCantidad($_POST['cantidadItem']))
-                 {
+                    !$producto->setIdItem($_POST['idItem']) or
+                    !$producto->setCantidad($_POST['cantidadItem'])
+                ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {
                     $result['status'] = 1;
@@ -37,22 +40,25 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al crear el registro';
                 }
                 break;
-                case 'subcreateRow':
-                    $_POST = Validator::validateForm($_POST);
-                    if (
-                        !$producto->setIdProducto($_POST['idProducto'])or
-                        !$producto->setIdItem($_POST['idItem'])or 
-                        !$producto->setCantidad($_POST['cantidadItem']))
-                     {
-                        $result['error'] = $producto->getDataError();
-                    } elseif ($producto->subcreateRow()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Registro creado correctamente';
-                    } else {
-                        $result['error'] = 'Ocurrió un problema al crear el registro';
-                    }
-                    break;
-            /*case 'readAll':
+
+                // Crear un subregistro de producto.
+            case 'subcreateRow':
+                $_POST = Validator::validateForm($_POST);
+                if (
+                    !$producto->setIdProducto($_POST['idProducto']) or
+                    !$producto->setIdItem($_POST['idItem']) or
+                    !$producto->setCantidad($_POST['cantidadItem'])
+                ) {
+                    $result['error'] = $producto->getDataError();
+                } elseif ($producto->subcreateRow()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Registro creado correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al crear el registro';
+                }
+                break;
+
+                /*case 'readAll':
                 if (!$producto->setIdModelo($_SESSION['idmod'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($result['dataset'] = $producto->readAll()) {
@@ -62,6 +68,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = ' No se encontraron registros';
                 }
                 break;*/
+
+                // Leer registros de productos por producto.
             case 'readByProducto':
                 if (!$producto->setIdProducto($_POST['idProducto'])) {
                     $result['error'] = $producto->getDataError();
@@ -72,6 +80,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Tallas no registradas';
                 }
                 break;
+
+                // Leer un registro específico de producto.
             case 'readOne':
                 if (!$producto->setId($_POST['idDetalleProducto'])) {
                     $result['error'] = $producto->getDataError();
@@ -81,6 +91,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Producto inexistente';
                 }
                 break;
+
+                // Actualizar un registro de producto existente.
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
@@ -95,6 +107,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al modificar el registro';
                 }
                 break;
+
+                // Eliminar un registro de producto.
             case 'deleteRow':
                 if (
                     !$producto->setId($_POST['idDetalleProducto'])
@@ -103,11 +117,12 @@ if (isset($_GET['action'])) {
                 } elseif ($producto->deleteRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Producto eliminado correctamente';
-                    
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar el producto';
                 }
                 break;
+
+                // Obtener la cantidad de productos por categoría.
             case 'cantidadProductosCategoria':
                 if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
                     $result['status'] = 1;
@@ -115,6 +130,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+
+                // Obtener el porcentaje de productos por categoría.
             case 'porcentajeProductosCategoria':
                 if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
                     $result['status'] = 1;
@@ -122,6 +139,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+
+                // Acción no disponible dentro de la sesión.
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
