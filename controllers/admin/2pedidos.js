@@ -199,34 +199,7 @@ const openUpdate = async (id) => {
     }
 }
 SUBINPUTSEARCH.addEventListener('input', async function () {
-    SUBROWS_FOUND.textContent = '';
-    SUBTABLE_BODY.innerHTML = '';
-    const FORM = new FormData();
-    FORM.append('valor', SUBINPUTSEARCH.value);
-    FORM.append('idPedido', ID_PEDIDO.value);
-    // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(DETALLEPEDIDO_API, 'searchRows', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
-        DATA.dataset.forEach(row => {
-            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
-            SUBTABLE_BODY.innerHTML += `
-                <tr>
-                    <td>${row.descripcion_modelo}</td>
-                    <td>${row.descripcion_marca}</td>
-                    <td>${row.descripcion_talla}</td>
-                    <td>$ ${row.precio_modelo_talla}</td>
-                    <td>${row.cantidad_detalle_pedido}</td>
-                    
-                </tr>
-            `;
-        });
-        // Se muestra un mensaje de acuerdo con el resultado.
-        SUBROWS_FOUND.textContent = DATA.message;
-    } else {
-        // sweetAlert(4, DATA.error, true);
-    }
+    fillSubTable();
 });
 //Función asíncrona para eliminar un registro.
 const openDelete = async (id) => {
