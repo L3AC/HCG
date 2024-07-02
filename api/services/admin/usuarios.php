@@ -181,10 +181,14 @@ if (isset($_GET['action'])) {
                     !$Usuario->setAlias($_POST['aliasAdministrador'])
                 ) {
                     $result['error'] = $Usuario->getDataError();
+                } elseif ($_SESSION['alias']!=$_POST['aliasAdministrador'] && $Usuario->readExist($_POST['aliasAdministrador'])) {
+                    $result['error'] = 'El nombre de usuario ya está en uso';
+                } elseif ($_SESSION['correo']!=$_POST['correoAdministrador'] && $Usuario->readExistMail($_POST['correoAdministrador'])) {
+                    $result['error'] = 'El correo electrónico ya está en uso';
                 } elseif ($Usuario->editProfile()) {
                     $result['status'] = 1;
                     $result['message'] = 'Perfil modificado correctamente';
-                    $_SESSION['usuarion'] = $_POST['aliasAdministrador'];
+                    $_SESSION['alias'] = $_POST['aliasAdministrador'];
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
@@ -235,6 +239,8 @@ if (isset($_GET['action'])) {
                     !$Usuario->setClave($_POST['clave'])
                 ) {
                     $result['error'] = $Usuario->getDataError();
+                }  elseif ($Usuario->readAll()) {
+                    $result['error'] = 'Ya hay un usuario creado';
                 } elseif ($_POST['clave'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($Usuario->createRow()) {

@@ -41,7 +41,7 @@ class UsuarioHandler
     // Método para verificar las credenciales del usuario al iniciar sesión.
     public function checkUser($username, $password)
     {
-        $sql = 'SELECT id_usuario ,id_rol, alias_usuario, clave_usuario, 
+        $sql = 'SELECT id_usuario ,id_rol, alias_usuario, clave_usuario, email_usuario,
         estado_rol, productos_opc,pedidos_opc, tipo_items_opc,items_opc,
         clientes_opc, usuarios_opc, roles_opc
         FROM tb_usuarios
@@ -54,6 +54,7 @@ class UsuarioHandler
         if ($data && password_verify($password, $data['clave_usuario'])) {
             $_SESSION['idUsuario'] = $data['id_usuario'];
             $_SESSION['alias'] = $data['alias_usuario'];
+            $_SESSION['correo'] = $data['email_usuario'];
             $_SESSION['idRol'] = $data['id_rol'];
             $_SESSION['productos_opc']       = $data['productos_opc'];
             $_SESSION['pedidos_opc']       = $data['pedidos_opc'];
