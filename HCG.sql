@@ -15,6 +15,7 @@ CREATE TABLE tb_roles(
   roles_opc BOOLEAN NOT NULL,
   PRIMARY KEY (id_rol)
 );
+
 CREATE TABLE tb_usuarios(
   id_usuario INT UNSIGNED,
   id_rol INT UNSIGNED,
@@ -103,14 +104,6 @@ CREATE TABLE tb_pedidos(
     CONSTRAINT fk_pedido_cliente 
     FOREIGN KEY(id_cliente) REFERENCES tb_clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE
 );
-/*delete from tb_pedidos where estado_pedido='No escogido' AND id_cliente = 11
-
-SELECT id_pedido FROM tb_pedidos
-         WHERE estado_pedido = ? AND id_cliente = ?
-select * from tb_clientes
-SELECT * FROM tb_pedidos
-         WHERE estado_pedido ='No escogido' AND id_cliente = 11*/
-select * from tb_detalle_pedidos
 
 CREATE TABLE tb_detalle_pedidos (
   id_detalle_pedido INT UNSIGNED ,
@@ -123,15 +116,6 @@ CREATE TABLE tb_detalle_pedidos (
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
-		SELECT id_cliente,id_detalle_pedido,id_producto,id_pedido,cantidad_pedido,fecha_pedido,
-		descripcion_producto,precio_producto,cantidad_pedido, 
-		(precio_producto*cantidad_pedido) as total
-        from tb_detalle_pedidos
-        INNER JOIN tb_pedidos USING (id_pedido)
-        INNER JOIN tb_productos USING (id_producto)
-        WHERE estado_pedido ="Pendiente" AND id_cliente=11 AND (descripcion_producto like '%%')
-        ORDER BY descripcion_producto
 
 
 

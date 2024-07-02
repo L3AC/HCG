@@ -109,7 +109,8 @@ class RolHandler
                 SET descripcion_rol = ?,estado_rol = ?,productos_opc = ?, pedidos_opc = ?, tipo_items_opc = ?,
                  items_opc = ?, clientes_opc= ?,usuarios_opc= ?
                 WHERE id_rol = ?';
-        $params = array($this->descripcion, $this->estado, $this->id);
+        $params = array($this->descripcion, $this->estado, $this->productos, $this->pedidos, $this->tipoitems,
+        $this->items,$this->clientes, $this->usuarios, $this->id);
         return Database::executeRow($sql, $params);
     }
 
