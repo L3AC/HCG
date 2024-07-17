@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la funciones que generan los gráficos en la página web.
     graficoBarrasCategorias();
     graficoPastelCategorias();
+    graficoBarrasClientesCompras();
 });
 
 /*
@@ -99,9 +100,9 @@ const graficoBarrasClientesCompras = async () => {
             cantidades.push(row.cantidad_pedidos);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        barGraph('chart1', clientes, cantidades, 'Cantidad de productos', 'Cantidad de modelos por marca');
+        barGraph('chart3', clientes, cantidades, 'Cantidad de pedidos', '');
     } else {
-        document.getElementById('chart1').remove();
+        document.getElementById('chart3').remove();
         console.log(DATA.error);
     }
 }
