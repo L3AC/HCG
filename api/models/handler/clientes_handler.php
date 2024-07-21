@@ -153,13 +153,20 @@ class ClienteHandler
     // Método para leer un solo cliente por su ID.
     public function readOne()
     {
-        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente,telefono_cliente,usuario_cliente,correo_cliente,estado_cliente
-                 from tb_clientes 
+        $sql = 'SELECT * from tb_clientes 
                 WHERE id_cliente = ?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
-
+    
+    public function verifUs()
+    {
+        $sql = 'SELECT *
+        from tb_clientes 
+        WHERE usuario_cliente = ?';
+        $params = array($this->usuario);
+        return Database::getRow($sql, $params);
+    }
     // Método para verificar si existe un usuario con un nombre específico.
     public function readExist($username)
     {

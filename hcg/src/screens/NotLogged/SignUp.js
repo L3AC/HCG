@@ -10,7 +10,7 @@ import Boton from '../../components/Button/Boton'; // Llamar al la plantilla par
 // Componente de función SignUp
 const SignUp = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
-  const [isContra, setIsContra] = useState(true)
+  const [isContra, setIsContra] = useState(true);
 
   return (
     <View style={styles.container}>

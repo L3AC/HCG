@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Alert,TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
+import { SERVER } from '../../../contexts/Network'; // URL del servidor para realizar solicitudes
 
 const VerifUs = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
-  const [text, setText] = useState(''); // Estado para el texto del input
   const [placeholderVisible, setPlaceholderVisible] = useState(true); // Estado para controlar la visibilidad del placeholder
+  const [usuario, setUsuario] = useState(''); // Estado para el nombre de usuario
 
   const onChangeTextHandler = (inputText) => { // pequeña constante para validar cuando el placeholder se muestre y cuando no 
-    setText(inputText);
+    setUsuario(inputText);
     if (inputText.length > 0) {
       setPlaceholderVisible(false);  // Ocultar el placeholder cuando se escriba algo
     } else {
@@ -17,6 +18,46 @@ const VerifUs = () => {
     }
   };
 
+  const handleUs = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('aliasCliente', usuario);
+
+      const response = await fetch(`${SERVER}services/public/clientes.php?action=verifUs`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (data.status) {
+        sendMail(data.dataset);
+      } else {
+        Alert.alert('Error', data.error);
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
+    }
+  };
+  const sendMail = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append('pin', data.pin_cliente);
+      formData.append('user', data.usuario_cliente);
+      formData.append('email', data.correo_cliente);
+
+      const response = await fetch(`${SERVER}libraries/sendCode.php`, {
+        method: 'POST',
+        body: formData,
+      });
+      Alert.alert('Pin de seguridad', 'Revise su correo electrónico');
+      navigation.navigate('VerifCode');
+      
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', error.toString());
+    }
+  };
   return (
     <View style={styles.container}>
       {/* Botón para volver a la pantalla anterior (en este caso a la pantalla de login) */}
@@ -39,14 +80,14 @@ const VerifUs = () => {
       <TextInput
         style={styles.input}
         onChangeText={onChangeTextHandler}
-        value={text}
+        value={usuario}
         placeholder={placeholderVisible ? 'usuario' : ''}
       />
 
       {/* Contenedor para alinear solo el botón al centro de la pantalla*/}
       <View style={styles.containerButton}>
         {/* Botón de confirmación y agregado para al precionar mandar a la ventana de verificación de codigo */}
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('VerifCode')}>
+        <TouchableOpacity style={styles.button} onPress={() => handleUs()}>
           <Text style={styles.buttonText}>Confirmar</Text>
         </TouchableOpacity>
       </View>

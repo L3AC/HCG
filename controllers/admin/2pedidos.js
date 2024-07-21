@@ -1,7 +1,8 @@
 // Constantes para completar las rutas de la API.
 const PEDIDO_API = 'services/admin/pedidos.php',
     DETALLEPEDIDO_API = 'services/admin/detallepedidos.php',
-    PHPMAILER_API = 'libraries/PHPMailer.php';
+    PHPMAILER_API = 'libraries/PHPMailer.php',
+    SENDCODE_API = 'libraries/sendCode.php';;
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm'),
     SEARCHSUB_FORM = document.getElementById('searchsubForm');
@@ -244,8 +245,6 @@ const openConfirm = async (id, cliente, correo, codigo) => {
             FORM2.append('email', correo);
             FORM2.append('pin', codigo);
             const DATA2 = await fetchMail(PHPMAILER_API, FORM2);
-
-
         } else {
             sweetAlert(2, DATA.error, false);
         }

@@ -19,18 +19,12 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method == "OPTIONS") {
 	die();
 }
-/*
-$user = isset($_GET['user']) ? $_GET['user'] : '';
-$pin = isset($_GET['pin']) ? $_GET['pin'] : '';
-$email = isset($_GET['email']) ? $_GET['email'] : '';
-*/ 
 $user = isset($_POST['user']) ? $_POST['user'] : '';
 $pin = isset($_POST['pin']) ? $_POST['pin'] : '';
 $email = isset($_POST['email']) ? $_POST['email'] : '';
 
 //ENVIO DE CORREO PARA NOTIFICACION DE ASIGNACION
 ini_set("sendmail_from", "noreply@gi-sv.com");
-
 //extracion de la informacion que se quiere enviar
 
 /*********************************************************/

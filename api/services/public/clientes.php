@@ -42,29 +42,29 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al leer el perfil';
                 }
                 break;
-                case 'editProfile':
-                    $_POST = Validator::validateForm($_POST);
-                    if (
-                        !$cliente->setNombre($_POST['nombreCliente']) or
-                        !$cliente->setApellido($_POST['apellidoCliente']) or
-                        !$cliente->setCorreo($_POST['correoCliente']) or
-                        !$cliente->setTelefono($_POST['telefonoCliente']) or
-                        !$cliente->setUsuario($_POST['aliasCliente'])
-                    ) {
-                        $result['error'] = $cliente->getDataError();
-                    } elseif ($_SESSION['usuarioc']!=$_POST['aliasCliente'] && $cliente->readExist($_POST['aliasCliente'])) {
-                        $result['error'] = 'El nombre de usuario ya está en uso';
-                    } elseif ($_SESSION['correo']!=$_POST['correoCliente'] && $cliente->readExistMail($_POST['correoCliente'])) {
-                        $result['error'] = 'El correo electrónico ya está en uso';
-                    } elseif ($cliente->editProfile()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Perfil modificado correctamente';
-                        $_SESSION['usuarioc'] = $_POST['aliasCliente'];
-                        $_SESSION['correo'] = $_POST['correoCliente'];
-                    } else {
-                        $result['error'] = 'Ocurrió un problema al modificar el perfil';
-                    }
-                    break;
+            case 'editProfile':
+                $_POST = Validator::validateForm($_POST);
+                if (
+                    !$cliente->setNombre($_POST['nombreCliente']) or
+                    !$cliente->setApellido($_POST['apellidoCliente']) or
+                    !$cliente->setCorreo($_POST['correoCliente']) or
+                    !$cliente->setTelefono($_POST['telefonoCliente']) or
+                    !$cliente->setUsuario($_POST['aliasCliente'])
+                ) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($_SESSION['usuarioc'] != $_POST['aliasCliente'] && $cliente->readExist($_POST['aliasCliente'])) {
+                    $result['error'] = 'El nombre de usuario ya está en uso';
+                } elseif ($_SESSION['correo'] != $_POST['correoCliente'] && $cliente->readExistMail($_POST['correoCliente'])) {
+                    $result['error'] = 'El correo electrónico ya está en uso';
+                } elseif ($cliente->editProfile()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Perfil modificado correctamente';
+                    $_SESSION['usuarioc'] = $_POST['aliasCliente'];
+                    $_SESSION['correo'] = $_POST['correoCliente'];
+                } else {
+                    $result['error'] = 'Ocurrió un problema al modificar el perfil';
+                }
+                break;
             case 'changePassword':
                 $_POST = Validator::validateForm($_POST);
                 if (!$usuario->checkPassword($_POST['claveActual'])) {
@@ -86,6 +86,15 @@ if (isset($_GET['action'])) {
     } else {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
         switch ($_GET['action']) {
+            case 'verifUs':
+                if (!$cliente->setUsuario($_POST['aliasCliente'])) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($result['dataset'] = $cliente->verifUs()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Usuario inexistente';
+                }
+                break;
                 /*case 'logInM':
                 $_POST = Validator::validateForm($_POST);
                 if (isset($_POST['usu']) && isset($_POST['clave'])) {
