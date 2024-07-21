@@ -327,6 +327,19 @@ class ProductoHandler
         return Database::getRows($sql);
     }
 
+    // Método para calcular como el top 5 de clientes que han realizado más compras, ordenados de mayor a menor
+    public function topClientesCompras()
+    {
+        $sql ='
+            SELECT c.nombre_cliente,COUNT(p.id_pedido) AS cantidad_pedidos
+            FROM tb_pedidos p
+            INNER JOIN tb_clientes c ON p.id_cliente = c.id_cliente
+            GROUP BY c.nombre_cliente
+            ORDER BY cantidad_pedidos DESC
+            LIMIT 5';
+            return Database::getRows($sql);
+    }
+
     /*
     *   Métodos para generar reportes.
     */

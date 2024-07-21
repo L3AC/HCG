@@ -132,6 +132,14 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+            // Obtener el top clientes con más compras.
+            case 'topClientesCompras':
+                if ($result['dataset'] = $producto->topClientesCompras()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'No hay datos disponibles';
+                }
+                break;
 
             // Acción no disponible dentro de la sesión.
             default:

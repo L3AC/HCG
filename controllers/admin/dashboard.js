@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la funciones que generan los gráficos en la página web.
     graficoBarrasCategorias();
     graficoPastelCategorias();
+    graficoBarrasClientesCompras();
 });
 
 /*
@@ -74,6 +75,34 @@ const graficoPastelCategorias = async () => {
         pieGraph('chart2', categorias, porcentajes, '5 Productos más pedidos');
     } else {
         document.getElementById('chart2').remove();
+        console.log(DATA.error);
+    }
+}
+
+
+/*
+*   Función asíncrona para mostrar un gráfico de barras con la cantidad de productos por categoría.
+*   Parámetros: ninguno.
+*   Retorno: ninguno.
+*/
+const graficoBarrasClientesCompras = async () => {
+    // Petición para obtener los datos del gráfico.
+    const DATA = await fetchData(PRODUCTO_API, 'topClientesCompras');
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
+    if (DATA.status) {
+        // Se declaran los arreglos para guardar los datos a graficar.
+        let clientes = [];
+        let cantidades = [];
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se agregan los datos a los arreglos.
+            clientes.push(row.nombre_cliente);
+            cantidades.push(row.cantidad_pedidos);
+        });
+        // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
+        barGraph('chart3', clientes, cantidades, 'Cantidad de pedidos', '');
+    } else {
+        document.getElementById('chart3').remove();
         console.log(DATA.error);
     }
 }
