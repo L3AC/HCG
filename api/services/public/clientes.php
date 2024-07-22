@@ -86,30 +86,26 @@ if (isset($_GET['action'])) {
     } else {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
         switch ($_GET['action']) {
+            
             case 'verifUs':
                 if (!$cliente->setUsuario($_POST['aliasCliente'])) {
                     $result['error'] = $cliente->getDataError();
                 } elseif ($result['dataset'] = $cliente->verifUs()) {
                     $result['status'] = 1;
+                    $_SESSION['clienteRecup'] = $result['dataset']['id_cliente'];
                 } else {
                     $result['error'] = 'Usuario inexistente';
                 }
                 break;
-                /*case 'logInM':
-                $_POST = Validator::validateForm($_POST);
-                if (isset($_POST['usu']) && isset($_POST['clave'])) {
-                    $userResult = $cliente->checkUserM($_POST['usu'], $_POST['clave']);
-                    if (!$userResult['success']) {
-                        $result['error'] = 'Datos incorrectos';
-                    } else {
-                        $result['status'] = 1;
-                        $result['message'] = 'Autenticación correcta';
-                        $result['dataset'] = $userResult['idCliente']; // Agregar el ID del cliente al resultado
-                    }
+            case 'verifPin':
+                if (!$cliente->setPin($_POST['pinCliente'])) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($result['dataset'] = $cliente->verifPin()) {
+                    $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Usuario y/o contraseña no proporcionados';
+                    $result['error'] = 'Codigo incorrecto';
                 }
-            break;*/
+                break;
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);
                 if (

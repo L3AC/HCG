@@ -10,6 +10,7 @@ class ClienteHandler
      *  Declaración de atributos para el manejo de datos.
      */
     protected $id = null;
+    protected $pin = null;
     protected $nombre = null;
     protected $apellido = null;
     protected $telefono = null;
@@ -24,17 +25,6 @@ class ClienteHandler
      *  Métodos para gestionar la cuenta del cliente.
      */
     /*GENERAR PIN*/
-    public function generarPin()
-    {
-        $pinLength = 6;
-        $pin = '';
-
-        for ($i = 0; $i < $pinLength; $i++) {
-            $pin .= mt_rand(0, 9);
-        }
-
-        return $pin;
-    }
 
     // Método para verificar el usuario y contraseña.
     public function checkUser($usuario, $password)
@@ -121,10 +111,10 @@ class ClienteHandler
         //echo $this->clave.' ';
         $sql = 'insert into tb_clientes(id_cliente,usuario_cliente,clave_cliente,nombre_cliente,
         apellido_cliente,correo_cliente,pin_cliente,estado_cliente,telefono_cliente) 
-        values((SELECT get_next_id("tb_clientes")),?,?,?,?,?,?,true,?)';
+        values((SELECT get_next_id("tb_clientes")),?,?,?,?,?,?,generar_codigo(),?)';
         $params = array(
             $this->usuario, $this->clave, $this->nombre,
-            $this->apellido, $this->email, $this->generarPin(), $this->telefono
+            $this->apellido, $this->email, $this->telefono
         );
 
         return Database::executeRow($sql, $params);
@@ -165,6 +155,15 @@ class ClienteHandler
         from tb_clientes 
         WHERE usuario_cliente = ?';
         $params = array($this->usuario);
+        return Database::getRow($sql, $params);
+    }
+    public function verifPin()
+    {
+        $sql = 'SELECT * from tb_clientes 
+        WHERE pin_cliente = ? AND id_cliente = ?;
+        update tb_clientes set pin_estado=generar_codigo()
+         where id_cliente=?;';
+        $params = array($this->pin,$_SESSION['clienteRecup'],$_SESSION['clienteRecup']);
         return Database::getRow($sql, $params);
     }
     // Método para verificar si existe un usuario con un nombre específico.

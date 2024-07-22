@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
-
-// ruta para iconos
-// https://github.com/oblador/react-native-vector-icons/tree/master/glyphmaps
 
 const Producto = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
 
-  
   // Constantes para los valores del input
   const [number1, setNumber1] = useState('');
   const [number2, setNumber2] = useState('');
@@ -18,34 +14,51 @@ const Producto = () => {
   const [number5, setNumber5] = useState('');
 
   // Función que maneja el cambio de texto en el TextInput
-  const onChangeText = (inputText) => {
-    // Verifica si el texto ingresado es un solo dígito
-    if (/^\d$/.test(inputText)) {
-      // Actualiza el estado `number` con el texto ingresado
-      setNumber(inputText);
+  const onChangeText = (text, setNumber) => {
+    if (/^\d$/.test(text)) {
+      setNumber(text);
+
+      // Verifica si todos los campos están llenos
+      if (number1 && number2 && number3 && number4 && text) {
+        handlePin(number1 + number2 + number3 + number4 + text);
+      }
+    }
+  };
+
+  const handlePin = async (pin) => {
+    try {
+      const formData = new FormData();
+      formData.append('pinCliente', pin);
+      const response = await fetch(`${SERVER}services/public/clientes.php?action=verifPin`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (data.status) {
+        navigation.navigate('NuevaClave');
+      } else {
+        Alert.alert('Error', data.error);
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
     }
   };
 
   return (
-
     <View style={styles.container}>
-      {/* Botón para volver a la pantalla anterior (en este caso a la pantalla de VerifUs) */}
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={40} color="black" />
       </TouchableOpacity>
 
-      {/* Imagen alusiva a la pantalla recuperación*/}
       <Ionicons style={styles.icono} name="shield-checkmark-sharp" size={140} color="black" />
-
-      {/* SubTítulo de la pantalla recuperación */}
       <Text style={styles.text}>Ingrese el pin enviado a su correo</Text>
 
-
-      {/* Contenedor de los 5 input, del  codigo de verificación*/}
       <View style={styles.inputsContainer}>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => onChangeText(text, setNumber1)}// Función que maneja el cambio de texto
+          onChangeText={(text) => onChangeText(text, setNumber1)} // Función que maneja el cambio de texto
           value={number1}
           placeholder=""
           keyboardType="numeric"
@@ -53,7 +66,7 @@ const Producto = () => {
         />
         <TextInput
           style={styles.input}
-          onChangeText={(text) => onChangeText(text, setNumber2)}// Función que maneja el cambio de texto
+          onChangeText={(text) => onChangeText(text, setNumber2)} // Función que maneja el cambio de texto
           value={number2}
           placeholder=""
           keyboardType="numeric"
@@ -61,7 +74,7 @@ const Producto = () => {
         />
         <TextInput
           style={styles.input}
-          onChangeText={(text) => onChangeText(text, setNumber3)}// Función que maneja el cambio de texto
+          onChangeText={(text) => onChangeText(text, setNumber3)} // Función que maneja el cambio de texto
           value={number3}
           placeholder=""
           keyboardType="numeric"
@@ -69,7 +82,7 @@ const Producto = () => {
         />
         <TextInput
           style={styles.input}
-          onChangeText={(text) => onChangeText(text, setNumber4)}// Función que maneja el cambio de texto
+          onChangeText={(text) => onChangeText(text, setNumber4)} // Función que maneja el cambio de texto
           value={number4}
           placeholder=""
           keyboardType="numeric"
@@ -77,21 +90,18 @@ const Producto = () => {
         />
         <TextInput
           style={styles.input}
-          onChangeText={(text) => onChangeText(text, setNumber5)}// Función que maneja el cambio de texto
+          onChangeText={(text) => onChangeText(text, setNumber5)} // Función que maneja el cambio de texto
           value={number5}
           placeholder=""
           keyboardType="numeric"
           maxLength={1}
         />
       </View>
-      {/* Contenedor para alinear solo el botón al centro de la pantalla*/}
       <View style={styles.containerButton}>
-        {/* Botón de confirmación y agregado para al precionar mandar a la ventana de verificación de codigo */}
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NuevaClave')}> 
+        <TouchableOpacity style={styles.button} onPress={() => handlePin(number1 + number2 + number3 + number4 + number5)}>
           <Text style={styles.buttonText}>Confirmar</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   );
 };
@@ -114,7 +124,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center'
   },
-  icono:{ // estilo para el icono del escudo
+  icono: { // estilo para el icono del escudo
     textAlign: 'center',
     marginTop: 20,
   },

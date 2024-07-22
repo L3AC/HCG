@@ -158,6 +158,15 @@ class Validator
         } else {
             return false;
         }
+    }    
+    public static function validatePin($value)
+    {
+        // Se verifica el contenido y la longitud de acuerdo con la base de datos.
+        if (preg_match('/^[a-zA-Z0-9]+$/', $value)) {
+            return true;
+        } else {
+            return false;
+        }
     }
     private static $forbiddenWords = [
         'puta',
