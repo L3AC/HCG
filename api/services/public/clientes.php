@@ -65,28 +65,28 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
                 break;
-            case 'changePassword':
-                $_POST = Validator::validateForm($_POST);
-                if (!$usuario->checkPassword($_POST['claveActual'])) {
-                    $result['error'] = 'Contraseña actual incorrecta';
-                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
-                    $result['error'] = 'Confirmación de contraseña diferente';
-                } elseif (!$usuario->setClave($_POST['claveNueva'])) {
-                    $result['error'] = $usuario->getDataError();
-                } elseif ($usuario->changePassword()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Contraseña cambiada correctamente';
-                } else {
-                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
-                }
-                break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
     } else {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
         switch ($_GET['action']) {
-            
+            case 'changePassword':
+                if (!isset($_SESSION['clienteRecup'])) {
+                    $result['error'] = 'Acción no disponible';
+                }elseif (!$cliente->checkPassword($_POST['claveActual'])) {
+                    $result['error'] = 'Contraseña actual incorrecta';
+                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                    $result['error'] = 'Confirmación de contraseña diferente';
+                } elseif (!$cliente->setClave($_POST['claveNueva'])) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->changePassword()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Contraseña modificada correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
+                }
+                break;
             case 'verifUs':
                 if (!$cliente->setUsuario($_POST['aliasCliente'])) {
                     $result['error'] = $cliente->getDataError();
@@ -100,10 +100,12 @@ if (isset($_GET['action'])) {
             case 'verifPin':
                 if (!$cliente->setPin($_POST['pinCliente'])) {
                     $result['error'] = $cliente->getDataError();
-                } elseif ($result['dataset'] = $cliente->verifPin()) {
+                } elseif (!$result['dataset'] = $cliente->verifPin()) {
+                    $result['error'] = 'Codigo incorrecto';
+                }elseif ($cliente->updatePin()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Codigo incorrecto';
+                    
                 }
                 break;
             case 'signUp':

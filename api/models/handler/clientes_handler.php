@@ -25,7 +25,17 @@ class ClienteHandler
      *  Métodos para gestionar la cuenta del cliente.
      */
     /*GENERAR PIN*/
+    public function generarPin()
+    {
+        $pinLength = 6;
+        $pin = '';
 
+        for ($i = 0; $i < $pinLength; $i++) {
+            $pin .= mt_rand(0, 9);
+        }
+
+        return $pin;
+    }
     // Método para verificar el usuario y contraseña.
     public function checkUser($usuario, $password)
     {
@@ -57,14 +67,27 @@ class ClienteHandler
             return false;
         }
     }
-
+    public function checkPassword($password)
+    {
+        $sql = 'SELECT clave_cliente
+                FROM tb_clientes
+                WHERE id_cliente = ?';
+        $params = array($_SESSION['clienteRecup']);
+        $data = Database::getRow($sql, $params);
+        // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
+        if ($data && password_verify($password, $data['clave_cliente'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     // Método para cambiar la contraseña del cliente.
     public function changePassword()
     {
         $sql = 'UPDATE tb_clientes
                 SET clave_cliente = ?
                 WHERE id_cliente = ?';
-        $params = array($this->clave, $_SESSION['idCliente']);
+        $params = array($this->clave, $_SESSION['clienteRecup']);
         return Database::executeRow($sql, $params);
     }
 
@@ -111,10 +134,10 @@ class ClienteHandler
         //echo $this->clave.' ';
         $sql = 'insert into tb_clientes(id_cliente,usuario_cliente,clave_cliente,nombre_cliente,
         apellido_cliente,correo_cliente,pin_cliente,estado_cliente,telefono_cliente) 
-        values((SELECT get_next_id("tb_clientes")),?,?,?,?,?,?,generar_codigo(),?)';
+        values((SELECT get_next_id("tb_clientes")),?,?,?,?,?,?,?,?)';
         $params = array(
             $this->usuario, $this->clave, $this->nombre,
-            $this->apellido, $this->email, $this->telefono
+            $this->apellido, $this->email,$this->generarPin(), $this->telefono
         );
 
         return Database::executeRow($sql, $params);
@@ -160,11 +183,16 @@ class ClienteHandler
     public function verifPin()
     {
         $sql = 'SELECT * from tb_clientes 
-        WHERE pin_cliente = ? AND id_cliente = ?;
-        update tb_clientes set pin_estado=generar_codigo()
-         where id_cliente=?;';
-        $params = array($this->pin,$_SESSION['clienteRecup'],$_SESSION['clienteRecup']);
+        WHERE pin_cliente = ? AND id_cliente = ?';
+        $params = array($this->pin,$_SESSION['clienteRecup']);
         return Database::getRow($sql, $params);
+    }
+    public function updatePin()
+    {
+        $sql = 'update tb_clientes set pin_cliente=?
+         where id_cliente=?;';
+        $params = array($this->generarPin(),$_SESSION['clienteRecup']);
+        return Database::executeRow($sql, $params);
     }
     // Método para verificar si existe un usuario con un nombre específico.
     public function readExist($username)

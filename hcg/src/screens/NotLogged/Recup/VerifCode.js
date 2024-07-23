@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
+import { SERVER } from '../../../contexts/Network'; // URL del servidor para realizar solicitudes
 
 const Producto = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
@@ -12,37 +13,55 @@ const Producto = () => {
   const [number3, setNumber3] = useState('');
   const [number4, setNumber4] = useState('');
   const [number5, setNumber5] = useState('');
+  const [number6, setNumber6] = useState('');
 
-  // Función que maneja el cambio de texto en el TextInput
-  const onChangeText = (text, setNumber) => {
+  // Referencias para los TextInput
+  const input2Ref = useRef(null);
+  const input3Ref = useRef(null);
+  const input4Ref = useRef(null);
+  const input5Ref = useRef(null);
+  const input6Ref = useRef(null);
+
+  // Función que maneja el cambio de texto en el TextInput y el foco automático
+  const onChangeText = (text, setNumber, nextInputRef) => {
     if (/^\d$/.test(text)) {
       setNumber(text);
-
-      // Verifica si todos los campos están llenos
-      if (number1 && number2 && number3 && number4 && text) {
-        handlePin(number1 + number2 + number3 + number4 + text);
+      if (nextInputRef) {
+        nextInputRef.current.focus();
       }
     }
   };
 
-  const handlePin = async (pin) => {
-    try {
-      const formData = new FormData();
-      formData.append('pinCliente', pin);
-      const response = await fetch(`${SERVER}services/public/clientes.php?action=verifPin`, {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await response.json();
-      if (data.status) {
-        navigation.navigate('NuevaClave');
-      } else {
-        Alert.alert('Error', data.error);
+  const onKeyPress = (e, setNumber, prevInputRef) => {
+    if (e.nativeEvent.key === 'Backspace' && !setNumber) {
+      if (prevInputRef) {
+        prevInputRef.current.focus();
       }
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
+    }
+  };
+
+  const handlePin = async () => {
+    const pin = number1 + number2 + number3 + number4 + number5 + number6;
+    if (pin.length === 6) {
+      try {
+        const formData = new FormData();
+        formData.append('pinCliente', pin);
+        const response = await fetch(`${SERVER}services/public/clientes.php?action=verifPin`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+        console.log(data);
+        if (data.status) {
+          navigation.navigate('NuevaClave');
+        } else {
+          Alert.alert('Error', data.error);
+        }
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
+      }
     }
   };
 
@@ -58,15 +77,19 @@ const Producto = () => {
       <View style={styles.inputsContainer}>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => onChangeText(text, setNumber1)} // Función que maneja el cambio de texto
+          onChangeText={(text) => onChangeText(text, setNumber1, input2Ref)} // Función que maneja el cambio de texto
+          onKeyPress={(e) => onKeyPress(e, number1, null)} // Manejador para tecla de retroceso
           value={number1}
           placeholder=""
           keyboardType="numeric"
           maxLength={1}
+          autoFocus={true}
         />
         <TextInput
           style={styles.input}
-          onChangeText={(text) => onChangeText(text, setNumber2)} // Función que maneja el cambio de texto
+          ref={input2Ref}
+          onChangeText={(text) => onChangeText(text, setNumber2, input3Ref)} // Función que maneja el cambio de texto
+          onKeyPress={(e) => onKeyPress(e, number2, input2Ref)} // Manejador para tecla de retroceso
           value={number2}
           placeholder=""
           keyboardType="numeric"
@@ -74,7 +97,9 @@ const Producto = () => {
         />
         <TextInput
           style={styles.input}
-          onChangeText={(text) => onChangeText(text, setNumber3)} // Función que maneja el cambio de texto
+          ref={input3Ref}
+          onChangeText={(text) => onChangeText(text, setNumber3, input4Ref)} // Función que maneja el cambio de texto
+          onKeyPress={(e) => onKeyPress(e, number3, input3Ref)} // Manejador para tecla de retroceso
           value={number3}
           placeholder=""
           keyboardType="numeric"
@@ -82,7 +107,9 @@ const Producto = () => {
         />
         <TextInput
           style={styles.input}
-          onChangeText={(text) => onChangeText(text, setNumber4)} // Función que maneja el cambio de texto
+          ref={input4Ref}
+          onChangeText={(text) => onChangeText(text, setNumber4, input5Ref)} // Función que maneja el cambio de texto
+          onKeyPress={(e) => onKeyPress(e, number4, input4Ref)} // Manejador para tecla de retroceso
           value={number4}
           placeholder=""
           keyboardType="numeric"
@@ -90,15 +117,30 @@ const Producto = () => {
         />
         <TextInput
           style={styles.input}
-          onChangeText={(text) => onChangeText(text, setNumber5)} // Función que maneja el cambio de texto
+          ref={input5Ref}
+          onChangeText={(text) => onChangeText(text, setNumber5, input6Ref)} // Función que maneja el cambio de texto
+          onKeyPress={(e) => onKeyPress(e, number5, input5Ref)} // Manejador para tecla de retroceso
           value={number5}
+          placeholder=""
+          keyboardType="numeric"
+          maxLength={1}
+        />
+        <TextInput
+          style={styles.input}
+          ref={input6Ref}
+          onChangeText={(text) => {
+            onChangeText(text, setNumber6, null);
+            handlePin();
+          }} // Función que maneja el cambio de texto y verifica el pin
+          onKeyPress={(e) => onKeyPress(e, number6, input6Ref)} // Manejador para tecla de retroceso
+          value={number6}
           placeholder=""
           keyboardType="numeric"
           maxLength={1}
         />
       </View>
       <View style={styles.containerButton}>
-        <TouchableOpacity style={styles.button} onPress={() => handlePin(number1 + number2 + number3 + number4 + number5)}>
+        <TouchableOpacity style={styles.button} onPress={handlePin}>
           <Text style={styles.buttonText}>Confirmar</Text>
         </TouchableOpacity>
       </View>
@@ -130,8 +172,8 @@ const styles = StyleSheet.create({
   },
   input: { // apartado de input
     marginTop: 30,
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     borderWidth: 2,
     borderRadius: 10,
     borderColor: 'gray',
