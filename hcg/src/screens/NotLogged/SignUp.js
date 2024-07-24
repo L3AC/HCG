@@ -1,74 +1,141 @@
 // Importación de librerías y componentes necesarios
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
-import Input from '../../components/inputs/Input' // Llama a la plantilla para los input
-import InputCorreo from '../../components/inputs/InputCorreo' // Llama a la plantilla para los input
-import Boton from '../../components/Button/Boton'; // Llamar al la plantilla para boton
+import Input from '../../components/inputs/Input'; // Llama a la plantilla para los input
+import InputCorreo from '../../components/inputs/InputCorreo'; // Llama a la plantilla para los input
+import Boton from '../../components/Button/Boton'; // Llamar al la plantilla para botón
+import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para input de login
+import PhoneInput from '../../components/inputs/PhoneInput';
+import { SERVER } from '../../contexts/Network';
 
 // Componente de función SignUp
 const SignUp = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
+  const [nombreCliente, setNombreCliente] = useState('');
+  const [apellidoCliente, setApellidoCliente] = useState('');
+  const [correoCliente, setCorreoCliente] = useState('');
+  const [telefonoCliente, setTelefonoCliente] = useState('');
+  const [usuarioCliente, setUsuarioCliente] = useState('');
+  const [claveCliente, setClaveCliente] = useState('');
+  const [confirmarClave, setConfirmarClave] = useState('');
   const [isContra, setIsContra] = useState(true);
+  const [isContra2, setIsContra2] = useState(true);
+
+  // Función para manejar el registro del usuario
+  const signin = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('nombreCliente', nombreCliente);
+      formData.append('apellidoCliente', apellidoCliente);
+      formData.append('correoCliente', correoCliente);
+      formData.append('telefonoCliente', telefonoCliente);
+      formData.append('usuarioCliente', usuarioCliente);
+      formData.append('claveCliente', claveCliente);
+      formData.append('confirmarClave', confirmarClave);
+
+      const response = await fetch(`${SERVER}services/public/clientes.php?action=signUp`, {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.status) {
+        Alert.alert(data.message); // Muestra un mensaje de éxito
+        navigation.navigate('Login'); // Navega a la pantalla de inicio de sesión
+      } else {
+        console.log(data);
+        Alert.alert(data.error); // Muestra un mensaje de error
+      }
+    } catch (error) {
+      console.error('Error :', error);
+      Alert.alert('Error', 'Error al registrar'); // Muestra un mensaje de error
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      {/* Botón para volver a la pantalla anterior */}
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back" size={24} color="black" />
-      </TouchableOpacity>
-      {/* Título de la pantalla de registro */}
-      <Text style={styles.title}>Registro</Text>
-      <View style={styles.contendor2}>
-        {/* Contenedor para el input de Nombre */}
-        <View style={styles.inputContainer}>
-          <Input placeHolder='Nombre' />
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        {/* Botón para volver a la pantalla anterior */}
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={24} color="black" />
+        </TouchableOpacity>
+        {/* Título de la pantalla de registro */}
+        <Text style={styles.title}>Registro</Text>
+        <View style={styles.contendor2}>
+          {/* Contenedor para el input de Nombre */}
+          <View style={styles.inputContainer}>
+            <Input placeHolder='Nombre' valor={nombreCliente} setTextChange={setNombreCliente} />
+          </View>
+          {/* Contenedor para el input de Apellido */}
+          <View style={styles.inputContainer}>
+            <Input placeHolder='Apellido' valor={apellidoCliente} setTextChange={setApellidoCliente} />
+          </View>
+          {/* Contenedor para el input de Correo */}
+          <View style={styles.inputContainer}>
+            <InputCorreo placeHolder='Correo' valor={correoCliente} setTextChange={setCorreoCliente} />
+          </View>
+          {/* Contenedor para el input de Teléfono */}
+          <View style={styles.inputContainer}>
+            <PhoneInput
+              type={'custom'}
+              format={'9999-9999'}
+              value={telefonoCliente}
+              onChangeText={setTelefonoCliente}
+              placeHolder='Telefono'
+            />
+          </View>
+          {/* Contenedor para el input de Usuario */}
+          <View style={styles.inputContainer}>
+            <Input placeHolder='Usuario' valor={usuarioCliente} setTextChange={setUsuarioCliente} />
+          </View>
+          {/* Contenedor para el input de Contraseña */}
+          <View style={styles.inputContainer}>
+            <InputLogin 
+              placeHolder='Contraseña' 
+              valor={claveCliente} 
+              setValor={setClaveCliente} 
+              clave={isContra} 
+              isContra={true} 
+              setIsContra={setIsContra} 
+            />
+          </View>
+          {/* Contenedor para el input de Confirmar Contraseña */}
+          <View style={styles.inputContainer}>
+            <InputLogin 
+              placeHolder='Confirmar' 
+              valor={confirmarClave} 
+              setValor={setConfirmarClave} 
+              clave={isContra2} 
+              isContra={true} 
+              setIsContra={setIsContra2} 
+            />
+          </View>
         </View>
-        {/* Contenedor para el input de Apellido */}
-        <View style={styles.inputContainer}>
-          <Input placeHolder='Apellido' />
-        </View>
-        {/* Contenedor para el input de Correo */}
-        <View style={styles.inputContainer}>
-          <InputCorreo placeHolder='Correo' />
-        </View>
-        {/* Contenedor para el input de Teléfono */}
-        <View style={styles.inputContainer}>
-          <Input placeHolder='Telefono' />
-        </View>
-        {/* Contenedor para el input de Usuario */}
-        <View style={styles.inputContainer}>
-          <Input placeHolder='Usuario' />
-        </View>
-        {/* Contenedor para el input de Contraseña */}
-        <View style={styles.inputContainer}>
-          <Input placeHolder='Contraseña' clave={isContra} />
-        </View>
+        {/* Botón de confirmación */}
+        <Boton textoBoton='Confirmar' accionBoton={signin} />
       </View>
-
-      {/* Botón de confirmación */}
-      <Boton
-         textoBoton='Confirmar'
-      />
-    </View>
+    </ScrollView>
   );
 };
 
 // Estilos del componente
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     paddingTop: 60,
     padding: 30,
     backgroundColor: '#d29c65', // Background color
   },
-  contendor2:{
+  contendor2: {
     backgroundColor: '#AA6231',
-    padding:20,
+    padding: 20,
     borderRadius: 20,
     borderColor: '#fff',
-    borderWidth: 1
+    borderWidth: 1,
   },
   title: {
     fontSize: 26,
@@ -76,45 +143,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     color: 'black', // Text color
-    fontFamily: 'QuickSand'
-  },
-  subtitle: {
-    fontSize: 16,
-    marginBottom: 16,
-    textAlign: 'center',
-    color: 'black', // Text color
+    fontFamily: 'QuickSand',
   },
   inputContainer: {
     marginBottom: 10,
   },
-  label: {
-    fontSize: 16,
-    color: '#fff', // Text color
-    
-  },
   input: {
-    marginBottom: 6,
-    marginTop: 6,
-    height: 40,
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 5,
     borderColor: '#ccc',
     borderWidth: 1,
-    paddingHorizontal: 8,
-    borderRadius: 8,
-    backgroundColor: '#F2E7CF',
-  },
-  button: {
-    height: 60,
-    width: 170,
-    backgroundColor: '#2F2C2C',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
-    marginTop: 16,
-  },
-  buttonText: {
-    color: 'white',
-    fontFamily: 'QuickSand',
-    fontSize: 16,
   },
 });
 

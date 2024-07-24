@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
+import { SERVER } from '../../../contexts/Network';
 
 const Producto = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
@@ -43,37 +44,52 @@ const Producto = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* Título de la pantalla de recuperación */}
-      <Text style={styles.title}>Cambio de contraseña</Text>
-      {/* Imagen alusiva a la pantalla nueva contraseña*/}
-      <Ionicons style={styles.icono} name="key" size={120} color="black" />
-      {/* Input para escribir su nueva contraseña (1)*/}
-      <Text style={styles.text}>Ingrese su nueva contraseña</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setNewPassword}
-        value={newPassword}
-        placeholder="contraseña"
-        secureTextEntry={!showNewPassword}
-      />
-      {/* Input para escribir su nueva contraseña (2)*/}
-      <Text style={styles.text}>Confirmar contraseña</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setConfirmPassword}
-        value={confirmPassword}
-        placeholder="contraseña"
-        secureTextEntry={!showConfirmPassword}
-      />
-      {/* Contenedor para alinear solo el botón al centro de la pantalla*/}
-      <View style={styles.containerButton}>
-        {/* Botón de confirmación y agregado para al precionar mandar a la ventana de verificación de codigo */}
-        <TouchableOpacity style={styles.button} onPress={changeP}> 
-          <Text style={styles.buttonText}>Confirmar</Text>
-        </TouchableOpacity>
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <View style={styles.container}>
+        {/* Título de la pantalla de recuperación */}
+        <Text style={styles.title}>Cambio de contraseña</Text>
+        {/* Imagen alusiva a la pantalla nueva contraseña */}
+        <Ionicons style={styles.icono} name="key" size={120} color="black" />
+        
+        {/* Input para escribir su nueva contraseña (1) */}
+        <Text style={styles.text}>Ingrese su nueva contraseña</Text>
+        <View style={styles.inputWrapper}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setNewPassword}
+            value={newPassword}
+            placeholder="contraseña"
+            secureTextEntry={!showNewPassword}
+          />
+          <TouchableOpacity onPress={() => setShowNewPassword(!showNewPassword)}>
+            <Ionicons name={showNewPassword ? 'eye-off' : 'eye'} size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+        
+        {/* Input para escribir su nueva contraseña (2) */}
+        <Text style={styles.text}>Confirmar contraseña</Text>
+        <View style={styles.inputWrapper}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setConfirmPassword}
+            value={confirmPassword}
+            placeholder="contraseña"
+            secureTextEntry={!showConfirmPassword}
+          />
+          <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+            <Ionicons name={showConfirmPassword ? 'eye-off' : 'eye'} size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Contenedor para alinear solo el botón al centro de la pantalla */}
+        <View style={styles.containerButton}>
+          {/* Botón de confirmación y agregado para al precionar mandar a la ventana de verificación de código */}
+          <TouchableOpacity style={styles.button} onPress={changeP}>
+            <Text style={styles.buttonText}>Confirmar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -84,28 +100,37 @@ const styles = StyleSheet.create({
     padding: 30,
     backgroundColor: '#d2a563', // Color de fondo
   },
+  scrollViewContent: {
+    flexGrow: 1,
+  },
   text: {
     marginTop: 20,
     fontSize: 20,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   title: {
     fontSize: 39,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
-  icono:{ // estilo para el icono del escudo
+  icono: { // estilo para el icono del escudo
     textAlign: 'center',
     marginTop: 40,
   },
   input: {
-    marginTop: 30,
+    flex: 1,
     height: 60,
-    borderBottomWidth: 2,
     borderBottomColor: 'black',
     paddingHorizontal: 10,
+    fontSize: 20,
+  },
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 2,
+    borderBottomColor: 'black',
+    marginTop: 30,
     marginBottom: 20,
-    fontSize: 20
   },
   button: {
     height: 50,
@@ -113,7 +138,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2F2C2C',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 30
+    borderRadius: 30,
   },
   buttonText: {
     justifyContent: 'center',
@@ -126,7 +151,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 });
 
 export default Producto;

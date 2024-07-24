@@ -43,6 +43,7 @@ const Login = () => {
       const formData = new FormData();
       formData.append('usu', usuario);
       formData.append('clave', clave);
+      console.log(formData);
 
       const response = await fetch(`${SERVER}services/public/clientes.php?action=logIn`, {
         method: 'POST',
@@ -56,7 +57,7 @@ const Login = () => {
           setIsLoggedIn(true);
           setIdUsuario(data.dataset);
           navigation.navigate('Main');
-        }, 2000);
+        }, 1000);
       } else {
         handleShowSimpleAlert(data.error, 'error', 3000);
       }
@@ -75,13 +76,13 @@ const Login = () => {
         <Input
           placeHolder='Usuario'
           style={styles.input}
-          setValor={usuario}
-          setTextChange={setUsuario}
+          valor={usuario}
+          setValor={setUsuario}
         />
         <Input
           placeHolder='Contraseña'
-          setValor={clave}
-          setTextChange={setClave}
+          valor={clave}
+          setValor={setClave}
           clave={isContra}
         />
         <TouchableOpacity onPress={() => navigation.navigate('VerifUs')}>

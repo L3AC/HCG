@@ -6,6 +6,7 @@ import { SERVER } from '../../contexts/Network'; // URL del servidor
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Input from '../../components/inputs/Input' // Llama a la plantilla para los input
 import InputCorreo from '../../components/inputs/InputCorreo' // Llama a la plantilla para los input
+import PhoneInput from '../../components/inputs/PhoneInput';
 
 // Componente de función PerfilScreen
 const PerfilScreen = () => {
@@ -36,7 +37,33 @@ const PerfilScreen = () => {
       Alert.alert('Error', 'Ocurrió un error al iniciar sesión'); // Muestra un alerta en caso de error
     }
   };
-
+// Función para editar el perfil del usuario y enviar los datos al servidor
+const editP = async () => {
+  try {
+      const formData = new FormData();
+      formData.append('nombreCliente', profileData.nombre_cliente);
+      formData.append('apellidoCliente', profileData.apellido_cliente);
+      formData.append('correoCliente', profileData.correo_cliente);
+      formData.append('telefonoCliente', profileData.telefono_cliente);
+      formData.append('aliasCliente', profileData.usuario_cliente);
+      console.log(profileData);
+      const response = await fetch(`${SERVER}services/public/clientes.php?action=editProfile`, {
+          method: 'POST',
+          body: formData,
+      });
+      const data = await response.json();
+      if (data.status) {
+          Alert.alert(data.message);
+      } else {
+          console.log(data);
+          Alert.alert(data.error);
+      }
+  } catch (error) {
+      console.error('Error :', error);
+      console.log(error);
+      Alert.alert('Error', 'Error al registrar');
+  }
+};
   // useEffect para obtener los datos del perfil al montar el componente
   useEffect(() => {
     fetchProfileData();
@@ -61,7 +88,7 @@ const PerfilScreen = () => {
       <View style={styles.header}>
         <Ionicons style={styles.iconoHeader} name="arrow-back" size={35} color="white" onPress={() => navigation.goBack()} />
         <Text style={styles.title}>Perfil</Text>
-        <Ionicons style={styles.iconoHeader} name="pencil" size={35} color="white" />
+        <Text style={styles.title}>          </Text>
       </View>
       <View style={styles.linea}></View>
 
@@ -73,7 +100,7 @@ const PerfilScreen = () => {
             <Input
               placeHolder='Nombre'
               setValor={profileData.nombre_cliente}
-              onChangeText={(text) => setProfileData({ ...profileData, nombre_cliente: text })}
+              setTextChange={(text) => setProfileData({ ...profileData, nombre_cliente: text })}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -81,7 +108,7 @@ const PerfilScreen = () => {
             <Input
               placeHolder='Apellido'
               setValor={profileData.apellido_cliente}
-              onChangeText={(text) => setProfileData({ ...profileData, apellido_cliente: text })}
+              setTextChange={(text) => setProfileData({ ...profileData, apellido_cliente: text })}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -89,7 +116,7 @@ const PerfilScreen = () => {
             <InputCorreo
               placeHolder='Correo'
               setValor={profileData.correo_cliente}
-              onChangeText={(text) => setProfileData({ ...profileData, correo_cliente: text })}
+              setTextChange={(text) => setProfileData({ ...profileData, correo_cliente: text })}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -97,20 +124,22 @@ const PerfilScreen = () => {
             <Input
               placeHolder='Usuario'
               setValor={profileData.usuario_cliente}
-              onChangeText={(text) => setProfileData({ ...profileData, usuario_cliente: text })}
+              setTextChange={(text) => setProfileData({ ...profileData, usuario_cliente: text })}
             />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Teléfono</Text>
-            <Input
-              placeHolder='Telefono'
-              setValor={profileData.telefono_cliente}
-              onChangeText={(text) => setProfileData({ ...profileData, telefono_cliente: text })}
+            <PhoneInput
+              type={'custom'}
+              format={'9999-9999'}
+              value={profileData.telefono_cliente}
+              setTextChange={(text) => setProfileData({ ...profileData, telefono_cliente: text })}
+              placeHolder='Teléfono'
             />
           </View>
         </View>
         {/* Botón para guardar los cambios */}
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={editP}>
           <Text style={styles.buttonText}>Guardar</Text>
         </TouchableOpacity>
       </View>

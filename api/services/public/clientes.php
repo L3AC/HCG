@@ -74,10 +74,8 @@ if (isset($_GET['action'])) {
             case 'changePassword':
                 if (!isset($_SESSION['clienteRecup'])) {
                     $result['error'] = 'Acción no disponible';
-                }elseif (!$cliente->checkPassword($_POST['claveActual'])) {
-                    $result['error'] = 'Contraseña actual incorrecta';
-                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
-                    $result['error'] = 'Confirmación de contraseña diferente';
+                }elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                    $result['error'] = 'Contraseñas diferentes';
                 } elseif (!$cliente->setClave($_POST['claveNueva'])) {
                     $result['error'] = $cliente->getDataError();
                 } elseif ($cliente->changePassword()) {
@@ -119,6 +117,10 @@ if (isset($_GET['action'])) {
                     !$cliente->setClave($_POST['claveCliente'])
                 ) {
                     $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->readExistMail($_POST['correoCliente'])) {
+                    $result['error'] = 'El correo electrónico ya está en uso';
+                }  elseif ($cliente->readExist($_POST['usuarioCliente'])) {
+                    $result['error'] = 'El nombre de usuario ya está en uso';
                 } elseif ($_POST['claveCliente'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($cliente->createRow()) {

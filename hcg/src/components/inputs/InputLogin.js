@@ -1,34 +1,47 @@
+import React from 'react';
+import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { StyleSheet, Text, View,TextInput, TouchableOpacity, Alert } from 'react-native';
-
-export default function Input({placeHolder, setValor, clave, setTextChange}) {
-
-return (
-
-    <TextInput
-    style={styles.Input}
-    placeholder={placeHolder}
-    value={setValor}
-    placeholderTextColor={'#FFF'}
-    secureTextEntry={clave} 
-    onChangeText={setTextChange}
-    />
-
-    );
-}
+const InputLogin = ({ placeHolder, valor, setValor, clave, isContra, setIsContra }) => {
+  return (
+    <View style={styles.inputContainer}>
+      <TextInput
+        style={styles.input}
+        placeholder={placeHolder}
+        placeholderTextColor="#fff"
+        value={valor}
+        onChangeText={setValor}
+        secureTextEntry={clave}
+      />
+      {isContra && (
+        <TouchableOpacity style={styles.icon} onPress={() => setIsContra(!clave)}>
+          <Ionicons name={clave ? 'eye-off' : 'eye'} size={24} color="#fff" />
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    Input: {
-        width: '100%',
-        color: "#fff", fontWeight:'800',
-        height: 50, // Ajusta la altura según sea necesario
-        borderRadius: 8, // Redondeo de los bordes
-        backgroundColor: '#AA6231', // Color de fondo del input
-        paddingHorizontal: 15,
-        marginBottom: 20,
-        color: '#ffffff',
-        fontFamily: 'QuickSand',
-        //fontFamily: 'QuickSand'// Ajusta el color del texto según el fondo
-    },
-
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#fff',
+    width: '95%',
+    marginBottom: 20,
+  },
+  input: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    paddingVertical: 10,
+    fontSize: 18,
+    color: '#fff',
+    fontFamily: 'QuickSand',
+  },
+  icon: {
+    paddingLeft: 10,
+  },
 });
+
+export default InputLogin;
