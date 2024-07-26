@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS db_hcg;
 CREATE DATABASE IF NOT EXISTS db_hcg;
 USE db_hcg;
 
+
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED,
   descripcion_rol VARCHAR(100) NOT NULL,
@@ -48,6 +49,7 @@ CREATE TABLE tb_clientes(
   CONSTRAINT telefono_unique UNIQUE (telefono_cliente),
   CONSTRAINT correo_unique UNIQUE (correo_cliente)
 );
+
 CREATE TABLE tb_tipo_items(
   id_tipo_item INT UNSIGNED,
   descripcion_tipo_item VARCHAR(255) NOT NULL,

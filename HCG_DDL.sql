@@ -117,3 +117,88 @@ BEGIN
     END IF;
 END;
 //DELIMITER ;
+
+
+DELIMITER //
+
+CREATE PROCEDURE sp_verificar_y_obtener_detalles_pedido()
+BEGIN
+    DECLARE v_disponible INT;
+    DECLARE v_id_detalle_pedido INT;
+    DECLARE v_id_producto INT;
+    DECLARE done INT DEFAULT 0;
+
+    -- Cursor para iterar sobre los detalles de pedidos pendientes
+    DECLARE cur_detalle CURSOR FOR
+        SELECT dp.id_detalle_pedido, dp.id_producto
+        FROM tb_detalle_pedidos dp
+        JOIN tb_pedidos p ON dp.id_pedido = p.id_pedido
+        WHERE p.estado_pedido = 'No escogido';
+
+    -- Handler para salir del loop
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    -- Abrir el cursor
+    OPEN cur_detalle;
+
+    -- Bucle para iterar sobre los detalles de pedidos pendientes
+    read_loop: LOOP
+        FETCH cur_detalle INTO v_id_detalle_pedido, v_id_producto;
+        
+        -- Si no hay más filas, salir del bucle
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+        
+        -- Verificar si el producto está disponible en el horario actual
+        SELECT COUNT(*)
+        INTO v_disponible
+        FROM tb_productos
+        WHERE id_producto = v_id_producto
+        AND estado_producto = 1
+        AND (
+            (DAYOFWEEK(NOW()) = 1 AND domingo_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 2 AND lunes_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 3 AND martes_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 4 AND miercoles_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 5 AND jueves_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 6 AND viernes_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 7 AND sabado_producto = 1)
+        )
+        AND (
+            (horario_producto = "Desayuno" AND TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00")
+            OR (horario_producto = "Almuerzo" AND TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00")
+            OR (horario_producto = "Típico" AND TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00")
+            OR (horario_producto = "Cena" AND TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00")
+            OR (horario_producto = "Todo el día")
+            OR (horario_producto = "Desayuno y Almuerzo" AND (TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00" OR TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00"))
+            OR (horario_producto = "Desayuno y Cena" AND (TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+            OR (horario_producto = "Almuerzo y Cena" AND (TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+            OR (horario_producto = "Típico y Desayuno" AND (TIME(NOW()) BETWEEN "06:00:00" AND "10:00:00" OR TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00"))
+            OR (horario_producto = "Típico y Almuerzo" AND (TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+            OR (horario_producto = "Típico y Cena" AND (TIME(NOW()) BETWEEN "06:00:00" AND "10:00:00" OR TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00"))
+        );
+
+        -- Si el producto no está disponible en el horario actual, eliminar el detalle del pedido
+        IF v_disponible = 0 THEN
+            DELETE FROM tb_detalle_pedidos WHERE id_detalle_pedido = v_id_detalle_pedido;
+        END IF;
+    END LOOP read_loop;
+
+    -- Cerrar el cursor
+    CLOSE cur_detalle;
+
+    -- Devolver los detalles de pedidos pendientes
+    SELECT dp.*
+    FROM tb_detalle_pedidos dp
+    JOIN tb_pedidos p ON dp.id_pedido = p.id_pedido
+    WHERE p.estado_pedido = 'No escogido';
+END//
+
+DELIMITER ;
+
+CALL sp_verificar_y_obtener_detalles_pedido();
+
+
+
+

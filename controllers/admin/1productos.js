@@ -44,6 +44,7 @@ IMAGEN_PRODUCTO = document.getElementById('imagenProducto'),
 //CONSTANTES PARA EL FORMULARIO DE ACTUALIZAR
 const SAVE_FORMU = document.getElementById('saveFormU'),
     ID_PRODUCTOU = document.getElementById('idProductoU'),
+    HORARIO_PRODUCTOU = document.getElementById('horarioProductoU'),
     NOMBRE_PRODUCTOU = document.getElementById('nombreProductoU'),
     TIPO_PRODUCTOU = document.getElementById('tipoProductoU'),
     DESCRIPCION_PRODUCTOU = document.getElementById('descripcionProductoU'),
@@ -435,6 +436,15 @@ const openUpdate = async (id) => {
             `<img src="${ROW.imagen_producto}">` // Backticks para img variable
         );
         ESTADO_PRODUCTOU.checked = ROW.estado_producto;
+        //SE COLOCA EL VALOR QUE VIENE DE LA BASE AL SELECT EN EL HTML
+        for (var i = 0; i < HORARIO_PRODUCTOU.options.length; i++) {
+            // Si el valor de la opción es igual al valor que quieres seleccionar
+            if (HORARIO_PRODUCTOU.options[i].value === ROW.horario_producto) {
+                // Seleccionar la opción
+                HORARIO_PRODUCTOU.selectedIndex = i;
+                break; // Salir del bucle una vez seleccionada la opción
+            }
+        }
 
         fillSubTableU('', ROW.id_producto);
     } else {
