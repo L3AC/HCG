@@ -306,7 +306,12 @@ public function createDetail()
     // Método para obtener los productos que se encuentran en el carrito de compras.
     public function readDetail()
     {
-        $sql = 'select id_detalle_pedido,id_producto,id_cliente,id_pedido,precio_producto,cantidad_pedido,imagen_producto,descripcion_producto
+        $sql = 'CALL sp_verificar_y_obtener_detalles_pedido(); ';
+        $params = array();
+        Database::getRow($sql, $params);
+
+        $sql = 'select id_detalle_pedido,id_producto,id_cliente,id_pedido,precio_producto,
+        cantidad_pedido,imagen_producto,descripcion_producto
         from tb_detalle_pedidos
         INNER JOIN tb_pedidos USING(id_pedido)
         INNER JOIN tb_productos USING(id_producto)
