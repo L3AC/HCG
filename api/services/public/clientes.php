@@ -65,6 +65,23 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
                 break;
+                case 'changePassword':
+                    $_POST = Validator::validateForm($_POST);
+                    if (!$cliente->setId($_SESSION['idCliente'])) {
+                        $result['error'] = 'Acción no disponible';
+                    }elseif (!$cliente->checkPassword($_POST['claveActual'])) {
+                        $result['error'] = 'Contraseña actual incorrecta';
+                    } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                        $result['error'] = 'Confirmación de contraseña diferente';
+                    } elseif (!$cliente->setClave($_POST['claveNueva'])) {
+                        $result['error'] = $cliente->getDataError();
+                    } elseif ($cliente->changePassword()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Contraseña cambiada correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
+                    }
+                    break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
@@ -72,7 +89,7 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
         switch ($_GET['action']) {
             case 'changePassword':
-                if (!isset($_SESSION['clienteRecup'])) {
+                if (!$cliente->setId($_SESSION['clienteRecup'])) {
                     $result['error'] = 'Acción no disponible';
                 }elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';

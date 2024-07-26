@@ -72,7 +72,8 @@ class ClienteHandler
         $sql = 'SELECT clave_cliente
                 FROM tb_clientes
                 WHERE id_cliente = ?';
-        $params = array($_SESSION['clienteRecup']);
+        
+        $params = array($this->id);
         $data = Database::getRow($sql, $params);
         // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
         if ($data && password_verify($password, $data['clave_cliente'])) {
@@ -80,14 +81,14 @@ class ClienteHandler
         } else {
             return false;
         }
-    }
+    }    
     // Método para cambiar la contraseña del cliente.
     public function changePassword()
     {
         $sql = 'UPDATE tb_clientes
                 SET clave_cliente = ?
                 WHERE id_cliente = ?';
-        $params = array($this->clave, $_SESSION['clienteRecup']);
+        $params = array($this->clave, $this->id);
         return Database::executeRow($sql, $params);
     }
 

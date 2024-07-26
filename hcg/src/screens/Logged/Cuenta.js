@@ -120,7 +120,7 @@ const CuentaScreen = () => {
       </TouchableOpacity>
 
       {/* Tarjeta para navegar a la pantalla de cambio de clave */}
-      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Clave')}>
+      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('CambioClave')}>
         <Ionicons name="lock-closed-outline" size={50} color="white" />
         <Text style={styles.cardText}>Clave</Text>
       </TouchableOpacity>
