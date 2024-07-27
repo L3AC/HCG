@@ -99,32 +99,32 @@ const editP = async () => {
             <Text style={styles.label}>Nombre</Text>
             <Input
               placeHolder='Nombre'
-              setValor={profileData.nombre_cliente}
-              setTextChange={(text) => setProfileData({ ...profileData, nombre_cliente: text })}
+              value={profileData.nombre_cliente}
+              onChangeText={(text) => setProfileData({ ...profileData, nombre_cliente: text })}
             />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Apellido</Text>
-            <Input
+            <Input 
               placeHolder='Apellido'
-              setValor={profileData.apellido_cliente}
-              setTextChange={(text) => setProfileData({ ...profileData, apellido_cliente: text })}
+              value={profileData.apellido_cliente}
+              onChangeText={(text) => setProfileData({ ...profileData, apellido_cliente: text })}
             />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Correo</Text>
             <InputCorreo
               placeHolder='Correo'
-              setValor={profileData.correo_cliente}
-              setTextChange={(text) => setProfileData({ ...profileData, correo_cliente: text })}
+              value={profileData.correo_cliente}
+              onChangeText={(text) => setProfileData({ ...profileData, correo_cliente: text })}
             />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Usuario</Text>
             <Input
               placeHolder='Usuario'
-              setValor={profileData.usuario_cliente}
-              setTextChange={(text) => setProfileData({ ...profileData, usuario_cliente: text })}
+              value={profileData.usuario_cliente}
+              onChangeText={(text) => setProfileData({ ...profileData, usuario_cliente: text })}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -133,7 +133,7 @@ const editP = async () => {
               type={'custom'}
               format={'9999-9999'}
               value={profileData.telefono_cliente}
-              setTextChange={(text) => setProfileData({ ...profileData, telefono_cliente: text })}
+              onChangeText={(text) => setProfileData({ ...profileData, telefono_cliente: text })}
               placeHolder='Teléfono'
             />
           </View>
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Espacia los elementos de manera equitativa
     alignItems: 'center', // Alinea los elementos verticalmente al centro
     marginBottom: 10,
-    marginTop: -50, // Ajusta este valor según sea necesario
+    marginTop: -50, // Ajusta este value según sea necesario
     backgroundColor: 'transparent'
   },
   title: {

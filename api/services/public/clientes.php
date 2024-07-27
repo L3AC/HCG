@@ -149,7 +149,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'logIn':
                 $_POST = Validator::validateForm($_POST);
-                if (isset($_POST['usu']) && isset($_POST['clave'])) {
+                if (!empty($_POST['usu']) && !empty($_POST['clave'])) {
                     if (!$cliente->checkUser($_POST['usu'], $_POST['clave'])) {
                         $result['error'] = 'Datos incorrectos';
                     } elseif ($cliente->checkStatus()) {
@@ -160,7 +160,7 @@ if (isset($_GET['action'])) {
                         $result['error'] = 'La cuenta ha sido desactivada';
                     }
                 } else {
-                    $result['error'] = 'Usuario y/o contraseña no proporcionados';
+                    $result['error'] = 'Credenciales vacías';
                 }
                 break;
             default:

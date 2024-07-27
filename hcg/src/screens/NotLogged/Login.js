@@ -6,7 +6,8 @@ import { useUser } from '../../contexts/UserContext'; // Hook del contexto de us
 import { SERVER } from '../../contexts/Network'; // URL del servidor para realizar solicitudes
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Boton from '../../components/Button/Boton'; // Llamar a la plantilla para botón
-import Input from '../../components/inputs/InputLogin'; // Llama a la plantilla para los input
+import Input from '../../components/inputs/Input'; // Llama a la plantilla para los input
+import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para los input
 import SimpleAlert from '../../components/alerts/SimpleAlert'; // Importa la alerta simple
 import { useFonts } from 'expo-font';
 
@@ -24,6 +25,7 @@ const Login = () => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [alertType, setAlertType] = useState('info');
+  
 
   const [fontsLoaded] = useFonts({
     QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
@@ -76,14 +78,16 @@ const Login = () => {
         <Input
           placeHolder='Usuario'
           style={styles.input}
-          valor={usuario}
-          setValor={setUsuario}
+          value={usuario}
+          onChangeText={setUsuario}
         />
-        <Input
+        <InputLogin
           placeHolder='Contraseña'
-          valor={clave}
-          setValor={setClave}
+          value={clave}
+          onChangeText={setClave}
           clave={isContra}
+          isContra={true} 
+          setIsContra={setIsContra} 
         />
         <TouchableOpacity onPress={() => navigation.navigate('VerifUs')}>
           <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>

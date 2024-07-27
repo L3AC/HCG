@@ -2,15 +2,15 @@ import React from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const InputLogin = ({ placeHolder, valor, setValor, clave, isContra, setIsContra }) => {
+const InputLogin = ({ placeHolder, value, onChangeText, clave, isContra, setIsContra }) => {
   return (
     <View style={styles.inputContainer}>
       <TextInput
         style={styles.input}
         placeholder={placeHolder}
         placeholderTextColor="#fff"
-        value={valor}
-        onChangeText={setValor}
+        value={value}
+        onChangeText={onChangeText}
         secureTextEntry={clave}
       />
       {isContra && (
@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     paddingVertical: 10,
-    fontSize: 18,
+    fontSize: 20,
     color: '#fff',
-    fontFamily: 'QuickSand',
+    fontFamily: 'QuickSand'
   },
   icon: {
     paddingLeft: 10,

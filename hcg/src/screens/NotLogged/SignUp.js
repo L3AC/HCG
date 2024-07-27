@@ -65,15 +65,15 @@ const SignUp = () => {
         <View style={styles.contendor2}>
           {/* Contenedor para el input de Nombre */}
           <View style={styles.inputContainer}>
-            <Input placeHolder='Nombre' valor={nombreCliente} setTextChange={setNombreCliente} />
+            <Input placeHolder='Nombre' value={nombreCliente} onChangeText={setNombreCliente} />
           </View>
           {/* Contenedor para el input de Apellido */}
           <View style={styles.inputContainer}>
-            <Input placeHolder='Apellido' valor={apellidoCliente} setTextChange={setApellidoCliente} />
+            <Input placeHolder='Apellido' value={apellidoCliente} onChangeText={setApellidoCliente} />
           </View>
           {/* Contenedor para el input de Correo */}
           <View style={styles.inputContainer}>
-            <InputCorreo placeHolder='Correo' valor={correoCliente} setTextChange={setCorreoCliente} />
+            <InputCorreo placeHolder='Correo' value={correoCliente} onChangeText={setCorreoCliente} />
           </View>
           {/* Contenedor para el input de Teléfono */}
           <View style={styles.inputContainer}>
@@ -87,14 +87,14 @@ const SignUp = () => {
           </View>
           {/* Contenedor para el input de Usuario */}
           <View style={styles.inputContainer}>
-            <Input placeHolder='Usuario' valor={usuarioCliente} setTextChange={setUsuarioCliente} />
+            <Input placeHolder='Usuario' value={usuarioCliente} setTextChange={setUsuarioCliente} />
           </View>
           {/* Contenedor para el input de Contraseña */}
           <View style={styles.inputContainer}>
             <InputLogin 
               placeHolder='Contraseña' 
-              valor={claveCliente} 
-              setValor={setClaveCliente} 
+              value={claveCliente} 
+              onChangeText={setClaveCliente} 
               clave={isContra} 
               isContra={true} 
               setIsContra={setIsContra} 
@@ -104,8 +104,8 @@ const SignUp = () => {
           <View style={styles.inputContainer}>
             <InputLogin 
               placeHolder='Confirmar' 
-              valor={confirmarClave} 
-              setValor={setConfirmarClave} 
+              value={confirmarClave} 
+              onChangeText={setConfirmarClave} 
               clave={isContra2} 
               isContra={true} 
               setIsContra={setIsContra2} 

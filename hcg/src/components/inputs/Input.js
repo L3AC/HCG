@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 
-export default function Input({ placeHolder, setValor, clave, setTextChange }) {
+export default function Input({ placeHolder, value, clave, onChangeText }) {
   return (
     <TextInput
       style={styles.input}
       placeholder={placeHolder}
-      value={setValor}
+      value={value}
       placeholderTextColor={'#fff'}
       secureTextEntry={clave}
-      onChangeText={setTextChange}
+      onChangeText={onChangeText}
     />
   );
 }
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#fff',
     width: '95%',
     paddingVertical: 10,
-    fontSize: 18,
+    fontSize: 20,
     color: '#fff',
     marginBottom: 20,
     fontFamily: 'QuickSand',
