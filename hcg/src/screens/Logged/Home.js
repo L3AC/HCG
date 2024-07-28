@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   menuContainer: {
-    paddingBottom: 40, // Padding inferior
+    paddingBottom: 70, // Padding inferior
     flexDirection: 'row', // Coloca los elementos en una fila
     flexWrap: 'wrap', // Permite que los elementos se envuelvan a la siguiente línea
     justifyContent: 'space-between', // Distribuye el espacio equitativamente entre los elementos

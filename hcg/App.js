@@ -43,10 +43,11 @@ const App = () => {
         <Stack.Navigator>
           {isLoading ? (
             <Stack.Screen
-              name="Splash"
-              component={SplashScreen}
-              options={{ headerShown: false }}
-            />
+            name="Splash"
+            component={SplashScreen}
+            options={{ headerShown: false }}
+            initialParams={{ log: isLoading}}
+          />
           ) : isLoggedIn ? (
             <Stack.Screen
               name="Main"

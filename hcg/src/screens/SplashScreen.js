@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Animated, Easing } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useRoute,useNavigation } from '@react-navigation/native';
 
 export default function SplashScreen() {
   const navigation = useNavigation();
   const [counter, setCounter] = useState(3); // Constante para la cuenta regresiva, indicando que cuente desde el 3 hacia el 1
   const positionValue = useRef(new Animated.Value(0)).current; // Constante para la posición del humo
+  const route = useRoute(); // Obtiene la ruta actual
+  const { log } = route.params;
 
   useEffect(() => {
     // Inicia el temporizador de cuenta regresiva
@@ -35,7 +37,12 @@ export default function SplashScreen() {
   useEffect(() => {
     // Navega al componente 'Auth' cuando el contador llega a 0
     if (counter === 0) {
-      navigation.navigate('Auth');
+      if(log){
+        navigation.navigate('Main');
+      }
+      else{
+        navigation.navigate('Auth');
+      }
     }
   }, [counter, navigation]);
 
