@@ -5,7 +5,7 @@ import { SERVER } from '../../contexts/Network'; // URL del servidor
 import { Icon } from 'react-native-elements'; // Iconos de react-native-elements
 import { useFonts } from 'expo-font';
 
-const MenuScreen = () => {
+const Home = () => {
   const [menuItems, setMenuItems] = useState([]); // Estado para almacenar los items del menú
   const [complementItems, setComplementItems] = useState([]); // Estado para almacenar los items complementarios
   const [refreshing, setRefreshing] = useState(false); // Estado para el control de la actualización
@@ -209,4 +209,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MenuScreen; // Exporta el componente MenuScreen
+export default Home; // Exporta el componente MenuScreen

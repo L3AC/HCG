@@ -7,7 +7,7 @@ import { SERVER } from '../../contexts/Network';
 import SweetAlert from '../../components/alerts/SimpleAlert';
 import { useFonts } from 'expo-font';
 
-const CuentaScreen = () => {
+const Cuenta = () => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [alertType, setAlertType] = useState(3);
@@ -162,4 +162,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CuentaScreen;
+export default Cuenta;

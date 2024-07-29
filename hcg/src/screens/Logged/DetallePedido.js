@@ -5,7 +5,7 @@ import { SERVER } from '../../contexts/Network'; // URL del servidor
 import Header from '../../components/containers/Header';
 
 // Componente funcional OrderDetailScreen
-const OrderDetailScreen = () => {
+const DetallePedido = () => {
   const route = useRoute(); // Obtiene la ruta actual
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
   const { orderId } = route.params; // Obtiene el orderId de los parámetros de la ruta
@@ -104,4 +104,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrderDetailScreen;
+export default DetallePedido;

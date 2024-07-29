@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 import { SERVER } from '../../../contexts/Network';
 import Header from '../../../components/containers/Header';
 
-const Producto = () => {
+const NuevaClave = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
   // Estados para almacenar las contraseñas actual, nueva y de confirmación
   const [currentPassword, setCurrentPassword] = useState('');
@@ -156,4 +156,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Producto;
+export default NuevaClave;

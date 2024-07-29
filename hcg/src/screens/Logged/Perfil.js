@@ -10,7 +10,7 @@ import PhoneInput from '../../components/inputs/PhoneInput';
 import Header from '../../components/containers/Header';
 
 // Componente de función PerfilScreen
-const PerfilScreen = () => {
+const Perfil = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
   const [refreshing, setRefreshing] = useState(false); // Estado para control de la actualización
   const [profileData, setProfileData] = useState({
@@ -220,4 +220,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PerfilScreen; // Exporta el componente PerfilScreen
+export default Perfil; // Exporta el componente PerfilScreen

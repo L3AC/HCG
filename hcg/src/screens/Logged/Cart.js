@@ -5,7 +5,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import SimpleAlert from '../../components/alerts/SimpleAlert'; // Importa la alerta simple
 
-const CartScreen = () => {
+const Cart = () => {
   const [refreshing, setRefreshing] = useState(false); // Estado para indicar si se está refrescando la pantalla
   const [loading, setLoading] = useState(false); // Estado para indicar si se está cargando la lista de elementos del carrito
   const [cartItems, setCartItems] = useState([]); // Estado para almacenar los elementos del carrito
@@ -413,4 +413,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CartScreen;
+export default Cart;

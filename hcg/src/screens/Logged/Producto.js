@@ -6,7 +6,7 @@ import { SERVER } from '../../contexts/Network';
 import Header from '../../components/containers/Header';
 
 // Estados para manejar la interfaz y los datos del producto
-const ProductoScreen = () => {
+const Producto= () => {
   const [refreshing, setRefreshing] = useState(false); // Estado para el control de refresco
   const [loading, setLoading] = useState(false); // Estado para el control de carga
   const [productInfo, setProductInfo] = useState({}); // Estado para la información del producto
@@ -329,4 +329,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ProductoScreen;
+export default Producto;

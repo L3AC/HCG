@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SERVER } from '../../../contexts/Network';
 import Header from '../../../components/containers/Header';
 
-const Producto = () => {
+const VerifCode = () => {
   const navigation = useNavigation();
 
   const [number1, setNumber1] = useState('');
@@ -222,4 +222,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Producto;
+export default VerifCode;
