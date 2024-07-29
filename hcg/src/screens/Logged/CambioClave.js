@@ -4,8 +4,9 @@ import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 import { SERVER } from '../../contexts/Network';
 import InputLogin from '../../components/inputs/InputLogin';
+import Header from '../../components/containers/Header';
 
-const Producto = () => {
+const CambioClave = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
   const [refreshing, setRefreshing] = useState(false);
 
@@ -57,15 +58,9 @@ const Producto = () => {
       contentContainerStyle={styles.scrollViewContent}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
+      <Header onPress={() => navigation.goBack()} titulo={'Clave'} />
       <View style={styles.container}>
 
-        <View style={styles.header}>
-          {/* Botón de retroceso */}
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={32} color="black" />
-          </TouchableOpacity>
-          <Text style={styles.title}>Cambio de clave</Text>
-        </View>
         {/* Imagen alusiva a la pantalla nueva contraseña */}
         <Ionicons style={styles.icono} name="key" size={120} color="black" />
         <View style={styles.inputContainer}>
@@ -177,4 +172,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Producto;
+export default CambioClave;

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, RefreshControl, TouchableOpacity, Alert, Modal, TextInput } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
-import { SERVER } from '../contexts/Network';
+import { SERVER } from '../../contexts/Network';
+import Header from '../../components/containers/Header';
 
 // Estados para manejar la interfaz y los datos del producto
 const ProductoScreen = () => {
@@ -110,11 +111,9 @@ const ProductoScreen = () => {
       contentContainerStyle={styles.scrollView}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} // Control de refresco
     >
+      <Header onPress={() => navigation.goBack()} titulo={'Detalle'} />
       <View style={styles.container}>
-        {/* Botón para volver a la pantalla anterior */}
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Text style={styles.flechita}>←</Text>
-        </TouchableOpacity>
+        
         {/* Título del producto */}
         <Text style={styles.title}>{productInfo.descripcion_producto || 'Producto'}</Text>
         {/* Imagen del producto */}
@@ -198,7 +197,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: '100%'
   },
-  contenedorTexto:{
+  contenedorTexto: {
     backgroundColor: '#E3DECA',
     borderRadius: 10,
     marginLeft: 30
@@ -210,7 +209,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   title: {
-    paddingTop: 45,
+    paddingTop: 0,
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 16,

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, ScrollView 
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 import { SERVER } from '../../../contexts/Network';
+import Header from '../../../components/containers/Header';
 
 const Producto = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
@@ -45,9 +46,10 @@ const Producto = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <Header onPress={() => navigation.goBack()} titulo={'Recuperación'} />
       <View style={styles.container}>
         {/* Título de la pantalla de recuperación */}
-        <Text style={styles.title}>Cambio de contraseña</Text>
+        <Text style={styles.title}>Cambio clave</Text>
         {/* Imagen alusiva a la pantalla nueva contraseña */}
         <Ionicons style={styles.icono} name="key" size={120} color="black" />
         
@@ -96,7 +98,7 @@ const Producto = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 60,
+    paddingTop: 20,
     padding: 30,
     backgroundColor: '#d2a563', // Color de fondo
   },
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   title: {
-    fontSize: 39,
+    fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
   },

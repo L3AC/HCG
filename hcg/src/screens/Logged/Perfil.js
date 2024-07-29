@@ -83,7 +83,7 @@ const editP = async () => {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
       {/* Encabezado con íconos de retroceso y edición */}
-      <Header onPress={navigation.goBack()} titulo={'Perfil'} />
+      <Header onPress={() => navigation.goBack()} titulo={'Perfil'} />
 
       {/* Formulario para los datos del perfil */}
       <View style={styles.form}>

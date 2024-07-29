@@ -9,6 +9,7 @@ import Boton from '../../components/Button/Boton'; // Llamar al la plantilla par
 import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para input de login
 import PhoneInput from '../../components/inputs/PhoneInput';
 import { SERVER } from '../../contexts/Network';
+import Header from '../../components/containers/Header';
 
 // Componente de función SignUp
 const SignUp = () => {
@@ -55,13 +56,8 @@ const SignUp = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <Header onPress={() => navigation.goBack()} titulo={'Registro'} />
       <View style={styles.container}>
-        {/* Botón para volver a la pantalla anterior */}
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="black" />
-        </TouchableOpacity>
-        {/* Título de la pantalla de registro */}
-        <Text style={styles.title}>Registro</Text>
         <View style={styles.contendor2}>
           {/* Contenedor para el input de Nombre */}
           <View style={styles.inputContainer}>
@@ -82,7 +78,7 @@ const SignUp = () => {
               format={'9999-9999'}
               value={telefonoCliente}
               onChangeText={setTelefonoCliente}
-              placeHolder='Telefono'
+              placeHolder='Teléfono'
             />
           </View>
           {/* Contenedor para el input de Usuario */}
@@ -126,7 +122,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: 60,
+    paddingTop: 40,
     padding: 30,
     backgroundColor: '#d29c65', // Background color
   },

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Alert,TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, TextInput,ScrollView} from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 import { SERVER } from '../../../contexts/Network'; // URL del servidor para realizar solicitudes
+import Header from '../../../components/containers/Header';
 
 const VerifUs = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
@@ -52,60 +53,61 @@ const VerifUs = () => {
       });
       Alert.alert('Pin de seguridad', 'Revise su correo electrónico');
       navigation.navigate('VerifCode');
-      
+
     } catch (error) {
       console.error(error);
       Alert.alert('Error', error.toString());
     }
   };
   return (
-    <View style={styles.container}>
-      {/* Botón para volver a la pantalla anterior (en este caso a la pantalla de login) */}
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back" size={40} color="black" />
-      </TouchableOpacity>
-      {/* Título de la pantalla de recuperación */}
-      {/* Imagen alusiva a la pantalla recuperación*/}
-      <Image
-        style={styles.imagen}
-        source={require('../../../img/lock.png')}
-      />
-      <View style={styles.contenedor2}>
-        <Text style={styles.indi}>Ingresa tu nombre de usuario y te enviaremos un enlace para recuperar el acceso a tu cuenta.</Text>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <Header onPress={() => navigation.goBack()} titulo={'Recuperación'} />
+      <View style={styles.container}>
+        <Image
+          style={styles.imagen}
+          source={require('../../../img/lock.png')}
+        />
+        <View style={styles.contenedor2}>
+          <Text style={styles.indi}>Ingresa tu nombre de usuario y te enviaremos un enlace para recuperar 
+            el acceso a tu cuenta.</Text>
+        </View>
+
+        <Text style={styles.text}>Ingrese su usuario</Text>
+
+        {/* Input para escribir el usuario a recuperar*/}
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeTextHandler}
+          value={usuario}
+          placeholder={placeholderVisible ? 'usuario' : ''}
+        />
+
+        {/* Contenedor para alinear solo el botón al centro de la pantalla*/}
+        <View style={styles.containerButton}>
+          {/* Botón de confirmación y agregado para al precionar mandar a la ventana de verificación de codigo */}
+          <TouchableOpacity style={styles.button} onPress={() => handleUs()}>
+            <Text style={styles.buttonText}>Confirmar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-
-      <Text style={styles.text}>Ingrese su usuario</Text>
-
-      {/* Input para escribir el usuario a recuperar*/}
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeTextHandler}
-        value={usuario}
-        placeholder={placeholderVisible ? 'usuario' : ''}
-      />
-
-      {/* Contenedor para alinear solo el botón al centro de la pantalla*/}
-      <View style={styles.containerButton}>
-        {/* Botón de confirmación y agregado para al precionar mandar a la ventana de verificación de codigo */}
-        <TouchableOpacity style={styles.button} onPress={() => handleUs()}>
-          <Text style={styles.buttonText}>Confirmar</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+      </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     paddingTop: 60,
     padding: 30,
     backgroundColor: '#d2a563', // Color de fondo
   },
-  contenedor2:{
+  contenedor2: {
     backgroundColor: '#AA6231',
     paddingBottom: 20,
-    borderRadius:20,
+    borderRadius: 20,
     borderColor: '#fff',
     borderWidth: 1
   },
@@ -123,8 +125,9 @@ const styles = StyleSheet.create({
   },
   indi: {
     fontFamily: 'QuickSand',
-    fontSize: 14,
+    fontSize: 20,
     textAlign: 'center',
+    color:'white',
     marginTop: 20
   },
   imagen: {

@@ -37,12 +37,13 @@ export default function SplashScreen() {
   useEffect(() => {
     // Navega al componente 'Auth' cuando el contador llega a 0
     if (counter === 0) {
+      /*console.log(log);
       if(log){
-        navigation.navigate('Main');
-      }
-      else{
         navigation.navigate('Auth');
       }
+      else{
+        navigation.navigate('Main');
+      }*/
     }
   }, [counter, navigation]);
 
