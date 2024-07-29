@@ -8,6 +8,7 @@ import Input from '../../components/inputs/Input' // Llama a la plantilla para l
 import InputCorreo from '../../components/inputs/InputCorreo' // Llama a la plantilla para los input
 import PhoneInput from '../../components/inputs/PhoneInput';
 import Header from '../../components/containers/Header';
+import Confirm from '../../components/buttons/Confirm';
 
 // Componente de función PerfilScreen
 const Perfil = () => {
@@ -132,9 +133,7 @@ const editP = async () => {
           </View>
         </View>
         {/* Botón para guardar los cambios */}
-        <TouchableOpacity style={styles.button} onPress={editP}>
-          <Text style={styles.buttonText}>Guardar</Text>
-        </TouchableOpacity>
+        <Confirm onPress={editP} tittle={'Guardar'}/>
       </View>
     </ScrollView>
   );

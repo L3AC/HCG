@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/AuthContext'; // Hook del contexto de au
 import { useUser } from '../../contexts/UserContext'; // Hook del contexto de usuario
 import { SERVER } from '../../contexts/Network'; // URL del servidor para realizar solicitudes
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
-import Boton from '../../components/Button/Boton'; // Llamar a la plantilla para botón
+import Boton from '../../components/buttons/Boton'; // Llamar a la plantilla para botón
 import Input from '../../components/inputs/Input'; // Llama a la plantilla para los input
 import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para los input
 import SimpleAlert from '../../components/alerts/SimpleAlert'; // Importa la alerta simple
