@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Input from '../../components/inputs/Input' // Llama a la plantilla para los input
 import InputCorreo from '../../components/inputs/InputCorreo' // Llama a la plantilla para los input
 import PhoneInput from '../../components/inputs/PhoneInput';
+import Header from '../../components/containers/Header';
 
 // Componente de función PerfilScreen
 const PerfilScreen = () => {
@@ -81,16 +82,8 @@ const editP = async () => {
       contentContainerStyle={styles.container}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
-      {/* Vista adicional para el color de fondo en la parte superior */}
-      <View style={styles.topBackground}></View>
-
       {/* Encabezado con íconos de retroceso y edición */}
-      <View style={styles.header}>
-        <Ionicons style={styles.iconoHeader} name="arrow-back" size={35} color="white" onPress={() => navigation.goBack()} />
-        <Text style={styles.title}>Perfil</Text>
-        <Text style={styles.title}>          </Text>
-      </View>
-      <View style={styles.linea}></View>
+      <Header onPress={navigation.goBack()} titulo={'Perfil'} />
 
       {/* Formulario para los datos del perfil */}
       <View style={styles.form}>

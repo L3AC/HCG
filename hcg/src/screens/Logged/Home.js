@@ -16,7 +16,10 @@ const MenuScreen = () => {
 
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
 
-  
+  const [fontsLoaded] = useFonts({
+    QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
+    QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
+  });
 
   // useEffect para obtener los datos del menú al montar el componente o cambiar la búsqueda
   useEffect(() => {
