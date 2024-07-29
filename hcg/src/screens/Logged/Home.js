@@ -3,6 +3,7 @@ import { View, Text, ScrollView, StyleSheet, Image, RefreshControl, TextInput, A
 import { useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network'; // URL del servidor
 import { Icon } from 'react-native-elements'; // Iconos de react-native-elements
+import { useFonts } from 'expo-font';
 
 const MenuScreen = () => {
   const [menuItems, setMenuItems] = useState([]); // Estado para almacenar los items del menú
@@ -14,6 +15,8 @@ const MenuScreen = () => {
   const [isComplementOdd, setIsComplementOdd] = useState(false); // Estado para controlar si el número de complementos es impar
 
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
+
+  
 
   // useEffect para obtener los datos del menú al montar el componente o cambiar la búsqueda
   useEffect(() => {
