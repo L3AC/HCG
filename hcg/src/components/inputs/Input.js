@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 
-export default function Input({ placeHolder, value, clave, onChangeText }) {
+export default function Input({ placeHolder, value, clave, onChangeText,multiline=false}) {
   return (
     <TextInput
       style={styles.input}
@@ -9,6 +9,7 @@ export default function Input({ placeHolder, value, clave, onChangeText }) {
       placeholderTextColor={'#fff'}
       secureTextEntry={clave}
       onChangeText={onChangeText}
+      multiline={multiline}
     />
   );
 }

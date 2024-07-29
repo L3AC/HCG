@@ -10,6 +10,7 @@ import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plant
 import PhoneInput from '../../components/inputs/PhoneInput';
 import { SERVER } from '../../contexts/Network';
 import Header from '../../components/containers/Header';
+import Confirm from '../../components/buttons/Confirm';
 
 // Componente de función SignUp
 const SignUp = () => {
@@ -109,7 +110,7 @@ const SignUp = () => {
           </View>
         </View>
         {/* Botón de confirmación */}
-        <Boton textoBoton='Confirmar' accionBoton={signin} />
+        <Confirm onPress={signin} tittle={'Confirmar'}/>
       </View>
     </ScrollView>
   );
@@ -132,6 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderColor: '#fff',
     borderWidth: 1,
+    marginBottom: 18,
   },
   title: {
     fontSize: 26,

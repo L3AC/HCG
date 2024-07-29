@@ -4,6 +4,9 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { SERVER } from '../../contexts/Network';
 import Header from '../../components/containers/Header';
+import Confirm from '../../components/buttons/Confirm';
+import Input from '../../../components/input/Input';
+import PhoneInput from '../../components/inputs/PhoneInput';
 
 // Estados para manejar la interfaz y los datos del producto
 const Producto= () => {
@@ -142,9 +145,7 @@ const Producto= () => {
           </View>
         ))}
         {/* Botón para abrir el modal de agregar al carrito */}
-        <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
-          <Text style={styles.addButtonText}>Agregar</Text>
-        </TouchableOpacity>
+        <Confirm onPress={() => setModalVisible(true)} tittle={'Agregar'}/>
       </View>
 
       {/* Modal para agregar el producto al carrito */}
@@ -157,23 +158,21 @@ const Producto= () => {
         <TouchableOpacity style={styles.modalOverlay} onPress={() => setModalVisible(false)}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Agregar</Text>
-            <TextInput
-              style={styles.modalInput}
-              placeholder="Cantidad"
-              value={cantidad}
-              onChangeText={setCantidad}
-              keyboardType="numeric"
+
+            <PhoneInput
+              type={'custom'}
+              format={'9'}
+              value={profileData.telefono_cliente}
+              onChangeText={(text) => setProfileData({ ...profileData, telefono_cliente: text })}
+              placeHolder='Teléfono'
             />
-            <TextInput
-              style={styles.modalTextArea}
-              placeholder="Nota"
+            <Input
+              placeHolder='Nota'
               value={nota}
               onChangeText={setNota}
-              multiline
+              multiline={true}
             />
-            <TouchableOpacity style={styles.confirmButton} onPress={addToCart}>
-              <Text style={styles.confirmButtonText}>Confirmar</Text>
-            </TouchableOpacity>
+            <Confirm onPress={addToCart} tittle={'Confirmar'}/>
           </View>
         </TouchableOpacity>
       </Modal>

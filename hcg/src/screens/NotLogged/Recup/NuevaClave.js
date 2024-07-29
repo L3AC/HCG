@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 import { SERVER } from '../../../contexts/Network';
 import Header from '../../../components/containers/Header';
+import Input from '../../components/inputs/Input' 
 
 const NuevaClave = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas

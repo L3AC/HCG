@@ -15,10 +15,8 @@ export default Confirm;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center', // Centra el contenido verticalmente
-    alignItems: 'center', // Centra el contenido horizontalmente
     width: '100%',
+    alignItems: 'center', // Centra el contenido horizontalmente
   },
   button: {
     height: 50,
@@ -27,13 +25,12 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Centra el contenido horizontalmente
     backgroundColor: '#2F2C2C', // Color de fondo del botón
     borderRadius: 8, // Bordes redondeados del botón
-    marginTop: 20, // Margen superior del botón
-    marginBottom: 70,
+    marginTop: 20, // Reducir margen superior del botón
+    marginBottom: 20, //
   },
   buttonText: {
     color: 'white', // Color del texto del botón
     fontFamily: 'QuickSandBold',
     fontSize: 16
-
   },
 });

@@ -10,6 +10,7 @@ import Input from '../../components/inputs/Input'; // Llama a la plantilla para 
 import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para los input
 import SimpleAlert from '../../components/alerts/SimpleAlert'; // Importa la alerta simple
 import { useFonts } from 'expo-font';
+import Confirm from '../../components/buttons/Confirm';
 
 // Componente de función Login
 const Login = () => {
@@ -92,9 +93,7 @@ const Login = () => {
         <TouchableOpacity onPress={() => navigation.navigate('VerifUs')}>
           <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Confirmar</Text>
-        </TouchableOpacity>
+        <Confirm onPress={handleLogin} tittle={'Confirmar'}/>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
         </TouchableOpacity>
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 240,
     height: 200,
-    marginBottom: 30,
+    marginBottom: 20,
   },
   title: {
     fontSize: 26,
@@ -141,19 +140,21 @@ const styles = StyleSheet.create({
     borderRadius: 8, // Redondeo de los bordes
     backgroundColor: '#AA6231', // Color de fondo del input
     paddingHorizontal: 15,
-    marginBottom: 20,
+    marginBottom: 15,
     fontFamily: 'QuickSand',
     color: '#ffffff',
   },
   forgotPassword: {
-    color: '#ffffff', // Ajusta el color del texto según el fondo
-    marginBottom: 23,
+    color: '#fffff', // Ajusta el color del texto según el fondo
+    marginBottom: 15,
+    fontSize: 20,
     fontFamily: 'QuickSand',
   },
   signUp: {
     color: '#ffffff', // Ajusta el color del texto según el fondo
-    marginTop: 23,
+    marginTop: 20,
     fontFamily: 'QuickSand',
+    fontSize: 20,
   },
   button: {
     width: '80%',

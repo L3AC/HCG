@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 import { SERVER } from '../../../contexts/Network'; // URL del servidor para realizar solicitudes
 import Header from '../../../components/containers/Header';
+import Confirm from '../../../components/buttons/Confirm';
 
 const VerifUs = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
@@ -85,9 +86,7 @@ const VerifUs = () => {
         {/* Contenedor para alinear solo el botón al centro de la pantalla*/}
         <View style={styles.containerButton}>
           {/* Botón de confirmación y agregado para al precionar mandar a la ventana de verificación de codigo */}
-          <TouchableOpacity style={styles.button} onPress={() => handleUs()}>
-            <Text style={styles.buttonText}>Confirmar</Text>
-          </TouchableOpacity>
+          <Confirm onPress={handleUs} tittle={'Confirmar'}/>
         </View>
       </View>
       </ScrollView>
