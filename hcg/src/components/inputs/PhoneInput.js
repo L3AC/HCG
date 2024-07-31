@@ -1,7 +1,7 @@
 import { StyleSheet, TextInput } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text'; // Importa TextInputMask
 
-export default function Input({ type, format, placeHolder, value, onChangeText }) {
+export default function PhoneInput({ type, format, placeHolder, value, onChangeText }) {
   return (
     <TextInputMask
       type={type}

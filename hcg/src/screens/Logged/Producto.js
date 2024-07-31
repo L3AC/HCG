@@ -5,7 +5,7 @@ import { Icon } from 'react-native-elements';
 import { SERVER } from '../../contexts/Network';
 import Header from '../../components/containers/Header';
 import Confirm from '../../components/buttons/Confirm';
-import Input from '../../../components/input/Input';
+import Input from '../../components/inputs/Input';
 import PhoneInput from '../../components/inputs/PhoneInput';
 
 // Estados para manejar la interfaz y los datos del producto
@@ -154,6 +154,7 @@ const Producto= () => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
+        style={styles.modalG}
       >
         <TouchableOpacity style={styles.modalOverlay} onPress={() => setModalVisible(false)}>
           <View style={styles.modalContent}>
@@ -162,9 +163,9 @@ const Producto= () => {
             <PhoneInput
               type={'custom'}
               format={'9'}
-              value={profileData.telefono_cliente}
-              onChangeText={(text) => setProfileData({ ...profileData, telefono_cliente: text })}
-              placeHolder='Teléfono'
+              value={cantidad}
+              onChangeText={setCantidad}
+              placeHolder='Cantidad'
             />
             <Input
               placeHolder='Nota'
@@ -273,6 +274,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'QuickSand'
   },
+  modalG: {
+    backgroundColor: '#d2a563',
+  },
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
@@ -281,7 +285,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: 300,
-    backgroundColor: '#FFF',
+    backgroundColor: '#d2a563',
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',

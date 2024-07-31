@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   forgotPassword: {
-    color: '#fffff', // Ajusta el color del texto según el fondo
+    color: '#ffffff', // Ajusta el color del texto según el fondo
     marginBottom: 15,
     fontSize: 20,
     fontFamily: 'QuickSand',

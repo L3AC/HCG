@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SERVER } from '../../../contexts/Network';
 import Header from '../../../components/containers/Header';
+import Confirm from '../../../components/buttons/Confirm';
 
 const VerifCode = () => {
   const navigation = useNavigation();
@@ -146,11 +147,7 @@ const VerifCode = () => {
             maxLength={1}
           />
         </View>
-        <View style={styles.containerButton}>
-          <TouchableOpacity style={styles.button} onPress={handlePin}>
-            <Text style={styles.buttonText}>Confirmar</Text>
-          </TouchableOpacity>
-        </View>
+        <Confirm onPress={handlePin} tittle={'Confirmar'}/>
       </View>
     </ScrollView>
   );

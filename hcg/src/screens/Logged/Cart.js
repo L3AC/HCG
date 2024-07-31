@@ -4,6 +4,9 @@ import { SERVER } from '../../contexts/Network';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import SimpleAlert from '../../components/alerts/SimpleAlert'; // Importa la alerta simple
+import Input from '../../components/inputs/Input';
+import PhoneInput from '../../components/inputs/PhoneInput';
+import Confirm from '../../components/buttons/Confirm';
 
 const Cart = () => {
   const [refreshing, setRefreshing] = useState(false); // Estado para indicar si se está refrescando la pantalla
@@ -255,21 +258,20 @@ const Cart = () => {
               <>
                 <Text style={styles.modalTitle}>Editar Producto</Text>
                 {/* Input para la cantidad */}
-                <TextInput
-                  style={styles.modalInput}
-                  placeholder="Cantidad"
+                <PhoneInput
+                  type={'custom'}
+                  format={'9'}
                   value={cantidad}
                   onChangeText={setCantidad}
-                  keyboardType="numeric"
+                  placeHolder='Cantidad'
                 />
-                {/* TextArea para la nota */}
-                <TextInput
-                  style={styles.modalTextArea}
-                  placeholder="Nota"
+                <Input
+                  placeHolder='Nota'
                   value={nota}
                   onChangeText={setNota}
-                  multiline
+                  multiline={true}
                 />
+                
                 {/* Botón para confirmar la edición */}
                 <TouchableOpacity style={styles.confirmButton} onPress={() => updateDetalle(currentItemId)}>
                   <Text style={styles.confirmButtonText}>Confirmar</Text>
@@ -302,6 +304,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
+    marginTop: 40,
     color: '#000',
   },
   finalizeButton: {
@@ -369,7 +372,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: 300,
-    backgroundColor: '#FFF',
+    backgroundColor: '#d2a563',
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',

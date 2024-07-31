@@ -4,7 +4,8 @@ import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 import { SERVER } from '../../../contexts/Network';
 import Header from '../../../components/containers/Header';
-import Input from '../../components/inputs/Input' 
+import InputLogin from '../../../components/inputs/InputLogin';
+import Confirm from '../../../components/buttons/Confirm';
 
 const NuevaClave = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
@@ -53,44 +54,31 @@ const NuevaClave = () => {
         <Text style={styles.title}>Cambio clave</Text>
         {/* Imagen alusiva a la pantalla nueva contraseña */}
         <Ionicons style={styles.icono} name="key" size={120} color="black" />
-        
-        {/* Input para escribir su nueva contraseña (1) */}
-        <Text style={styles.text}>Ingrese su nueva contraseña</Text>
-        <View style={styles.inputWrapper}>
-          <TextInput
-            style={styles.input}
-            onChangeText={setNewPassword}
-            value={newPassword}
-            placeholder="contraseña"
-            secureTextEntry={!showNewPassword}
-          />
-          <TouchableOpacity onPress={() => setShowNewPassword(!showNewPassword)}>
-            <Ionicons name={showNewPassword ? 'eye-off' : 'eye'} size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-        
-        {/* Input para escribir su nueva contraseña (2) */}
-        <Text style={styles.text}>Confirmar contraseña</Text>
-        <View style={styles.inputWrapper}>
-          <TextInput
-            style={styles.input}
-            onChangeText={setConfirmPassword}
-            value={confirmPassword}
-            placeholder="contraseña"
-            secureTextEntry={!showConfirmPassword}
-          />
-          <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-            <Ionicons name={showConfirmPassword ? 'eye-off' : 'eye'} size={24} color="black" />
-          </TouchableOpacity>
-        </View>
 
+        {/* Input para escribir su nueva contraseña (1) */}
+        <Text style={styles.text}></Text>
+        <InputLogin
+          placeHolder='Nueva clave'
+          value={newPassword}
+          onChangeText={setNewPassword}
+          clave={showNewPassword}
+          isContra={true}
+          setIsContra={setShowNewPassword}
+        />
+
+        {/* Input para escribir su nueva contraseña (2) */}
+        <Text style={styles.text}></Text>
+        <InputLogin
+          placeHolder='Repita la clave'
+          value={newPassword}
+          onChangeText={setConfirmPassword}
+          clave={showNewPassword}
+          isContra={true}
+          setIsContra={setShowNewPassword}
+        />
+        <Text style={styles.text}></Text>
         {/* Contenedor para alinear solo el botón al centro de la pantalla */}
-        <View style={styles.containerButton}>
-          {/* Botón de confirmación y agregado para al precionar mandar a la ventana de verificación de código */}
-          <TouchableOpacity style={styles.button} onPress={changeP}>
-            <Text style={styles.buttonText}>Confirmar</Text>
-          </TouchableOpacity>
-        </View>
+        <Confirm onPress={changeP} tittle={'Confirmar'}/>
       </View>
     </ScrollView>
   );
