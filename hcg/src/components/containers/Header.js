@@ -49,9 +49,6 @@ const styles = StyleSheet.create({
     fontFamily: 'QuickSand',
     paddingRight: 26,
   },
-  linea: {
-    // Define el estilo para la línea aquí
-  },
 });
 
 export default Header;

@@ -10,11 +10,9 @@ import Confirm from '../../../components/buttons/Confirm';
 const NuevaClave = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
   // Estados para almacenar las contraseñas actual, nueva y de confirmación
-  const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   // Estados para manejar la visibilidad de las contraseñas
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -22,7 +20,6 @@ const NuevaClave = () => {
     try {
       // Se crea un objeto FormData con las contraseñas
       const formData = new FormData();
-      formData.append('claveActual', currentPassword);
       formData.append('claveNueva', newPassword);
       formData.append('confirmarClave', confirmPassword);
       // Se realiza una solicitud POST al servidor para cambiar la contraseña
@@ -70,11 +67,11 @@ const NuevaClave = () => {
         <Text style={styles.text}></Text>
         <InputLogin
           placeHolder='Repita la clave'
-          value={newPassword}
+          value={confirmPassword}
           onChangeText={setConfirmPassword}
-          clave={showNewPassword}
+          clave={showConfirmPassword}
           isContra={true}
-          setIsContra={setShowNewPassword}
+          setIsContra={setShowConfirmPassword}
         />
         <Text style={styles.text}></Text>
         {/* Contenedor para alinear solo el botón al centro de la pantalla */}

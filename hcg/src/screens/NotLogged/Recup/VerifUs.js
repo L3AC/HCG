@@ -69,8 +69,7 @@ const VerifUs = () => {
           source={require('../../../img/lock.png')}
         />
         <View style={styles.contenedor2}>
-          <Text style={styles.indi}>Ingresa tu nombre de usuario y te enviaremos un enlace para recuperar 
-            el acceso a tu cuenta.</Text>
+          <Text style={styles.indi}>Ingresa tu nombre de usuario y te enviaremos un email al correo enlazado a tu cuenta.</Text>
         </View>
 
         <Text style={styles.text}>Ingrese su usuario</Text>
