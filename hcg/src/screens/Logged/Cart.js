@@ -208,9 +208,7 @@ const Cart = () => {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} // Componente RefreshControl para actualizar la lista
     >
       <Text style={styles.header}>Carrito de compras</Text>
-      <TouchableOpacity style={styles.finalizeButton} onPress={() => finishOrder()} >
-        <Text style={styles.finalizeButtonText}>Finalizar</Text>
-      </TouchableOpacity>
+      <Confirm onPress={() => finishOrder()} tittle={'Finalizar'}/>
       <Text style={styles.totalText}>Total a pagar: ${totalToPay.toFixed(2)}</Text>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
@@ -273,9 +271,7 @@ const Cart = () => {
                 />
                 
                 {/* Botón para confirmar la edición */}
-                <TouchableOpacity style={styles.confirmButton} onPress={() => updateDetalle(currentItemId)}>
-                  <Text style={styles.confirmButtonText}>Confirmar</Text>
-                </TouchableOpacity>
+                <Confirm onPress={() => updateDetalle(currentItemId)} tittle={'Confirmar'}/>
               </>
             )}
           </View>
