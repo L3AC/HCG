@@ -12,6 +12,7 @@ import { SERVER } from '../../contexts/Network';
 import Header from '../../components/containers/Header';
 import Confirm from '../../components/buttons/Confirm';
 
+
 // Componente de función SignUp
 const SignUp = () => {
   const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas

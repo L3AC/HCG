@@ -1,6 +1,6 @@
 import { StyleSheet, TextInput } from 'react-native';
 
-export default function InputEmail({ placeHolder, setValor, setTextChange }) {
+export default function InputEmail({ placeHolder, setValor, setTextChange ,keyboardType}) {
   return (
     <TextInput
       style={styles.input}
