@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 
-export default function Input({ placeHolder, value, clave, onChangeText,multiline=false}) {
+export default function Input({ placeHolder, value, clave, onChangeText,multiline=false,keyboardType='default'}) {
   return (
     <TextInput
       style={styles.input}
@@ -10,6 +10,7 @@ export default function Input({ placeHolder, value, clave, onChangeText,multilin
       secureTextEntry={clave}
       onChangeText={onChangeText}
       multiline={multiline}
+      keyboardType={keyboardType}
     />
   );
 }

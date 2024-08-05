@@ -5,7 +5,6 @@ import { Ionicons } from '@expo/vector-icons'; // Iconos de Ionicons
 import { SERVER } from '../../contexts/Network'; // URL del servidor
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Input from '../../components/inputs/Input' // Llama a la plantilla para los input
-import InputCorreo from '../../components/inputs/InputCorreo' // Llama a la plantilla para los input
 import PhoneInput from '../../components/inputs/PhoneInput';
 import Header from '../../components/containers/Header';
 import Confirm from '../../components/buttons/Confirm';
@@ -107,11 +106,8 @@ const editP = async () => {
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Correo</Text>
-            <InputCorreo
-              placeHolder='Correo'
-              value={profileData.correo_cliente}
-              onChangeText={(text) => setProfileData({ ...profileData, correo_cliente: text })}
-            />
+            <Input placeHolder='Correo' keyboardType={'email-address'} value={profileData.correo_cliente} 
+            onChangeText={(text) => setProfileData({ ...profileData, correo_cliente: text })} />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Usuario</Text>

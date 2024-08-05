@@ -4,7 +4,6 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'rea
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 import Input from '../../components/inputs/Input'; // Llama a la plantilla para los input
-import InputCorreo from '../../components/inputs/InputCorreo'; // Llama a la plantilla para los input
 import Boton from '../../components/buttons/Boton'; // Llamar al la plantilla para botón
 import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para input de login
 import PhoneInput from '../../components/inputs/PhoneInput';
@@ -28,6 +27,7 @@ const SignUp = () => {
 
   // Función para manejar el registro del usuario
   const signin = async () => {
+
     try {
       const formData = new FormData();
       formData.append('nombreCliente', nombreCliente);
@@ -38,6 +38,7 @@ const SignUp = () => {
       formData.append('claveCliente', claveCliente);
       formData.append('confirmarClave', confirmarClave);
 
+      console.log(formData);
       const response = await fetch(`${SERVER}services/public/clientes.php?action=signUp`, {
         method: 'POST',
         body: formData,
@@ -71,7 +72,7 @@ const SignUp = () => {
           </View>
           {/* Contenedor para el input de Correo */}
           <View style={styles.inputContainer}>
-            <InputCorreo placeHolder='Correo' value={correoCliente} onChangeText={setCorreoCliente} />
+            <Input placeHolder='Correo' keyboardType={'email-address'} value={correoCliente} onChangeText={setCorreoCliente} />
           </View>
           {/* Contenedor para el input de Teléfono */}
           <View style={styles.inputContainer}>
@@ -85,7 +86,7 @@ const SignUp = () => {
           </View>
           {/* Contenedor para el input de Usuario */}
           <View style={styles.inputContainer}>
-            <Input placeHolder='Usuario' value={usuarioCliente} setTextChange={setUsuarioCliente} />
+            <Input placeHolder='Usuario' value={usuarioCliente} onChangeText={setUsuarioCliente} />
           </View>
           {/* Contenedor para el input de Contraseña */}
           <View style={styles.inputContainer}>
