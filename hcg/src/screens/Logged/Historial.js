@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, RefreshControl, St
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network'; // Reemplaza con la URL de tu servidor
+import SimpleAlert from '../../components/alerts/SimpleAlert'; // Importa la alerta simple
 
 const Historial = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -10,6 +11,17 @@ const Historial = () => {
   const [estado, setEstado] = useState('Pendiente');
   const [orders, setOrders] = useState([]);
   const navigation = useNavigation();
+
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertType, setAlertType] = useState('info');
+
+  const handleShowSimpleAlert = (message, type = 'info', timer = 1500) => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setAlertVisible(true);
+    setTimeout(() => setAlertVisible(false), timer);
+  };
 
   const fetchData = async (query = '', estado = 'Pendiente') => {
     try {
@@ -28,7 +40,7 @@ const Historial = () => {
       if (response.ok && data.status === 1) {
         setOrders(data.dataset);  // Asegúrate de que `data.dataset` contiene la lista de pedidos
       } else {
-        Alert.alert('No existen pedidos registrados');
+        handleShowSimpleAlert('No hay ningún pedido registrado', 'warning');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -90,6 +102,13 @@ const Historial = () => {
           <Text style={styles.cardText}>Fecha: {order.fecha}</Text>
         </TouchableOpacity>
       ))}
+      <SimpleAlert
+        isVisible={alertVisible}
+        type={alertType}
+        text={alertMessage}
+        timer={2000}
+        onClose={() => setAlertVisible(false)}
+      />
     </ScrollView>
   );
 };

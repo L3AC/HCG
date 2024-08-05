@@ -7,9 +7,10 @@ import Header from '../../components/containers/Header';
 import Confirm from '../../components/buttons/Confirm';
 import Input from '../../components/inputs/Input';
 import PhoneInput from '../../components/inputs/PhoneInput';
+import SimpleAlert from '../../components/alerts/SimpleAlert'; // Importa la alerta simple
 
 // Estados para manejar la interfaz y los datos del producto
-const Producto= () => {
+const Producto = () => {
   const [refreshing, setRefreshing] = useState(false); // Estado para el control de refresco
   const [loading, setLoading] = useState(false); // Estado para el control de carga
   const [productInfo, setProductInfo] = useState({}); // Estado para la información del producto
@@ -18,10 +19,21 @@ const Producto= () => {
   const [cantidad, setCantidad] = useState(''); // Estado para la cantidad del producto a agregar
   const [nota, setNota] = useState(''); // Estado para la nota del producto a agregar
 
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertType, setAlertType] = useState('info');
+
   // Hooks de navegación y rutas
   const route = useRoute();
   const navigation = useNavigation(); // Hook para la navegación
   const { idProducto } = route.params; // Obtener el ID del producto desde los parámetros de la ruta
+
+  const handleShowSimpleAlert = (message, type = 'info', timer = 1500) => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setAlertVisible(true);
+    setTimeout(() => setAlertVisible(false), timer);
+  };
 
   // Función para obtener datos del producto desde el servidor
   const fetchMenuData = async () => {
@@ -73,9 +85,10 @@ const Producto= () => {
       const data = await response.json(); // Parsear la respuesta a JSON
       if (response.ok && data.status === 1) {
         // Si la respuesta es exitosa y el estado es 1, mostrar una alerta y navegar al carrito
-        Alert.alert('Producto añadido', 'Se ha añadido el producto al carrito.');
-        setModalVisible(false);
-        navigation.navigate('Cart');
+        handleShowSimpleAlert('Se ha añadido el producto al carrito.', 'success');
+        setTimeout(() => {
+          navigation.navigate('Cart'); // Navega a la pantalla principal (home) después de 1.5 segundos
+        }, 1500);
       }
       else if (response.ok && data.status === 2) {
         // Si la respuesta es exitosa y el estado es 2, mostrar un mensaje de alerta
@@ -116,7 +129,7 @@ const Producto= () => {
     >
       <Header onPress={() => navigation.goBack()} titulo={'Detalle'} />
       <View style={styles.container}>
-        
+
         {/* Título del producto */}
         <Text style={styles.title}>{productInfo.descripcion_producto || 'Producto'}</Text>
         {/* Imagen del producto */}
@@ -145,7 +158,7 @@ const Producto= () => {
           </View>
         ))}
         {/* Botón para abrir el modal de agregar al carrito */}
-        <Confirm onPress={() => setModalVisible(true)} tittle={'Agregar'}/>
+        <Confirm onPress={() => setModalVisible(true)} tittle={'Agregar'} />
       </View>
 
       {/* Modal para agregar el producto al carrito */}
@@ -173,10 +186,17 @@ const Producto= () => {
               onChangeText={setNota}
               multiline={true}
             />
-            <Confirm onPress={addToCart} tittle={'Confirmar'}/>
+            <Confirm onPress={addToCart} tittle={'Confirmar'} />
           </View>
         </TouchableOpacity>
       </Modal>
+      <SimpleAlert
+        isVisible={alertVisible}
+        type={alertType}
+        text={alertMessage}
+        timer={2000}
+        onClose={() => setAlertVisible(false)}
+      />
     </ScrollView>
   );
 };

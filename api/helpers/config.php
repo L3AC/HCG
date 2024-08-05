@@ -8,4 +8,6 @@ define('SERVER', 'localhost');
 define('DATABASE', 'db_hcg');
 define('USERNAME', 'hcguser');
 define('PASSWORD', 'hcguser');
+//define('USERNAME', 'root');
+//define('PASSWORD', '');
 ?>
