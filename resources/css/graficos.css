@@ -1,0 +1,19 @@
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.dashboard-item {
+    background-color: #E3DECA;
+    border-radius: 8px;
+    padding: 20px;
+    flex: 1 1 calc(70% - 40px); /* Cambia el ancho para que sea dos columnas */
+    color: white;
+    min-width: 250px;
+}
+
+.dashboard-item h4 {
+    margin-bottom: 20px;
+}

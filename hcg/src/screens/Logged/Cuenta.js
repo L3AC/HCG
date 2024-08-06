@@ -109,10 +109,6 @@ const Cuenta = () => {
         <Text style={styles.cardText}>Clave</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('SobreNosotros')}>
-        <Ionicons name="people-circle-outline" size={50} color="white" />
-        <Text style={styles.cardText}>Sobre nosotros</Text>
-      </TouchableOpacity>
       <SweetAlert 
         isVisible={confirmVisible} 
         type={alertType} 
