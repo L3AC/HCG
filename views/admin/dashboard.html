@@ -30,32 +30,16 @@
         <!-- Título del contenido principal -->
         <h3 id="mainTitle" class="mt-5 text-white"></h3>
 
-        <!-- Contenedor de gráficos -->
-        <div class="row">
-            
-            <div class="col-sm-12 col-md-6 col-lg-3">
-                <!-- Se muestra un gráfico con la cantidad de productos por categoría -->
-                <canvas id="chart1"></canvas>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-5">
-                <!-- Se muestra un gráfico con el porcentaje de productos por categoría -->
-                <canvas id="chart2"></canvas>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <!-- Se muestra un gráfico con los clientes con mas compras -->
-                <p class="fs-4 fw-medium text-center">Top 5 "Clientes con mas compras"</p>
-                <canvas id="chart3"></canvas>
-            </div>
-        </div>
         <div class="dashboard-container text-center">
             <div class="dashboard-item text-center d-flex flex-column align-items-center text-dark">
-                <h4 class="">Combos más pedidos</h4>
+                <h4 class="">5 Combos más pedidos</h4>
                 <div class="col-5 mb-3">
                     <label for="list1" class="form-label">Filtrar</label>
                     <select id="list1" name="list1" class="form-select text-center" required>
-                        <option class="fs-5 py-2" value="5">5 combos</option>
-                        <option class="fs-5 py-2" value="3">3 combos</option>
-                        <option class="fs-5 py-2" value="10">10 combos</option>
+                        <option class="fs-5 py-2" value="1">Hace 1 mes</option>
+                        <option class="fs-5 py-2" value="3">Hace 3 meses</option>
+                        <option class="fs-5 py-2" value="6">Hace 6 meses</option>
+                        <option class="fs-5 py-2" value="12">Hace 1 año</option>
                     </select>
                 </div>
                 <!-- Se muestra un gráfico con la cantidad de productos por categoría -->
@@ -67,14 +51,27 @@
                 <div class="col-5 mb-3">
                     <label for="list2" class="form-label">Filtrar</label>
                     <select id="list2" name="list2" class="form-select text-center" required>
-                        <option class="fs-5 py-2" value="5">5 complementos</option>
-                        <option class="fs-5 py-2" value="8">8 complementos</option>
-                        <option class="fs-5 py-2" value="10">10 complementos</option>
+                        <option class="fs-5 py-2" value="1">Hace 1 mes</option>
+                        <option class="fs-5 py-2" value="3">Hace 3 meses</option>
+                        <option class="fs-5 py-2" value="6">Hace 6 meses</option>
+                        <option class="fs-5 py-2" value="12">Hace 1 año</option>
                     </select>
                 </div>
                 <canvas id="chart2"></canvas>
             </div>
 
+            <div class="dashboard-item text-center d-flex flex-column align-items-center text-dark">
+                <h4>Top clientes con más pedidos</h4>
+                <div class="col-5 mb-3">
+                    <label for="list3" class="form-label">Filtrar</label>
+                    <select id="list3" name="list3" class="form-select text-center" required>
+                        <option class="fs-5 py-2" value="5">5 clientes</option>
+                        <option class="fs-5 py-2" value="3">3 clientes</option>
+                        <option class="fs-5 py-2" value="6">6 clientes</option>
+                    </select>
+                </div>
+                <canvas id="chart3"></canvas>
+            </div>
             <div class="dashboard-item text-center d-flex flex-column align-items-center text-dark">
                 <h4>Categorías más pedidas</h4>
                 <div class="col-5 mb-3">
@@ -86,35 +83,8 @@
                         <option class="fs-5 py-2" value="10">10 categorías</option>
                     </select>
                 </div>
-                <canvas id="chart3"></canvas>
-            </div>
-            <div class="dashboard-item text-center d-flex flex-column align-items-center text-dark">
-                <h4>Horario con más pedidos</h4>
-                <div class="col-5 mb-3">
-                    <label for="list3" class="form-label">Filtrar</label>
-                    <select id="list3" name="list3" class="form-select text-center" required>
-                        <option class="fs-5 py-2" value="5">Hace 1 mes</option>
-                        <option class="fs-5 py-2" value="3">Hace 3 meses</option>
-                        <option class="fs-5 py-2" value="6">Hace 6 meses</option>
-                        <option class="fs-5 py-2" value="6">Hace 1 año</option>
-                        <option class="fs-5 py-2" value="6">Todo el tiempo</option>
-                    </select>
-                </div>
                 <canvas id="chart4"></canvas>
             </div>
-            <div class="dashboard-item text-center d-flex flex-column align-items-center text-dark">
-                <h4>Top clientes con más pedidos</h4>
-                <div class="col-5 mb-3">
-                    <label for="list3" class="form-label">Filtrar</label>
-                    <select id="list3" name="list3" class="form-select text-center" required>
-                        <option class="fs-5 py-2" value="5">5 clientes</option>
-                        <option class="fs-5 py-2" value="3">3 clientes</option>
-                        <option class="fs-5 py-2" value="6">6 clientes</option>
-                    </select>
-                </div>
-                <canvas id="chart5"></canvas>
-            </div>
-
             <div class="dashboard-item text-center d-flex flex-column align-items-center text-dark">
                 <h4 class="">Ganancias de los últimos meses</h4>
                 <div class="col-5 mb-3">
@@ -126,6 +96,20 @@
                     </select>
                 </div>
                 <!-- Se muestra un gráfico con el porcentaje de productos por categoría -->
+                <canvas id="chart5"></canvas>
+            </div>
+            <div class="dashboard-item text-center d-flex flex-column align-items-center text-dark">
+                <h4>Horario con más pedidos</h4>
+                <div class="col-5 mb-3">
+                    <label for="list6" class="form-label">Filtrar</label>
+                    <select id="list6" name="list6" class="form-select text-center" required>
+                        <option class="fs-5 py-2" value="5">Hace 1 mes</option>
+                        <option class="fs-5 py-2" value="3">Hace 3 meses</option>
+                        <option class="fs-5 py-2" value="6">Hace 6 meses</option>
+                        <option class="fs-5 py-2" value="6">Hace 1 año</option>
+                        <option class="fs-5 py-2" value="6">Todo el tiempo</option>
+                    </select>
+                </div>
                 <canvas id="chart6"></canvas>
             </div>
         </div>

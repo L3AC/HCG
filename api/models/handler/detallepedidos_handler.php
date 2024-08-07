@@ -44,7 +44,7 @@ class DetallePedidoHandler
         WHERE id_pedido=? AND descripcion_producto like ?
         ORDER BY tipo_producto';
 
-        $params = array($this->id,$value);
+        $params = array($this->id, $value);
         return Database::getRows($sql, $params);
     }
 
@@ -63,7 +63,7 @@ class DetallePedidoHandler
         WHERE estado_pedido ="Finalizado" AND id_cliente=? AND (descripcion_producto like ?)
         ORDER BY descripcion_producto';
 
-        $params = array($_SESSION['idCliente'],$this->search);
+        $params = array($_SESSION['idCliente'], $this->search);
         return Database::getRows($sql, $params);
     }
 
@@ -107,14 +107,14 @@ class DetallePedidoHandler
         ORDER BY t.descripcion_talla';
         //echo $this->idModelo. ' que';
         $params = array($this->idModelo);
-        
+
         return Database::getRows($sql, $params);
     }
-    
+
     // Método para leer una fila específica de detalle_pedidos.
     public function readOne()
     {
-        $sql ='select * from tb_detalle_pedidos where id_detalle_pedido=?';
+        $sql = 'select * from tb_detalle_pedidos where id_detalle_pedido=?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
@@ -135,7 +135,7 @@ class DetallePedidoHandler
         $sql = 'UPDATE tb_detalle_pedidos 
                 SET cantidad_pedido = ?, nota_pedido = ?
                 WHERE id_detalle_pedido = ?';
-        $params = array($this->cantidad, $this->nota,$this->id);
+        $params = array($this->cantidad, $this->nota, $this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -156,7 +156,7 @@ class DetallePedidoHandler
         INNER JOIN ctg_marcas ma USING(id_marca)
         WHERE mo.id_marca LIKE ? OR estado="A"
         ORDER BY mo.descripcion';
-        /*'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
+            /*'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
                 FROM producto
                 INNER JOIN categoria USING(id_categoria)
                 WHERE id_categoria = ? AND estado_producto = true
@@ -202,6 +202,163 @@ class DetallePedidoHandler
                 WHERE id_categoria = ?
                 ORDER BY nombre_producto';
         $params = array($this->categoria);
+        return Database::getRows($sql, $params);
+    }
+    public function topClientes()
+    {
+        $sql = 'SELECT 
+    c.nombre_cliente,
+    c.apellido_cliente,
+    c.correo_cliente,
+    COUNT(ped.id_pedido) AS cantidad_pedidos_finalizados
+    FROM 
+        tb_pedidos ped
+    INNER JOIN 
+        tb_clientes c ON ped.id_cliente = c.id_cliente
+    WHERE 
+        ped.estado_pedido = "Finalizado"
+    GROUP BY 
+        c.id_cliente, c.nombre_cliente, c.apellido_cliente, c.correo_cliente
+    ORDER BY 
+        cantidad_pedidos_finalizados DESC
+        LIMIT ' . $this->id . ';';
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
+    public function topConjuntos()
+    {
+        $sql = 'SELECT p.descripcion_producto, COUNT(dp.id_producto) AS cantidad_pedidos
+        FROM 
+            tb_detalle_pedidos dp
+        INNER JOIN 
+            tb_productos p ON dp.id_producto = p.id_producto
+        INNER JOIN 
+            tb_pedidos ped ON dp.id_pedido = ped.id_pedido
+        WHERE 
+            p.tipo_producto = "Conjunto"
+            AND ped.fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL ' . $this->id . ' MONTH)
+        GROUP BY 
+            dp.id_producto, p.descripcion_producto
+        ORDER BY dp.id_producto';
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
+    public function topComplementos()
+    {
+        $sql = 'SELECT 
+        p.descripcion_producto, 
+        COUNT(dp.id_producto) AS cantidad_pedidos
+        FROM 
+            tb_detalle_pedidos dp
+        INNER JOIN 
+            tb_productos p ON dp.id_producto = p.id_producto
+        INNER JOIN 
+            tb_pedidos ped ON dp.id_pedido = ped.id_pedido
+        WHERE 
+            p.tipo_producto = "Complemento"
+            AND ped.fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL ' . $this->id . ' MONTH)
+        GROUP BY 
+            dp.id_producto, p.descripcion_producto
+        ORDER BY dp.id_producto';
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
+    public function topCategorias()
+    {
+        $sql = 'SELECT 
+        ti.descripcion_tipo_item,
+        COUNT(dp.id_item) AS cantidad_items_pedidos
+        FROM tb_detalle_productos dp
+        INNER JOIN tb_items i ON dp.id_item = i.id_item
+        INNER JOIN tb_tipo_items ti ON i.id_tipo_item = ti.id_tipo_item
+        GROUP BY ti.descripcion_tipo_item
+        ORDER BY cantidad_items_pedidos DESC
+        LIMIT ' . $this->id . ';';
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
+    public function topHorarios()
+    {
+        $sql = 'SELECT horario_individual AS horario_producto, COUNT(*) AS cantidad_pedidos,
+        ROUND((COUNT(*) * 100.0 / total.total_pedidos), 1) AS porcentaje
+        FROM (SELECT dp.id_detalle_pedido, dp.id_producto,ped.id_pedido,
+        SUBSTRING_INDEX(SUBSTRING_INDEX(p.horario_producto, " y ", n.n), " y ", -1) AS horario_individual
+        FROM tb_detalle_pedidos dp
+        INNER JOIN tb_pedidos ped ON dp.id_pedido = ped.id_pedido
+        INNER JOIN tb_productos p ON dp.id_producto = p.id_producto
+        CROSS JOIN (SELECT 1 AS n UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4) n
+        WHERE ped.fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL ' . $this->id . ' MONTH)
+        AND n.n <= LENGTH(p.horario_producto) - LENGTH(REPLACE(p.horario_producto, " y ", "")) + 1
+        ) AS subquery
+        CROSS JOIN (
+            SELECT COUNT(*) AS total_pedidos FROM tb_detalle_pedidos dp
+            INNER JOIN tb_pedidos ped ON dp.id_pedido = ped.id_pedido
+            WHERE ped.fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+        ) total
+        GROUP BY horario_individual
+        ORDER BY cantidad_pedidos DESC;';
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
+    public function prediccionGanancia(){
+        $sql="WITH ventas AS (
+        SELECT DATE_FORMAT(ped.fecha_pedido, '%Y-%m') AS mes, ROUND(SUM(dp.cantidad_pedido * prod.precio_producto), 2) AS ventas_mensuales,
+            CASE
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '01' THEN 'Enero'
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '02' THEN 'Febrero'
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '03' THEN 'Marzo'
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '04' THEN 'Abril'
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '05' THEN 'Mayo'
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '06' THEN 'Junio'
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '07' THEN 'Julio'
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '08' THEN 'Agosto'
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '09' THEN 'Septiembre'
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '10' THEN 'Octubre'
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '11' THEN 'Noviembre'
+                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '12' THEN 'Diciembre'
+        END AS nombre_mes,
+        ROW_NUMBER() OVER (ORDER BY DATE_FORMAT(ped.fecha_pedido, '%Y-%m')) AS mes_indice
+        FROM tb_pedidos ped
+        JOIN tb_detalle_pedidos dp ON ped.id_pedido = dp.id_pedido
+        JOIN tb_productos prod ON dp.id_producto = prod.id_producto
+        WHERE ped.estado_pedido = 'Finalizado'
+        GROUP BY DATE_FORMAT(ped.fecha_pedido, '%Y-%m')
+        ORDER BY DATE_FORMAT(ped.fecha_pedido, '%Y-%m') DESC
+        LIMIT ".$this->id."
+        ),
+        coeficientes AS (
+            SELECT COUNT(*) AS n, SUM(mes_indice) AS sum_x, SUM(ventas_mensuales) AS sum_y, SUM(mes_indice * ventas_mensuales) AS sum_xy, SUM(mes_indice * mes_indice) AS sum_xx 
+            FROM ventas
+        ),
+        calculos AS (SELECT (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x) AS slope,(sum_y - ((n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x)) * sum_x) / n AS intercept
+            FROM coeficientes
+        ),
+        prediccion AS (
+            SELECT 
+                ROUND(c.slope * (MAX(v.mes_indice) + 1) + c.intercept, 2) AS prediccion_siguiente_mes,
+                CASE
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '01' THEN 'Enero'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '02' THEN 'Febrero'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '03' THEN 'Marzo'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '04' THEN 'Abril'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '05' THEN 'Mayo'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '06' THEN 'Junio'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '07' THEN 'Julio'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '08' THEN 'Agosto'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '09' THEN 'Septiembre'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '10' THEN 'Octubre'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '11' THEN 'Noviembre'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '12' THEN 'Diciembre'
+                END AS nombre_siguiente_mes
+            FROM ventas v
+            JOIN tb_pedidos ped ON DATE_FORMAT(ped.fecha_pedido, '%Y-%m') = v.mes
+            CROSS JOIN calculos c
+        )
+        SELECT v.mes, v.ventas_mensuales,v.nombre_mes,p.prediccion_siguiente_mes,p.nombre_siguiente_mes
+        FROM ventas v
+        CROSS JOIN prediccion p
+        ORDER BY mes ASC;";
+        $params = array();
         return Database::getRows($sql, $params);
     }
 }
