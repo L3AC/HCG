@@ -153,23 +153,35 @@ const barGraph = (canvas, xAxis, yAxis, legend, title) => {
                         color: 'white' // Cambiar color de las etiquetas de la leyenda a blanco
                     }
                 }
+                
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                }
             }
         }
     });
 }
 let existingBarBordChart;
-
 const barBordGraph = (canvas, legends, values, title) => {
     // Destruir el gráfico existente si existe
     if (existingBarBordChart) {
         existingBarBordChart.destroy();
     }
-
     let colors = [];
     values.forEach(() => {
         colors.push('#' + (Math.random().toString(16)).substring(2, 8));
     });
-
     // Crear el nuevo gráfico y guardar la referencia
     existingBarBordChart = new Chart(document.getElementById(canvas), {
         type: 'bar',
@@ -471,10 +483,11 @@ const horBarGraph = (canvas, legends, values, title) => {
             datasets: [{
                 label: '',
                 data: values,
-                backgroundColor: colors,
+                backgroundColor: colors.map(color => color + '33'), // Ajuste la transparencia del fondo
                 borderColor: colors,
                 borderWidth: 2,
-                fill: true
+                borderRadius: 10, // Ajustar el radio del borde
+                borderSkipped: false,
             }]
         },
         options: {
@@ -497,6 +510,20 @@ const horBarGraph = (canvas, legends, values, title) => {
                 title: {
                     display: true,
                     text: title
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
                 }
             }
         },

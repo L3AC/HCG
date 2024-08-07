@@ -79,7 +79,7 @@ const graficaTopComplementos = async () => {
     const FORM = new FormData();
     FORM.append('limit', LIST_2.value);
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(DETALLE_API, 'topPuntuacion',FORM);
+    const DATA = await fetchData(DETALLE_API, 'topComplementos',FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a graficar.
@@ -88,11 +88,11 @@ const graficaTopComplementos = async () => {
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            labels.push(row.descripcion_modelo);
-            values.push(row.promedio_puntuacion);
+            labels.push(row.descripcion_producto);
+            values.push(row.cantidad_pedidos);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        horBarGraph('chart2', labels, values, 'Modelos', 'Modelo');
+        barGraph('chart2', labels, values);
     } else {
         document.getElementById('chart2').remove();
         console.log(DATA.error);
@@ -104,7 +104,7 @@ const graficaTopClientes = async () => {
     const FORM = new FormData();
     FORM.append('limit', LIST_3.value);
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(DETALLE_API, 'topClientesR', FORM);
+    const DATA = await fetchData(DETALLE_API, 'topClientes', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a graficar.
@@ -113,11 +113,11 @@ const graficaTopClientes = async () => {
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            labels.push(row.cliente);
-            values.push(row.total_productos_comprados);
+            labels.push(row.nombre_cliente);
+            values.push(row.cantidad_pedidos_finalizados);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        barGraph('chart3', labels, values, 'Productos', 'Clientes');
+        horBarGraph('chart3', labels, values, 'Productos', 'Clientes');
     } else {
         document.getElementById('chart3').remove();
         console.log(DATA.error);

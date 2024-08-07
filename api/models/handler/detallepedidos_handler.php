@@ -255,7 +255,7 @@ class DetallePedidoHandler
         INNER JOIN 
             tb_pedidos ped ON dp.id_pedido = ped.id_pedido
         WHERE 
-            p.tipo_producto = "Complemento"
+            p.tipo_producto = "Complementario"
             AND ped.fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL ' . $this->id . ' MONTH)
         GROUP BY 
             dp.id_producto, p.descripcion_producto
