@@ -183,17 +183,20 @@ const graficaHorarios = async () => {
         let values = [];
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            // Se agregan los datos a los arreglos.
             labels.push(row.horario_producto);
-            values.push(row.cantidad_pedidos);
+            values.push({
+                porcentaje: row.porcentaje,
+                cantidad_pedidos: row.cantidad_pedidos
+            });
         });
-        // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        doughnutGraph('chart6', labels, values, 'Horarios', 'Horarios');
+        // Llamada a la función para generar y mostrar un gráfico de dona
+        doughnutGraph('chart6', labels, values, 'Horarios');
     } else {
         document.getElementById('chart6').remove();
         console.log(DATA.error);
     }
 }
+
 /*
 *   Función asíncrona para mostrar un gráfico de pastel con el porcentaje de productos por categoría.
 *   Parámetros: ninguno.

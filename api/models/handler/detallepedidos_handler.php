@@ -279,24 +279,57 @@ class DetallePedidoHandler
     }
     public function topHorarios()
     {
-        $sql = 'SELECT horario_individual AS horario_producto, COUNT(*) AS cantidad_pedidos,
-        ROUND((COUNT(*) * 100.0 / total.total_pedidos), 1) AS porcentaje
-        FROM (SELECT dp.id_detalle_pedido, dp.id_producto,ped.id_pedido,
-        SUBSTRING_INDEX(SUBSTRING_INDEX(p.horario_producto, " y ", n.n), " y ", -1) AS horario_individual
-        FROM tb_detalle_pedidos dp
-        INNER JOIN tb_pedidos ped ON dp.id_pedido = ped.id_pedido
-        INNER JOIN tb_productos p ON dp.id_producto = p.id_producto
-        CROSS JOIN (SELECT 1 AS n UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4) n
-        WHERE ped.fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL ' . $this->id . ' MONTH)
-        AND n.n <= LENGTH(p.horario_producto) - LENGTH(REPLACE(p.horario_producto, " y ", "")) + 1
+        $sql = 'SELECT 
+            horario_individual AS horario_producto, 
+            COUNT(*) AS cantidad_pedidos,
+            ROUND((COUNT(*) * 100.0 / total.total_pedidos), 1) AS porcentaje
+        FROM (
+            SELECT 
+                dp.id_detalle_pedido, 
+                dp.id_producto,
+                ped.id_pedido,
+                CASE
+                    WHEN p.horario_producto = "Todo el día" THEN
+                        CASE
+                            WHEN TIME(ped.fecha_pedido) BETWEEN "06:00:00" AND "11:00:00" THEN "Desayuno"
+                            WHEN TIME(ped.fecha_pedido) BETWEEN "11:00:00" AND "15:00:00" THEN "Almuerzo"
+                            WHEN TIME(ped.fecha_pedido) BETWEEN "15:00:00" AND "18:00:00" THEN "Típico"
+                            WHEN TIME(ped.fecha_pedido) BETWEEN "18:00:00" AND "22:00:00" THEN "Cena"
+                            ELSE "Desayuno" -- Considerar un horario por defecto si no entra en ninguno de los anteriores
+                        END
+                    ELSE
+                        CASE
+                            WHEN p.horario_producto LIKE "%Desayuno%" THEN "Desayuno"
+                            WHEN p.horario_producto LIKE "%Almuerzo%" THEN "Almuerzo"
+                            WHEN p.horario_producto LIKE "%Típico%" THEN "Típico"
+                            WHEN p.horario_producto LIKE "%Cena%" THEN "Cena"
+                        END
+                END AS horario_individual
+            FROM 
+                tb_detalle_pedidos dp
+            INNER JOIN 
+                tb_pedidos ped ON dp.id_pedido = ped.id_pedido
+            INNER JOIN 
+                tb_productos p ON dp.id_producto = p.id_producto
+            WHERE 
+                ped.fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL ' . $this->id . ' MONTH)
         ) AS subquery
         CROSS JOIN (
-            SELECT COUNT(*) AS total_pedidos FROM tb_detalle_pedidos dp
-            INNER JOIN tb_pedidos ped ON dp.id_pedido = ped.id_pedido
-            WHERE ped.fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+            SELECT 
+                COUNT(*) AS total_pedidos 
+            FROM 
+                tb_detalle_pedidos dp
+            INNER JOIN 
+                tb_pedidos ped ON dp.id_pedido = ped.id_pedido
+            WHERE 
+                ped.fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL ' . $this->id . ' MONTH)
         ) total
-        GROUP BY horario_individual
-        ORDER BY cantidad_pedidos DESC;';
+        GROUP BY 
+            horario_individual
+        HAVING
+            horario_individual IN ("Desayuno", "Almuerzo", "Típico", "Cena")
+        ORDER BY 
+            cantidad_pedidos DESC;';
         $params = array();
         return Database::getRows($sql, $params);
     }

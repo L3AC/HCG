@@ -283,7 +283,7 @@ const doughnutGraph = (canvas, legends, values, title) => {
         data: {
             labels: legends,
             datasets: [{
-                data: values,
+                data: values.map(v => v.porcentaje), // Solo usa el porcentaje para el gráfico
                 backgroundColor: colors
             }]
         },
@@ -296,8 +296,10 @@ const doughnutGraph = (canvas, legends, values, title) => {
                 tooltip: {
                     callbacks: {
                         label: function(context) {
+                            let label = context.label || '';
                             let value = context.raw || 0;
-                            return `${value} %`;
+                            let cantidadPedidos = values[context.dataIndex].cantidad_pedidos || 0;
+                            return `${value}% (${cantidadPedidos} pedidos)`;
                         }
                     }
                 }
@@ -464,11 +466,20 @@ const areaGraph = (canvas, legends, values, title) => {
             }]
         },
         options: {
+
             plugins: {
                 title: {
                     display: true,
                     text: title
-                }
+                },           
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let value = context.raw || 0;
+                            return `$ ${value}`;
+                        }
+                    }
+                },
             },
             scales: {
                 x: {
