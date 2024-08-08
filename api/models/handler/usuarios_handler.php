@@ -53,7 +53,7 @@ class UsuarioHandler
         //echo $data['clave'];
         if ($data && password_verify($password, $data['clave_usuario'])) {
             $_SESSION['idUsuario'] = $data['id_usuario'];
-            $_SESSION['alias'] = $data['alias_usuario'];
+            $_SESSION['usuarion'] = $data['alias_usuario'];
             $_SESSION['correo'] = $data['email_usuario'];
             $_SESSION['idRol'] = $data['id_rol'];
             $_SESSION['productos_opc']       = $data['productos_opc'];

@@ -135,9 +135,9 @@ if (isset($_GET['action'])) {
 
             // Obtener información del usuario en sesión.
             case 'getUser':
-                if (isset($_SESSION['alias'])) {
+                if (isset($_SESSION['usuarion'])) {
                     $result['status'] = 1;
-                    $result['username'] = $_SESSION['alias'];
+                    $result['username'] = $_SESSION['usuarion'];
                     $result['idrol'] = $_SESSION['idRol'];
                     $result['productos_opc'] = $_SESSION['productos_opc'];
                     $result['pedidos_opc'] = $_SESSION['pedidos_opc'];

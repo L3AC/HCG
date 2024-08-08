@@ -247,4 +247,19 @@ class ClienteHandler
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
+    public function topClientes()
+    {
+        $this->id = $this->id === null ? 20 :$this->id;
+        $sql = 'SELECT id_cliente,CONCAT(nombre_cliente," ", apellido_cliente) AS cliente, correo_cliente, 
+        SUM(cantidad_pedido) AS total_productos_comprados
+        FROM tb_clientes 
+        JOIN tb_pedidos USING(id_cliente)
+        JOIN tb_detalle_pedidos USING(id_pedido)
+        WHERE estado_pedido = "Finalizado"
+        GROUP BY id_cliente, nombre_cliente, apellido_cliente, correo_cliente
+        ORDER BY total_productos_comprados DESC
+        LIMIT  '.$this->id.';';
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
 }
