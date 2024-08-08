@@ -266,7 +266,6 @@ const pieGraph = (canvas, legends, values, title) => {
 }
 
 let existingDoughnutChart = null;
-
 const doughnutGraph = (canvas, legends, values, title) => {
     // Destruir el gráfico existente si existe
     if (existingDoughnutChart) {
@@ -293,6 +292,14 @@ const doughnutGraph = (canvas, legends, values, title) => {
                 title: {
                     display: true,
                     text: title
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let value = context.raw || 0;
+                            return `${value} %`;
+                        }
+                    }
                 }
             }
         }
@@ -332,8 +339,17 @@ const lineGraph = (canvas, legends, values, title) => {
                 }
             },
             scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
                 }
             }
         }
@@ -390,8 +406,13 @@ const polarGraph = (canvas, legends, values, title) => {
 
     let colors = [];
     values.forEach(() => {
-        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+        // Generar un color aleatorio y agregar transparencia
+        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        const rgbaColor = `rgba(${parseInt(randomColor.substring(0, 2), 16)}, 
+        ${parseInt(randomColor.substring(2, 4), 16)}, ${parseInt(randomColor.substring(4, 6), 16)}, 0.3)`;
+        colors.push(rgbaColor);
     });
+
     existingPolarChart = new Chart(document.getElementById(canvas), {
         type: 'polarArea',
         data: {
@@ -407,10 +428,11 @@ const polarGraph = (canvas, legends, values, title) => {
                     display: true,
                     text: title
                 }
-            }
+            },
         }
     });
 }
+
 /*
 *   Función para generar un gráfico de área. Requiere la librería chart.js para funcionar.
 *   Parámetros: canvas (identificador de la etiqueta canvas), legends (valores para las etiquetas), values (valores de los datos) y title (título del gráfico).
@@ -449,8 +471,17 @@ const areaGraph = (canvas, legends, values, title) => {
                 }
             },
             scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
                 }
             }
         }

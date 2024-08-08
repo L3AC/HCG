@@ -127,7 +127,7 @@ const graficaTopCategorias = async () => {
     const FORM = new FormData();
     FORM.append('limit', LIST_4.value);
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(DETALLE_API, 'topTallas',FORM);
+    const DATA = await fetchData(DETALLE_API, 'topCategorias',FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a graficar.
@@ -136,11 +136,11 @@ const graficaTopCategorias = async () => {
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            labels.push('Talla ' + row.descripcion_talla);
-            values.push(row.total_cantidad_pedida);
+            labels.push(row.descripcion_tipo_item);
+            values.push(row.cantidad_items_pedidos);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        polarGraph('chart4', labels, values, 'Tallas', 'Talla');
+        polarGraph('chart4', labels, values, 'Categoría', 'Categoría');
     } else {
         document.getElementById('chart4').remove();
         console.log(DATA.error);
@@ -175,7 +175,7 @@ const graficaHorarios = async () => {
     const FORM = new FormData();
     FORM.append('limit', LIST_4.value);
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(DETALLE_API, 'topTallas',FORM);
+    const DATA = await fetchData(DETALLE_API, 'topHorarios',FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a graficar.
@@ -184,11 +184,11 @@ const graficaHorarios = async () => {
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            labels.push('Talla ' + row.descripcion_talla);
-            values.push(row.total_cantidad_pedida);
+            labels.push(row.horario_producto);
+            values.push(row.cantidad_pedidos);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        polarGraph('chart5', labels, values, 'Tallas', 'Talla');
+        doughnutGraph('chart6', labels, values, 'Horarios', 'Horarios');
     } else {
         document.getElementById('chart6').remove();
         console.log(DATA.error);

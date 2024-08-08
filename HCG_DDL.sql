@@ -197,7 +197,6 @@ END//
 
 DELIMITER ;
 
-CALL sp_verificar_y_obtener_detalles_pedido();
 
 
 

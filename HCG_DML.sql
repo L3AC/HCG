@@ -80,18 +80,18 @@ VALUES((SELECT get_next_id("tb_clientes")),"Juan","$2y$10$aP8t6cRWFw29VBpgbNrLWu
 ((SELECT get_next_id("tb_clientes")),"Diego","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Diego","Flores","71926608","diegoflores@gmail.com"),
 ((SELECT get_next_id("tb_clientes")),"Lucia","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Lucia","Gutierrez","71926709","luciagtz@gmail.com");
 
-INSERT INTO tb_pedidos (id_pedido, id_cliente,estado_pedido,codigo_pedido)
+INSERT INTO tb_pedidos (id_pedido, id_cliente,estado_pedido,codigo_pedido,fecha_pedido)
 VALUES 
-((SELECT get_next_id("tb_pedidos")), 1,'Pendiente',generar_codigo()),
-((SELECT get_next_id("tb_pedidos")), 2,'Pendiente',generar_codigo()),
-((SELECT get_next_id("tb_pedidos")), 3,'Pendiente',generar_codigo()),
-((SELECT get_next_id("tb_pedidos")), 4,'Pendiente',generar_codigo()),
-((SELECT get_next_id("tb_pedidos")), 5,'Pendiente',generar_codigo()),
-((SELECT get_next_id("tb_pedidos")), 6,'Pendiente',generar_codigo()),
-((SELECT get_next_id("tb_pedidos")), 7,'Pendiente',generar_codigo()),
-((SELECT get_next_id("tb_pedidos")), 8,'Pendiente',generar_codigo()),
-((SELECT get_next_id("tb_pedidos")), 9,'Pendiente',generar_codigo()),
-((SELECT get_next_id("tb_pedidos")), 10,'Pendiente',generar_codigo());
+((SELECT get_next_id("tb_pedidos")), 1,'Pendiente',generar_codigo(),2024-01-20),
+((SELECT get_next_id("tb_pedidos")), 2,'Pendiente',generar_codigo(),2024-01-20),
+((SELECT get_next_id("tb_pedidos")), 3,'Pendiente',generar_codigo(),2024-02-20),
+((SELECT get_next_id("tb_pedidos")), 4,'Pendiente',generar_codigo(),2024-02-20),
+((SELECT get_next_id("tb_pedidos")), 5,'Pendiente',generar_codigo(),2024-03-20),
+((SELECT get_next_id("tb_pedidos")), 6,'Pendiente',generar_codigo(),2024-04-20),
+((SELECT get_next_id("tb_pedidos")), 7,'Pendiente',generar_codigo(),2024-05-20),
+((SELECT get_next_id("tb_pedidos")), 8,'Pendiente',generar_codigo(),2024-05-20),
+((SELECT get_next_id("tb_pedidos")), 9,'Pendiente',generar_codigo(),2024-06-20),
+((SELECT get_next_id("tb_pedidos")), 10,'Pendiente',generar_codigo(),2024-06-20);
 
 INSERT INTO tb_detalle_pedidos (id_detalle_pedido,id_pedido, id_producto, cantidad_pedido)
 VALUES((SELECT get_next_id("tb_detalle_pedidos")),1, 1, 2),
