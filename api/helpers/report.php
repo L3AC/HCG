@@ -74,7 +74,7 @@ class Report extends FPDF
     public function header()
     {
         // Se establece la imagen de fondo (el tamaño puede necesitar ajustes según tu imagen y formato de página).
-        $this->image('../../images/expo.png', 0, 0, 216, 279);
+        $this->image('../../images/bgreport.png', 0, 0, 216, 279);
         // Se establece el logo.
         $this->image('../../images/logo.png', 15, 15, 35);
         // Se ubica la fecha y hora del servidor.
@@ -113,7 +113,8 @@ class Report extends FPDF
     public function footer()
     {
         // Se establece la posición para el número de página (a 15 milímetros del final).
-        $this->setY(-15);
+        $this->setY(-12);
+        $this->setX(200);
         // Se establece la fuente para el número de página.
         $this->setFont('Arial', 'I', 20);
         $this->SetTextColor(237, 237, 237);
