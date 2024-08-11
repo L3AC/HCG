@@ -11,7 +11,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-INPUTSEARCH = document.getElementById('inputsearch'),
+    INPUTSEARCH = document.getElementById('inputsearch'),
     ID_ITEM = document.getElementById('idItem'),
     NOMBRE_ITEM = document.getElementById('nombreItem'),
     //PRECIO_PRODUCTO = document.getElementById('precioProducto'),
@@ -97,6 +97,9 @@ const fillTable = async () => {
                         </button>
                         <button type="button" title="Eliminar pedido" class="btnAgregar" style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_item})">
                             <i class="bi bi-trash-fill"></i>
+                        </button>
+                        <button type="button" title="Eliminar pedido" class="btnAgregar" style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_item})">
+                            <i class="bi bi-file-earmark-text-fill"></i>
                         </button>
                     </div>  
                 </div>

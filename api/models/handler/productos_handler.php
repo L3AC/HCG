@@ -355,4 +355,19 @@ class ProductoHandler
         $params = array($this->id);
         return Database::getRows($sql, $params);
     }
+
+
+    //Metódo para leer todos los productos segun el item seleccionado.
+    public function productosItem(){
+
+        $sql = 'SELECT p.descripcion_producto, p.horario_producto, t.descripcion_tipo_item
+                FROM tb_productos p
+                INNER JOIN tb_detalle_productos dp ON p.id_producto = dp.id_producto
+                INNER JOIN tb_items i ON dp.id_item = i.id_item
+                INNER JOIN tb_tipo_items t ON i.id_tipo_item = t.id_tipo_item
+                WHERE i.id_item = ?
+                ORDER BY p.descripcion_producto';
+        $params = array($this->id);
+        return Database::getRows($sql, $params);
+    }
 }
