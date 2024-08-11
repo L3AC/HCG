@@ -98,7 +98,7 @@ const fillTable = async () => {
                         <button type="button" title="Eliminar pedido" class="btnAgregar" style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_item})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
-                        <button type="button" title="Eliminar pedido" class="btnAgregar" style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_item})">
+                        <button type="button" title="Reporte item" class="btnAgregar" style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openReportParam(${row.id_item})">
                             <i class="bi bi-file-earmark-text-fill"></i>
                         </button>
                     </div>  
@@ -175,6 +175,21 @@ const openDelete = async (id) => {
 const openReport = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
     const PATH = new URL(`${SERVER_URL}reports/admin/productos.php`);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
+}
+
+
+/*
+*   Función para abrir un reporte parametrizado.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openReportParam = (id) => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/productos_item.php`);
+    // Se agrega un parámetro a la ruta con el valor del registro seleccionado.
+    PATH.searchParams.append('idItem', id);
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }

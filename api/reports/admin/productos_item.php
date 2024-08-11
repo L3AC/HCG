@@ -17,25 +17,26 @@ if (isset($_GET['idItem'])) {
         // Se verifica si la categoría existe, de lo contrario se muestra un mensaje.
         if ($rowItem = $item->readOne()) {
             // Se inicia el reporte con el encabezado del documento.
-            $pdf->startReport('Productos del item : ' . $rowItem['descripcion_item']);
+            $pdf->startReport('Item: ' . $rowItem['descripcion_item']);
             // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
             if ($dataProductos = $producto->productosItem()) {
                 // Se establece un color de relleno para los encabezados.
-                $pdf->setFillColor(0, 21, 26);
+                $pdf->setFillColor(193, 141, 88);
                 // Se establece la fuente para los encabezados.
-                $pdf->setFont('Times', 'B', 15);
-                $pdf->SetTextColor(237, 237, 237);
+                $pdf->setFont('Arial', 'B', 16);
+                $pdf->SetTextColor(0, 0, 0);
                 // Se imprimen las celdas con los encabezados.
-                $pdf->cell(120, 10, 'Nombre', 1, 0, 'C', 1);
-                $pdf->cell(40, 10, 'Horario del producto', 1, 0, 'C', 1);
-                $pdf->cell(30, 10, 'Tipo de item', 1, 1, 'C', 1);
+                $pdf->cell(90, 10, 'Nombre', 1, 0, 'C', 1);
+                $pdf->cell(60, 10, 'Horario del producto', 1, 0, 'C', 1);
+                $pdf->cell(40, 10, 'Tipo de item', 1, 1, 'C', 1);
                 // Se establece la fuente para los datos de los productos.
-                $pdf->setFont('Times', '', 11);
+                $pdf->setFont('Arial', '', 15);
+                $pdf->SetTextColor(0, 0, 0);
                 // Se recorren los registros fila por fila.
                 foreach ($dataProductos as $rowProducto) {
-                    $pdf->cell(120, 10, $pdf->encodeString($rowProducto['descripcion_producto']), 1, 0);
-                    $pdf->cell(40, 10, $rowProducto['horario_producto'], 1, 0);
-                    $pdf->cell(30, 10, $rowProducto['descripcion_tipo_item'], 1, 1);
+                    $pdf->cell(90, 10, $pdf->encodeString($rowProducto['descripcion_producto']), 1, 0, 'C');
+                    $pdf->cell(60, 10,  $pdf->encodeString($rowProducto['horario_producto']), 1, 0, 'C');
+                    $pdf->cell(40, 10,  $pdf->encodeString($rowProducto['descripcion_tipo_item']), 1, 1, 'C');
                 }
             } else {
                 $pdf->cell(0, 10, $pdf->encodeString('No hay productos para este item'), 1, 1);
