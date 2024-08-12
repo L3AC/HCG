@@ -2,7 +2,6 @@ DROP DATABASE IF EXISTS db_hcg;
 CREATE DATABASE IF NOT EXISTS db_hcg;
 USE db_hcg;
 
-
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED,
   descripcion_rol VARCHAR(100) NOT NULL,
@@ -27,11 +26,11 @@ CREATE TABLE tb_usuarios(
   email_usuario VARCHAR(255) NOT NULL,
   pin_usuario VARCHAR(6) NOT NULL,
   estado_usuario BOOLEAN DEFAULT TRUE,
+  fecha_usuario TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   PRIMARY KEY (id_usuario),
   CONSTRAINT alias_usuario UNIQUE (alias_usuario),
   CONSTRAINT fk_usuario_rol
   FOREIGN KEY(id_rol) REFERENCES tb_roles(id_rol)
-  ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE tb_clientes(
@@ -39,11 +38,12 @@ CREATE TABLE tb_clientes(
   usuario_cliente VARCHAR(255) NOT NULL,
   clave_cliente VARCHAR(255) NOT NULL,
   telefono_cliente VARCHAR(255) NOT NULL,
-  correo_cliente VARCHAR(255) NOT NULL UNIQUE,
+  correo_cliente VARCHAR(255) NOT NULL,
   nombre_cliente VARCHAR(255) NOT NULL,
   apellido_cliente VARCHAR(255) NOT NULL,
   estado_cliente BOOLEAN DEFAULT TRUE NOT NULL,
   pin_cliente VARCHAR(6) NOT NULL DEFAULT '000000',
+  fecha_cliente TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   PRIMARY KEY (id_cliente),
   CONSTRAINT usuario_unique UNIQUE (usuario_cliente),
   CONSTRAINT telefono_unique UNIQUE (telefono_cliente),

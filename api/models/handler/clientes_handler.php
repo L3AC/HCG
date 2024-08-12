@@ -261,5 +261,78 @@ class ClienteHandler
         LIMIT  '.$this->id.';';
         $params = array();
         return Database::getRows($sql, $params);
+    }      
+    public function prediccionClientes(){
+        $sql="WITH clientes_mes AS (
+    SELECT DATE_FORMAT(fecha_cliente, '%Y-%m') AS mes,
+           COUNT(*) AS clientes_mensuales,
+           CASE
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '01' THEN 'Enero'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '02' THEN 'Febrero'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '03' THEN 'Marzo'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '04' THEN 'Abril'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '05' THEN 'Mayo'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '06' THEN 'Junio'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '07' THEN 'Julio'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '08' THEN 'Agosto'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '09' THEN 'Septiembre'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '10' THEN 'Octubre'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '11' THEN 'Noviembre'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '12' THEN 'Diciembre'
+           END AS nombre_mes,
+           ROW_NUMBER() OVER (ORDER BY DATE_FORMAT(fecha_cliente, '%Y-%m')) AS mes_indice
+            FROM tb_clientes
+            WHERE estado_cliente = TRUE
+            GROUP BY DATE_FORMAT(fecha_cliente, '%Y-%m')
+            ORDER BY DATE_FORMAT(fecha_cliente, '%Y-%m') DESC
+            LIMIT  LIMIT ".$this->id."
+        ),
+        coeficientes AS (
+            SELECT COUNT(*) AS n,
+                SUM(mes_indice) AS sum_x,
+                SUM(clientes_mensuales) AS sum_y,
+                SUM(mes_indice * clientes_mensuales) AS sum_xy,
+                SUM(mes_indice * mes_indice) AS sum_xx
+            FROM clientes_mes
+        ),
+        calculos AS (
+            SELECT 
+                (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x) AS slope,
+                (sum_y - ((n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x)) * sum_x) / n AS intercept
+            FROM coeficientes
+        ),
+        prediccion AS (
+            SELECT 
+                ROUND(c.slope * (MAX(cmes.mes_indice) + 1) + c.intercept, 2) AS prediccion_siguiente_mes,
+                CASE
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '01' THEN 'Enero'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '02' THEN 'Febrero'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '03' THEN 'Marzo'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '04' THEN 'Abril'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '05' THEN 'Mayo'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '06' THEN 'Junio'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '07' THEN 'Julio'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '08' THEN 'Agosto'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '09' THEN 'Septiembre'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '10' THEN 'Octubre'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '11' THEN 'Noviembre'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '12' THEN 'Diciembre'
+                END AS nombre_siguiente_mes
+            FROM clientes_mes cmes
+            JOIN tb_clientes tc ON DATE_FORMAT(tc.fecha_cliente, '%Y-%m') = cmes.mes
+            CROSS JOIN calculos c
+        )
+        SELECT 
+            cmes.mes,
+            cmes.clientes_mensuales,
+            cmes.nombre_mes,
+            p.prediccion_siguiente_mes,
+            p.nombre_siguiente_mes
+        FROM clientes_mes cmes
+        CROSS JOIN prediccion p
+        ORDER BY cmes.mes ASC;";
+        $params = array();
+        return Database::getRows($sql, $params);
     }
 }
+
