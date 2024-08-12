@@ -248,4 +248,30 @@ class UsuarioHandler
             return true;
         }
     }
+    public function historialUsuarios(){
+        $sql="SELECT 
+            DATE_FORMAT(fecha_cliente, '%Y-%m') AS mes,
+            COUNT(*) AS usuarios_mensuales,
+            CASE
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '01' THEN 'Enero'
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '02' THEN 'Febrero'
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '03' THEN 'Marzo'
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '04' THEN 'Abril'
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '05' THEN 'Mayo'
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '06' THEN 'Junio'
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '07' THEN 'Julio'
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '08' THEN 'Agosto'
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '09' THEN 'Septiembre'
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '10' THEN 'Octubre'
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '11' THEN 'Noviembre'
+                WHEN DATE_FORMAT(fecha_cliente, '%m') = '12' THEN 'Diciembre'
+            END AS nombre_mes
+        FROM tb_clientes
+        WHERE estado_cliente = TRUE
+        GROUP BY DATE_FORMAT(fecha_cliente, '%Y-%m')
+        ORDER BY mes ASC;
+        LIMIT ".$this->id."";
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
 }

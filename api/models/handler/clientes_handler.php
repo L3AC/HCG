@@ -285,7 +285,7 @@ class ClienteHandler
             WHERE estado_cliente = TRUE
             GROUP BY DATE_FORMAT(fecha_cliente, '%Y-%m')
             ORDER BY DATE_FORMAT(fecha_cliente, '%Y-%m') DESC
-            LIMIT  LIMIT ".$this->id."
+            LIMIT ".$this->id."
         ),
         coeficientes AS (
             SELECT COUNT(*) AS n,
