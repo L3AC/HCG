@@ -17,7 +17,7 @@ class ProductoData extends ProductoHandler
     /*
      *   Métodos para validar y establecer los datos.
      */
-    
+
     // Método para establecer el ID del producto.
     public function setId($value)
     {
@@ -152,6 +152,21 @@ class ProductoData extends ProductoHandler
             return false;
         }
     }
+    
+    /*
+        * Establece la categoría del modelo.
+    */
+    public function setItem($value)
+    {
+        // Validación del identificador de la categoría.
+        if (Validator::validateNaturalNumber($value)) {
+            $this->id = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
 
     /*
         * Establece el estado del modelo.
@@ -248,7 +263,7 @@ class ProductoData extends ProductoHandler
     }
     public function setSearch($value)
     {
-        $this->search= $value;
+        $this->search = $value;
         return true;
     }
     /*

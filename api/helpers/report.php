@@ -30,8 +30,8 @@ class Report extends FPDF
             $this->title = $title;
             $this->subtitle = $subtitle;
             // Se establece el título del documento (true = utf-8).
-            $this->setTitle('YNWA - Reporte', true);
-            $this->setTitle('YNWA - Reporte', true);
+            $this->setTitle('HCG - Reporte', true);
+            $this->setTitle('HCG - Reporte', true);
             // Se establecen los margenes del documento (izquierdo, superior y derecho).
             $this->setMargins(15, 15, 15);
             // Se añade una nueva página al documento con orientación vertical y formato carta, llamando implícitamente al método header()
@@ -43,8 +43,8 @@ class Report extends FPDF
             $this->title = $title;
             $this->subtitle = $subtitle;
             // Se establece el título del documento (true = utf-8).
-            $this->setTitle('YNWA - Reporte', true);
-            $this->setTitle('YNWA - Reporte', true);
+            $this->setTitle('HCG - Reporte', true);
+            $this->setTitle('HCG - Reporte', true);
             // Se establecen los margenes del documento (izquierdo, superior y derecho).
             $this->setMargins(15, 15, 15);
             // Se añade una nueva página al documento con orientación vertical y formato carta, llamando implícitamente al método header()
@@ -74,18 +74,18 @@ class Report extends FPDF
     public function header()
     {
         // Se establece la imagen de fondo (el tamaño puede necesitar ajustes según tu imagen y formato de página).
-        $this->image('../../images/bgo.png', 0, 0, 216, 279);
+        $this->image('../../images/bgreport.png', 0, 0, 216, 279);
         // Se establece el logo.
-        $this->image('../../images/logo.png', 15, 15, 20);
+        $this->image('../../images/logo.png', 15, 15, 35);
         // Se ubica la fecha y hora del servidor.
-        $this->setFont('Arial', 'I', 10);
+        $this->setFont('Arial', 'I', 13);
         $this->cell(0, 10, 'Fecha: ' . date('d-m-Y') .'     '. 'Hora: ' . date('H:i:s'), 0, 1, 'C');
         // Se ubica el título.
-        $this->setFont('Arial', 'B', 15);
+        $this->setFont('Arial', 'B', 20);
         $this->cell(0, 10, $this->encodeString($this->title), 0, 1, 'C');
         // Subtítulo
         if ($this->subtitle) {
-            $this->setFont('Arial', '', 12);
+            $this->setFont('Arial', '', 15);
             $this->cell(0, 10, $this->encodeString($this->subtitle), 0, 1, 'C');
         }
 
@@ -113,9 +113,11 @@ class Report extends FPDF
     public function footer()
     {
         // Se establece la posición para el número de página (a 15 milímetros del final).
-        $this->setY(-15);
+        $this->setY(-12);
+        $this->setX(200);
         // Se establece la fuente para el número de página.
-        $this->setFont('Arial', 'I', 8);
+        $this->setFont('Arial', 'I', 20);
+        $this->SetTextColor(237, 237, 237);
         // Se imprime una celda con el número de página.
         $this->cell(0, 10, $this->encodeString('Página ') . $this->pageNo() . '/{nb}', 0, 0, 'C');
     }
