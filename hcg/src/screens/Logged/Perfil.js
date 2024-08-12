@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1, // Permite que el contenido se expanda y se desplace
     padding: 0,
+    paddingBottom: 80,
     backgroundColor: '#d2a563', // Color de fondo
     justifyContent: 'center', // Centra el contenido verticalmente
   },

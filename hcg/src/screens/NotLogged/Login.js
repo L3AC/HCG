@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 26,
+    fontSize: 20,
     marginBottom: 20,
     color: '#ffffff', // Ajusta el color del texto según el fondo
     fontFamily: 'QuickSandBold',
@@ -147,14 +147,14 @@ const styles = StyleSheet.create({
   forgotPassword: {
     color: '#ffffff', // Ajusta el color del texto según el fondo
     marginBottom: 15,
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: 'QuickSand',
   },
   signUp: {
     color: '#ffffff', // Ajusta el color del texto según el fondo
     marginTop: 20,
     fontFamily: 'QuickSand',
-    fontSize: 20,
+    fontSize: 18,
   },
   button: {
     width: '80%',

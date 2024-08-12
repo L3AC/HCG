@@ -112,10 +112,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 60,
     padding: 30,
+    paddingBottom: 30,
     backgroundColor: '#d2a563', // Color de fondo
   },
   scrollViewContent: {
     flexGrow: 1,
+    marginBottom:60,
   },
   header: {
     flexDirection: 'row',
@@ -137,7 +139,7 @@ const styles = StyleSheet.create({
   },
   icono: { // estilo para el icono del escudo
     textAlign: 'center',
-    marginTop: 40,
+    marginTop: 0,
   },
   input: {
     flex: 1,
