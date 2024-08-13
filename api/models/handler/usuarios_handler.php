@@ -269,8 +269,8 @@ class UsuarioHandler
         FROM tb_clientes
         WHERE estado_cliente = TRUE
         GROUP BY DATE_FORMAT(fecha_cliente, '%Y-%m')
-        ORDER BY mes ASC;
-        LIMIT ".$this->id."";
+        ORDER BY mes ASC
+        LIMIT ".$this->id.";";
         $params = array();
         return Database::getRows($sql, $params);
     }

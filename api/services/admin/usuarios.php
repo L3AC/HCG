@@ -210,6 +210,17 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
                 }
                 break;
+                case 'historialUsuarios':
+                    if (
+                        !$Usuario->setId($_POST['limit'])
+                    ) {
+                        $result['error'] = $Usuario->getDataError();
+                    } elseif ($result['dataset'] = $Usuario->historialUsuarios()) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['error'] = 'No hay datos disponibles';
+                    }
+                    break;
 
             // Acción no disponible dentro de la sesión.
             default:

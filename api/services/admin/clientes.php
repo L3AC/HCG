@@ -156,23 +156,18 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
                 break;
-                /*case 'changePassword':
-                // Cambiar la contraseña del usuario.
-                $_POST = Validator::validateForm($_POST);
-                if (!$cliente->checkPassword($_POST['claveActual'])) {
-                    $result['error'] = 'Contraseña actual incorrecta';
-                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
-                    $result['error'] = 'Confirmación de contraseña diferente';
-                } elseif (!$cliente->setClave($_POST['claveNueva'])) {
-                    $result['error'] = $cliente->getDataError();
-                } elseif ($cliente->changePassword()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Contraseña cambiada correctamente';
-                } else {
-                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
-                }
-                break;*/
                 // Acción no disponible dentro de la sesión.
+                case 'prediccionClientes':
+                    if (
+                        !$cliente->setId($_POST['limit'])
+                    ) {
+                        $result['error'] = $cliente->getDataError();
+                    } elseif ($result['dataset'] = $cliente->prediccionClientes()) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['error'] = 'No hay datos disponibles';
+                    }
+                    break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }

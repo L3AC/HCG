@@ -498,6 +498,132 @@ const areaGraph = (canvas, legends, values, title) => {
         }
     });
 }
+let existingAreaCliente;
+const areaGraphCliente = (canvas, legends, values, title) => {
+    // Destruir gráfico existente si lo hay para evitar superposiciones.
+    if (existingAreaCliente) {
+        existingAreaCliente.destroy();
+    }
+
+    // Generar un color aleatorio.
+    let color = '#' + (Math.random().toString(16).substring(2, 8));
+
+    // Crear una nueva instancia del gráfico.
+    existingAreaCliente = new Chart(document.getElementById(canvas), {
+        type: 'line',
+        data: {
+            labels: legends,
+            datasets: [{
+                label: '',
+                data: values,
+                backgroundColor: color,
+                borderColor: color,
+                borderWidth: 2,
+                tension: 0.1,
+                pointBackgroundColor: color
+            }]
+        },
+        options: {
+
+            plugins: {
+                legend: {
+                    display: false
+                },    
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let value = context.raw || 0;
+                            return `${value}`;
+                        }
+                    }
+                },
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+}
+let existingAreaUs;
+const areaGraphUs = (canvas, legends, values, title) => {
+    // Destruir gráfico existente si lo hay para evitar superposiciones.
+    if (existingAreaUs) {
+        existingAreaUs.destroy();
+    }
+
+    // Generar un color aleatorio con transparencia.
+    let color = '#' + (Math.random().toString(16).substring(2, 8));
+    let backgroundColor = color + '80'; // Adding '80' for 50% opacity
+
+    // Crear una nueva instancia del gráfico.
+    existingAreaUs = new Chart(document.getElementById(canvas), {
+        type: 'line',
+        data: {
+            labels: legends,
+            datasets: [{
+                label: '',
+                data: values,
+                backgroundColor: backgroundColor, // Usar el color con transparencia
+                borderColor: color,
+                borderWidth: 2,
+                fill: true, // Rellenar el área bajo la línea
+                tension: 0.3, // Curva de la línea
+                pointBackgroundColor: color,
+                pointBorderWidth: 2,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            plugins: {
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: function(context) {
+                            let value = context.raw || 0;
+                            return `${value}`;
+                        }
+                    }
+                },
+                legend: {
+                    display: false
+                },
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false // Quitar las líneas de la cuadrícula en el eje X
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false // Quitar las líneas de la cuadrícula en el eje Y
+                    }
+                }
+            }
+        }
+    });
+}
+
+
 /*
 *   Función para generar un gráfico de barras horizontales. Requiere la librería chart.js para funcionar.
 *   Parámetros: canvas (identificador de la etiqueta canvas), legends (valores para las etiquetas), values (valores de los datos) y title (título del gráfico).

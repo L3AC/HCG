@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const MODELO_API = 'services/admin/productos.php',
+const USUARIO_API = 'services/admin/usuarios.php',
     DETALLE_API= 'services/admin/detallepedidos.php',
     CLIENTE_API = 'services/admin/clientes.php',
     TIPO_ITEM_API = 'services/admin/tipoitems.php',
@@ -11,7 +11,9 @@ const LIST_1 = document.getElementById('list1'),
     LIST_3 = document.getElementById('list3'),
     LIST_4 = document.getElementById('list4'),
     LIST_5 = document.getElementById('list5'),
-    LIST_6 = document.getElementById('list6');
+    LIST_6 = document.getElementById('list6'),
+    LIST_7 = document.getElementById('list7'),
+    LIST_8 = document.getElementById('list8');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -38,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     graficaTopCategorias();
     graficaGanancias();
     graficaHorarios();
+    graficaClientes();
+    graficaUsuarios();
     // Añadir eventos de cambio a los selectores para actualizar los gráficos.
     LIST_1.addEventListener('change', graficaTopConjuntos);
     LIST_2.addEventListener('change', graficaTopComplementos);
@@ -45,8 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
     LIST_4.addEventListener('change', graficaTopCategorias);
     LIST_5.addEventListener('change', graficaGanancias);
     LIST_6.addEventListener('change', graficaHorarios);
+    LIST_7.addEventListener('change', graficaClientes);
+    LIST_8.addEventListener('change', graficaUsuarios);
 });
-
 /*
 *   Función asíncrona para mostrar un gráfico de barras con la cantidad de productos por categoría.
 *   Parámetros: ninguno.
@@ -98,7 +103,6 @@ const graficaTopComplementos = async () => {
         console.log(DATA.error);
     }
 }
-
 const graficaTopClientes = async () => {
     //let num = LIST_1.value;
     const FORM = new FormData();
@@ -196,7 +200,54 @@ const graficaHorarios = async () => {
         console.log(DATA.error);
     }
 }
-
+const graficaClientes = async () => {
+    const FORM = new FormData();
+    FORM.append('limit', LIST_7.value);
+    // Petición para obtener los datos del gráfico.
+    const DATA = await fetchData(CLIENTE_API, 'prediccionClientes',FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
+    if (DATA.status) {
+        // Se declaran los arreglos para guardar los datos a graficar.
+        let labels = [];
+        let values = [];
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se agregan los datos a los arreglos.
+            labels.push(row.nombre_mes);
+            values.push(row.clientes_mensuales);
+        });
+        labels.push(DATA.dataset[0].nombre_siguiente_mes);
+        values.push(DATA.dataset[0].prediccion_siguiente_mes);
+        // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
+        areaGraphCliente('chart7', labels, values, 'Clientes', 'Mes');
+    } else {
+        document.getElementById('chart7').remove();
+        console.log(DATA.error);
+    }
+}
+const graficaUsuarios = async () => {
+    const FORM = new FormData();
+    FORM.append('limit', LIST_8.value);
+    // Petición para obtener los datos del gráfico.
+    const DATA = await fetchData(USUARIO_API, 'historialUsuarios',FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
+    if (DATA.status) {
+        // Se declaran los arreglos para guardar los datos a graficar.
+        let labels = [];
+        let values = [];
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se agregan los datos a los arreglos.
+            labels.push(row.nombre_mes);
+            values.push(row.usuarios_mensuales);
+        });
+        // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
+        areaGraphUs('chart8', labels, values, 'Usarios', 'Mes');
+    } else {
+        document.getElementById('chart8').remove();
+        console.log(DATA.error);
+    }
+}
 /*
 *   Función asíncrona para mostrar un gráfico de pastel con el porcentaje de productos por categoría.
 *   Parámetros: ninguno.
