@@ -61,6 +61,14 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen administradores registrados';
                 }
                 break;
+            case 'readClientesPedidos':
+                if ($result['dataset'] = $cliente->readAll()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'No existen administradores registrados';
+                }
+                break;
                 // Verificar si existe un usuario.
             case 'readExist':
                 if ($cliente->readExist($_POST['usuario'])) {

@@ -334,5 +334,16 @@ class ClienteHandler
         $params = array();
         return Database::getRows($sql, $params);
     }
+
+    //Metodo para saber cantidad de total de pedidos hechas por los clientes
+    public function readClientesPedidos()
+    {
+        $sql = 'SELECT CONCAT(c.nombre_cliente, " " ,c.apellido_cliente) AS nombre, COUNT(p.id_pedido) AS cantidad_pedidos
+                FROM tb_clientes c
+                LEFT JOIN tb_pedidos p ON c.id_cliente = p.id_cliente
+                GROUP BY c.id_cliente, c.nombre_cliente, c.apellido_cliente
+                ORDER BY cantidad_pedidos DESC;';
+        return Database::getRows($sql);
+    }
 }
 
