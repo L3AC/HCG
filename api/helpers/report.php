@@ -76,7 +76,7 @@ class Report extends FPDF
         // Se establece la imagen de fondo (el tamaño puede necesitar ajustes según tu imagen y formato de página).
         $this->image('../../images/bgreport.png', 0, 0, 216, 279);
         // Se establece el logo.
-        $this->image('../../images/logo.png', 15, 15, 35);
+        $this->image('../../images/logo.png', 8, 10, 30);
         // Se ubica la fecha y hora del servidor.
         $this->setFont('Arial', 'I', 13);
         $this->cell(0, 10, 'Fecha: ' . date('d-m-Y') .'     '. 'Hora: ' . date('H:i:s'), 0, 1, 'C');
