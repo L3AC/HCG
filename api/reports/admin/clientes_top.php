@@ -20,6 +20,9 @@ $pdf->setFont('Arial', 'B', 12);
 $pdf->write(6, $pdf->encodeString('Clientes con más productos comprados'));
 $pdf->ln(9);
 
+// Descripción del reporte
+$pdf->setFont('Arial', '', 11);
+$pdf->write(6, $pdf->encodeString('A continuación, se podrán observar el total de productos que los clientes han comprado (siendo estos la suma total de productos a lo largo de todos los pedidos).'));
 // Espacio
 $pdf->ln(8);
 
@@ -60,6 +63,11 @@ $pdf->ln(8);
 $pdf->setFont('Arial', 'B', 12);
 
 $pdf->write(6, $pdf->encodeString('Clientes con más pedidos realizados'));
+$pdf->ln(9);
+
+// Descripción del reporte
+$pdf->setFont('Arial', '', 11);
+$pdf->write(6, $pdf->encodeString('A continuación, se podrán observar el total de pedidos que han hecho los clientes. Mostrando únicamente los que se han completado hasta el momento en que se generó este reporte.'));
 $pdf->ln(9);
 
 // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
