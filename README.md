@@ -16,7 +16,7 @@ Jeremy Leandro Castro Moreno 20220638
 
 ## Dependencias utilizadas en la aplicación movil
 
-\```json
+```json
 "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/bottom-tabs": "^6.5.20",
