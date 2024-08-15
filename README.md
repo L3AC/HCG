@@ -41,4 +41,3 @@ Jeremy Leandro Castro Moreno 20220638
     "react-native-reanimated": "^3.12.0",
     "react-native-vector-icons": "^10.1.0"
   }
-\```
