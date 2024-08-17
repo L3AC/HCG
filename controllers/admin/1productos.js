@@ -649,3 +649,10 @@ IMAGEN_PRODUCTO.addEventListener('input', function () {
 document.addEventListener('click', function() {
     IMAGEN_PREU.style.transform = 'scale(1)'; 
 });*/
+
+const openTopReport = () => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/pedidos_productos.php`);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
+}

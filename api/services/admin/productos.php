@@ -64,6 +64,16 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
+            // Leer todos los cuantos pedidos por productos.
+            case 'readPedidosProducto':
+                if ($result['dataset'] = $producto->readAll()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'No se encontraron registros';
+                }
+                break;
+
             // Leer un registro específico de producto.
             case 'readOne':
                 if (!$producto->setId($_POST['idProducto'])) {
