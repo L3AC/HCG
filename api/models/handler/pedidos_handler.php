@@ -74,6 +74,24 @@ class PedidoHandler
         return Database::getRows($sql);
     }
 
+    public function readEstadoPedidos()
+    {
+        $sql = 'SELECT CONCAT(c.nombre_cliente, " " ,c.apellido_cliente) AS Nombre, p.fecha_pedido, p.codigo_pedido, p.estado_pedido
+                FROM tb_pedidos p
+                JOIN tb_clientes c ON p.id_cliente = c.id_cliente
+                WHERE estado_pedido = "Finalizado"
+                ORDER BY p.fecha_pedido DESC;';
+        return Database::getRows($sql);
+    }
+
+    public function readEstadosTodosPedidos()
+    {
+        $sql = 'SELECT estado_pedido, COUNT(*) AS cantidad_pedidos
+                FROM tb_pedidos
+                GROUP BY estado_pedido;';
+        return Database::getRows($sql);
+    }
+
     // Método para obtener todos los detalles de un pedido específico.
     public function readsubAll()
     {

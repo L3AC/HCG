@@ -66,7 +66,7 @@ if (isset($_GET['action'])) {
 
             // Leer todos los cuantos pedidos por productos.
             case 'readPedidosProducto':
-                if ($result['dataset'] = $producto->readAll()) {
+                if ($result['dataset'] = $producto->readPedidosProducto()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {

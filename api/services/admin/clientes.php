@@ -62,7 +62,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readClientesPedidos':
-                if ($result['dataset'] = $cliente->readAll()) {
+                if ($result['dataset'] = $cliente->readClientesPedidos()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
