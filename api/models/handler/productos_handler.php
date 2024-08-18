@@ -152,6 +152,17 @@ class ProductoHandler
         return Database::getRows($sql);
     }
 
+    // Método para leer todos cuantos pedidos ha tenido cada producto.
+    public function readPedidosProducto()
+    {
+        $sql = 'SELECT  p.descripcion_producto, SUM(dp.cantidad_pedido) AS cantidad_pedidos
+                FROM tb_detalle_pedidos dp
+                INNER JOIN tb_productos p ON dp.id_producto = p.id_producto
+                GROUP BY p.descripcion_producto
+                ORDER BY cantidad_pedidos DESC;';
+        return Database::getRows($sql);
+    }
+
     // Método para leer los últimos 8 modelos de productos activos junto con su marca asociada.
     public function readDesc()
     {

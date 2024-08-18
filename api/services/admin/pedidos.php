@@ -54,6 +54,22 @@ if (isset($_GET['action'])) {
                     $result['error'] = ' No se encontraron registros';
                 }
                 break;
+            case 'readEstadoPedidos':
+                if ($result['dataset'] = $producto->readEstadoPedidos()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = ' No se encontraron registros';
+                }
+                break;
+            case 'readEstadosTodosPedidos':
+                if ($result['dataset'] = $producto->readEstadosTodosPedidos()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = ' No se encontraron registros';
+                }
+                break;
             case 'readsubAll':
                 if (!$producto->setId($_SESSION['idmod'])) {
                     $result['error'] = $producto->getDataError();
