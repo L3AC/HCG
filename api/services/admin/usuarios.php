@@ -221,6 +221,17 @@ if (isset($_GET['action'])) {
                         $result['error'] = 'No hay datos disponibles';
                     }
                     break;
+                    case 'topRoles':
+                        if (
+                            !$Usuario->setId($_POST['limit'])
+                        ) {
+                            $result['error'] = $Usuario->getDataError();
+                        } elseif ($result['dataset'] = $Usuario->topRoles()) {
+                            $result['status'] = 1;
+                        } else {
+                            $result['error'] = 'No hay datos disponibles';
+                        }
+                        break;
 
             // Acción no disponible dentro de la sesión.
             default:
