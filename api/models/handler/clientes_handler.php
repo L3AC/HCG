@@ -359,6 +359,19 @@ class ClienteHandler
         return Database::getRows($sql);
     }
 
-
+    // Método para generar reporte : Cantidad de pedidos por un cliente
+    public function readPedidosClienteID()
+    {
+        $sql = 'SELECT p.id_pedido, p.fecha_pedido AS fecha_registro, c.nombre_cliente, p.codigo_pedido AS codigoPedido, GROUP_CONCAT(DISTINCT pr.descripcion_producto ORDER BY pr.descripcion_producto ASC SEPARATOR ", ") AS productos_pedidos, SUM(dp.cantidad_pedido) AS cantidad_productos_pedidos
+                FROM tb_pedidos p
+                INNER JOIN tb_clientes c ON p.id_cliente = c.id_cliente
+                INNER JOIN tb_detalle_pedidos dp ON p.id_pedido = dp.id_pedido
+                INNER JOIN tb_productos pr ON dp.id_producto = pr.id_producto
+                WHERE c.id_cliente = ?
+                GROUP BY p.id_pedido, p.fecha_pedido, c.nombre_cliente, p.codigo_pedido;
+        ';
+        $params = array($this->id);
+        return Database::getRows($sql, $params);
+    }
 }
 

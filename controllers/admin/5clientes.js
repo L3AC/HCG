@@ -26,11 +26,11 @@ const SAVE_FORM = document.getElementById('saveForm'),
 
 const MENSAJE_DIV = document.getElementById('MENSAJE_DIV'),
     IDGUARDAR = document.getElementById('idGuardar');
-let new_correo = '',timeout_id;
+let new_correo = '', timeout_id;
 
 vanillaTextMask.maskInput({
-        inputElement: TEL_CLIENTE,
-        mask: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    inputElement: TEL_CLIENTE,
+    mask: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 });
 
 // Método del evento para cuando el documento ha cargado.
@@ -97,8 +97,8 @@ const fillTable = async () => {
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.
         DATA.dataset.forEach(row => {
-             // Se establece un icono para el estado 
-             (row.estado_cliente) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            // Se establece un icono para el estado 
+            (row.estado_cliente) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
              <div class="cardlar row col-12" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
@@ -116,6 +116,10 @@ const fillTable = async () => {
                 <button type="button" title="Eliminar pedido" class="btnAgregar" 
                 style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_cliente})">
                     <i class="bi bi-trash-fill"></i>
+                </button>
+                <button type="button" title="Reporte pedido" class="btnAgregar" 
+                style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openReportParam(${row.id_cliente})">
+                    <i class="bi bi-file-earmark-text-fill"></i>
                 </button>
             </div>   
         </div>
@@ -163,13 +167,13 @@ const openUpdate = async (id) => {
         new_correo = ROW.correo_cliente;
         TEL_CLIENTE.value = ROW.telefono_cliente;
         ALIAS_CLIENTE.value = ROW.usuario_cliente;
-        ESTADO_CLIENTE.checked=ROW.estado_cliente;
+        ESTADO_CLIENTE.checked = ROW.estado_cliente;
 
     } else {
         sweetAlert(2, DATA.error, false);
     }
 }
-const hideElements= async(bool)=>{
+const hideElements = async (bool) => {
     //DIV_ALIAS.hidden = bool;
     ALIAS_CLIENTE.disabled = bool;
     //DIV_CLAVE.hidden = bool;
@@ -203,6 +207,21 @@ const openDelete = async (id) => {
 const openTopReport = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
     const PATH = new URL(`${SERVER_URL}reports/admin/clientes_top.php`);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
+}
+
+
+/*
+*   Función para abrir un reporte parametrizado.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openReportParam = (id) => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/clientes_pedido.php`);
+    // Se agrega un parámetro a la ruta con el valor del registro seleccionado.
+    PATH.searchParams.append('idCliente', id);
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }

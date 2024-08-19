@@ -1,3 +1,4 @@
+
 <?php
 // Se incluye la clase con las plantillas para generar reportes.
 require_once('../../helpers/report.php');
@@ -17,37 +18,46 @@ if (isset($_GET['idCliente'])) {
         // Se verifica si el cliente existe, de lo contrario se muestra un mensaje.
         if ($rowCliente = $cliente->readOne()) {
             // Se inicia el reporte con el encabezado del documento.
-            $pdf->startReport('Cliente: ' . $rowCliente['nombre_cliente'] . $rowCliente['apellido_cliente']);
+            $pdf->startReport('Cliente: ' . $rowCliente['nombre_cliente'] . ' ' . $rowCliente['apellido_cliente']);
 
             // Descripción del reporte
-            $pdf->setFont('Arial', '', 11);
-            $pdf->write(6, $pdf->encodeString('A continuación, se mostraran los datos de los pedidos realizados por.'));
+            $pdf->setFont('Arial', '', 16);
+            $pdf->write(6, $pdf->encodeString('A continuación, se mostraran los datos de los pedidos realizados por el cliente : ' . $rowCliente['nombre_cliente']));
             // Espacio
-            $pdf->ln(8);
+            $pdf->ln(10);
             // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
-            if ($dataPedidos = $pedido->readPedidosClienteID()) {
+            if ($dataClientes = $cliente->readPedidosClienteID()) {
                 // Se establece un color de relleno para los encabezados.
                 $pdf->setFillColor(155, 119, 74);
                 $pdf->SetTextColor(225, 225, 225);
                 // Se establece la fuente para los encabezados.
-                $pdf->setFont('Arial', 'B', 16);
+                $pdf->setFont('Arial', 'B', 14);
 
                 // Se imprimen las celdas con los encabezados.
-                $pdf->cell(40, 10, 'Codigo del pedido', 'B', 0, 'C', 1);
-                $pdf->cell(60, 10, 'Productos solicitados', 'B', 0, 'C', 1);
-                $pdf->cell(40, 10, 'Cantidad', 'B', 0, 'C', 1);
-                $pdf->cell(40, 10, 'Fecha', 'B', 1, 'C', 1);
+                $pdf->cell(40, 10, 'Codigo', 'B', 0, 'C', 1);
+                $pdf->cell(30, 10, 'Cantidad', 'B', 0, 'C', 1);
+                $pdf->cell(50, 10, 'Fecha', 'B', 0, 'C', 1);
+                $pdf->cell(70, 10, 'Productos solicitados', 'B', 1, 'C', 1);
 
                 // Se establece la fuente para los datos de los productos.
-                $pdf->setFont('Arial', '', 15);
+                $pdf->setFont('Arial', '', 13);
                 $pdf->SetTextColor(0, 0, 0);
 
                 // Se recorren los registros fila por fila.
-                foreach ($dataPedidos as $rowPedido) {
-                    $pdf->cell(90, 10, $pdf->encodeString($rowPedido['codigoPedido']), 'TB', 0, 'C');
-                    $pdf->cell(60, 10, $pdf->encodeString($rowPedido['productos_pedidos']), 'TB', 0, 'C');
-                    $pdf->cell(40, 10, $pdf->encodeString($rowPedido['cantidad_productos_pedidos']), 'TB', 0, 'C');
-                    $pdf->cell(40, 10, $pdf->encodeString($rowPedido['fecha_registro']), 'TB', 1, 'C');
+                foreach ($dataClientes as $rowPedido) {
+                    // Imprimir la primera celda
+                    $pdf->cell(40, 10, $pdf->encodeString($rowPedido['codigoPedido']), 0, 0, 'C');
+                    // Imprimir la celda de cantidad
+                    $pdf->cell(30, 10, $pdf->encodeString($rowPedido['cantidad_productos_pedidos']), 0, 0, 'C');
+                    // Imprimir la celda de fecha
+                    $pdf->cell(50, 10, $pdf->encodeString($rowPedido['fecha_registro']), 0, 0, 'C');
+
+                    // Imprimir la celda de productos solicitados con MultiCell
+                    $pdf->MultiCell(70, 10, $pdf->encodeString($rowPedido['productos_pedidos']), 0, 'C');
+                    // Ajusta la posición de la siguiente fila después de usar MultiCell
+                    $pdf->SetXY($pdf->GetX(), $pdf->GetY()); // Mantén la posición actual después de MultiCell
+                    // Opcional: Imprime un borde al final de la fila
+                    $pdf->Cell(0, 10, '', 'T', 1); // Línea de separación al final de la fila
                 }
             } else {
                 $pdf->cell(0, 10, $pdf->encodeString('No hay pedidos de este cliente'), 1, 1);
