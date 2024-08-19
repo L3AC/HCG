@@ -22,14 +22,14 @@ if (isset($_GET['idCliente'])) {
 
             // Descripción del reporte
             $pdf->setFont('Arial', '', 16);
-            $pdf->write(6, $pdf->encodeString('A continuación, se mostraran los datos de los pedidos realizados por el cliente : ' . $rowCliente['nombre_cliente']));
+            $pdf->write(6, $pdf->encodeString('A continuación, se mostraran los datos de los pedidos realizados por el cliente. '));
             // Espacio
             $pdf->ln(10);
             // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
             if ($dataClientes = $cliente->readPedidosClienteID()) {
                 // Se establece un color de relleno para los encabezados.
                 $pdf->setFillColor(155, 119, 74);
-                $pdf->SetTextColor(225, 225, 225);
+                $pdf->SetTextColor(255, 255, 255);
                 // Se establece la fuente para los encabezados.
                 $pdf->setFont('Arial', 'B', 14);
 
@@ -53,7 +53,7 @@ if (isset($_GET['idCliente'])) {
                     $pdf->cell(50, 10, $pdf->encodeString($rowPedido['fecha_registro']), 0, 0, 'C');
 
                     // Imprimir la celda de productos solicitados con MultiCell
-                    $pdf->MultiCell(70, 10, $pdf->encodeString($rowPedido['productos_pedidos']), 0, 'C');
+                    $pdf->MultiCell(65, 10, $pdf->encodeString($rowPedido['productos_pedidos']), 0, 'C');
                     // Ajusta la posición de la siguiente fila después de usar MultiCell
                     $pdf->SetXY($pdf->GetX(), $pdf->GetY()); // Mantén la posición actual después de MultiCell
                     // Opcional: Imprime un borde al final de la fila
