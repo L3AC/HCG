@@ -2,13 +2,13 @@
 // Se incluye la clase para trabajar con la base de datos.
 require_once('../../helpers/database.php');
 /*
-*	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
-*/
+ *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
+ */
 class PedidoHandler
 {
     /*
-    *   Declaración de atributos para el manejo de datos.
-    */
+     *   Declaración de atributos para el manejo de datos.
+     */
     protected $id = null;
     protected $id_cliente = null;
     protected $id_producto = null;
@@ -24,8 +24,8 @@ class PedidoHandler
     const RUTA_IMAGEN = '../../images/modelos/';
 
     /*
-    *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
-    */
+     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
+     */
 
     // Método para buscar pedidos basado en criterios de búsqueda.
     public function searchRows()
@@ -57,7 +57,7 @@ class PedidoHandler
         WHERE estado_pedido = ? AND
         codigo_pedido LIKE ? AND id_cliente = ?
         ORDER BY fecha_pedido DESC';
-        $params = array($this->estado, $this->search,$_SESSION['idCliente']);
+        $params = array($this->estado, $this->search, $_SESSION['idCliente']);
         return Database::getRows($sql, $params);
     }
 
@@ -183,11 +183,10 @@ class PedidoHandler
                 ORDER BY id_pedido DESC LIMIT 1;';
                 $params = array();
 
-                if($data = Database::getRow($sql, $params)){
-                    $_SESSION['idPedido']=$data['id_pedido'];
+                if ($data = Database::getRow($sql, $params)) {
+                    $_SESSION['idPedido'] = $data['id_pedido'];
                     return true;
-                }
-                else{
+                } else {
                     return false;
                 }
             }
@@ -210,7 +209,7 @@ class PedidoHandler
             if ($this->cantidad < 7) {
                 $sql = 'UPDATE tb_detalle_pedidos 
                 SET cantidad_pedido= ?, nota_pedido=? WHERE id_detalle_pedido=?';
-                $params = array($this->cantidad,$this->nota,  $result['id_detalle_pedido']);
+                $params = array($this->cantidad, $this->nota, $result['id_detalle_pedido']);
                 if (Database::executeRow($sql, $params)) {
                     $mensaje = 1;
                     //$mensaje = 'Registro exitoso';
@@ -223,7 +222,7 @@ class PedidoHandler
 
             $sql = 'INSERT INTO tb_detalle_pedidos(id_detalle_pedido, id_producto, cantidad_pedido, nota_pedido,id_pedido)
                 VALUES((SELECT get_next_id("tb_detalle_pedidos")), ?, ?,?, ?)';
-            $params = array($this->id_producto, $this->cantidad,$this->nota,  $_SESSION['idPedido']);
+            $params = array($this->id_producto, $this->cantidad, $this->nota, $_SESSION['idPedido']);
             if (Database::executeRow($sql, $params)) {
                 $mensaje = 1;
                 //$mensaje = 'Registro exitoso';
@@ -445,4 +444,19 @@ public function createDetail()
         $params = array($this->id_detalle, $_SESSION['idPedido']);
         return Database::executeRow($sql, $params);
     }*/
+
+    // Método para generar reporte : Cantidad de pedidos por un cliente
+    public function readPedidosClienteID()
+    {
+        $sql = 'SELECT p.id_pedido, p.fecha_pedido AS fecha_registro, c.nombre_cliente, p.codigo_pedido AS codigoPedido, GROUP_CONCAT(DISTINCT pr.descripcion_producto ORDER BY pr.descripcion_producto ASC SEPARATOR ", ") AS productos_pedidos, SUM(dp.cantidad_pedido) AS cantidad_productos_pedidos
+                    FROM tb_pedidos p
+                    INNER JOIN tb_clientes c ON p.id_cliente = c.id_cliente
+                    INNER JOIN tb_detalle_pedidos dp ON p.id_pedido = dp.id_pedido
+                    INNER JOIN tb_productos pr ON dp.id_producto = pr.id_producto
+                    WHERE c.id_cliente = ?
+                    GROUP BY p.id_pedido, p.fecha_pedido, c.nombre_cliente, p.codigo_pedido;
+            ';
+        $params = array($this->id);
+        return Database::getRows($sql, $params);
+    }
 }

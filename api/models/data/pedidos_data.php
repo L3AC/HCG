@@ -50,7 +50,7 @@ class PedidoData extends PedidoHandler
             $this->id_cliente = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador del producto es incorrecto';
+            $this->data_error = 'El identificador del cliente es incorrecto';
             return false;
         }
     }
