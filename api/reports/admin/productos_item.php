@@ -24,20 +24,20 @@ if (isset($_GET['idItem'])) {
                 $pdf->setFillColor(155, 119, 74);
                 $pdf->SetTextColor(225, 225, 225);
                 // Se establece la fuente para los encabezados.
-                $pdf->setFont('Arial', 'B', 16);
+                $pdf->setFont('Arial', 'B', 14);
 
                 // Se imprimen las celdas con los encabezados.
-                $pdf->cell(90, 10, 'Nombre', 'B', 0, 'C', 1);
-                $pdf->cell(60, 10, 'Horario del producto', 'B', 0, 'C', 1);
-                $pdf->cell(40, 10, 'Tipo de item', 'B', 1, 'C', 1);
+                $pdf->cell(70, 10, 'Nombre', 'B', 0, 'C', 1);
+                $pdf->cell(70, 10, 'Horario del producto', 'B', 0, 'C', 1);
+                $pdf->cell(50, 10, 'Tipo de item', 'B', 1, 'C', 1);
                 // Se establece la fuente para los datos de los productos.
-                $pdf->setFont('Arial', '', 15);
+                $pdf->setFont('Arial', '', 12);
                 $pdf->SetTextColor(0, 0, 0);
                 // Se recorren los registros fila por fila.
                 foreach ($dataProductos as $rowProducto) {
-                    $pdf->cell(90, 10, $pdf->encodeString($rowProducto['descripcion_producto']), 'TB', 0, 'C');
-                    $pdf->cell(60, 10,  $pdf->encodeString($rowProducto['horario_producto']), 'TB', 0, 'C');
-                    $pdf->cell(40, 10,  $pdf->encodeString($rowProducto['descripcion_tipo_item']), 'TB', 1, 'C');
+                    $pdf->cell(70, 10, $pdf->encodeString($rowProducto['descripcion_producto']), 'TB', 0, 'C');
+                    $pdf->cell(70, 10,  $pdf->encodeString($rowProducto['horario_producto']), 'TB', 0, 'C');
+                    $pdf->cell(50, 10,  $pdf->encodeString($rowProducto['descripcion_tipo_item']), 'TB', 1, 'C');
                 }
             } else {
                 $pdf->cell(0, 10, $pdf->encodeString('No hay productos para este item'), 1, 1);
