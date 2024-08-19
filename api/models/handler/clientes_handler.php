@@ -72,7 +72,7 @@ class ClienteHandler
         $sql = 'SELECT clave_cliente
                 FROM tb_clientes
                 WHERE id_cliente = ?';
-        
+
         $params = array($this->id);
         $data = Database::getRow($sql, $params);
         // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
@@ -81,7 +81,7 @@ class ClienteHandler
         } else {
             return false;
         }
-    }    
+    }
     // Método para cambiar la contraseña del cliente.
     public function changePassword()
     {
@@ -137,8 +137,13 @@ class ClienteHandler
         apellido_cliente,correo_cliente,pin_cliente,estado_cliente,telefono_cliente) 
         values((SELECT get_next_id("tb_clientes")),?,?,?,?,?,?,true,?)';
         $params = array(
-            $this->usuario, $this->clave, $this->nombre,
-            $this->apellido, $this->email,$this->generarPin(), $this->telefono
+            $this->usuario,
+            $this->clave,
+            $this->nombre,
+            $this->apellido,
+            $this->email,
+            $this->generarPin(),
+            $this->telefono
         );
 
         return Database::executeRow($sql, $params);
@@ -172,7 +177,7 @@ class ClienteHandler
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
-    
+
     public function verifUs()
     {
         $sql = 'SELECT *
@@ -185,14 +190,14 @@ class ClienteHandler
     {
         $sql = 'SELECT * from tb_clientes 
         WHERE pin_cliente = ? AND id_cliente = ?';
-        $params = array($this->pin,$_SESSION['clienteRecup']);
+        $params = array($this->pin, $_SESSION['clienteRecup']);
         return Database::getRow($sql, $params);
     }
     public function updatePin()
     {
         $sql = 'update tb_clientes set pin_cliente=?
          where id_cliente=?;';
-        $params = array($this->generarPin(),$_SESSION['clienteRecup']);
+        $params = array($this->generarPin(), $_SESSION['clienteRecup']);
         return Database::executeRow($sql, $params);
     }
     // Método para verificar si existe un usuario con un nombre específico.
@@ -234,8 +239,14 @@ class ClienteHandler
                 SET nombre_cliente = ?, apellido_cliente = ?, 
                 correo_cliente = ?,telefono_cliente = ?,estado_cliente = ?
                 WHERE id_cliente = ?';
-        $params = array($this->nombre, $this->apellido, $this->email,
-        $this->telefono,$this->estado, $this->id);
+        $params = array(
+            $this->nombre,
+            $this->apellido,
+            $this->email,
+            $this->telefono,
+            $this->estado,
+            $this->id
+        );
         return Database::executeRow($sql, $params);
     }
 
@@ -249,7 +260,7 @@ class ClienteHandler
     }
     public function topClientes()
     {
-        $this->id = $this->id === null ? 20 :$this->id;
+        $this->id = $this->id === null ? 20 : $this->id;
         $sql = 'SELECT id_cliente,CONCAT(nombre_cliente," ", apellido_cliente) AS cliente, correo_cliente, 
         SUM(cantidad_pedido) AS total_productos_comprados
         FROM tb_clientes 
@@ -258,12 +269,13 @@ class ClienteHandler
         WHERE estado_pedido = "Finalizado"
         GROUP BY id_cliente, nombre_cliente, apellido_cliente, correo_cliente
         ORDER BY total_productos_comprados DESC
-        LIMIT  '.$this->id.';';
+        LIMIT  ' . $this->id . ';';
         $params = array();
         return Database::getRows($sql, $params);
-    }      
-    public function prediccionClientes(){
-        $sql="WITH clientes_mes AS (
+    }
+    public function prediccionClientes()
+    {
+        $sql = "WITH clientes_mes AS (
     SELECT DATE_FORMAT(fecha_cliente, '%Y-%m') AS mes,
            COUNT(*) AS clientes_mensuales,
            CASE
@@ -285,7 +297,7 @@ class ClienteHandler
             WHERE estado_cliente = TRUE
             GROUP BY DATE_FORMAT(fecha_cliente, '%Y-%m')
             ORDER BY DATE_FORMAT(fecha_cliente, '%Y-%m') DESC
-            LIMIT ".$this->id."
+            LIMIT " . $this->id . "
         ),
         coeficientes AS (
             SELECT COUNT(*) AS n,
@@ -345,6 +357,21 @@ class ClienteHandler
                 GROUP BY c.id_cliente, c.nombre_cliente, c.apellido_cliente
                 ORDER BY cantidad_pedidos DESC;';
         return Database::getRows($sql);
+    }
+
+    // Método para generar reporte : Cantidad de pedidos por un cliente
+    public function readPedidosClienteID()
+    {
+        $sql = 'SELECT p.id_pedido, p.fecha_pedido AS fecha_registro, c.nombre_cliente, p.codigo_pedido AS codigoPedido, GROUP_CONCAT(DISTINCT pr.descripcion_producto ORDER BY pr.descripcion_producto ASC SEPARATOR ", ") AS productos_pedidos, SUM(dp.cantidad_pedido) AS cantidad_productos_pedidos
+                FROM tb_pedidos p
+                INNER JOIN tb_clientes c ON p.id_cliente = c.id_cliente
+                INNER JOIN tb_detalle_pedidos dp ON p.id_pedido = dp.id_pedido
+                INNER JOIN tb_productos pr ON dp.id_producto = pr.id_producto
+                WHERE c.id_cliente = ?
+                GROUP BY p.id_pedido, p.fecha_pedido, c.nombre_cliente, p.codigo_pedido;
+        ';
+        $params = array($this->id);
+        return Database::getRows($sql, $params);
     }
 }
 
