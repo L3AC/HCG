@@ -57,6 +57,20 @@
                 </div>
             </form>
         </div>
+        <div class="dashboard-item text-center d-flex flex-column align-items-center text-dark mt-5">
+            <h4>Productos segun el dia "Reporte"</h4>
+            <div class="col-5 mb-3">
+                <select id="listDay" name="listDay" class="form-select text-center" required>
+                    <option class="fs-5 py-2" value="Lunes">Lunes</option>
+                    <option class="fs-5 py-2" value="Martes">Martes</option>
+                    <option class="fs-5 py-2" value="Miercoles">Miercoles</option>
+                    <option class="fs-5 py-2" value="Jueves">Jueves</option>
+                    <option class="fs-5 py-2" value="Viernes">Viernes</option>
+                    <option class="fs-5 py-2" value="Sabado">Sabado</option>
+                    <option class="fs-5 py-2" value="Domingo">Domingo</option>
+                </select>
+            </div>
+        </div>
         <!-- Botones de la parte derecha -->
         <div class="col-sm-12 col-md-12 d-flex justify-content-end pb-3 pt-3">
             <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
@@ -172,7 +186,8 @@
                             <div class="col-sm-12 col-md-6">
                                 <div class="input_box">
                                     <span>Tipo producto :</span>
-                                    <select id="tipoProducto" name="tipoProducto" class="form-select fw-bold text-white">
+                                    <select id="tipoProducto" name="tipoProducto"
+                                        class="form-select fw-bold text-white">
                                         <option class="bg-dark fs-5 py-2" value="Conjunto">Conjunto</option>
                                         <option class="bg-dark fs-5 py-2" value="Complementario">Complementario</option>
                                     </select>
@@ -410,7 +425,8 @@
                             <div class="col-sm-12 col-md-6">
                                 <div class="input_box">
                                     <span>Tipo producto :</span>
-                                    <select id="tipoProductoU" name="tipoProductoU" class="form-select fw-bold text-white">
+                                    <select id="tipoProductoU" name="tipoProductoU"
+                                        class="form-select fw-bold text-white">
                                         <option class="bg-dark fs-5 py-2" value="Conjunto">Conjunto</option>
                                         <option class="bg-dark fs-5 py-2" value="Complementario">Complementario</option>
                                     </select>
@@ -451,8 +467,8 @@
                             <div class="col-12">
                                 <div class="input_box">
                                     <span>Imagen :</span>
-                                    <input id="imagenProductoU" type="url" name="imagenProductoU"
-                                        class="form-control" rows="3"></input>
+                                    <input id="imagenProductoU" type="url" name="imagenProductoU" class="form-control"
+                                        rows="3"></input>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
@@ -483,7 +499,7 @@
                                 <form class="col-12" id="searchsubFormU">
                                     <div class="row">
                                         <div class="col-12">
-                                            
+
                                         </div>
                                     </div>
                                 </form>

@@ -281,6 +281,17 @@ class ProductoData extends ProductoHandler
         }
     }
 
+    public function setComboBdia($value)
+    {
+        // Validar si el valor es un número natural.
+        if (Validator::validateNaturalNumber($value)) {
+            $this->combobdia = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
     /*
      *  Métodos para obtener los atributos adicionales.
      */

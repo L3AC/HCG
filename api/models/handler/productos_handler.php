@@ -2,13 +2,13 @@
 // Se incluye la clase para trabajar con la base de datos.
 require_once('../../helpers/database.php');
 /*
-*	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
-*/
+ *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
+ */
 class ProductoHandler
 {
     /*
-    *   Declaración de atributos para el manejo de datos.
-    */
+     *   Declaración de atributos para el manejo de datos.
+     */
     protected $search = null;
     protected $id = null;
     protected $nombre = null;
@@ -24,13 +24,14 @@ class ProductoHandler
     protected $viernes = null;
     protected $sabado = null;
     protected $domingo = null;
+    protected $combobdia = null;
 
     // Constante para establecer la ruta de las imágenes.
     const RUTA_IMAGEN = '../../images/modelos/';
 
     /*
-    *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
-    */
+     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
+     */
 
     // Método para buscar productos según un criterio de búsqueda.
     public function searchRows()
@@ -51,7 +52,7 @@ class ProductoHandler
     public function searchModelos($value)
     {
         $value = !empty($value) ? '%' . $value . '%' : '%%';
-        
+
         $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
         FROM prc_modelos 
         INNER JOIN ctg_marcas USING(id_marca)
@@ -72,9 +73,23 @@ class ProductoHandler
         jueves_producto,viernes_producto,sabado_producto,domingo_producto) 
         VALUES((SELECT get_next_id("tb_productos")),?,?,?,?,?,?,?,?,?,?,?,?,?);';
 
-        $params = array($this->tipoproducto, $this->nombre, $this->horario, $this->precio
-        , $this->url, $this->estado, $this->lunes, $this->martes, $this->miercoles, $this->jueves
-        , $this->viernes, $this->sabado, $this->domingo);
+        $params = array(
+            $this->tipoproducto,
+            $this->nombre,
+            $this->horario,
+            $this->precio
+            ,
+            $this->url,
+            $this->estado,
+            $this->lunes,
+            $this->martes,
+            $this->miercoles,
+            $this->jueves
+            ,
+            $this->viernes,
+            $this->sabado,
+            $this->domingo
+        );
         return Database::executeRow($sql, $params);
     }
 
@@ -193,7 +208,7 @@ class ProductoHandler
     public function searchProductos($value)
     {
         $value = $value === '' ? '%%' : '%' . $value . '%';
-        
+
         $sql = 'SELECT *
         FROM tb_productos
         WHERE estado_producto = 1 AND tipo_producto="Conjunto" AND descripcion_producto LIKE ? 
@@ -219,8 +234,8 @@ class ProductoHandler
             OR (horario_producto = "Típico y Almuerzo" AND (TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
             OR (horario_producto = "Típico y Cena" AND (TIME(NOW()) BETWEEN "06:00:00" AND "10:00:00" OR TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00"))
         )   ';
-                    
-            $sql2 = 'SELECT *
+
+        $sql2 = 'SELECT *
             FROM tb_productos
             WHERE estado_producto = 1 AND tipo_producto="Complementario" AND descripcion_producto LIKE ? 
             AND (
@@ -283,9 +298,24 @@ class ProductoHandler
         imagen_producto = ?,estado_producto = ?,lunes_producto = ?,martes_producto = ?,
         miercoles_producto = ?,jueves_producto = ?,viernes_producto = ?,sabado_producto = ?,
         domingo_producto = ? WHERE id_producto = ?;';
-        $params = array($this->tipoproducto, $this->nombre, $this->horario, $this->precio
-        , $this->url, $this->estado, $this->lunes, $this->martes, $this->miercoles, $this->jueves
-        , $this->viernes, $this->sabado, $this->domingo,$this->id);
+        $params = array(
+            $this->tipoproducto,
+            $this->nombre,
+            $this->horario,
+            $this->precio
+            ,
+            $this->url,
+            $this->estado,
+            $this->lunes,
+            $this->martes,
+            $this->miercoles,
+            $this->jueves
+            ,
+            $this->viernes,
+            $this->sabado,
+            $this->domingo,
+            $this->id
+        );
         return Database::executeRow($sql, $params);
     }
 
@@ -311,8 +341,8 @@ class ProductoHandler
     }
 
     /*
-    *   Métodos para generar gráficos.
-    */
+     *   Métodos para generar gráficos.
+     */
 
     // Método para obtener la cantidad de modelos por marca más frecuentes.
     public function cantidadProductosCategoria()
@@ -341,19 +371,19 @@ class ProductoHandler
     // Método para calcular como el top 5 de clientes que han realizado más compras, ordenados de mayor a menor
     public function topClientesCompras()
     {
-        $sql ='
+        $sql = '
             SELECT c.nombre_cliente,COUNT(p.id_pedido) AS cantidad_pedidos
             FROM tb_pedidos p
             INNER JOIN tb_clientes c ON p.id_cliente = c.id_cliente
             GROUP BY c.nombre_cliente
             ORDER BY cantidad_pedidos DESC
             LIMIT 5';
-            return Database::getRows($sql);
+        return Database::getRows($sql);
     }
 
     /*
-    *   Métodos para generar reportes.
-    */
+     *   Métodos para generar reportes.
+     */
 
     // Método para leer todos los productos de una categoría específica ordenados por nombre.
     public function productosCategoria()
@@ -369,7 +399,8 @@ class ProductoHandler
 
 
     //Metódo para leer todos los productos segun el item seleccionado.
-    public function productosItem(){
+    public function productosItem()
+    {
 
         $sql = 'SELECT p.descripcion_producto, p.horario_producto, t.descripcion_tipo_item
                 FROM tb_productos p
@@ -381,4 +412,32 @@ class ProductoHandler
         $params = array($this->id);
         return Database::getRows($sql, $params);
     }
+
+    // Método para leer todos los productos segun el dia seleccionado
+    public function productosDia()
+    {
+        $sql = 'SET @dia_semana = ?;
+                SELECT 
+                    p.id_producto, 
+                    p.descripcion_producto, 
+                    p.horario_producto, 
+                    p.precio_producto, 
+                    p.estado_producto 
+                FROM 
+                    tb_productos p
+                WHERE 
+                    CASE 
+                        WHEN @dia_semana = "lunes" THEN p.lunes_producto
+                        WHEN @dia_semana = "martes" THEN p.martes_producto
+                        WHEN @dia_semana = "miercoles" THEN p.miercoles_producto
+                        WHEN @dia_semana = "jueves" THEN p.jueves_producto
+                        WHEN @dia_semana = "viernes" THEN p.viernes_producto
+                        WHEN @dia_semana = "sabado" THEN p.sabado_producto
+                        WHEN @dia_semana = "domingo" THEN p.domingo_producto
+                    END = TRUE';
+
+        $params = array($this->combobdia);
+        return Database::getRows($sql, $params);
+    }
+
 }
