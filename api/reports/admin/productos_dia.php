@@ -32,9 +32,9 @@ if (isset($_GET['listDay'])) {
                 $pdf->setFont('Arial', 'B', 14);
 
                 // Se imprimen las celdas con los encabezados.
-                $pdf->cell(40, 10, 'Nombre', 'B', 0, 'C', 1);
-                $pdf->cell(30, 10, 'Horario', 'B', 0, 'C', 1);
-                $pdf->cell(50, 10, 'Precio', 'B', 0, 'C', 1);
+                $pdf->cell(70, 10, 'Nombre', 'B', 0, 'C', 1);
+                $pdf->cell(70, 10, 'Horario', 'B', 0, 'C', 1);
+                $pdf->cell(50, 10, 'Precio', 'B', 1, 'C', 1);
 
                 // Se establece la fuente para los datos de los productos.
                 $pdf->setFont('Arial', '', 13);
