@@ -56,6 +56,28 @@ class TipoItemHandler
         return Database::getRows($sql);
     }
 
+    // Método para contar cuantos items tiene cada tipo item.
+    public function readItemsTipoI()
+    {
+        $sql = 'SELECT ti.descripcion_tipo_item AS nombre_tipo_item, COUNT(i.id_item) AS cantidad_items
+                FROM tb_tipo_items ti
+                LEFT JOIN tb_items i ON ti.id_tipo_item = i.id_tipo_item
+                GROUP BY ti.descripcion_tipo_item;';
+        return Database::getRows($sql);
+    }
+
+    // Método para contar el tipo items con mas resgistros.
+    public function readItemsTipoIMax()
+    {
+        $sql = 'SELECT ti.descripcion_tipo_item AS nombre_tipo_item, COUNT(i.id_item) AS cantidad_items
+                FROM tb_tipo_items ti
+                LEFT JOIN tb_items i ON ti.id_tipo_item = i.id_tipo_item
+                GROUP BY ti.descripcion_tipo_item
+                ORDER BY cantidad_items DESC
+                LIMIT 1;';
+        return Database::getRows($sql);
+    }
+
     // Método para leer todos los registros activos de tipo_items.
     public function readAllActive()
     {
