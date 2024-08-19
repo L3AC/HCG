@@ -69,6 +69,10 @@ const SAVE_TREFORM = document.getElementById('savetreForm'),
 //Variable para poner un tiempo de espera
 let timeout_id, dataT, selectedItems = [];
 
+//Variable para comboBox
+const LIST_Day = document.getElementById('listDay');
+
+
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
@@ -77,6 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
     MAIN_TITLE.textContent = 'Gestionar productos';
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
+     // Añadir eventos de cambio a los selectores para actualizar los gráficos.
+     LIST_Day.addEventListener('change', openReportParam);
 });
 
 // Método del evento para cuando se envía el formulario de buscar.
@@ -653,6 +659,26 @@ document.addEventListener('click', function() {
 const openTopReport = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
     const PATH = new URL(`${SERVER_URL}reports/admin/pedidos_productos.php`);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
+}
+
+
+/*
+*   Función para abrir un reporte parametrizado.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openReportParam = () => {
+    // Obtener el valor seleccionado del combobox.
+    const selectedDay = LIST_Day.value;
+
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/productos_dia.php`);
+    
+    // Se agrega un parámetro a la ruta con el valor del día seleccionado.
+    PATH.searchParams.append('listDay', selectedDay);
+    
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }

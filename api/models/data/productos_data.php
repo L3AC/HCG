@@ -32,8 +32,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
-        * Establece el nombre del modelo.
-    */
+     * Establece el nombre del modelo.
+     */
     public function setNombre($value, $min = 2, $max = 50)
     {
         // Validación del nombre.
@@ -71,8 +71,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
-        * Establece la descripción del modelo.
-    */
+     * Establece la descripción del modelo.
+     */
     public function setDescripcion($value, $min = 2, $max = 250)
     {
         // Validación de la descripción.
@@ -89,8 +89,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
-        * Establece el precio del modelo.
-    */
+     * Establece el precio del modelo.
+     */
     public function setPrecio($value)
     {
         // Validación del precio.
@@ -104,8 +104,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
-        * Establece las existencias del modelo.
-    */
+     * Establece las existencias del modelo.
+     */
     public function setExistencias($value)
     {
         // Validación de las existencias.
@@ -119,8 +119,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
-        * Establece la imagen del modelo.
-    */
+     * Establece la imagen del modelo.
+     */
     public function setImagen($file, $filename = null)
     {
         // Validación de la imagen.
@@ -139,8 +139,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
-        * Establece la categoría del modelo.
-    */
+     * Establece la categoría del modelo.
+     */
     public function setCategoria($value)
     {
         // Validación del identificador de la categoría.
@@ -152,10 +152,10 @@ class ProductoData extends ProductoHandler
             return false;
         }
     }
-    
+
     /*
-        * Establece la categoría del modelo.
-    */
+     * Establece la categoría del modelo.
+     */
     public function setItem($value)
     {
         // Validación del identificador de la categoría.
@@ -169,8 +169,8 @@ class ProductoData extends ProductoHandler
     }
 
     /*
-        * Establece el estado del modelo.
-    */
+     * Establece el estado del modelo.
+     */
     public function setEstado($value)
     {
         // Validación del estado.
@@ -267,8 +267,8 @@ class ProductoData extends ProductoHandler
         return true;
     }
     /*
- * Establece el nombre de archivo.
- */
+     * Establece el nombre de archivo.
+     */
     public function setFilename()
     {
         // Obtiene el nombre de archivo desde la lectura.
@@ -283,15 +283,16 @@ class ProductoData extends ProductoHandler
 
     public function setComboBdia($value)
     {
-        // Validar si el valor es un número natural.
-        if (Validator::validateNaturalNumber($value)) {
-            $this->combobdia = $value;
+        $validDays = array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo");
+        if (in_array(strtolower($value), $validDays)) {
+            $this->combobdia = strtolower($value); // Aseguramos que esté en minúsculas
             return true;
         } else {
-            $this->data_error = 'El identificador es incorrecto';
+            $this->data_error = 'El dia es incorrecto';
             return false;
         }
     }
+
     /*
      *  Métodos para obtener los atributos adicionales.
      */

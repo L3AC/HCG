@@ -416,28 +416,29 @@ class ProductoHandler
     // Método para leer todos los productos segun el dia seleccionado
     public function productosDia()
     {
-        $sql = 'SET @dia_semana = ?;
-                SELECT 
-                    p.id_producto, 
-                    p.descripcion_producto, 
-                    p.horario_producto, 
-                    p.precio_producto, 
-                    p.estado_producto 
-                FROM 
-                    tb_productos p
-                WHERE 
-                    CASE 
-                        WHEN @dia_semana = "lunes" THEN p.lunes_producto
-                        WHEN @dia_semana = "martes" THEN p.martes_producto
-                        WHEN @dia_semana = "miercoles" THEN p.miercoles_producto
-                        WHEN @dia_semana = "jueves" THEN p.jueves_producto
-                        WHEN @dia_semana = "viernes" THEN p.viernes_producto
-                        WHEN @dia_semana = "sabado" THEN p.sabado_producto
-                        WHEN @dia_semana = "domingo" THEN p.domingo_producto
-                    END = TRUE';
+        $sql = '
+        SELECT 
+            p.id_producto, 
+            p.descripcion_producto, 
+            p.horario_producto, 
+            p.precio_producto, 
+            p.estado_producto 
+        FROM 
+            tb_productos p
+        WHERE 
+            (CASE 
+                WHEN ? = "lunes" THEN p.lunes_producto
+                WHEN ? = "martes" THEN p.martes_producto
+                WHEN ? = "miercoles" THEN p.miercoles_producto
+                WHEN ? = "jueves" THEN p.jueves_producto
+                WHEN ? = "viernes" THEN p.viernes_producto
+                WHEN ? = "sabado" THEN p.sabado_producto
+                WHEN ? = "domingo" THEN p.domingo_producto
+            END) = TRUE';
 
-        $params = array($this->combobdia);
+        $params = array($this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia);
         return Database::getRows($sql, $params);
     }
+
 
 }
