@@ -77,15 +77,13 @@ class ProductoHandler
             $this->tipoproducto,
             $this->nombre,
             $this->horario,
-            $this->precio
-            ,
+            $this->precio,
             $this->url,
             $this->estado,
             $this->lunes,
             $this->martes,
             $this->miercoles,
-            $this->jueves
-            ,
+            $this->jueves,
             $this->viernes,
             $this->sabado,
             $this->domingo
@@ -302,15 +300,13 @@ class ProductoHandler
             $this->tipoproducto,
             $this->nombre,
             $this->horario,
-            $this->precio
-            ,
+            $this->precio,
             $this->url,
             $this->estado,
             $this->lunes,
             $this->martes,
             $this->miercoles,
-            $this->jueves
-            ,
+            $this->jueves,
             $this->viernes,
             $this->sabado,
             $this->domingo,
@@ -413,6 +409,22 @@ class ProductoHandler
         return Database::getRows($sql, $params);
     }
 
+
+    // Método para leer todos los productos según el tipo de item seleccionado.
+    public function productosTipoItem()
+    {
+        $sql = 'SELECT p.descripcion_producto, p.horario_producto, i.descripcion_item
+            FROM tb_productos p
+            INNER JOIN tb_detalle_productos dp ON p.id_producto = dp.id_producto
+            INNER JOIN tb_items i ON dp.id_item = i.id_item
+            INNER JOIN tb_tipo_items t ON i.id_tipo_item = t.id_tipo_item
+            WHERE t.id_tipo_item = ?
+            ORDER BY p.descripcion_producto';
+        $params = array($this->id);
+        return Database::getRows($sql, $params);
+    }
+
+
     // Método para leer todos los productos segun el dia seleccionado
     public function productosDia()
     {
@@ -440,6 +452,4 @@ class ProductoHandler
         $params = array($this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia);
         return Database::getRows($sql, $params);
     }
-
-
 }

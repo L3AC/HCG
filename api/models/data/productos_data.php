@@ -139,9 +139,24 @@ class ProductoData extends ProductoHandler
     }
 
     /*
-     * Establece la categoría del modelo.
+     * Establece el ID del item.
      */
     public function setCategoria($value)
+    {
+        // Validación del identificador de la categoría.
+        if (Validator::validateNaturalNumber($value)) {
+            $this->id = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
+
+    /*
+     * Establece el ID de tipo Item.
+     */
+    public function setTipoItem($value)
     {
         // Validación del identificador de la categoría.
         if (Validator::validateNaturalNumber($value)) {
