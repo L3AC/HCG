@@ -18,6 +18,16 @@ if (isset($_GET['idTipoItem'])) {
         if ($rowTipoItem = $tipoItem->readOne()) {
             // Se inicia el reporte con el encabezado del documento.
             $pdf->startReport('Tipo Item: ' . $rowTipoItem['descripcion_tipo_item']);
+            // Se establece la fuente para los encabezados.
+            $pdf->setFont('Arial', 'B', 13);
+
+            $pdf->write(6, $pdf->encodeString('Productos segun tipo de item'));
+            $pdf->ln(9);
+
+            // Descripción del reporte
+            $pdf->setFont('Arial', '', 12);
+            $pdf->write(6, $pdf->encodeString('A continuación, se podrán observar cuantos productos cuenta  el tipo item : " ' .$rowTipoItem['descripcion_tipo_item'] . '" .'));
+            $pdf->ln(9);
             // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
             if ($dataProductos = $producto->productosTipoItem()) {
                 // Se establece un color de relleno para los encabezados.
