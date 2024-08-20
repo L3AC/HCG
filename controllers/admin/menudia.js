@@ -1,11 +1,40 @@
 const MENU_API = 'services/admin/productos.php';
 const CONJUNTOS = document.getElementById('conjuntos');
 const COMPLEMENTOS = document.getElementById('complementos');
+const FECHA = document.getElementById('MAIN_TITLE');
+const TIME_TEXT = document.getElementById('TIME');
 
 
 document.addEventListener('DOMContentLoaded', async () => {
 
+    // Constante para obtener el número de horas.
+    const HOUR = new Date().getHours();
+    // Se define una variable para guardar un saludo.
+    let greeting = '';
+    // Dependiendo del número de horas transcurridas en el día, se asigna un saludo para el usuario.
+    if (HOUR < 12) {
+        greeting = 'Buenos días';
+    } else if (HOUR < 19) {
+        greeting = 'Buenas tardes';
+    } else if (HOUR <= 23) {
+        greeting = 'Buenas noches';
+    }
     // Petición para obtener las categorías disponible
+    FECHA.textContent = `${greeting}`;
+
+    // Constante para obtener el número de horas.
+    const TIME = new Date().getHours();
+    let time = '';
+    // Dependiendo del número de horas transcurridas en el día, se asigna un saludo para el usuario.
+    if (TIME < 12) {
+        time = 'el desayuno';
+    } else if (TIME < 19) {
+        time = 'el almuerzo';
+    } else if (TIME <= 23) {
+        time = 'la cena';
+    }
+
+    TIME_TEXT.textContent = `Platillos de ${time}`;
 
     const DATA = await fetchData(MENU_API, 'menuProductos');
     console.log(DATA);
@@ -18,9 +47,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Se crean y concatenan las tarjetas con los datos de cada categoría.
             CONJUNTOS.innerHTML += `
             <div class="menu-item">
-                    <p>${row.descripcion_producto}</p>
-                    <p class="price">$${row.precio_producto}</p>
-                </div>
+                <p>${row.descripcion_producto}</p>
+                <p class="price">$${row.precio_producto}</p>
+            </div>
                 `;
         });
         // Se inicializa el contenedor de categorías.
@@ -30,42 +59,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Se crean y concatenan las tarjetas con los datos de cada categoría.
             /*col-sm-12 col-md-6 col-lg-3*/
             COMPLEMENTOS.innerHTML += `
-                <div class="cardv col-lg-3 col-md-6 " style="margin-bottom: 100px; margin-right: 60px;">
-                        <div class="image_container" >
-                            <img src="${row.imagen_producto}" alt="" class="image">
-                        </div>
-                        <div class="row">
-                            <div class="col-12" >
-                                <div class="title">
-                                    <span class="titulo">${row.descripcion_producto}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="size">
-                                    <span class="Horario">Horario: ${row.horario_producto}</span><br>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="action">
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="price">
-                                    <span>$${row.precio_producto}</span>
-                                </div>
-                            </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <a href="detail.html?id=${row.id_producto}" >
-                                        <Button class="btnAgregar">+</Button>
-                                    </a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                `;
+                <div class="menu-item">
+                <p>${row.descripcion_producto}</p>
+                <p class="price">$${row.precio_producto}</p>
+            </div>`;
         });
     }
     else {

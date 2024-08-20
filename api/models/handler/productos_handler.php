@@ -270,7 +270,7 @@ class ProductoHandler
 
         $sql = 'SELECT *
         FROM tb_productos
-        WHERE estado_producto = 1 AND tipo_producto="Conjunto" AND descripcion_producto LIKE "% %"
+        WHERE estado_producto = 1 AND tipo_producto="Conjunto" 
         AND (
             (DAYOFWEEK(NOW()) = 1 AND domingo_producto = 1)
             OR (DAYOFWEEK(NOW()) = 2 AND lunes_producto = 1)
@@ -296,7 +296,7 @@ class ProductoHandler
 
         $sql2 = 'SELECT *
             FROM tb_productos
-            WHERE estado_producto = 1 AND tipo_producto="Complementario" AND descripcion_producto LIKE "% %"
+            WHERE estado_producto = 1 AND tipo_producto="Complementario"
             AND (
                 (DAYOFWEEK(NOW()) = 1 AND domingo_producto = 1)
                 OR (DAYOFWEEK(NOW()) = 2 AND lunes_producto = 1)

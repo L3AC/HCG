@@ -10,6 +10,9 @@
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #333;
@@ -22,6 +25,8 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
+            font-family: "Lobster Two", sans-serif;
+            font-optical-sizing: auto;
         }
 
         .menu-container {
@@ -41,11 +46,13 @@
         }
 
         .menu-header h1 {
-            font-size: 3.5em;
+            font-size: 4.5em;
             color: #f9a825;
+
         }
 
         .menu-header p {
+            font-size: 2.0em;
             color: #ccc;
         }
 
@@ -66,6 +73,7 @@
             color: #f9a825;
             font-size: 1.8em;
             margin-bottom: 10px;
+            margin-top: 60px;
         }
 
         .menu-item {
@@ -73,6 +81,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
+            font-size: 23px;
         }
 
         .menu-item p {
@@ -193,7 +202,8 @@
             top: 380px;
             left: -130px;
         }
-        .imageLock{
+
+        .imageLock {
             width: 200px;
             height: 200px;
         }
@@ -210,44 +220,25 @@
 
     <div class="menu-header">
         <h1>Menú del día</h1>
+        <p id="MAIN_TITLE"></p>
     </div>
 
 
     <div class="menu-container">
         <div class="menu-section">
             <div class="menu-category">
-                <h2>Combos del día</h2>
+                <h2 id="TIME"></h2>
                 <div class="row" id="conjuntos">
 
-                </div>  
+                </div>
             </div>
         </div>
 
         <div class="menu-section">
             <div class="menu-category">
                 <h2>Complementos</h2>
-                <div class="row" id="conplementos">
+                <div class="row" id="complementos">
 
-                </div>
-                <div class="menu-item">
-                    <p>Option 1</p>
-                    <p class="price">$10</p>
-                </div>
-                <div class="menu-item">
-                    <p>Option 2</p>
-                    <p class="price">$10</p>
-                </div>
-                <div class="menu-item">
-                    <p>Option 3</p>
-                    <p class="price">$10</p>
-                </div>
-                <div class="menu-item">
-                    <p>Option 4</p>
-                    <p class="price">$10</p>
-                </div>
-                <div class="menu-item">
-                    <p>Option 5</p>
-                    <p class="price">$10</p>
                 </div>
             </div>
         </div>
