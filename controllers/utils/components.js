@@ -307,6 +307,48 @@ const doughnutGraph = (canvas, legends, values, title) => {
         }
     });
 }
+let existingDoughnutItems = null;
+const doughnutItems= (canvas, legends, values, title) => {
+    // Destruir el gráfico existente si existe
+    if (existingDoughnutItems) {
+        existingDoughnutItems.destroy();
+    }
+
+    let colors = [];
+    values.forEach(() => {
+        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+    });
+
+    // Crear el nuevo gráfico y guardar la referencia
+    existingDoughnutItems = new Chart(document.getElementById(canvas), {
+        type: 'doughnut',
+        data: {
+            labels: legends,
+            datasets: [{
+                data: values.map(v => v.porcentaje), // Solo usa el porcentaje para el gráfico
+                backgroundColor: colors
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            let value = context.raw || 0;
+                            let total_cantidad = values[context.dataIndex].total_cantidad || 0;
+                            return `${value}% (${total_cantidad} veces)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
 /*
 *   Función para generar un gráfico de líneas. Requiere la librería chart.js para funcionar.
 *   Parámetros: canvas (identificador de la etiqueta canvas), legends (valores para las etiquetas), values (valores de los datos) y title (título del gráfico).
@@ -434,7 +476,41 @@ const polarGraph = (canvas, legends, values, title) => {
         }
     });
 }
+let existingPolarRoles;
+const polarRolesGraph = (canvas, legends, values, title) => {
+    // Destruir gráfico existente si lo hay para evitar superposiciones.
+    if (existingPolarRoles) {
+        existingPolarRoles.destroy();
+    }
 
+    let colors = [];
+    values.forEach(() => {
+        // Generar un color aleatorio y agregar transparencia
+        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        const rgbaColor = `rgba(${parseInt(randomColor.substring(0, 2), 16)}, 
+        ${parseInt(randomColor.substring(2, 4), 16)}, ${parseInt(randomColor.substring(4, 6), 16)}, 0.3)`;
+        colors.push(rgbaColor);
+    });
+
+    existingPolarRoles = new Chart(document.getElementById(canvas), {
+        type: 'polarArea',
+        data: {
+            labels: legends,
+            datasets: [{
+                data: values,
+                backgroundColor: colors
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            },
+        }
+    });
+}
 /*
 *   Función para generar un gráfico de área. Requiere la librería chart.js para funcionar.
 *   Parámetros: canvas (identificador de la etiqueta canvas), legends (valores para las etiquetas), values (valores de los datos) y title (título del gráfico).

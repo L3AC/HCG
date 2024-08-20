@@ -13,7 +13,9 @@ const LIST_1 = document.getElementById('list1'),
     LIST_5 = document.getElementById('list5'),
     LIST_6 = document.getElementById('list6'),
     LIST_7 = document.getElementById('list7'),
-    LIST_8 = document.getElementById('list8');
+    LIST_8 = document.getElementById('list8')
+    LIST_9 = document.getElementById('list9'),
+    LIST_10 = document.getElementById('list10');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -42,6 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
     graficaHorarios();
     graficaClientes();
     graficaUsuarios();
+    graficaRoles();
+    graficaItems();
     // Añadir eventos de cambio a los selectores para actualizar los gráficos.
     LIST_1.addEventListener('change', graficaTopConjuntos);
     LIST_2.addEventListener('change', graficaTopComplementos);
@@ -51,6 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
     LIST_6.addEventListener('change', graficaHorarios);
     LIST_7.addEventListener('change', graficaClientes);
     LIST_8.addEventListener('change', graficaUsuarios);
+    LIST_9.addEventListener('change', graficaRoles);   
+    LIST_10.addEventListener('change', graficaItems);
 });
 /*
 *   Función asíncrona para mostrar un gráfico de barras con la cantidad de productos por categoría.
@@ -248,9 +254,52 @@ const graficaUsuarios = async () => {
         console.log(DATA.error);
     }
 }
-/*
-*   Función asíncrona para mostrar un gráfico de pastel con el porcentaje de productos por categoría.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+const graficaRoles = async () => {
+    const FORM = new FormData();
+    FORM.append('limit', LIST_9.value);
+    // Petición para obtener los datos del gráfico.
+    const DATA = await fetchData(USUARIO_API, 'topRoles',FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
+    if (DATA.status) {
+        // Se declaran los arreglos para guardar los datos a graficar.
+        let labels = [];
+        let values = [];
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se agregan los datos a los arreglos.
+            labels.push(row.descripcion_rol);
+            values.push(row.cantidad_usuarios);
+        });
+        // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
+        polarRolesGraph('chart9', labels, values, 'Rol', 'Rol');
+    } else {
+        document.getElementById('chart9').remove();
+        console.log(DATA.error);
+    }
+}
+const graficaItems = async () => {
+    const FORM = new FormData();
+    FORM.append('limit', LIST_10.value);
+    // Petición para obtener los datos del gráfico.
+    const DATA = await fetchData(DETALLE_API, 'graficaItems',FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
+    if (DATA.status) {
+        // Se declaran los arreglos para guardar los datos a graficar.
+        let labels = [];
+        let values = [];
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            labels.push(row.descripcion_item);
+            values.push({
+                porcentaje: row.porcentaje,
+                total_cantidad: row.total_cantidad
+            });
+        });
+        // Llamada a la función para generar y mostrar un gráfico de dona
+        doughnutItems('chart10', labels, values, 'Items');
+    } else {
+        document.getElementById('chart10').remove();
+        console.log(DATA.error);
+    }
+}
 

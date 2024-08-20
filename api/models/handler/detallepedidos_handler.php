@@ -394,4 +394,17 @@ class DetallePedidoHandler
         $params = array();
         return Database::getRows($sql, $params);
     }
+    public function graficaItems(){
+        $sql="SELECT tb_items.descripcion_item,SUM(tb_detalle_productos.cantidad_item) AS total_cantidad,
+        ROUND((SUM(tb_detalle_productos.cantidad_item) / total.total_cantidad_general) * 100, 1) AS porcentaje
+        FROM tb_detalle_productos
+        INNER JOIN tb_items ON tb_detalle_productos.id_item = tb_items.id_item
+        CROSS JOIN (SELECT SUM(cantidad_item) AS total_cantidad_general FROM tb_detalle_productos) AS total
+        GROUP BY tb_items.descripcion_item, total.total_cantidad_general
+        ORDER BY total_cantidad DESC
+        LIMIT ".$this->id.";";
+        $params = array();
+        return Database::getRows($sql, $params);
+
+    }
 }

@@ -16,7 +16,7 @@ if (isset($_GET['action'])) {
         $result['session'] = 1;
         // Se compara la acción a realizar cuando un Usuario ha iniciado sesión.
         switch ($_GET['action']) {
-            // Buscar filas que coincidan con un valor de búsqueda.
+                // Buscar filas que coincidan con un valor de búsqueda.
             case 'searchRows':
                 if (!$Usuario->setSearch($_POST['valor'])) {
                     $result['error'] = $Usuario->getDataError();
@@ -28,7 +28,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Llenar tabla de usuarios según el rol del usuario en sesión.
+                // Llenar tabla de usuarios según el rol del usuario en sesión.
             case 'fillTab':
                 if ($result['dataset'] = $Usuario->fillTab($_SESSION['idRol'])) {
                     $result['status'] = 1;
@@ -38,7 +38,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Crear un nuevo usuario.
+                // Crear un nuevo usuario.
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
@@ -65,7 +65,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Leer todos los usuarios.
+                // Leer todos los usuarios.
             case 'readAll':
                 if ($result['dataset'] = $Usuario->readAll()) {
                     $result['status'] = 1;
@@ -76,7 +76,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Verificar la existencia de un usuario por su nombre de usuario.
+                // Verificar la existencia de un usuario por su nombre de usuario.
             case 'readExist':
                 if ($Usuario->readExist($_POST['usuario'])) {
                     $result['status'] = 1;
@@ -85,7 +85,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Leer un usuario específico.
+                // Leer un usuario específico.
             case 'readOne':
                 if (!$Usuario->setId($_POST['idUsuario'])) {
                     $result['error'] = 'Usuario incorrecto';
@@ -96,7 +96,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Actualizar un usuario.
+                // Actualizar un usuario.
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
@@ -119,7 +119,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Eliminar un usuario.
+                // Eliminar un usuario.
             case 'deleteRow':
                 if ($_POST['idUsuario'] == $_SESSION['idUsuario']) {
                     $result['error'] = 'No se puede eliminar a sí mismo';
@@ -133,7 +133,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Obtener información del usuario en sesión.
+                // Obtener información del usuario en sesión.
             case 'getUser':
                 if (isset($_SESSION['usuarion'])) {
                     $result['status'] = 1;
@@ -151,7 +151,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Cerrar sesión.
+                // Cerrar sesión.
             case 'logOut':
                 if (session_destroy()) {
                     $result['status'] = 1;
@@ -161,7 +161,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Leer perfil de usuario.
+                // Leer perfil de usuario.
             case 'readProfile':
                 if ($result['dataset'] = $Usuario->readProfile()) {
                     $result['status'] = 1;
@@ -170,7 +170,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Editar perfil de usuario.
+                // Editar perfil de usuario.
             case 'editProfile':
                 $_POST = Validator::validateForm($_POST);
 
@@ -181,9 +181,9 @@ if (isset($_GET['action'])) {
                     !$Usuario->setAlias($_POST['aliasAdministrador'])
                 ) {
                     $result['error'] = $Usuario->getDataError();
-                } elseif ($_SESSION['alias']!=$_POST['aliasAdministrador'] && $Usuario->readExist($_POST['aliasAdministrador'])) {
+                } elseif ($_SESSION['alias'] != $_POST['aliasAdministrador'] && $Usuario->readExist($_POST['aliasAdministrador'])) {
                     $result['error'] = 'El nombre de usuario ya está en uso';
-                } elseif ($_SESSION['correo']!=$_POST['correoAdministrador'] && $Usuario->readExistMail($_POST['correoAdministrador'])) {
+                } elseif ($_SESSION['correo'] != $_POST['correoAdministrador'] && $Usuario->readExistMail($_POST['correoAdministrador'])) {
                     $result['error'] = 'El correo electrónico ya está en uso';
                 } elseif ($Usuario->editProfile()) {
                     $result['status'] = 1;
@@ -194,7 +194,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Cambiar contraseña de usuario.
+                // Cambiar contraseña de usuario.
             case 'changePassword':
                 $_POST = Validator::validateForm($_POST);
                 if (!$Usuario->checkPassword($_POST['claveActual'])) {
@@ -210,37 +210,37 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
                 }
                 break;
-                case 'historialUsuarios':
-                    if (
-                        !$Usuario->setId($_POST['limit'])
-                    ) {
-                        $result['error'] = $Usuario->getDataError();
-                    } elseif ($result['dataset'] = $Usuario->historialUsuarios()) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['error'] = 'No hay datos disponibles';
-                    }
-                    break;
-                    case 'topRoles':
-                        if (
-                            !$Usuario->setId($_POST['limit'])
-                        ) {
-                            $result['error'] = $Usuario->getDataError();
-                        } elseif ($result['dataset'] = $Usuario->topRoles()) {
-                            $result['status'] = 1;
-                        } else {
-                            $result['error'] = 'No hay datos disponibles';
-                        }
-                        break;
+            case 'historialUsuarios':
+                if (
+                    !$Usuario->setId($_POST['limit'])
+                ) {
+                    $result['error'] = $Usuario->getDataError();
+                } elseif ($result['dataset'] = $Usuario->historialUsuarios()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'No hay datos disponibles';
+                }
+                break;
+            case 'topRoles':
+                if (
+                    !$Usuario->setId($_POST['limit'])
+                ) {
+                    $result['error'] = $Usuario->getDataError();
+                } elseif ($result['dataset'] = $Usuario->topRoles()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'No hay datos disponibles';
+                }
+                break;
 
-            // Acción no disponible dentro de la sesión.
+                // Acción no disponible dentro de la sesión.
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
     } else {
         // Se compara la acción a realizar cuando el Usuario no ha iniciado sesión.
         switch ($_GET['action']) {
-            // Leer todos los usuarios.
+                // Leer todos los usuarios.
             case 'readUsers':
                 if ($Usuario->readAll()) {
                     $result['status'] = 1;
@@ -250,7 +250,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Registrar un nuevo usuario.
+                // Registrar un nuevo usuario.
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);
                 if (
@@ -261,7 +261,7 @@ if (isset($_GET['action'])) {
                     !$Usuario->setClave($_POST['clave'])
                 ) {
                     $result['error'] = $Usuario->getDataError();
-                }  elseif ($Usuario->readAll()) {
+                } elseif ($Usuario->readAll()) {
                     $result['error'] = 'Ya hay un usuario creado';
                 } elseif ($_POST['clave'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
@@ -273,7 +273,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Iniciar sesión de usuario.
+                // Iniciar sesión de usuario.
             case 'logIn':
                 $_POST = Validator::validateForm($_POST);
 
@@ -285,7 +285,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Acción no disponible fuera de la sesión.
+                // Acción no disponible fuera de la sesión.
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';
         }
@@ -299,4 +299,3 @@ if (isset($_GET['action'])) {
 } else {
     print(json_encode('Recurso no disponible'));
 }
-?>

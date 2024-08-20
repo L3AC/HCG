@@ -188,6 +188,17 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+            case 'graficaItems':
+                if (
+                    !$detalle->setId($_POST['limit'])
+                ) {
+                    $result['error'] = $detalle->getDataError();
+                } elseif ($result['dataset'] = $detalle->graficaItems()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'No hay datos disponibles';
+                }
+                break;
                 // Acción no disponible dentro de la sesión.
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
