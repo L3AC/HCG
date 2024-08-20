@@ -434,7 +434,8 @@ class ProductoHandler
                 WHEN ? = "viernes" THEN p.viernes_producto
                 WHEN ? = "sabado" THEN p.sabado_producto
                 WHEN ? = "domingo" THEN p.domingo_producto
-            END) = TRUE';
+            END) = TRUE
+            ORDER BY p.precio_producto ASC';
 
         $params = array($this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia);
         return Database::getRows($sql, $params);
