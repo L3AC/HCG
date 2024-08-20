@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Restaurante</title>
+    <!-- Llamada al icono de la página web -->
+    <!-- <link type="image/png" rel="icon" href="../../resources/img/icon.png"> -->
+    <!-- Llamada a las hojas de estilos del framework e iconos -->
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #333;
+            background-image: url('../../resources/img/fondoPublicidad.png');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: "Lobster Two", sans-serif;
+            font-optical-sizing: auto;
+        }
+
+        .menu-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: right;
+            align-items: center;
+        }
+
+        .menu-header {
+            position: absolute;
+            top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .menu-header h1 {
+            font-size: 4.5em;
+            color: #f9a825;
+
+        }
+
+        .menu-header p {
+            font-size: 2.0em;
+            color: #ccc;
+        }
+
+        .menu-section {
+            width: 30%;
+            padding: 20px;
+        }
+
+        .menu-category {
+            background-color: transparent;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .menu-category h2 {
+            color: #f9a825;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            margin-top: 60px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 23px;
+        }
+
+        .menu-item p {
+            margin: 0;
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        .menu-item .price {
+            font-size: 1em;
+            color: #f9a825;
+        }
+
+        .menu-image img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .imglogo {
+            width: 580px;
+            height: 580px;
+            object-fit: contain;
+            animation: myAnim 5s ease-in-out infinite;
+        }
+
+        @keyframes myAnim {
+
+            0%,
+            100% {
+                transform: translateX(0%);
+                transform-origin: 50% 50%;
+            }
+
+            15% {
+                transform: translateX(-30px) rotate(-6deg);
+            }
+
+            30% {
+                transform: translateX(15px) rotate(6deg);
+            }
+
+            45% {
+                transform: translateX(-15px) rotate(-3.6deg);
+            }
+
+            60% {
+                transform: translateX(9px) rotate(2.4deg);
+            }
+
+            75% {
+                transform: translateX(-6px) rotate(-1.2deg);
+            }
+        }
+
+        .imghamburguesa {
+            width: 500px;
+            height: 500px;
+            object-fit: contain;
+            animation: hamburguesa 5s ease-in-out infinite;
+        }
+
+        @keyframes hamburguesa {
+            0% {
+                animation-timing-function: ease-in;
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            38% {
+                animation-timing-function: ease-out;
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            55% {
+                animation-timing-function: ease-in;
+                transform: scale(0.7);
+            }
+
+            72% {
+                animation-timing-function: ease-out;
+                transform: scale(1);
+            }
+
+            81% {
+                animation-timing-function: ease-in;
+                transform: scale(0.84);
+            }
+
+            89% {
+                animation-timing-function: ease-out;
+                transform: scale(1);
+            }
+
+            95% {
+                animation-timing-function: ease-in;
+                transform: scale(0.95);
+            }
+
+            100% {
+                animation-timing-function: ease-out;
+                transform: scale(1);
+            }
+        }
+
+        .logo-container {
+            position: absolute;
+            top: -100px;
+            left: -50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .imghamburguesa-container {
+            position: absolute;
+            top: 380px;
+            left: -130px;
+        }
+
+        .imageLock {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo-container">
+        <img src="../../resources/img/logoPublicidad.png" class="imglogo" alt="Logo">
+    </div>
+    <div class="imghamburguesa-container">
+        <img src="../../resources/img/hamburguesa.png" class="imghamburguesa" alt="Hamburguesa">
+    </div>
+
+    <div class="menu-header">
+        <h1>Menú del día</h1>
+        <p id="MAIN_TITLE"></p>
+    </div>
+
+
+    <div class="menu-container">
+        <div class="menu-section">
+            <div class="menu-category">
+                <h2 id="TIME"></h2>
+                <div class="row" id="conjuntos">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-category">
+                <h2>Complementos</h2>
+                <div class="row" id="complementos">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- Llamada al framework y librería de mensajes -->
+    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <!-- Llamada al controlador general de la aplicación -->
+    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <!-- Llamada al controlador del sitio público -->
+    <script type="text/javascript" src="../../controllers/utils/admin.js"></script>
+    <!-- Llamada al controlador de la página web -->
+    <script type="text/javascript" src="../../controllers/admin/menudia.js"></script>
+</body>
+
+</html>

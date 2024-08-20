@@ -60,13 +60,16 @@
 
         <!-- Botones de la parte derecha -->
         <div class="col-sm-12 col-md-12 d-flex justify-content-end pb-3 pt-3">
+            <button type="button" class="btnAgregar mx-2" onclick="window.location.href='../admin/menudia.html';">
+                Ir a Menú del Día
+            </button>  
             <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
             <button type="button" class="btnAgregar" onclick="openCreate()">
                 Agregar
             </button>
             <button type="button" class="btnAgregar mx-2" onclick="openTopReport()">
                 <i class="bi bi-file-earmark-pdf"></i>
-            </button>
+            </button>          
         </div>
         <div colspan="6" id="rowsFound" class="text-white d-flex justify-content-center mb-4"></div>
         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
