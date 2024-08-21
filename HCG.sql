@@ -2,13 +2,6 @@ DROP DATABASE IF EXISTS db_hcg;
 CREATE DATABASE IF NOT EXISTS db_hcg;
 USE db_hcg;
 
-SELECT descripcion_rol,COUNT(id_usuario) AS cantidad_usuarios
-FROM tb_usuarios
-INNER JOIN tb_roles USING(id_rol)
-GROUP BY descripcion_rol
-ORDER BY cantidad_usuarios DESC
-LIMIT 1;
-
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED,
   descripcion_rol VARCHAR(100) NOT NULL,
