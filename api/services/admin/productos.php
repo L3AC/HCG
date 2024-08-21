@@ -15,7 +15,7 @@ if (isset($_GET['action'])) {
     if (isset($_SESSION['idUsuario'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
-            // Buscar filas que coincidan con un valor de búsqueda.
+                // Buscar filas que coincidan con un valor de búsqueda.
             case 'searchRows':
                 if (!$producto->setSearch($_POST['valor'])) {
                     $result['error'] = $producto->getDataError();
@@ -27,7 +27,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Crear un nuevo registro de producto.
+                // Crear un nuevo registro de producto.
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
@@ -54,7 +54,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Leer todos los registros de productos.
+                // Leer todos los registros de productos.
             case 'readAll':
                 if ($result['dataset'] = $producto->readAll()) {
                     $result['status'] = 1;
@@ -64,7 +64,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Leer todos los cuantos pedidos por productos.
+                // Leer todos los cuantos pedidos por productos.
             case 'readPedidosProducto':
                 if ($result['dataset'] = $producto->readPedidosProducto()) {
                     $result['status'] = 1;
@@ -74,7 +74,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Leer un registro específico de producto.
+                // Leer un registro específico de producto.
             case 'readOne':
                 if (!$producto->setId($_POST['idProducto'])) {
                     $result['error'] = $producto->getDataError();
@@ -85,7 +85,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Actualizar un registro de producto.
+                // Actualizar un registro de producto.
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
@@ -113,7 +113,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Eliminar un registro de producto.
+                // Eliminar un registro de producto.
             case 'deleteRow':
                 if (!$producto->setId($_POST['idProducto'])) {
                     $result['error'] = $producto->getDataError();
@@ -125,7 +125,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Obtener la cantidad de productos por categoría.
+                // Obtener la cantidad de productos por categoría.
             case 'cantidadProductosCategoria':
                 if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
                     $result['status'] = 1;
@@ -134,7 +134,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Obtener el porcentaje de productos por categoría.
+                // Obtener el porcentaje de productos por categoría.
             case 'porcentajeProductosCategoria':
                 if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
                     $result['status'] = 1;
@@ -142,7 +142,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
-            // Obtener el top clientes con más compras.
+                // Obtener el top clientes con más compras.
             case 'topClientesCompras':
                 if ($result['dataset'] = $producto->topClientesCompras()) {
                     $result['status'] = 1;
@@ -150,8 +150,16 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+                //Obtener los productos segun el dia para la pantalla de menu
+            case 'menuProductos':
+                if ($result['dataset'] = $producto->menuProductos()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Productos Inexistentes';
+                }
+                break;
 
-            // Acción no disponible dentro de la sesión.
+                // Acción no disponible dentro de la sesión.
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
@@ -167,4 +175,3 @@ if (isset($_GET['action'])) {
 } else {
     print(json_encode('Recurso no disponible'));
 }
-?>

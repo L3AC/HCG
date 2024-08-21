@@ -12,48 +12,51 @@ if (isset($_GET['listDay'])) {
     // Se instancian las entidades correspondientes.
     $productos = new ProductoData;
     // Se establece el valor del cliente, de lo contrario se muestra un mensaje.
-    if ($productos->setComboBdia($_GET['listDay']) ) {
+    if ($productos->setComboBdia($_GET['listDay'])) {
         // Se verifica si el cliente existe, de lo contrario se muestra un mensaje.
-            // Se inicia el reporte con el encabezado del documento.
-            $pdf->startReport('Productos del día seleccionado');
+        // Se inicia el reporte con el encabezado del documento.
+        $pdf->startReport('Productos del día seleccionado');
 
-            // // Descripción del reporte
-            // $pdf->setFont('Arial', '', 16);
-            // $pdf->write(6, $pdf->encodeString('A continuación, se mostraran los datos de los pedidos realizados por el cliente. '));
-            // // Espacio
-            // $pdf->ln(10);
+        // Descripción del reporte
+        $pdf->setFont('Arial', '', 13);
+        $pdf->write(8, $pdf->encodeString('         A continuación, se podrá observar cada producto que esta disponible segun el dia seleccionado.'));
+        // Espacio
+        $pdf->ln(10);
+        $pdf->write(8, $pdf->encodeString('         Los productos mostrados estan ordenados segun su precio, se han ordenado de menor a mayor los datos.'));
+        // Espacio
+        $pdf->ln(15);
 
-            // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
-            if ($dataProductos = $productos->productosDia()) {
-                // Se establece un color de relleno para los encabezados.
-                $pdf->setFillColor(155, 119, 74);
-                $pdf->SetTextColor(255, 255, 255);
-                // Se establece la fuente para los encabezados.
-                $pdf->setFont('Arial', 'B', 14);
+        // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
+        if ($dataProductos = $productos->productosDia()) {
+            // Se establece un color de relleno para los encabezados.
+            $pdf->setFillColor(155, 119, 74);
+            $pdf->SetTextColor(255, 255, 255);
+            // Se establece la fuente para los encabezados.
+            $pdf->setFont('Arial', 'B', 16);
 
-                // Se imprimen las celdas con los encabezados.
-                $pdf->cell(70, 10, 'Nombre', 'B', 0, 'C', 1);
-                $pdf->cell(70, 10, 'Horario', 'B', 0, 'C', 1);
-                $pdf->cell(50, 10, 'Precio', 'B', 1, 'C', 1);
+            // Se imprimen las celdas con los encabezados.
+            $pdf->cell(70, 10, 'Nombre', 'B', 0, 'C', 1);
+            $pdf->cell(70, 10, 'Horario', 'B', 0, 'C', 1);
+            $pdf->cell(50, 10, 'Precio', 'B', 1, 'C', 1);
 
-                // Se establece la fuente para los datos de los productos.
-                $pdf->setFont('Arial', '', 13);
-                $pdf->SetTextColor(0, 0, 0);
+            // Se establece la fuente para los datos de los productos.
+            $pdf->setFont('Arial', '', 13);
+            $pdf->SetTextColor(0, 0, 0);
 
-                // Se recorren los registros fila por fila.
-                foreach ($dataProductos as $rowProducto) {
-                    $pdf->cell(70, 10, $pdf->encodeString($rowProducto['descripcion_producto']), 'TB', 0, 'C');
-                    $pdf->cell(70, 10,  $pdf->encodeString($rowProducto['horario_producto']), 'TB', 0, 'C');
-                    $pdf->cell(50, 10,  $pdf->encodeString($rowProducto['precio_producto']), 'TB', 1, 'C');
-                }
-            } else {
-                $pdf->cell(0, 10, $pdf->encodeString('No hay productos de este dia '), 1, 1);
+            // Se recorren los registros fila por fila.
+            foreach ($dataProductos as $rowProducto) {
+                $pdf->cell(70, 10, $pdf->encodeString($rowProducto['descripcion_producto']), 'TB', 0, 'C');
+                $pdf->cell(70, 10,  $pdf->encodeString($rowProducto['horario_producto']), 'TB', 0, 'C');
+                $pdf->cell(50, 10,  '$'. $pdf->encodeString($rowProducto['precio_producto']), 'TB', 1, 'C');
             }
-            // Se llama implícitamente al método footer() y se envía el documento al navegador web.
-            $pdf->output('I', 'Producto Pedidos.pdf');
+        } else {
+            $pdf->cell(0, 10, $pdf->encodeString('No hay productos de este dia '), 1, 1);
+        }
+        // Se llama implícitamente al método footer() y se envía el documento al navegador web.
+        $pdf->output('I', 'Producto Pedidos.pdf');
     } else {
-        print ('Dia incorrecto');
+        print('Dia incorrecto');
     }
 } else {
-    print ('Debe seleccionar un dia');
+    print('Debe seleccionar un dia');
 }

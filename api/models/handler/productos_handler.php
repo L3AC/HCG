@@ -77,15 +77,13 @@ class ProductoHandler
             $this->tipoproducto,
             $this->nombre,
             $this->horario,
-            $this->precio
-            ,
+            $this->precio,
             $this->url,
             $this->estado,
             $this->lunes,
             $this->martes,
             $this->miercoles,
-            $this->jueves
-            ,
+            $this->jueves,
             $this->viernes,
             $this->sabado,
             $this->domingo
@@ -265,6 +263,67 @@ class ProductoHandler
         return array('conjunto' => Database::getRows($sql, $params), 'complementario' => Database::getRows($sql2, $params));
     }
 
+
+    // Método para mostrar productos "Conjunto" y "Complementario" en el menu de pantalla.
+    public function menuProductos()
+    {
+
+        $sql = 'SELECT *
+        FROM tb_productos
+        WHERE estado_producto = 1 AND tipo_producto="Conjunto" 
+        AND (
+            (DAYOFWEEK(NOW()) = 1 AND domingo_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 2 AND lunes_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 3 AND martes_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 4 AND miercoles_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 5 AND jueves_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 6 AND viernes_producto = 1)
+            OR (DAYOFWEEK(NOW()) = 7 AND sabado_producto = 1)
+        )
+        AND (
+            (horario_producto = "Desayuno" AND TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00")
+            OR (horario_producto = "Almuerzo" AND TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00")
+            OR (horario_producto = "Típico" AND TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00")
+            OR (horario_producto = "Cena" AND TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00")
+            OR (horario_producto = "Todo el día")
+            OR (horario_producto = "Desayuno y Almuerzo" AND (TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00" OR TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00"))
+            OR (horario_producto = "Desayuno y Cena" AND (TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+            OR (horario_producto = "Almuerzo y Cena" AND (TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+            OR (horario_producto = "Típico y Desayuno" AND (TIME(NOW()) BETWEEN "06:00:00" AND "10:00:00" OR TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00"))
+            OR (horario_producto = "Típico y Almuerzo" AND (TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+            OR (horario_producto = "Típico y Cena" AND (TIME(NOW()) BETWEEN "06:00:00" AND "10:00:00" OR TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00"))
+        )   ';
+
+        $sql2 = 'SELECT *
+            FROM tb_productos
+            WHERE estado_producto = 1 AND tipo_producto="Complementario"
+            AND (
+                (DAYOFWEEK(NOW()) = 1 AND domingo_producto = 1)
+                OR (DAYOFWEEK(NOW()) = 2 AND lunes_producto = 1)
+                OR (DAYOFWEEK(NOW()) = 3 AND martes_producto = 1)
+                OR (DAYOFWEEK(NOW()) = 4 AND miercoles_producto = 1)
+                OR (DAYOFWEEK(NOW()) = 5 AND jueves_producto = 1)
+                OR (DAYOFWEEK(NOW()) = 6 AND viernes_producto = 1)
+                OR (DAYOFWEEK(NOW()) = 7 AND sabado_producto = 1)
+            )
+            AND (
+                (horario_producto = "Desayuno" AND TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00")
+                OR (horario_producto = "Almuerzo" AND TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00")
+                OR (horario_producto = "Típico" AND TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00")
+                OR (horario_producto = "Cena" AND TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00")
+                OR (horario_producto = "Todo el día")
+                OR (horario_producto = "Desayuno y Almuerzo" AND (TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00" OR TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00"))
+                OR (horario_producto = "Desayuno y Cena" AND (TIME(NOW()) BETWEEN "06:00:00" AND "11:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+                OR (horario_producto = "Almuerzo y Cena" AND (TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+                OR (horario_producto = "Típico y Desayuno" AND (TIME(NOW()) BETWEEN "06:00:00" AND "10:00:00" OR TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00"))
+                OR (horario_producto = "Típico y Almuerzo" AND (TIME(NOW()) BETWEEN "11:00:00" AND "15:00:00" OR TIME(NOW()) BETWEEN "18:00:00" AND "22:00:00"))
+                OR (horario_producto = "Típico y Cena" AND (TIME(NOW()) BETWEEN "06:00:00" AND "10:00:00" OR TIME(NOW()) BETWEEN "15:00:00" AND "18:00:00"))
+            )   ';
+
+        return array('conjunto' => Database::getRows($sql), 'complementario' => Database::getRows($sql2));
+    }
+
+
     // Método para leer un producto específico según su ID.
     public function readOne()
     {
@@ -302,15 +361,13 @@ class ProductoHandler
             $this->tipoproducto,
             $this->nombre,
             $this->horario,
-            $this->precio
-            ,
+            $this->precio,
             $this->url,
             $this->estado,
             $this->lunes,
             $this->martes,
             $this->miercoles,
-            $this->jueves
-            ,
+            $this->jueves,
             $this->viernes,
             $this->sabado,
             $this->domingo,
@@ -413,6 +470,22 @@ class ProductoHandler
         return Database::getRows($sql, $params);
     }
 
+
+    // Método para leer todos los productos según el tipo de item seleccionado.
+    public function productosTipoItem()
+    {
+        $sql = 'SELECT p.descripcion_producto, p.horario_producto, i.descripcion_item
+            FROM tb_productos p
+            INNER JOIN tb_detalle_productos dp ON p.id_producto = dp.id_producto
+            INNER JOIN tb_items i ON dp.id_item = i.id_item
+            INNER JOIN tb_tipo_items t ON i.id_tipo_item = t.id_tipo_item
+            WHERE t.id_tipo_item = ?
+            ORDER BY p.descripcion_producto';
+        $params = array($this->id);
+        return Database::getRows($sql, $params);
+    }
+
+
     // Método para leer todos los productos segun el dia seleccionado
     public function productosDia()
     {
@@ -434,11 +507,10 @@ class ProductoHandler
                 WHEN ? = "viernes" THEN p.viernes_producto
                 WHEN ? = "sabado" THEN p.sabado_producto
                 WHEN ? = "domingo" THEN p.domingo_producto
-            END) = TRUE';
+            END) = TRUE
+            ORDER BY p.precio_producto ASC';
 
         $params = array($this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia, $this->combobdia);
         return Database::getRows($sql, $params);
     }
-
-
 }

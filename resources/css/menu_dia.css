@@ -1,0 +1,242 @@
+
+body {
+    background-color: #333;
+    background-image: url('../../resources/img/fondoPublicidad.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: "Lobster Two", sans-serif;
+    font-optical-sizing: auto;
+}
+
+.menu-container {
+    width: 145vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+justify-content: flex-end;    
+align-items: center;
+}
+
+.menu-header {
+    position: absolute;
+    top: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.menu-header h1 {
+    font-size: 4.5em;
+    color: #f9a825;
+    animation: titulo 3s ease 0s 1 normal forwards;
+}
+
+.menu-header p {
+    font-size: 2.0em;
+    color: #ccc;
+    animation: titulo 3s ease 0s 1 normal forwards;
+}
+
+@keyframes titulo {
+    0% {
+        animation-timing-function: ease-in;
+        opacity: 1;
+        transform: translateY(-45px);
+    }
+
+    24% {
+        opacity: 1;
+    }
+
+    40% {
+        animation-timing-function: ease-in;
+        transform: translateY(-24px);
+    }
+
+    65% {
+        animation-timing-function: ease-in;
+        transform: translateY(-12px);
+    }
+
+    82% {
+        animation-timing-function: ease-in;
+        transform: translateY(-6px);
+    }
+
+    93% {
+        animation-timing-function: ease-in;
+        transform: translateY(-4px);
+    }
+
+    25%,
+    55%,
+    75%,
+    87% {
+        animation-timing-function: ease-out;
+        transform: translateY(0px);
+    }
+
+    100% {
+        animation-timing-function: ease-out;
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.menu-section {
+    width: 35%;
+    padding: 15px;
+}
+
+.menu-category {
+    background-color: transparent;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.menu-category h2 {
+    color: #f9a825;
+    font-size: 3.8em;
+    margin-bottom: 10px;
+    margin-top: 60px;
+    flex-direction: column;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 60px;
+}
+
+.menu-item p {
+    margin: 0;
+    color: #ccc;
+    font-size: 0.9em;
+}
+
+.menu-item .price {
+    font-size: 1em;
+    color: #f9a825;
+}
+
+.menu-image img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.imglogo {
+    width: 580px;
+    height: 580px;
+    object-fit: contain;
+    animation: myAnim 5s ease-in-out infinite;
+}
+
+@keyframes myAnim {
+
+    0%,
+    100% {
+        transform: translateX(0%);
+        transform-origin: 50% 50%;
+    }
+
+    15% {
+        transform: translateX(-30px) rotate(-6deg);
+    }
+
+    30% {
+        transform: translateX(15px) rotate(6deg);
+    }
+
+    45% {
+        transform: translateX(-15px) rotate(-3.6deg);
+    }
+
+    60% {
+        transform: translateX(9px) rotate(2.4deg);
+    }
+
+    75% {
+        transform: translateX(-6px) rotate(-1.2deg);
+    }
+}
+
+.imghamburguesa {
+    width: 500px;
+    height: 500px;
+    object-fit: contain;
+    animation: hamburguesa 5s ease-in-out infinite;
+}
+
+@keyframes hamburguesa {
+    0% {
+        animation-timing-function: ease-in;
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    38% {
+        animation-timing-function: ease-out;
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    55% {
+        animation-timing-function: ease-in;
+        transform: scale(0.7);
+    }
+
+    72% {
+        animation-timing-function: ease-out;
+        transform: scale(1);
+    }
+
+    81% {
+        animation-timing-function: ease-in;
+        transform: scale(0.84);
+    }
+
+    89% {
+        animation-timing-function: ease-out;
+        transform: scale(1);
+    }
+
+    95% {
+        animation-timing-function: ease-in;
+        transform: scale(0.95);
+    }
+
+    100% {
+        animation-timing-function: ease-out;
+        transform: scale(1);
+    }
+}
+
+.logo-container {
+    position: absolute;
+    top: -100px;
+    left: -50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imghamburguesa-container {
+    position: absolute;
+    top: 380px;
+    left: -130px;
+}
+
+.imageLock {
+    width: 200px;
+    height: 200px;
+}
