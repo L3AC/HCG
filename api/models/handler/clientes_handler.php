@@ -119,10 +119,10 @@ class ClienteHandler
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
-        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente, 
+        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente,
         correo_cliente, usuario_cliente,estado_cliente,telefono_cliente
                 FROM tb_clientes
-                WHERE apellido_cliente LIKE ? OR nombre_cliente LIKE ? 
+                WHERE apellido_cliente LIKE ? OR nombre_cliente LIKE ?
                 OR correo_cliente like ? OR telefono_cliente LIKE ?
                 ORDER BY apellido_cliente';
         $params = array($this->search, $this->search, $this->search, $this->search);
@@ -134,7 +134,7 @@ class ClienteHandler
     {
         //echo $this->clave.' ';
         $sql = 'insert into tb_clientes(id_cliente,usuario_cliente,clave_cliente,nombre_cliente,
-        apellido_cliente,correo_cliente,pin_cliente,estado_cliente,telefono_cliente) 
+        apellido_cliente,correo_cliente,pin_cliente,estado_cliente,telefono_cliente)
         values((SELECT get_next_id("tb_clientes")),?,?,?,?,?,?,true,?)';
         $params = array(
             $this->usuario,
@@ -154,7 +154,7 @@ class ClienteHandler
     {
         $sql = 'SELECT id_cliente,nombre_cliente,apellido_cliente,
                 telefono_cliente,correo_cliente,estado_cliente
-                FROM tb_clientes; 
+                FROM tb_clientes;
                 ORDER BY apellido_cliente';
         return Database::getRows($sql);
     }
@@ -162,7 +162,7 @@ class ClienteHandler
     // Método para leer todos los clientes activos.
     public function readAllActive()
     {
-        $sql = 'SELECT id_cliente,usuario_cliente, clave_cliente, 
+        $sql = 'SELECT id_cliente,usuario_cliente, clave_cliente,
          nombre_cliente, apellido_cliente ,email_cliente, estado_cliente,direccion_cliente
                 from prc_clientes where estado_cliente=true
                 ORDER BY apellido_cliente';
@@ -172,7 +172,7 @@ class ClienteHandler
     // Método para leer un solo cliente por su ID.
     public function readOne()
     {
-        $sql = 'SELECT * from tb_clientes 
+        $sql = 'SELECT * from tb_clientes
                 WHERE id_cliente = ?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
@@ -181,14 +181,14 @@ class ClienteHandler
     public function verifUs()
     {
         $sql = 'SELECT *
-        from tb_clientes 
+        from tb_clientes
         WHERE usuario_cliente = ?';
         $params = array($this->usuario);
         return Database::getRow($sql, $params);
     }
     public function verifPin()
     {
-        $sql = 'SELECT * from tb_clientes 
+        $sql = 'SELECT * from tb_clientes
         WHERE pin_cliente = ? AND id_cliente = ?';
         $params = array($this->pin, $_SESSION['clienteRecup']);
         return Database::getRow($sql, $params);
@@ -235,8 +235,8 @@ class ClienteHandler
     // Método para actualizar los datos de un cliente.
     public function updateRow()
     {
-        $sql = 'UPDATE tb_clientes 
-                SET nombre_cliente = ?, apellido_cliente = ?, 
+        $sql = 'UPDATE tb_clientes
+                SET nombre_cliente = ?, apellido_cliente = ?,
                 correo_cliente = ?,telefono_cliente = ?,estado_cliente = ?
                 WHERE id_cliente = ?';
         $params = array(
@@ -261,9 +261,9 @@ class ClienteHandler
     public function topClientes()
     {
         $this->id = $this->id === null ? 20 : $this->id;
-        $sql = 'SELECT id_cliente,CONCAT(nombre_cliente," ", apellido_cliente) AS cliente, correo_cliente, 
+        $sql = 'SELECT id_cliente,CONCAT(nombre_cliente," ", apellido_cliente) AS cliente, correo_cliente,
         SUM(cantidad_pedido) AS total_productos_comprados
-        FROM tb_clientes 
+        FROM tb_clientes
         JOIN tb_pedidos USING(id_cliente)
         JOIN tb_detalle_pedidos USING(id_pedido)
         WHERE estado_pedido = "Finalizado"
@@ -308,13 +308,13 @@ class ClienteHandler
             FROM clientes_mes
         ),
         calculos AS (
-            SELECT 
+            SELECT
                 (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x) AS slope,
                 (sum_y - ((n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x)) * sum_x) / n AS intercept
             FROM coeficientes
         ),
         prediccion AS (
-            SELECT 
+            SELECT
                 ROUND(c.slope * (MAX(cmes.mes_indice) + 1) + c.intercept, 2) AS prediccion_siguiente_mes,
                 CASE
                     WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '01' THEN 'Enero'
@@ -334,7 +334,7 @@ class ClienteHandler
             JOIN tb_clientes tc ON DATE_FORMAT(tc.fecha_cliente, '%Y-%m') = cmes.mes
             CROSS JOIN calculos c
         )
-        SELECT 
+        SELECT
             cmes.mes,
             cmes.clientes_mensuales,
             cmes.nombre_mes,
@@ -347,6 +347,79 @@ class ClienteHandler
         return Database::getRows($sql, $params);
     }
 
+    public function prediccionClientesRep()
+    {
+        $sql = "WITH clientes_mes AS (
+    SELECT DATE_FORMAT(fecha_cliente, '%Y-%m') AS mes,
+           COUNT(*) AS clientes_mensuales,
+           CASE
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '01' THEN 'Enero'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '02' THEN 'Febrero'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '03' THEN 'Marzo'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '04' THEN 'Abril'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '05' THEN 'Mayo'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '06' THEN 'Junio'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '07' THEN 'Julio'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '08' THEN 'Agosto'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '09' THEN 'Septiembre'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '10' THEN 'Octubre'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '11' THEN 'Noviembre'
+               WHEN DATE_FORMAT(fecha_cliente, '%m') = '12' THEN 'Diciembre'
+           END AS nombre_mes,
+           ROW_NUMBER() OVER (ORDER BY DATE_FORMAT(fecha_cliente, '%Y-%m')) AS mes_indice
+            FROM tb_clientes
+            WHERE estado_cliente = TRUE
+            GROUP BY DATE_FORMAT(fecha_cliente, '%Y-%m')
+            ORDER BY DATE_FORMAT(fecha_cliente, '%Y-%m') DESC
+            LIMIT 6
+        ),
+        coeficientes AS (
+            SELECT COUNT(*) AS n,
+                SUM(mes_indice) AS sum_x,
+                SUM(clientes_mensuales) AS sum_y,
+                SUM(mes_indice * clientes_mensuales) AS sum_xy,
+                SUM(mes_indice * mes_indice) AS sum_xx
+            FROM clientes_mes
+        ),
+        calculos AS (
+            SELECT
+                (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x) AS slope,
+                (sum_y - ((n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x)) * sum_x) / n AS intercept
+            FROM coeficientes
+        ),
+        prediccion AS (
+            SELECT
+                ROUND(c.slope * (MAX(cmes.mes_indice) + 1) + c.intercept, 2) AS prediccion_siguiente_mes,
+                CASE
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '01' THEN 'Enero'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '02' THEN 'Febrero'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '03' THEN 'Marzo'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '04' THEN 'Abril'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '05' THEN 'Mayo'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '06' THEN 'Junio'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '07' THEN 'Julio'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '08' THEN 'Agosto'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '09' THEN 'Septiembre'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '10' THEN 'Octubre'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '11' THEN 'Noviembre'
+                    WHEN DATE_FORMAT(ADDDATE(MAX(fecha_cliente), INTERVAL 1 MONTH), '%m') = '12' THEN 'Diciembre'
+                END AS nombre_siguiente_mes
+            FROM clientes_mes cmes
+            JOIN tb_clientes tc ON DATE_FORMAT(tc.fecha_cliente, '%Y-%m') = cmes.mes
+            CROSS JOIN calculos c
+        )
+        SELECT
+            cmes.mes,
+            cmes.clientes_mensuales,
+            cmes.nombre_mes,
+            p.prediccion_siguiente_mes,
+            p.nombre_siguiente_mes
+        FROM clientes_mes cmes
+        CROSS JOIN prediccion p
+        ORDER BY cmes.mes ASC;";
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
     //Metodo para saber cantidad de total de pedidos hechas por los clientes
     public function readClientesPedidos()
     {
@@ -374,4 +447,3 @@ class ClienteHandler
         return Database::getRows($sql, $params);
     }
 }
-
