@@ -89,7 +89,7 @@ const fillTable = async (estado=null) => {
     // Se verifica la acción a realizar.
     const FORM = new FormData();
     FORM.append('valor', INPUTSEARCH.value);
-    FORM.append('estado',estado); 
+    FORM.append('estado',estado);
     // Petición para obtener los registros disponibles.
     const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);
     /*(form) ? action = 'searchRows' : action = 'readAll';
@@ -107,8 +107,8 @@ const fillTable = async (estado=null) => {
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Estado: </div>${row.estado_pedido}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12 d-flex justify-content-end">
-                        <button type="button" title="Finalizar pedido" class="btnAgregar"  
-                        style="width: 55%; margin-top: 5px; margin-bottom: 5px;" 
+                        <button type="button" title="Finalizar pedido" class="btnAgregar"
+                        style="width: 55%; margin-top: 5px; margin-bottom: 5px;"
                         onclick="openConfirm(${row.id_pedido},'${row.cliente}','${row.correo_cliente}','${row.codigo_pedido}')">
                             <i class="bi bi-check-lg"></i>
                         </button>
@@ -122,14 +122,14 @@ const fillTable = async (estado=null) => {
                 </tr>
             `;
             TABLE_BODY.innerHTML += rowHTML;
-            } else { 
+            } else {
                 const rowHTML = `
                 <div class="cardlard row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Nombre: </div>${row.cliente}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Estado: </div>${row.estado_pedido}</div>
                     <div class="col-lg-3 col-md-12 col-sm-12 d-flex justify-content-end">
-                        
+
                         <button type="button" title="Detalle pedido" class="btnAgregar"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_pedido})">
                             <i class="bi bi-info-circle" ></i>
                         </button>
@@ -274,7 +274,7 @@ const fillSubTable = async () => {
                     <td>$ ${row.precio_producto}</td>
                     <td>$ ${row.total_pedido}</td>
                     <td>
-                        <button type="button" title="Existe una nota" class="btn btn-danger"  style="width: 75%; 
+                        <button type="button" title="Existe una nota" class="btn btn-danger"  style="width: 75%;
                         margin-top: 5px; margin-bottom: 5px;" onclick="opensubUpdate(${row.id_detalle_pedido})">
                             <i class="bi bi-app-indicator"></i>
                         </button>
@@ -384,6 +384,13 @@ const openReport = () => {
 const openStateReport = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
     const PATH = new URL(`${SERVER_URL}reports/admin/pedidos_estado.php`);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
+}
+
+const openPredictReport = () => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/prediccion_mes_sig.php`);
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }

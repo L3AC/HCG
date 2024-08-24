@@ -20,8 +20,7 @@ if (isset($_GET['action'])) {
                     !$producto->setEstado($_POST['estado'])
                 ) {
                     $result['error'] = $producto->getDataError();
-                } 
-                elseif ($result['dataset'] = $producto->searchRows()) {
+                } elseif ($result['dataset'] = $producto->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -80,7 +79,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Tallas no registradas';
                 }
                 break;
-            
+
             case 'readOne':
                 if (!$producto->setId($_POST['idPedido'])) {
                     $result['error'] = $producto->getDataError();
@@ -91,7 +90,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            /*case 'updateRow':
+                /*case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$producto->setId($_POST['idProducto']) or
@@ -115,7 +114,7 @@ if (isset($_GET['action'])) {
                 break;*/
             case 'deleteRow':
                 if (
-                    !$producto->setId($_POST['idPedido']) 
+                    !$producto->setId($_POST['idPedido'])
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->deleteRow()) {
@@ -125,17 +124,28 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al eliminar el pedido';
                 }
                 break;
+            case 'reporteGanancias':
+                if (
+                    !$detalle->setId($_POST['limit'])
+                ) {
+                    $result['error'] = $detalle->getDataError();
+                } elseif ($result['dataset'] = $detalle->reporteGanancias()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'No hay datos disponibles';
+                }
+                break;
             case 'confirmRow':
-                    if (
-                        !$producto->setId($_POST['idPedido']) 
-                    ) {
-                        $result['error'] = $producto->getDataError();
-                    } elseif ($producto->confirmRow()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Pedido finalizado correctamente';
-                    } else {
-                        $result['error'] = 'Ocurrió un problema al finalizar el pedido';
-                    }
+                if (
+                    !$producto->setId($_POST['idPedido'])
+                ) {
+                    $result['error'] = $producto->getDataError();
+                } elseif ($producto->confirmRow()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Pedido finalizado correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al finalizar el pedido';
+                }
                 break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
