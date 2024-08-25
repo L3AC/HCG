@@ -97,7 +97,7 @@ const fillTable = async () => {
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.
         DATA.dataset.forEach(row => {
-            // Se establece un icono para el estado 
+            // Se establece un icono para el estado
             (row.estado_cliente) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
@@ -109,19 +109,19 @@ const fillTable = async () => {
 
                 <div class="col-lg-1 col-md-12 col-sm-12" style="display: flex; align-items: center;font-size: 30px;"><div class="texto-antes" style="font-size: 17px;">Estado: </div><i  class="${icon}"></i></div>
                 <div class="col-lg-2 col-md-12 col-sm-12 d-flex justify-content-end">
-                <button type="button" title="Detalle pedido" class="btnAgregar btnMargin"  
+                <button type="button" title="Detalle pedido" class="btnAgregar btnMargin"
                 style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_cliente})">
                     <i class="bi bi-pencil-fill"></i>
                 </button>
-                <button type="button" title="Eliminar pedido" class="btnAgregar" 
+                <button type="button" title="Eliminar pedido" class="btnAgregar"
                 style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openDelete(${row.id_cliente})">
                     <i class="bi bi-trash-fill"></i>
                 </button>
-                <button type="button" title="Reporte pedido" class="btnAgregar" 
+                <button type="button" title="Reporte pedido" class="btnAgregar"
                 style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openReportParam(${row.id_cliente})">
                     <i class="bi bi-file-earmark-text-fill"></i>
                 </button>
-            </div>   
+            </div>
         </div>
             `;
         });
@@ -222,6 +222,13 @@ const openReportParam = (id) => {
     const PATH = new URL(`${SERVER_URL}reports/admin/clientes_pedido.php`);
     // Se agrega un parámetro a la ruta con el valor del registro seleccionado.
     PATH.searchParams.append('idCliente', id);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
+}
+
+const openReportPred = () => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/clientes_predic.php`);
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }

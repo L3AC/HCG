@@ -165,17 +165,29 @@ if (isset($_GET['action'])) {
                 }
                 break;
                 // Acción no disponible dentro de la sesión.
-                case 'prediccionClientes':
-                    if (
-                        !$cliente->setId($_POST['limit'])
-                    ) {
-                        $result['error'] = $cliente->getDataError();
-                    } elseif ($result['dataset'] = $cliente->prediccionClientes()) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['error'] = 'No hay datos disponibles';
-                    }
-                    break;
+            case 'prediccionClientes':
+                if (
+                    !$cliente->setId($_POST['limit'])
+                ) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($result['dataset'] = $cliente->prediccionClientes()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'No hay datos disponibles';
+                }
+                break;
+                // Acción no disponible dentro de la sesión.
+            case 'prediccionClientesRep':
+                if (
+                    !$detalle->setId($_POST['limit'])
+                ) {
+                    $result['error'] = $detalle->getDataError();
+                } elseif ($result['dataset'] = $detalle->prediccionClientesRep()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'No hay datos disponibles';
+                }
+                break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
