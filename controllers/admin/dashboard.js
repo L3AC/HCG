@@ -6,16 +6,12 @@ const USUARIO_API = 'services/admin/usuarios.php',
     PEDIDO_API = 'services/admin/pedidos.php';
 
 //Constantes de variables
-const LIST_1 = document.getElementById('list1'),
-    LIST_2 = document.getElementById('list2'),
-    LIST_3 = document.getElementById('list3'),
+const LIST_3 = document.getElementById('list3'),
     LIST_4 = document.getElementById('list4'),
     LIST_5 = document.getElementById('list5'),
     LIST_6 = document.getElementById('list6'),
     LIST_7 = document.getElementById('list7'),
-    LIST_8 = document.getElementById('list8')
-    LIST_9 = document.getElementById('list9'),
-    LIST_10 = document.getElementById('list10');
+    LIST_8 = document.getElementById('list8');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,16 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
     graficaRoles();
     graficaItems();
     // Añadir eventos de cambio a los selectores para actualizar los gráficos.
-    LIST_1.addEventListener('change', graficaTopConjuntos);
-    LIST_2.addEventListener('change', graficaTopComplementos);
     LIST_3.addEventListener('change', graficaTopClientes);
     LIST_4.addEventListener('change', graficaTopCategorias);
     LIST_5.addEventListener('change', graficaGanancias);
     LIST_6.addEventListener('change', graficaHorarios);
     LIST_7.addEventListener('change', graficaClientes);
     LIST_8.addEventListener('change', graficaUsuarios);
-    LIST_9.addEventListener('change', graficaRoles);   
-    LIST_10.addEventListener('change', graficaItems);
 });
 /*
 *   Función asíncrona para mostrar un gráfico de barras con la cantidad de productos por categoría.
@@ -65,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 */
 const graficaTopConjuntos = async () => {
     const FORM = new FormData();
-    FORM.append('limit', LIST_1.value);
+    FORM.append('limit', /*LIST_1.value*/'5');
     // Petición para obtener los datos del gráfico.
     const DATA = await fetchData(DETALLE_API, 'topConjuntos',FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
@@ -88,7 +80,7 @@ const graficaTopConjuntos = async () => {
 }
 const graficaTopComplementos = async () => {
     const FORM = new FormData();
-    FORM.append('limit', LIST_2.value);
+    FORM.append('limit', /*LIST_2.value*/'5');
     // Petición para obtener los datos del gráfico.
     const DATA = await fetchData(DETALLE_API, 'topComplementos',FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
@@ -256,7 +248,7 @@ const graficaUsuarios = async () => {
 }
 const graficaRoles = async () => {
     const FORM = new FormData();
-    FORM.append('limit', LIST_9.value);
+    FORM.append('limit', '5'/*LIST_9.value*/);
     // Petición para obtener los datos del gráfico.
     const DATA = await fetchData(USUARIO_API, 'topRoles',FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
@@ -279,7 +271,7 @@ const graficaRoles = async () => {
 }
 const graficaItems = async () => {
     const FORM = new FormData();
-    FORM.append('limit', LIST_10.value);
+    FORM.append('limit', '10'/*LIST_10.value*/);
     // Petición para obtener los datos del gráfico.
     const DATA = await fetchData(DETALLE_API, 'graficaItems',FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
