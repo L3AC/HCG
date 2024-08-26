@@ -16,7 +16,8 @@ $cliente = new ClienteData;
 $pdf->ln(8);
 
 // Obtener datos
-$dataP = $cliente->prediccionClientesRep();
+$cliente->setId(6);
+$dataP = $cliente->prediccionClientes();
 
 // Verificar si existen registros para mostrar
 if ($dataP) {
