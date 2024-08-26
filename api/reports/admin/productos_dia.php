@@ -19,10 +19,10 @@ if (isset($_GET['listDay'])) {
 
         // Descripción del reporte
         $pdf->setFont('Arial', '', 13);
-        $pdf->write(8, $pdf->encodeString('         A continuación, se podrá observar cada producto que esta disponible segun el dia seleccionado.'));
+        $pdf->write(8, $pdf->encodeString('         A continuación, se podrá observar cada producto que está disponible según el día seleccionado.'));
         // Espacio
         $pdf->ln(10);
-        $pdf->write(8, $pdf->encodeString('         Los productos mostrados estan ordenados segun su precio, se han ordenado de menor a mayor los datos.'));
+        $pdf->write(8, $pdf->encodeString('         Los productos mostrados están ordenados según su precio, se han ordenado de menor a mayor los datos.'));
         // Espacio
         $pdf->ln(15);
 
