@@ -1,0 +1,40 @@
+1. Escribe Código Claro y Legible:
+Nombres Significativos: Usa nombres descriptivos para variables, funciones, y clases. Ejemplo: totalSales en lugar de x.
+Comentarios Claros: Documenta el propósito del código y explica las partes complejas. Sin embargo, no abuses de los comentarios; el código debe ser autoexplicativo.
+Formato Consistente: Sigue convenciones de estilo de tu lenguaje (por ejemplo, PEP 8 en Python). Indenta correctamente y organiza tu código en bloques.
+
+2. Modularidad y Reutilización:
+Funciones y Métodos Pequeños: Divide tu código en funciones pequeñas que hagan una sola cosa (Single Responsibility Principle). Esto facilita la lectura y el mantenimiento.
+DRY (Don't Repeat Yourself): Evita la duplicación de código. Si ves que estás repitiendo código, considera extraerlo en una función o clase.
+
+3. Gestión de Errores y Excepciones:
+Manejo de Excepciones: Implementa manejo de errores adecuado con bloques try-catch o equivalentes según el lenguaje. Asegúrate de tratar las excepciones de manera que no oculten errores críticos.
+Validación de Entradas: Siempre valida las entradas de usuarios o datos externos para evitar errores o vulnerabilidades de seguridad.
+
+4. Pruebas y Debugging:
+Pruebas Unitarias: Escribe pruebas unitarias para verificar que cada componente funcione correctamente. Esto ayuda a detectar problemas desde etapas tempranas.
+Test Driven Development (TDD): Considera escribir tus pruebas antes de implementar la funcionalidad. Esto asegura que tu código siempre tenga un propósito claro.
+Depuración: Usa herramientas de depuración en lugar de print para rastrear y corregir errores.
+
+5. Uso de Control de Versiones:
+Git: Usa un sistema de control de versiones como Git. Haz commits pequeños y descriptivos, y utiliza ramas para desarrollar nuevas funcionalidades o corregir errores.
+Comentarios de Commit: Escribe mensajes de commit claros y concisos para facilitar el seguimiento de los cambios.
+
+6. Optimización y Rendimiento:
+Eficiencia Algorítmica: Considera la complejidad de los algoritmos que implementas. Asegúrate de que tu código sea eficiente en términos de tiempo y espacio.
+Optimización Prematura: No optimices el código antes de identificar un problema real de rendimiento. Primero, asegúrate de que tu código funcione correctamente.
+
+7. Documentación:
+Documentación del Código: Asegúrate de que el código esté bien documentado, incluyendo instrucciones para su uso, configuración y posibles dependencias.
+ReadMe y Wikis: Crea archivos ReadMe o wikis para documentar cómo instalar, configurar y ejecutar tu proyecto.
+
+8. Revisión de Código:
+Peer Reviews: Participa en revisiones de código. Esto no solo mejora la calidad del código, sino que también fomenta el aprendizaje entre compañeros.
+Linter y Análisis Estático: Utiliza linters y herramientas de análisis estático para identificar problemas potenciales en el código antes de la ejecución.
+
+9. Seguridad:
+Protección de Datos Sensibles: Nunca expongas credenciales, claves API u otros datos sensibles en tu código. Usa variables de entorno y sistemas de gestión de secretos.
+Sanitización de Datos: Siempre sanitiza las entradas para proteger tu aplicación de ataques como inyección SQL o cross-site scripting (XSS).
+
+10. Mantén el Código Simple:
+KISS (Keep It Simple, Stupid): No hagas el código más complicado de lo necesario. La simplicidad hace que el código sea más fácil de mantener y menos propenso a errores.
