@@ -17,16 +17,16 @@ if (isset($_GET['idTipoItem'])) {
         // Se verifica si la categoría existe, de lo contrario se muestra un mensaje.
         if ($rowTipoItem = $tipoItem->readOne()) {
             // Se inicia el reporte con el encabezado del documento.
-            $pdf->startReport('Tipo Item: ' . $rowTipoItem['descripcion_tipo_item']);
+            $pdf->startReport('Tipo Ítem: ' . $rowTipoItem['descripcion_tipo_item']);
             // Se establece la fuente para los encabezados.
             $pdf->setFont('Arial', 'B', 13);
 
-            $pdf->write(6, $pdf->encodeString('Productos segun tipo de item'));
+            $pdf->write(6, $pdf->encodeString('Productos según tipo de ítem'));
             $pdf->ln(9);
 
             // Descripción del reporte
             $pdf->setFont('Arial', '', 12);
-            $pdf->write(6, $pdf->encodeString('A continuación, se podrán observar cuantos productos cuenta  el tipo item : " ' .$rowTipoItem['descripcion_tipo_item'] . '" .'));
+            $pdf->write(6, $pdf->encodeString('A continuación, se podrán observar cuantos productos cuenta el tipo ítem: "' .$rowTipoItem['descripcion_tipo_item'] . '".'));
             $pdf->ln(9);
             // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
             if ($dataProductos = $producto->productosTipoItem()) {
@@ -39,7 +39,7 @@ if (isset($_GET['idTipoItem'])) {
                 // Se imprimen las celdas con los encabezados.
                 $pdf->cell(70, 10, 'Nombre', 'B', 0, 'C', 1);
                 $pdf->cell(70, 10, 'Horario del producto', 'B', 0, 'C', 1);
-                $pdf->cell(50, 10, 'Item', 'B', 1, 'C', 1);
+                $pdf->cell(50, 10, $pdf->encodeString('Ítem'), 'B', 1, 'C', 1);
                 // Se establece la fuente para los datos de los productos.
                 $pdf->setFont('Arial', '', 12);
                 $pdf->SetTextColor(0, 0, 0);

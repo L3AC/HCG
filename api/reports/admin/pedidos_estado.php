@@ -67,7 +67,7 @@ $pdf->ln(9);
 
 // Descripción del reporte
 $pdf->setFont('Arial', '', 11);
-$pdf->write(6, $pdf->encodeString('A continuación, se podrán el conteo total de los pedidos, de cuantos han sido entregados en total y cuantos aun se encuentra en pendientes o no entregados.'));
+$pdf->write(6, $pdf->encodeString('A continuación, se podrán el conteo total de los pedidos, de cuantos han sido entregados en total y cuantos aún se encuentra en pendientes o no entregados.'));
 $pdf->ln(9);
 
 // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.

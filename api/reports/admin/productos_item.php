@@ -17,7 +17,7 @@ if (isset($_GET['idItem'])) {
         // Se verifica si la categoría existe, de lo contrario se muestra un mensaje.
         if ($rowItem = $item->readOne()) {
             // Se inicia el reporte con el encabezado del documento.
-            $pdf->startReport('Item: ' . $rowItem['descripcion_item']);
+            $pdf->startReport('Ítem: ' . $rowItem['descripcion_item']);
             // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
             if ($dataProductos = $producto->productosItem()) {
                 // Se establece un color de relleno para los encabezados.
@@ -29,7 +29,7 @@ if (isset($_GET['idItem'])) {
                 // Se imprimen las celdas con los encabezados.
                 $pdf->cell(70, 10, 'Nombre', 'B', 0, 'C', 1);
                 $pdf->cell(70, 10, 'Horario del producto', 'B', 0, 'C', 1);
-                $pdf->cell(50, 10, 'Tipo de item', 'B', 1, 'C', 1);
+                $pdf->cell(50, 10, $pdf->encodeString('Tipo de ítem'), 'B', 1, 'C', 1);
                 // Se establece la fuente para los datos de los productos.
                 $pdf->setFont('Arial', '', 12);
                 $pdf->SetTextColor(0, 0, 0);

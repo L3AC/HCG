@@ -14,7 +14,7 @@ $pedido = new PedidoData;
 
 // Descripción del reporte
 $pdf->setFont('Arial', '', 11);
-$pdf->write(6, $pdf->encodeString('A continuación, se muestran las ganancias obtenidas de los ultimos 6 meses'));
+$pdf->write(6, $pdf->encodeString('A continuación, se muestran las ganancias obtenidas de los últimos 6 meses'));
 $pdf->ln(8);
 
 // Obtener datos

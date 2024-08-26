@@ -7,7 +7,7 @@ require_once('../../models/data/tipoitems_data.php');
 // Se instancia la clase para crear el reporte.
 $pdf = new Report;
 // Se inicia el reporte con el encabezado del documento.
-$pdf->startReport('Datos de tipos items');
+$pdf->startReport('Datos de tipos ítems');
 // Se instancia el módelo Categoría para obtener los datos.
 $tipoItem = new TipoItemData;
 
@@ -17,7 +17,7 @@ $pdf->ln(8);
 // Se establece la fuente para los encabezados.
 $pdf->setFont('Arial', 'B', 12);
 
-$pdf->write(6, $pdf->encodeString('Conteo total del uso de tipo items'));
+$pdf->write(6, $pdf->encodeString('Conteo total del uso de tipo ítems'));
 $pdf->ln(9);
 
 // Descripción del reporte
@@ -38,7 +38,7 @@ if ($dataP = $tipoItem->readItemsTipoI()) {
     $pdf->SetX(($pdf->GetPageWidth() - $tableWidth) / 2);
 
     // Se imprimen las celdas con los encabezados.
-    $pdf->cell(60, 10, 'Nombre del tipo item', 'B', 0, 'C', 1);
+    $pdf->cell(60, 10, $pdf->encodeString('Nombre del tipo ítem'), 'B', 0, 'C', 1);
     $pdf->cell(60, 10, 'Cantidad', 'B', 1, 'C', 1);
 
     // Se establece un color de relleno para mostrar el nombre de la categoría.
@@ -65,7 +65,7 @@ if ($dataP = $tipoItem->readItemsTipoIMax()) {
 
     // Descripción del reporte
     $pdf->setFont('Arial', 'B', 12);
-    $pdf->write(6, $pdf->encodeString('Tipo de item con más items agregados'));
+    $pdf->write(6, $pdf->encodeString('Tipo de ítems con más ítems agregados'));
     $pdf->ln(9);
     
     // Se establece la fuente para los encabezados.

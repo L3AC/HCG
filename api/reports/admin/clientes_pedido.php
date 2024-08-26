@@ -34,7 +34,7 @@ if (isset($_GET['idCliente'])) {
                 $pdf->setFont('Arial', 'B', 14);
 
                 // Se imprimen las celdas con los encabezados.
-                $pdf->cell(40, 10, 'Codigo', 'B', 0, 'C', 1);
+                $pdf->cell(40, 10, $pdf->encodeString('Código'), 'B', 0, 'C', 1);
                 $pdf->cell(30, 10, 'Cantidad', 'B', 0, 'C', 1);
                 $pdf->cell(50, 10, 'Fecha', 'B', 0, 'C', 1);
                 $pdf->cell(70, 10, 'Productos solicitados', 'B', 1, 'C', 1);
