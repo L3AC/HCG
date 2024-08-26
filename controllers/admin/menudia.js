@@ -33,9 +33,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log(DATA);
     if (DATA.status) {
         CONJUNTOS.innerHTML = '';
-        DATA.dataset.conjunto.forEach((row, index) => {
-            const activeClass = index === 0 ? 'active' : '';
+        const conjuntosLength = DATA.dataset.conjunto.length;
+
+        // Iterar de dos en dos
+        for (let i = 0; i < conjuntosLength; i += 2) {
+            const activeClass = i === 0 ? 'active' : '';
+            const row1 = DATA.dataset.conjunto[i];
+            const row2 = i + 1 < conjuntosLength ? DATA.dataset.conjunto[i + 1] : null; // Verificar si existe el segundo elemento
+
             CONJUNTOS.innerHTML += `
+                <div class="carousel-item ${activeClass}">
+                    <div class="menu-item">
+                        <img src="${row1.imagen_producto}" alt="${row1.descripcion_producto}" style="width: 200px; height: 200px; border-radius: 20px;">
+                        <p>${row1.descripcion_producto}</p>
+                        <p class="price">$${row1.precio_producto}</p>
+                    </div>
+                    ${row2 ? `
+                    <div class="menu-item">
+                        <img src="${row2.imagen_producto}" alt="${row2.descripcion_producto}" style="width: 200px; height: 200px; border-radius: 20px;">
+                        <p>${row2.descripcion_producto}</p>
+                        <p class="price">$${row2.precio_producto}</p>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+
+        COMPLEMENTOS.innerHTML = '';
+        DATA.dataset.complementario.forEach((row, index) => {
+            const activeClass = index === 0 ? 'active' : '';
+            COMPLEMENTOS.innerHTML += `
                 <div class="carousel-item ${activeClass}">
                     <div class="menu-item">
                     <img src="${row.imagen_producto}" alt"${row.descripcion_producto}" style="width: 200px; height: 200px;     border-radius: 20px;
@@ -45,15 +73,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>
                 </div>
             `;
-        });
-
-        COMPLEMENTOS.innerHTML = '';
-        DATA.dataset.complementario.forEach(row => {
-            COMPLEMENTOS.innerHTML += `
-                <div class="menu-item">
-                    <p>${row.descripcion_producto}</p>
-                    <p class="price">$${row.precio_producto}</p>
-                </div>`;
         });
     } else {
         // Manejo de errores si no hay datos

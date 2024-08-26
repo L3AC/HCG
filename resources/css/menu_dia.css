@@ -135,8 +135,8 @@ align-items: center;
 }
 
 .imglogo {
-    width: 580px;
-    height: 580px;
+    width: 680px;
+    height: 680px;
     object-fit: contain;
     animation: myAnim 5s ease-in-out infinite;
 }
@@ -171,8 +171,8 @@ align-items: center;
 }
 
 .imghamburguesa {
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     object-fit: contain;
     animation: hamburguesa 5s ease-in-out infinite;
 }
@@ -232,7 +232,7 @@ align-items: center;
 
 .imghamburguesa-container {
     position: absolute;
-    top: 380px;
+    top: 780px;
     left: -130px;
 }
 
