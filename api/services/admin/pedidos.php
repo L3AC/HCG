@@ -1,3 +1,4 @@
+
 <?php
 // Se incluye la clase del modelo.
 require_once('../../models/data/pedidos_data.php');
@@ -122,17 +123,6 @@ if (isset($_GET['action'])) {
                     $result['message'] = 'Pedido eliminado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar el pedido';
-                }
-                break;
-            case 'reporteGanancias':
-                if (
-                    !$detalle->setId($_POST['limit'])
-                ) {
-                    $result['error'] = $detalle->getDataError();
-                } elseif ($result['dataset'] = $detalle->reporteGanancias()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'No hay datos disponibles';
                 }
                 break;
             case 'confirmRow':

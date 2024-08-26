@@ -2,7 +2,7 @@
 // Se incluye la clase con las plantillas para generar reportes.
 require_once('../../helpers/report.php');
 // Se incluyen las clases para la transferencia y acceso a datos.
-require_once('../../models/data/pedidos_data.php');
+require_once('../../models/data/detallepedidos_data.php');
 
 // Se instancia la clase para crear el reporte.
 $pdf = new Report;
@@ -10,7 +10,7 @@ $pdf = new Report;
 $pdf->startReport('Ganancias Mensuales');
 
 // Se instancia el modelo PedidosData para obtener los datos.
-$pedido = new PedidoData;
+$pedido = new DetallePedidoData;
 
 // Descripción del reporte
 $pdf->setFont('Arial', '', 11);
@@ -18,7 +18,8 @@ $pdf->write(6, $pdf->encodeString('A continuación, se muestran las ganancias ob
 $pdf->ln(8);
 
 // Obtener datos
-$dataP = $pedido->reporteGanancias();
+$pedido->setId(6);
+$dataP = $pedido->prediccionGanancia();
 
 // Verificar si existen registros para mostrar
 if ($dataP) {

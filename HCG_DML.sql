@@ -53,7 +53,15 @@ lY56MlAIOAvXHvPEVxBDVzG1uz1zULEBYdJ-I4Aa-xOyPEVvv7fmIjLnxaOz",true,true,true,tru
 ((SELECT get_next_id("tb_productos")),"Complementario","Tiramisú","Cena",4.5,
 "https://mui.kitchen/__export/1604882392531/sites/muikitchen/img/2020/11/08/receta-tiramisu-italiano.jpg_1103262588.jpg",true,false,false,false,true,false,false,true),
 ((SELECT get_next_id("tb_productos")),"Complementario","Fruta fresca","Todo el día",3.5,
-"https://d2d8wwwkmhfcva.cloudfront.net/800x/d2lnr5mha7bycj.cloudfront.net/product-image/file/large_b2c11e1a-b4b0-43e6-936d-7c66c1e5fd9c.jpg",true,true,true,true,true,true,true,true);
+"https://d2d8wwwkmhfcva.cloudfront.net/800x/d2lnr5mha7bycj.cloudfront.net/product-image/file/large_b2c11e1a-b4b0-43e6-936d-7c66c1e5fd9c.jpg",true,true,true,true,true,true,true,true),
+((SELECT get_next_id("tb_productos")), "Complementario", "Pan de Ajo", "Todo el día", 4.0,
+"https://1.bp.blogspot.com/-kJK-2rEMj40/W-7MkDM_beI/AAAAAAAAe9s/uansbl6rmPwGw6eFgHfTfafmPSX2cmd_QCLcBGAs/s1600/Pan%2Bde%2Bajo%2B01.jpg", true, true, true, true, true, true, true, true),
+((SELECT get_next_id("tb_productos")), "Complementario", "Guacamole", "Todo el día", 5.0,
+"https://www.thespruceeats.com/thmb/0KXm7SVduHXRaqbv1xM755yPEDU=/4048x2696/filters:fill(auto,1)/simple-guacamole-recipe-2342710-hero-01-0abcdd8e923c41788d0c38230cd7d86e.jpg", true, true, true, true, true, true, true, true),
+((SELECT get_next_id("tb_productos")), "Complementario", "Papas Fritas", "Todo el día", 3.0,
+"https://cdn.kiwilimon.com/recetaimagen/15785/7818.jpg", true, true, true, true, true, true, true, true),
+((SELECT get_next_id("tb_productos")), "Complementario", "Aros de Cebolla", "Todo el día", 5.5,
+"https://www.notiactual.com/wp-content/uploads/2017/02/Aros-de-cebolla.jpg", true, true, true, true, true, true, true, true);
 
 
 INSERT INTO tb_detalle_productos(id_detalle_producto,id_item,id_producto,cantidad_item) 
@@ -95,30 +103,45 @@ VALUES
 ((SELECT get_next_id("tb_usuarios")), 2, "smartinez", "$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je", "Sofia", "Martinez", "sofiamtz@gmail.com", "c3b2a1", '2024-08-15 10:00:00');
 
 
-INSERT INTO tb_pedidos (id_pedido, id_cliente,estado_pedido,codigo_pedido,fecha_pedido)
+-- Insertar pedidos
+INSERT INTO tb_pedidos (id_pedido, id_cliente, estado_pedido, codigo_pedido, fecha_pedido)
 VALUES 
-((SELECT get_next_id("tb_pedidos")), 1,'Pendiente',generar_codigo(),'2024-01-15 10:00:00'),
-((SELECT get_next_id("tb_pedidos")), 2,'Pendiente',generar_codigo(),'2024-01-15 10:00:00'),
-((SELECT get_next_id("tb_pedidos")), 3,'Pendiente',generar_codigo(),'2024-02-15 10:00:00'),
-((SELECT get_next_id("tb_pedidos")), 4,'Pendiente',generar_codigo(),'2024-02-15 10:00:00'),
-((SELECT get_next_id("tb_pedidos")), 5,'Pendiente',generar_codigo(),'2024-03-15 10:00:00'),
-((SELECT get_next_id("tb_pedidos")), 6,'Pendiente',generar_codigo(),'2024-03-15 10:00:00'),
-((SELECT get_next_id("tb_pedidos")), 7,'Pendiente',generar_codigo(),'2024-04-15 10:00:00'),
-((SELECT get_next_id("tb_pedidos")), 8,'Pendiente',generar_codigo(),'2024-05-15 10:00:00'),
-((SELECT get_next_id("tb_pedidos")), 9,'Pendiente',generar_codigo(),'2024-06-15 10:00:00'),
-((SELECT get_next_id("tb_pedidos")), 10,'Pendiente',generar_codigo(),'2024-07-15 10:00:00');
+((SELECT get_next_id('tb_pedidos')), 1, 'Finalizado', generar_codigo(), '2024-01-15 10:00:00'),
+((SELECT get_next_id('tb_pedidos')), 2, 'Finalizado', generar_codigo(), '2024-01-15 10:00:00'),
+((SELECT get_next_id('tb_pedidos')), 3, 'Finalizado', generar_codigo(), '2024-02-15 10:00:00'),
+((SELECT get_next_id('tb_pedidos')), 4, 'Finalizado', generar_codigo(), '2024-02-15 10:00:00'),
+((SELECT get_next_id('tb_pedidos')), 5, 'Finalizado', generar_codigo(), '2024-03-15 10:00:00'),
+((SELECT get_next_id('tb_pedidos')), 6, 'Finalizado', generar_codigo(), '2024-03-15 10:00:00'),
+((SELECT get_next_id('tb_pedidos')), 7, 'Finalizado', generar_codigo(), '2024-04-15 10:00:00'),
+((SELECT get_next_id('tb_pedidos')), 8, 'Finalizado', generar_codigo(), '2024-05-15 10:00:00'),
+((SELECT get_next_id('tb_pedidos')), 9, 'Finalizado', generar_codigo(), '2024-06-15 10:00:00'),
+((SELECT get_next_id('tb_pedidos')), 10, 'Finalizado', generar_codigo(), '2024-06-15 10:00:00'),
+((SELECT get_next_id('tb_pedidos')), 10, 'Finalizado', generar_codigo(), '2024-07-15 11:00:00'),
+((SELECT get_next_id('tb_pedidos')), 9, 'Finalizado', generar_codigo(), '2024-07-15 12:00:00'),
+((SELECT get_next_id('tb_pedidos')), 8, 'Finalizado', generar_codigo(), '2024-07-15 13:00:00');
 
-
-INSERT INTO tb_detalle_pedidos (id_detalle_pedido,id_pedido, id_producto, cantidad_pedido)
-VALUES((SELECT get_next_id("tb_detalle_pedidos")),1, 1, 2),
-((SELECT get_next_id("tb_detalle_pedidos")),1, 2, 1),
-((SELECT get_next_id("tb_detalle_pedidos")),2, 3, 3),
-((SELECT get_next_id("tb_detalle_pedidos")),2, 4, 2),
-((SELECT get_next_id("tb_detalle_pedidos")),3, 5, 1),
-((SELECT get_next_id("tb_detalle_pedidos")),3, 6, 2),
-((SELECT get_next_id("tb_detalle_pedidos")),4, 7, 1),
-((SELECT get_next_id("tb_detalle_pedidos")),4, 8, 3),
-((SELECT get_next_id("tb_detalle_pedidos")),5, 9, 2),
-((SELECT get_next_id("tb_detalle_pedidos")),5, 10, 1);
-
+-- Insertar detalles de pedidos
+INSERT INTO tb_detalle_pedidos (id_detalle_pedido, id_pedido, id_producto, cantidad_pedido)
+VALUES 
+((SELECT get_next_id('tb_detalle_pedidos')), 1, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Combo Hamburguesa'), 2),
+((SELECT get_next_id('tb_detalle_pedidos')), 1, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Tacos de carne asada'), 1),
+((SELECT get_next_id('tb_detalle_pedidos')), 2, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Pasta Alfredo'), 2),
+((SELECT get_next_id('tb_detalle_pedidos')), 2, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Sopa de pollo'), 1),
+((SELECT get_next_id('tb_detalle_pedidos')), 3, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Nachos Preparados'), 3),
+((SELECT get_next_id('tb_detalle_pedidos')), 4, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Hamburguesa de pollo'), 1),
+((SELECT get_next_id('tb_detalle_pedidos')), 5, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Sandwich club'), 2),
+((SELECT get_next_id('tb_detalle_pedidos')), 5, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Fruta fresca'), 1),
+((SELECT get_next_id('tb_detalle_pedidos')), 6, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Tiramisú'), 2),
+((SELECT get_next_id('tb_detalle_pedidos')), 7, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Ensalada mixta'), 1),
+((SELECT get_next_id('tb_detalle_pedidos')), 8, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Combo Hamburguesa'), 2),
+((SELECT get_next_id('tb_detalle_pedidos')), 8, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Tacos de carne asada'), 1),
+((SELECT get_next_id('tb_detalle_pedidos')), 9, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Pasta Alfredo'), 1),
+((SELECT get_next_id('tb_detalle_pedidos')), 9, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Sopa de pollo'), 2),
+((SELECT get_next_id('tb_detalle_pedidos')), 10, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Nachos Preparados'), 2),
+((SELECT get_next_id('tb_detalle_pedidos')), 11, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Ensalada mixta'), 2),
+((SELECT get_next_id('tb_detalle_pedidos')), 11, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Papas Fritas'), 3),
+((SELECT get_next_id('tb_detalle_pedidos')), 12, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Guacamole'), 1),
+((SELECT get_next_id('tb_detalle_pedidos')), 12, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Aros de Cebolla'), 2),
+((SELECT get_next_id('tb_detalle_pedidos')), 13, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Fruta fresca'), 1),
+((SELECT get_next_id('tb_detalle_pedidos')), 13, (SELECT id_producto FROM tb_productos WHERE descripcion_producto = 'Tiramisú'), 2);
 
