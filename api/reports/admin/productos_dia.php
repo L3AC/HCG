@@ -15,7 +15,7 @@ if (isset($_GET['listDay'])) {
     if ($productos->setComboBdia($_GET['listDay'])) {
         // Se verifica si el cliente existe, de lo contrario se muestra un mensaje.
         // Se inicia el reporte con el encabezado del documento.
-        $pdf->startReport('Productos del día seleccionado');
+        $pdf->startReport('Productos del día ' . $_GET['listDay']);
 
         // Descripción del reporte
         $pdf->setFont('Arial', '', 13);
