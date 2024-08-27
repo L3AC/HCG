@@ -7,3 +7,16 @@
 4. **Uso de comentarios descriptivos**: El código está bien documentado con comentarios que explican la funcionalidad de bloques específicos de código. Esto ayuda a otros desarrolladores a entender rápidamente el propósito de cada sección del script.
 
 5. **Manejo de errores y excepciones**: El código utiliza un enfoque estructurado para manejar errores y excepciones. Utiliza mensajes de error específicos y verificaciones de estado para manejar diferentes escenarios, lo que es esencial para una buena experiencia de usuario y para el mantenimiento del código.
+
+
+Estándares de JS:
+
+1. **Consistencia en el uso de `const` y `let`**: Verifica que todos los elementos que no cambian después de ser declarados estén definidos como `const`. En tu código, todos están bien definidos, pero asegúrate de mantener esa consistencia en todo el script.
+
+2. **Separación de lógica y manipulación del DOM**: Aunque tu código ya sigue este principio, podrías considerar la posibilidad de separar aún más la lógica de obtención de datos (API calls) y la manipulación del DOM para mejorar la legibilidad y facilidad de mantenimiento.
+
+3. **Uso de funciones utilitarias**: Podrías crear funciones utilitarias adicionales para evitar repetición de código, especialmente para tareas comunes como mostrar alertas o hacer fetch.
+
+4. **Control de errores y manejo de excepciones**: Aunque tienes un manejo básico de errores con la función `sweetAlert`, considera implementar un manejo de excepciones más robusto para casos donde el fetch falle o se presenten errores inesperados.
+
+5. **Optimización del rendimiento**: Observa el número de manipulaciones directas al DOM, ya que pueden afectar el rendimiento si hay muchas operaciones. Podrías considerar el uso de fragmentos de documento o técnicas similares para optimizar la manipulación del DOM.
