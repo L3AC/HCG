@@ -1,5 +1,3 @@
-Para analizar el código y extraer cinco estándares de programación en PHP, observamos las prácticas utilizadas. Aquí están cinco estándares observados en el código:
-
 1. **Sangría de 4 espacios**: El código utiliza una sangría de 4 espacios para mejorar la legibilidad y organización del código. Esto es crucial para mantener la estructura clara, especialmente en bloques de control como `if`, `switch`, y `case`.
 
 2. **Uso de CamelCase en nombres de métodos y variables**: En el código, los nombres de métodos como `setNombre`, `setApellido`, `readExist` y las variables como `$clienteData`, siguen la convención CamelCase, lo que facilita la legibilidad y coherencia en la nomenclatura de las funciones y variables.
@@ -9,5 +7,3 @@ Para analizar el código y extraer cinco estándares de programación en PHP, ob
 4. **Uso de comentarios descriptivos**: El código está bien documentado con comentarios que explican la funcionalidad de bloques específicos de código. Esto ayuda a otros desarrolladores a entender rápidamente el propósito de cada sección del script.
 
 5. **Manejo de errores y excepciones**: El código utiliza un enfoque estructurado para manejar errores y excepciones. Utiliza mensajes de error específicos y verificaciones de estado para manejar diferentes escenarios, lo que es esencial para una buena experiencia de usuario y para el mantenimiento del código.
-
-Estos estándares ayudan a mejorar la calidad del código, facilitando la comprensión y el mantenimiento por parte de otros desarrolladores.
