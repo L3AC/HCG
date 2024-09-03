@@ -37,7 +37,6 @@ CREATE TABLE tb_usuarios(
 );
 
 
-
 CREATE TABLE tb_clientes(
   id_cliente INT UNSIGNED,
   usuario_cliente VARCHAR(255) NOT NULL,
