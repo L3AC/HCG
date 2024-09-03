@@ -8,7 +8,6 @@
 
 5. **Manejo de errores y excepciones**: El código utiliza un enfoque estructurado para manejar errores y excepciones. Utiliza mensajes de error específicos y verificaciones de estado para manejar diferentes escenarios, lo que es esencial para una buena experiencia de usuario y para el mantenimiento del código.
 
-
 Estándares de JS:
 
 1. **Consistencia en el uso de `const` y `let`**: Verifica que todos los elementos que no cambian después de ser declarados estén definidos como `const`. En tu código, todos están bien definidos, pero asegúrate de mantener esa consistencia en todo el script.
