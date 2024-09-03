@@ -28,6 +28,7 @@ CREATE TABLE tb_usuarios(
   estado_usuario BOOLEAN DEFAULT TRUE,
   fecha_usuario TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   intentos_usuario INT UNSIGNED DEFAULT 0,
+  fecha_reactivacion TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (id_usuario),
   CONSTRAINT alias_usuario UNIQUE (alias_usuario),
   CONSTRAINT fk_usuario_rol
@@ -46,6 +47,7 @@ CREATE TABLE tb_clientes(
   pin_cliente VARCHAR(6) NOT NULL DEFAULT '000000',
   fecha_cliente TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   intentos_cliente INT UNSIGNED DEFAULT 0,
+  fecha_reactivacion TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (id_cliente),
   CONSTRAINT usuario_unique UNIQUE (usuario_cliente),
   CONSTRAINT telefono_unique UNIQUE (telefono_cliente),
