@@ -199,7 +199,9 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
                 if (!$Usuario->checkPassword($_POST['claveActual'])) {
                     $result['error'] = 'Contraseña actual incorrecta';
-                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                }  elseif ($_POST['claveActual'] == $_POST['claveNueva']) {
+                    $result['error'] = 'La clave nueva no puede ser igual a la actual';
+                }  elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Confirmación de contraseña diferente';
                 } elseif (!$Usuario->setClave($_POST['claveNueva'])) {
                     $result['error'] = $Usuario->getDataError();
