@@ -35,6 +35,8 @@ CREATE TABLE tb_usuarios(
   FOREIGN KEY(id_rol) REFERENCES tb_roles(id_rol)
 );
 
+
+
 CREATE TABLE tb_clientes(
   id_cliente INT UNSIGNED,
   usuario_cliente VARCHAR(255) NOT NULL,

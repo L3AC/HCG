@@ -43,7 +43,7 @@ class UsuarioHandler
     {
         $sql = 'SELECT id_usuario ,id_rol, alias_usuario, clave_usuario, email_usuario,
         estado_rol, productos_opc,pedidos_opc, tipo_items_opc,items_opc,
-        clientes_opc, usuarios_opc, roles_opc,intentos_usuarios
+        clientes_opc, usuarios_opc, roles_opc,intentos_usuario
         FROM tb_usuarios
         INNER JOIN tb_roles using(id_rol)
         WHERE  estado_usuario=true AND alias_usuario = ? AND estado_rol=true';
@@ -67,13 +67,13 @@ class UsuarioHandler
             //echo ($_SESSION['usuario']).' 1';
             return true;
         } else {
-            $_SESSION['count'] = 1; 
+          /*  $_SESSION['count'] = 1; 
             if($_SESSION['count']) {
 
             }
             $sql = 'UPDATE tb_usuarios SET intentos_usuario = ? WHERE alias_usuario = ?';
             $params = array(,$username);
-            Database::executeRow($sql, $params);
+            Database::executeRow($sql, $params);*/
             return false;
         }
     }
