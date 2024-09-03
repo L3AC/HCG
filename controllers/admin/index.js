@@ -45,6 +45,7 @@ SIGNUP_FORM.addEventListener('submit', async (event) => {
 });
 
 // Método del evento para cuando se envía el formulario de inicio de sesión.
+// Método del evento para cuando se envía el formulario de inicio de sesión.
 LOGIN_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
@@ -52,11 +53,13 @@ LOGIN_FORM.addEventListener('submit', async (event) => {
     const FORM = new FormData(LOGIN_FORM);
     // Petición para iniciar sesión.
     const DATA = await fetchData(USER_API, 'logIn', FORM);
+
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         sweetAlert(1, DATA.message, true, 'dashboard.html');
-    } else { 
-        sweetAlert(3, "Credenciales inválidas", true);
-        //alerta(4, DATA.error, true,"https://unsplash.it/400/200");
+    } else {
+        // Mostrar mensaje de error devuelto por el servidor
+        sweetAlert(3, DATA.error, true);
     }
 });
+
