@@ -29,12 +29,13 @@ CREATE TABLE tb_usuarios(
   fecha_usuario TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   intentos_usuario INT UNSIGNED DEFAULT 0,
   fecha_reactivacion TIMESTAMP NULL DEFAULT NULL,
+  ultimo_intento TIMESTAMP NULL DEFAULT NULL,
+  ultimo_cambio_clave TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   PRIMARY KEY (id_usuario),
   CONSTRAINT alias_usuario UNIQUE (alias_usuario),
   CONSTRAINT fk_usuario_rol
   FOREIGN KEY(id_rol) REFERENCES tb_roles(id_rol)
 );
-
 
 
 CREATE TABLE tb_clientes(
@@ -50,6 +51,8 @@ CREATE TABLE tb_clientes(
   fecha_cliente TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   intentos_cliente INT UNSIGNED DEFAULT 0,
   fecha_reactivacion TIMESTAMP NULL DEFAULT NULL,
+  ultimo_intento TIMESTAMP NULL DEFAULT NULL,
+    ultimo_cambio_clave TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   PRIMARY KEY (id_cliente),
   CONSTRAINT usuario_unique UNIQUE (usuario_cliente),
   CONSTRAINT telefono_unique UNIQUE (telefono_cliente),
