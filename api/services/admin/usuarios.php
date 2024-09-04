@@ -135,9 +135,11 @@ if (isset($_GET['action'])) {
 
             // Obtener información del usuario en sesión.
             case 'getUser':
-                if (isset($_SESSION['usuarion'])) {
+                if (isset($_SESSION['usuarion'])) {  
                     $result['status'] = 1;
+                    $result['dataset'] = 1;
                     $result['username'] = $_SESSION['usuarion'];
+                    $result['ultimo_cambio'] = $_SESSION['ultimo_cambio'];
                     $result['idrol'] = $_SESSION['idRol'];
                     $result['productos_opc'] = $_SESSION['productos_opc'];
                     $result['pedidos_opc'] = $_SESSION['pedidos_opc'];
@@ -146,10 +148,22 @@ if (isset($_GET['action'])) {
                     $result['clientes_opc'] = $_SESSION['clientes_opc'];
                     $result['usuarios_opc'] = $_SESSION['usuarios_opc'];
                     $result['roles_opc'] = $_SESSION['roles_opc'];
+            
+                    // Validar si han pasado más de 90 días desde el último cambio de contraseña
+                    $ultima_clave = new DateTime($_SESSION['ultimo_cambio']);
+                    $fecha_actual = new DateTime();
+                    $interval = $fecha_actual->diff($ultima_clave);
+            
+                    if ($interval->days > 1) {
+                        $result['dataset'] = 2;  // Indica que deben cambiar la contraseña
+                        $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
+                    } 
                 } else {
-                    $result['error'] = 'Alias de Usuario indefinido';
+                    $result['dataset'] = 2;
+                    $result['message'] = 'Alias de Usuario indefinido';
                 }
                 break;
+            
 
             // Cerrar sesión.
             case 'logOut':

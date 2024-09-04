@@ -9,14 +9,14 @@ let temporizador;
 function resetearTemporizador() {
     clearTimeout(temporizador);
     tiempoUltimaActividad = Date.now();
-    document.getElementById('mensaje').style.display = 'none'; // Ocultar el mensaje
+    //document.getElementById('mensaje').style.display = 'none'; // Ocultar el mensaje
     temporizador = setTimeout(logOut2, tiempoInactividad);
     
 }
 
 
 function mostrarAdvertencia() {
-    document.getElementById('mensaje').style.display = 'block'; // Mostrar el mensaje
+   // document.getElementById('mensaje').style.display = 'block'; // Mostrar el mensaje
 }
 
 document.addEventListener('mousemove', resetearTemporizador);

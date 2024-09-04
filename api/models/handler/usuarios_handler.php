@@ -43,7 +43,7 @@ class UsuarioHandler
     {
         $sql = 'SELECT id_usuario, id_rol, alias_usuario, clave_usuario, email_usuario, 
                 estado_rol, productos_opc, pedidos_opc, tipo_items_opc, items_opc, 
-                clientes_opc, usuarios_opc, roles_opc, intentos_usuario, fecha_reactivacion, ultimo_intento
+                clientes_opc, usuarios_opc, roles_opc, intentos_usuario, fecha_reactivacion, ultimo_intento,ultimo_cambio_clave
                 FROM tb_usuarios
                 INNER JOIN tb_roles USING (id_rol)
                 WHERE alias_usuario = ? AND estado_rol = true AND estado_usuario= true';
@@ -84,6 +84,7 @@ class UsuarioHandler
     
                 // Establecer las variables de sesión
                 $_SESSION['idUsuario'] = $data['id_usuario'];
+                $_SESSION['ultimo_cambio'] = $data['ultimo_cambio_clave'];
                 $_SESSION['usuarion'] = $data['alias_usuario'];
                 $_SESSION['correo'] = $data['email_usuario'];
                 $_SESSION['idRol'] = $data['id_rol'];
