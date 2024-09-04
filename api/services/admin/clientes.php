@@ -184,6 +184,14 @@ if (isset($_GET['action'])) {
     } else {
         // Se compara la acción a realizar cuando el administrador no ha iniciado sesión.
         switch ($_GET['action']) {
+            case 'getMails':
+                if ($result['dataset'] = $cliente->readMails()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'No existen correos registrados';
+                }
+                break;
                 // Leer todos los usuarios (requiere autenticación).
             case 'readUsers':
                 if ($cliente->readAll()) {

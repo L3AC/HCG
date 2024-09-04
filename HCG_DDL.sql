@@ -198,6 +198,18 @@ END//
 DELIMITER ;
 
 
+DELIMITER //
+CREATE TRIGGER before_insert_tb_detalle_pedidos
+BEFORE INSERT ON tb_detalle_pedidos
+FOR EACH ROW
+BEGIN
+  IF NEW.nota_pedido IS NULL OR NEW.nota_pedido = '' THEN
+    SET NEW.nota_pedido = 'Nota vacía';
+  END IF;
+END; //
+DELIMITER ;
+
+
 
 
 

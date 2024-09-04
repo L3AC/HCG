@@ -236,6 +236,13 @@ class ClienteHandler
                 ORDER BY apellido_cliente';
         return Database::getRows($sql);
     }
+    public function readMails()
+    {
+        $sql = 'SELECT correo_cliente
+                FROM tb_clientes;
+                where estado_cliente=true';
+        return Database::getRows($sql);
+    }
 
     // Método para leer todos los clientes activos.
     public function readAllActive()
