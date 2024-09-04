@@ -798,14 +798,13 @@ const logOut = async () => {
 
 const logOut2 = async () => {
     // Se verifica la respuesta del mensaje.
-    sweetAlert(4, 'La sesion esta a punto de ser cerrada', false);
         // Petición para eliminar la sesión.
         const DATA = await fetchData(USER_API, 'logOut');
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             sweetAlert(1, DATA.message, true, 'index.html');
         } else {
-            sweetAlert(2, DATA.exception, false);
+            sweetAlert(4, 'La sesion sera cerrada por inactividad, mueve el mouse para volver', false);
         }
     
 }
