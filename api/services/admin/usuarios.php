@@ -154,7 +154,7 @@ if (isset($_GET['action'])) {
                     $fecha_actual = new DateTime();
                     $interval = $fecha_actual->diff($ultima_clave);
             
-                    if ($interval->days > 1) {
+                    if ($interval->days > 90) {
                         $result['dataset'] = 2;  // Indica que deben cambiar la contraseña
                         $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
                     } 
