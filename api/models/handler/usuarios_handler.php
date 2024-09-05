@@ -71,7 +71,7 @@ class UsuarioHandler
                 $lastAttempt = new DateTime($ultimo_intento);
                 $interval = $now->diff($lastAttempt);
     
-                if ($interval->i >= 1) {
+                if ($interval->i >= 10) {
                     // Reiniciar contador de intentos si han pasado más de 10 minutos
                     $intentos = 0;
                     $this->reiniciarIntentos($data['id_usuario']);
@@ -96,7 +96,7 @@ class UsuarioHandler
                 $_SESSION['usuarios_opc'] = $data['usuarios_opc'];
                 $_SESSION['roles_opc'] = $data['roles_opc'];
     
-                return ['status' => true, 'message' => "Inicio de sesión exitoso"];
+                return ['status' => true, 'message' => "Credenciales correctas"];
             } else {
                 // Incrementar el contador de intentos fallidos
                 $this->incrementarIntentos($data['id_usuario']);

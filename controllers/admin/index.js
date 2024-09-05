@@ -59,7 +59,7 @@ LOGIN_FORM.addEventListener('submit', async (event) => {
         sweetAlert(1, DATA.message, true, 'dashboard.html');
     } else {
         // Mostrar mensaje de error devuelto por el servidor
-        sweetAlert(3, DATA.error, true);
+        sweetAlert(3, DATA.message, true);
     }
 });
 

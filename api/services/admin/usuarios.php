@@ -137,7 +137,7 @@ if (isset($_GET['action'])) {
             case 'getUser':
                 if (isset($_SESSION['usuarion'])) {  
                     $result['status'] = 1;
-                    $result['dataset'] = 1;
+                    //$result['dataset'] = 1;
                     $result['username'] = $_SESSION['usuarion'];
                     $result['ultimo_cambio'] = $_SESSION['ultimo_cambio'];
                     $result['idrol'] = $_SESSION['idRol'];
@@ -149,18 +149,9 @@ if (isset($_GET['action'])) {
                     $result['usuarios_opc'] = $_SESSION['usuarios_opc'];
                     $result['roles_opc'] = $_SESSION['roles_opc'];
             
-                    // Validar si han pasado más de 90 días desde el último cambio de contraseña
-                    $ultima_clave = new DateTime($_SESSION['ultimo_cambio']);
-                    $fecha_actual = new DateTime();
-                    $interval = $fecha_actual->diff($ultima_clave);
-            
-                    if ($interval->days > 90) {
-                        $result['dataset'] = 2;  // Indica que deben cambiar la contraseña
-                        $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
-                    } 
                 } else {
-                    $result['dataset'] = 2;
-                    $result['message'] = 'Alias de Usuario indefinido';
+                    //$result['dataset'] = 2;
+                    $result['error'] = 'Alias de Usuario indefinido';
                 }
                 break;
             
@@ -292,28 +283,40 @@ if (isset($_GET['action'])) {
             // Iniciar sesión de usuario.
             case 'logIn':
                 $_POST = Validator::validateForm($_POST);
-
+            
                 // Llama a la función checkUser y captura la respuesta detallada
                 $loginResult = $Usuario->checkUser($_POST['usuariol'], $_POST['clavel']);
-
+            
                 if ($loginResult['status']) {
-                    // Inicio de sesión exitoso
-                    $result['status'] = 1;
-                    $result['message'] = $loginResult['message'];
+                    // Verificar la última vez que se cambió la clave
+                    $ultima_clave = new DateTime($_SESSION['ultimo_cambio']);
+                    $fecha_actual = new DateTime();
+                    $interval = $fecha_actual->diff($ultima_clave);
+            
+                    if ($interval->days > 1) {
+                        // Si han pasado más de 90 días, solicitar cambio de clave
+                        unset($_SESSION['idUsuario']);
+                        $result['status'] = 0;
+                        $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
+                    } else {
+                        // Inicio de sesión exitoso
+                        $result['status'] = 1;
+                        $result['message'] = $loginResult['message'];
+                    }
                 } else {
                     // Verificar si hay un error de bloqueo de cuenta o intentos fallidos
                     if (isset($loginResult['intentos'])) {
                         if ($loginResult['intentos'] >= 3) {
-                            $result['error'] = 'Cuenta suspendida por 24 horas debido a múltiples intentos fallidos.';
+                            $result['message'] = 'Cuenta suspendida por 24 horas debido a múltiples intentos fallidos.';
                         } else {
-                            $result['error'] = 'Credenciales incorrectas. Intento ' . $loginResult['intentos'] . ' de 3.';
+                            $result['message'] = 'Credenciales incorrectas. Intento ' . $loginResult['intentos'] . ' de 3.';
                         }
                     } else {
-                        $result['error'] = 'Credenciales incorrectas';
+                        $result['message'] = 'Credenciales incorrectas';
                     }
                 }
                 break;
-
+            
 
             // Acción no disponible fuera de la sesión.
             default:

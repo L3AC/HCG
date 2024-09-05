@@ -1,5 +1,5 @@
-const tiempoInactividad = 10000; // 10 segundos en milisegundos
-const tiempoAdvertencia = 5000; // 5 segundos en milisegundos (para mostrar el mensaje de advertencia)
+const tiempoInactividad = 50000; // 10 segundos en milisegundos
+const tiempoAdvertencia = 30000; // 5 segundos en milisegundos (para mostrar el mensaje de advertencia)
 let temporizador;
 let temporizadorAdvertencia;
 let tiempoUltimaActividad = Date.now();
