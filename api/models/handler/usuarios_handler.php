@@ -169,7 +169,7 @@ class UsuarioHandler
     public function changePassword()
     {
         $sql = 'UPDATE tb_usuarios
-                SET clave_usuario = ?
+                SET clave_usuario = ?, ultimo_cambio_clave = now()
                 WHERE id_usuario = ?';
         $params = array($this->clave, $_SESSION['idUsuario']);
         return Database::executeRow($sql, $params);
