@@ -129,6 +129,16 @@ class UsuarioHandler
         $params = array($id_usuario);
         return Database::executeRow($sql, $params);
     }
+
+    //Funcion para verificar si el usuaro existe
+    public function verifUs()
+    {
+        $sql = 'SELECT *
+        from tb_usuarios
+        WHERE alias_usuario = ?';
+        $params = array($this->usuario);
+        return Database::getRow($sql, $params);
+    }
     
     // Función para incrementar el contador de intentos
     private function incrementarIntentos($id_usuario)

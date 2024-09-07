@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+}
+
+.image-side {
+    flex: 0.7;
+    background: url('../img/prueba.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.form-side {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.form-container {
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-custom {
+    background-color: #f08d33;
+    color: white;
+    border: none;
+}
+
+.btn-custom:hover {
+    background-color: #d9782c;
+    color: #FFFFFF;
+}

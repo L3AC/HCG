@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Recuperar Contraseña</title>
+        <!-- Bootstrap CSS -->
+        <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="../../resources/css/recuperar_contrasenia.css" rel="stylesheet">
+    </head>
+    
+    <body>
+        <div class="image-side"></div>
+    
+        <div class="form-side">
+            <div class="form-container">
+                <h2>Recuperar contraseña</h2>
+                <p>Ingresa tu nombre de usuario y te enviaremos un email al correo enlazado a tu cuenta.</p>
+                <form id="saveForm">
+                    <div class="mb-3">
+                        <input type="user" class="form-control" id="usuario" name="usuario" placeholder="Ingresa tu usuario">
+                    </div>
+                    <button type="submit" id="boton" name="boton" class="btn btn-custom w-100">Enviar código</button>
+                    <p class="mt-3 text-muted">
+                        Recuerda revisar tu bandeja de correos para ver el código que debes ingresar.
+                    </p>
+                </form>
+            </div>
+        </div>
+        <!-- Bootstrap JS Bundle -->
+    <script src="../../resources/js/bootstrap.bundle.min.js"></script>
+    
+
+    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- Llamada al framework y librería de mensajes -->
+    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <!-- Llamada al controlador general de la aplicación -->
+    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <!-- Llamada al controlador de la página web -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+        <script src="../../controllers/admin/recuperacioncontrasenia.js"></script>
+    </body>
+</html>
