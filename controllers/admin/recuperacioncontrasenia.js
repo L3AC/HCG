@@ -23,7 +23,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         // Se comprueba si la respuesta es satisfactoria
         if (DATA.status) {
             // Mostrar mensaje de éxito.
-            sweetAlert(1, DATA.message, true);
+            sweetAlert(1, 'Usuario encontrado, revise su correo electrónico', true);
 
             // Si los datos de usuario son correctos, procedemos a enviar el correo.
             const userData = {
@@ -34,6 +34,8 @@ SAVE_FORM.addEventListener('submit', async (event) => {
 
             // Llamada a la función para enviar el correo con los datos.
             await sendMail(userData);
+
+            window.location.href = `../../views/admin/recuperacioncontaseniacodigo.html?id=${DATA.dataset.id_usuario}`;
         } else {
             // Mostrar mensaje de error.
             sweetAlert(2, DATA.error, false);
@@ -51,18 +53,7 @@ const sendMail = async (data) => {
         formData.append('user', data.alias_usuario);
         formData.append('email', data.email_usuario);
 
-        // Verifica la URL en la consola
-        console.log('Enviando solicitud a: api/libraries/sendCode.php');
-
         const response = await fetchData(LIBRERIA, 'sendCode', formData);
-
-        // Verifica el estado de la respuesta
-        if (response.ok) {
-            console.log('Correo enviado con éxito');
-        } else {
-            const errorText = await response.text(); // Obtener texto del error
-            throw new Error(`Error al enviar el correo: ${response.status} ${errorText}`);
-        }
     } catch (error) {
         console.error('Error en sendMail:', error.message);
     }

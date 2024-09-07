@@ -21,6 +21,7 @@ class UsuarioHandler
     protected $alias = null;
     protected $clave = null;
     protected $estado = null;
+    protected $pinRecu = null;
 
     /*
      *  Métodos para gestionar la cuenta del administrador.
@@ -137,6 +138,14 @@ class UsuarioHandler
         from tb_usuarios
         WHERE alias_usuario = ?';
         $params = array($this->usuario);
+        return Database::getRow($sql, $params);
+    }
+
+    public function verifPin()
+    {
+        $sql = 'SELECT * from tb_usuarios
+        WHERE pin_usuario = ? AND id_usuario = ?';
+        $params = array($this->pinRecu, $this->id);
         return Database::getRow($sql, $params);
     }
     
