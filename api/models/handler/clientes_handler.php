@@ -41,7 +41,7 @@ class ClienteHandler
         $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente,correo_cliente,
                 intentos_cliente, fecha_reactivacion, ultimo_intento
                 FROM tb_clientes
-                WHERE usuario_cliente = ? and estado_usuario = true';
+                WHERE usuario_cliente = ? and estado_cliente = true';
         
         $params = array($username);
         $data = Database::getRow($sql, $params);

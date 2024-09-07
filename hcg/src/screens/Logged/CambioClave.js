@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity,  Alert, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Hook de navegación
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Iconos de Ionicons
 import { SERVER } from '../../contexts/Network';
@@ -97,7 +97,7 @@ const CambioClave = () => {
 
         {/* Contenedor para alinear solo el botón al centro de la pantalla */}
         <View style={styles.containerButton}>
-          {/* Botón de confirmación y agregado para al precionar mandar a la ventana de verificación de código */}
+          {/* Botón de confirmación */}
           <TouchableOpacity style={styles.button} onPress={changeP}>
             <Text style={styles.buttonText}>Confirmar</Text>
           </TouchableOpacity>
@@ -109,15 +109,13 @@ const CambioClave = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 60,
+    paddingTop: 30,
     padding: 30,
     paddingBottom: 30,
     backgroundColor: '#d2a563', // Color de fondo
   },
   scrollViewContent: {
-    flexGrow: 1,
-    marginBottom:60,
+    paddingBottom: 60, // Asegura espacio al final para el scroll
   },
   header: {
     flexDirection: 'row',
@@ -137,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
   },
-  icono: { // estilo para el icono del escudo
+  icono: { 
     textAlign: 'center',
     marginTop: 0,
   },
