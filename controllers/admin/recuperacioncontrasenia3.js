@@ -21,7 +21,6 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     const FORM = new FormData(SAVE_FORM);
     FORM.append('claveNueva', CONTRASENIA_NUEVA.value);
     FORM.append('confirmarClave', CONTRASENIA_VERIFICACION.value);
-    FORM.append('id', id);
 
     try {
         // Petición para verificar el usuario.
