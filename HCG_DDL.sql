@@ -117,16 +117,13 @@ BEGIN
 END;
 //DELIMITER ;
 
-
 DELIMITER //
-
 CREATE PROCEDURE sp_verificar_y_obtener_detalles_pedido()
 BEGIN
     DECLARE v_disponible INT;
     DECLARE v_id_detalle_pedido INT;
     DECLARE v_id_producto INT;
     DECLARE done INT DEFAULT 0;
-
     -- Cursor para iterar sobre los detalles de pedidos pendientes
     DECLARE cur_detalle CURSOR FOR
         SELECT dp.id_detalle_pedido, dp.id_producto
@@ -136,19 +133,15 @@ BEGIN
 
     -- Handler para salir del loop
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
-
     -- Abrir el cursor
     OPEN cur_detalle;
-
     -- Bucle para iterar sobre los detalles de pedidos pendientes
     read_loop: LOOP
         FETCH cur_detalle INTO v_id_detalle_pedido, v_id_producto;
-        
-        -- Si no hay más filas, salir del bucle
+         -- Si no hay más filas, salir del bucle
         IF done THEN
             LEAVE read_loop;
         END IF;
-        
         -- Verificar si el producto está disponible en el horario actual
         SELECT COUNT(*)
         INTO v_disponible
@@ -193,9 +186,7 @@ BEGIN
     JOIN tb_pedidos p ON dp.id_pedido = p.id_pedido
     WHERE p.estado_pedido = 'No escogido';
 END//
-
 DELIMITER ;
-
 
 DELIMITER //
 CREATE TRIGGER before_insert_tb_detalle_pedidos
@@ -207,8 +198,5 @@ BEGIN
   END IF;
 END; //
 DELIMITER ;
-
-
-
 
 
