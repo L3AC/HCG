@@ -102,6 +102,21 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
                 }
                 break;
+                // Cambiar contraseña de usuario recuperacion publica.
+            case 'changePasswordRecup':
+                if (!$cliente->setId($_SESSION['clienteRecup'])) {
+                    $result['error'] = 'Acción no disponible';
+                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                    $result['error'] = 'Contraseñas diferentes';
+                } elseif (!$cliente->setClave($_POST['claveNueva'])) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->changePasswordRecup()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Contraseña modificada correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
+                }
+                break;
             case 'verifUs':
                 if (!$cliente->setUsuario($_POST['aliasCliente'])) {
                     $result['error'] = $cliente->getDataError();
@@ -175,6 +190,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Accion no habilitada';
                 }
                 break;
+
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';
         }

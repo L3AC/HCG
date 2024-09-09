@@ -171,6 +171,16 @@ class ClienteHandler
         return Database::executeRow($sql, $params);
     }
 
+    // Método para cambiar la contraseña del usuario cliente en caso este en la accion de recuperar contraseña.
+    public function changePasswordRecup()
+    {
+        $sql = 'UPDATE tb_clientes
+                SET clave_cliente = ?, ultimo_cambio_clave = now(), pin_cliente = ?
+                WHERE id_cliente = ?';
+        $params = array($this->clave, $this->generarPin(), $this->id);
+        return Database::executeRow($sql, $params);
+    }
+
     // Método para leer el perfil del cliente.
     public function readProfile()
     {
