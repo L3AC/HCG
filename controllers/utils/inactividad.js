@@ -1,5 +1,5 @@
-const tiempoInactividad = 60000; // 1 minuto en milisegundos (total de inactividad permitida)
-const tiempoAdvertencia = 50000; // 50 segundos en milisegundos (cuando se debe mostrar la advertencia)
+const tiempoInactividad = 300000; // 1 minuto en milisegundos (total de inactividad permitida)
+const tiempoAdvertencia = 270000; // 50 segundos en milisegundos (cuando se debe mostrar la advertencia)
 const tiempoRestanteAdvertencia = tiempoInactividad - tiempoAdvertencia; // Tiempo restante después de la advertencia (10 segundos)
 
 let temporizador;
