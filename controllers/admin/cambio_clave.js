@@ -17,7 +17,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     const DATA = await fetchData(USER_API, 'newPassword', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
-        sweetAlert(1, DATA.message, true);
+        sweetAlert(1, DATA.message, true,'index.html');
     } else {
         sweetAlert(2, DATA.error, false);
     }

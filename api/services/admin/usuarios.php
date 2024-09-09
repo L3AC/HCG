@@ -135,6 +135,7 @@ if (isset($_GET['action'])) {
 
             // Obtener información del usuario en sesión.
             case 'getUser':
+                unset($_SESSION['pasw']);
                 if (isset($_SESSION['usuarion'])) {  
                     $result['status'] = 1;
                     $result['username'] = $_SESSION['usuarion'];
@@ -147,15 +148,12 @@ if (isset($_GET['action'])) {
                     $result['clientes_opc'] = $_SESSION['clientes_opc'];
                     $result['usuarios_opc'] = $_SESSION['usuarios_opc'];
                     $result['roles_opc'] = $_SESSION['roles_opc'];
-            
                 }
                 else {
                     //$result['dataset'] = 2;
                     $result['error'] = 'Alias de Usuario indefinido';
                 }
                 break;
-            
-
             // Cerrar sesión.
             case 'logOut':
                 if (session_destroy()) {
@@ -202,7 +200,9 @@ if (isset($_GET['action'])) {
             // Cambiar contraseña de usuario.
             case 'changePassword':
                 $_POST = Validator::validateForm($_POST);
-                if (!$Usuario->checkPassword($_POST['claveActual'])) {
+                if (!$Usuario->setId($_SESSION['idUsuario'])) {
+                    $result['error'] = 'Acción no disponible';
+                }elseif (!$Usuario->checkPassword($_POST['claveActual'])) {
                     $result['error'] = 'Contraseña actual incorrecta';
                 } elseif ($_POST['claveActual'] == $_POST['claveNueva']) {
                     $result['error'] = 'La clave nueva no puede ser igual a la actual';
@@ -244,51 +244,24 @@ if (isset($_GET['action'])) {
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
-    } /*elseif(isset($_SESSION['idChange'])){
-        switch ($_GET['action']) {
-            // Leer todos los usuarios.
-            case 'changePassword':
-                if (!$cliente->setId($_SESSION['clienteRecup'])) {
-                    $result['error'] = 'Acción no disponible';
-                }elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
-                    $result['error'] = 'Contraseñas diferentes';
-                } elseif (!$cliente->setClave($_POST['claveNueva'])) {
-                    $result['error'] = $cliente->getDataError();
-                } elseif ($cliente->changePassword()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Contraseña modificada correctamente';
-                } else {
-                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
-                }
-                break;
-            // Acción no disponible fuera de la sesión.
-            default:
-                $result['error'] = 'Acción dentro del cambio';
-        }
-
-    }*/
-    else {
+    } else {
         // Se compara la acción a realizar cuando el Usuario no ha iniciado sesión.
         switch ($_GET['action']) {
             // Iniciar sesión de usuario.
             case 'logIn':
                 $_POST = Validator::validateForm($_POST);
-            
                 // Llama a la función checkUser y captura la respuesta detallada
                 $loginResult = $Usuario->checkUser($_POST['usuariol'], $_POST['clavel']);
-            
                 if ($loginResult['status']) {
                     // Verificar la última vez que se cambió la clave
                     $ultima_clave = new DateTime($_SESSION['ultimo_cambio']);
                     $fecha_actual = new DateTime();
                     $interval = $fecha_actual->diff($ultima_clave);
-            
                     if ($interval->days > 1) {
                         // Si han pasado más de 90 días, solicitar cambio de clave
                         unset($_SESSION['idUsuario']);
                         $result['dataset'] = 4;
                         $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
-
                     } else {
                         // Inicio de sesión exitoso
                         $result['status'] = 1;
@@ -322,7 +295,9 @@ if (isset($_GET['action'])) {
             case 'newPassword':
                 if (!$Usuario->setId($_SESSION['idChange'])) {
                     $result['error'] = 'Acción no disponible';
-                }elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                }elseif ($_SESSION['pasw'] == $_POST['claveNueva']) {
+                    $result['error'] = 'La clave nueva no puede ser igual a la actual';
+                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif (!$Usuario->setClave($_POST['claveNueva'])) {
                     $result['error'] = $Usuario->getDataError();
