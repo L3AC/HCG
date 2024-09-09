@@ -85,6 +85,7 @@ class UsuarioHandler
     
                 // Establecer las variables de sesión
                 $_SESSION['idUsuario'] = $data['id_usuario'];
+                $_SESSION['idChange'] = $data['id_usuario'];
                 $_SESSION['ultimo_cambio'] = $data['ultimo_cambio_clave'];
                 $_SESSION['usuarion'] = $data['alias_usuario'];
                 $_SESSION['correo'] = $data['email_usuario'];

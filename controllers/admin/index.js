@@ -55,11 +55,14 @@ LOGIN_FORM.addEventListener('submit', async (event) => {
     const DATA = await fetchData(USER_API, 'logIn', FORM);
 
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
+    if (DATA.dataset==1) {
         sweetAlert(1, DATA.message, true, 'dashboard.html');
-    } else {
-        // Mostrar mensaje de error devuelto por el servidor
+    } else if (DATA.dataset==2)  {
+        sweetAlert(2, DATA.message, true);
+    }else if (DATA.dataset==3)  {
         sweetAlert(3, DATA.message, true);
+    }else if (DATA.dataset==4)  {
+        sweetAlert(4, DATA.message, true,'cambio_clave.html');
     }
 });
 

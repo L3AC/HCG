@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña</title>
+    <!-- Bootstrap CSS -->
+    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../../resources/css/recuperar_contrasenia.css" rel="stylesheet">
+</head>
+
+<body class="backgroundRecup">
+    <div class="image-side2"></div>
+
+    <div class="form-side">
+        <div class="form-container">
+            <h2>Recuperar contraseña</h2>
+            <p>Ingresa la nueva clave de tu cuenta.</p>
+            <form id="saveForm">
+                <div class="mb-3">
+                    <input type="password" id="inputPasswordRecup1" name="inputPasswordRecup1" class="form-control mb-3"
+                        aria-describedby="passwordHelpBlock" placeholder="Ingresa tu nueva clave">
+                    <input type="password" id="inputPasswordRecup2" name="inputPasswordRecup2" class="form-control"
+                        aria-describedby="passwordHelpBlock" placeholder="Repite tu clave">
+                    <small id="passwordHelpBlock" class="form-text text-muted">
+                        Recuerda utilizar una contraseña segura y que su lonjitud sea de 8 como minimo.
+                    </small>
+                </div>
+                <div class="d-flex">
+                    <button type="submit" class="ButtonRecup2  w-10" id="boton" name="boton">
+                        <span>Cambiar contraseña</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Bootstrap JS Bundle -->
+    <script src="../../resources/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- Llamada al framework y librería de mensajes -->
+    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <!-- Llamada al controlador general de la aplicación -->
+    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <script type="text/javascript" src="../../controllers/utils/valid.js"></script>
+    <script type="text/javascript" src="../../controllers/admin/cambio_clave.js"></script>
+    <!-- Llamada al controlador de la página web -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- <script src="../../controllers/admin/recuperacioncontrasenia.js"></script> -->
+</body>
+
+</html>

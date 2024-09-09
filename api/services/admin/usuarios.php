@@ -137,7 +137,6 @@ if (isset($_GET['action'])) {
             case 'getUser':
                 if (isset($_SESSION['usuarion'])) {  
                     $result['status'] = 1;
-                    //$result['dataset'] = 1;
                     $result['username'] = $_SESSION['usuarion'];
                     $result['ultimo_cambio'] = $_SESSION['ultimo_cambio'];
                     $result['idrol'] = $_SESSION['idRol'];
@@ -149,7 +148,8 @@ if (isset($_GET['action'])) {
                     $result['usuarios_opc'] = $_SESSION['usuarios_opc'];
                     $result['roles_opc'] = $_SESSION['roles_opc'];
             
-                } else {
+                }
+                else {
                     //$result['dataset'] = 2;
                     $result['error'] = 'Alias de Usuario indefinido';
                 }
@@ -244,9 +244,95 @@ if (isset($_GET['action'])) {
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
-    } else {
+    } /*elseif(isset($_SESSION['idChange'])){
+        switch ($_GET['action']) {
+            // Leer todos los usuarios.
+            case 'changePassword':
+                if (!$cliente->setId($_SESSION['clienteRecup'])) {
+                    $result['error'] = 'Acción no disponible';
+                }elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                    $result['error'] = 'Contraseñas diferentes';
+                } elseif (!$cliente->setClave($_POST['claveNueva'])) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->changePassword()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Contraseña modificada correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
+                }
+                break;
+            // Acción no disponible fuera de la sesión.
+            default:
+                $result['error'] = 'Acción dentro del cambio';
+        }
+
+    }*/
+    else {
         // Se compara la acción a realizar cuando el Usuario no ha iniciado sesión.
         switch ($_GET['action']) {
+            // Iniciar sesión de usuario.
+            case 'logIn':
+                $_POST = Validator::validateForm($_POST);
+            
+                // Llama a la función checkUser y captura la respuesta detallada
+                $loginResult = $Usuario->checkUser($_POST['usuariol'], $_POST['clavel']);
+            
+                if ($loginResult['status']) {
+                    // Verificar la última vez que se cambió la clave
+                    $ultima_clave = new DateTime($_SESSION['ultimo_cambio']);
+                    $fecha_actual = new DateTime();
+                    $interval = $fecha_actual->diff($ultima_clave);
+            
+                    if ($interval->days > 1) {
+                        // Si han pasado más de 90 días, solicitar cambio de clave
+                        unset($_SESSION['idUsuario']);
+                        $result['dataset'] = 4;
+                        $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
+
+                    } else {
+                        // Inicio de sesión exitoso
+                        $result['status'] = 1;
+                        $result['dataset'] = 1;
+                        $result['message'] = $loginResult['message'];
+                    }
+                } else {
+                    // Verificar si hay un error de bloqueo de cuenta o intentos fallidos
+                    if (isset($loginResult['intentos'])) {
+                        if ($loginResult['intentos'] >= 3) {
+                            $result['dataset'] = 3;
+                            $result['message'] = 'Cuenta suspendida por 24 horas debido a múltiples intentos fallidos.';
+                        } else {
+                            $result['dataset'] = 2;
+                            $result['message'] = 'Credenciales incorrectas. Intento ' . $loginResult['intentos'] . ' de 3.';
+                        }
+                    } else {
+                        $result['dataset'] = 2;
+                        $result['message'] = 'Credenciales incorrectas';
+                    }
+                }
+                break;
+            case 'getChange':
+                if (isset($_SESSION['idChange'])) {  
+                    $result['status'] = 1;
+                }
+                else {
+                    $result['error'] = 'Accion no habilitada';
+                }
+                break;
+            case 'newPassword':
+                if (!$Usuario->setId($_SESSION['idChange'])) {
+                    $result['error'] = 'Acción no disponible';
+                }elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                    $result['error'] = 'Contraseñas diferentes';
+                } elseif (!$Usuario->setClave($_POST['claveNueva'])) {
+                    $result['error'] = $Usuario->getDataError();
+                } elseif ($Usuario->changePassword()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Contraseña modificada correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
+                }
+                break;
             // Leer todos los usuarios.
             case 'readUsers':
                 if ($Usuario->readAll()) {
@@ -300,45 +386,6 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al registrar el Usuario';
                 }
                 break;
-
-            // Iniciar sesión de usuario.
-            case 'logIn':
-                $_POST = Validator::validateForm($_POST);
-            
-                // Llama a la función checkUser y captura la respuesta detallada
-                $loginResult = $Usuario->checkUser($_POST['usuariol'], $_POST['clavel']);
-            
-                if ($loginResult['status']) {
-                    // Verificar la última vez que se cambió la clave
-                    $ultima_clave = new DateTime($_SESSION['ultimo_cambio']);
-                    $fecha_actual = new DateTime();
-                    $interval = $fecha_actual->diff($ultima_clave);
-            
-                    if ($interval->days > 90) {
-                        // Si han pasado más de 90 días, solicitar cambio de clave
-                        unset($_SESSION['idUsuario']);
-                        $result['status'] = 0;
-                        $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
-                    } else {
-                        // Inicio de sesión exitoso
-                        $result['status'] = 1;
-                        $result['message'] = $loginResult['message'];
-                    }
-                } else {
-                    // Verificar si hay un error de bloqueo de cuenta o intentos fallidos
-                    if (isset($loginResult['intentos'])) {
-                        if ($loginResult['intentos'] >= 3) {
-                            $result['message'] = 'Cuenta suspendida por 24 horas debido a múltiples intentos fallidos.';
-                        } else {
-                            $result['message'] = 'Credenciales incorrectas. Intento ' . $loginResult['intentos'] . ' de 3.';
-                        }
-                    } else {
-                        $result['message'] = 'Credenciales incorrectas';
-                    }
-                }
-                break;
-            
-
             // Acción no disponible fuera de la sesión.
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';
