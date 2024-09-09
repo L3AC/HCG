@@ -184,7 +184,7 @@ if (isset($_GET['action'])) {
                     !$Usuario->setAlias($_POST['aliasAdministrador'])
                 ) {
                     $result['error'] = $Usuario->getDataError();
-                } elseif ($_SESSION['alias'] != $_POST['aliasAdministrador'] && $Usuario->readExist($_POST['aliasAdministrador'])) {
+                } elseif ($_SESSION['usuarion'] != $_POST['aliasAdministrador'] && $Usuario->readExist($_POST['aliasAdministrador'])) {
                     $result['error'] = 'El nombre de usuario ya está en uso';
                 } elseif ($_SESSION['correo'] != $_POST['correoAdministrador'] && $Usuario->readExistMail($_POST['correoAdministrador'])) {
                     $result['error'] = 'El correo electrónico ya está en uso';
@@ -291,6 +291,13 @@ if (isset($_GET['action'])) {
                 else {
                     $result['error'] = 'Accion no habilitada';
                 }
+                case 'getRecup':
+                    if (isset($_SESSION['usuarioRecup'])) {  
+                        $result['status'] = 1;
+                    }
+                    else {
+                        $result['error'] = 'Accion no habilitada';
+                    }
                 break;
             case 'newPassword':
                 if (!$Usuario->setId($_SESSION['idChange'])) {
@@ -322,14 +329,14 @@ if (isset($_GET['action'])) {
                     $result['error'] = $Usuario->getDataError();
                 } elseif ($result['dataset'] = $Usuario->verifUs()) {
                     $result['status'] = 1;
-                    //$_SESSION['clienteRecup'] = $result['dataset']['id_cliente'];
+                    $_SESSION['usuarioRecup'] = $result['dataset']['id_usuario'];
                 } else {
                     $result['error'] = 'Usuario inexistente';
                 }
                 break;
             case 'verifPin':
                 if (!$Usuario->setpinRecu($_POST['pinRecu']) or
-                    !$Usuario->setId($_POST['id'])
+                    !$Usuario->setId($_SESSION['usuarioRecup'])
                 ) {
                     $result['error'] = $Usuario->getDataError();
                 } elseif ($result['dataset'] = $Usuario->verifPin()) {
@@ -341,7 +348,7 @@ if (isset($_GET['action'])) {
                 break;
                 // Cambiar contraseña de usuario.
             case 'changePasswordRecup':
-                if (!$Usuario->setId($_POST['id'])) {
+                if (!$Usuario->setId($_SESSION['usuarioRecup'])) {
                     $result['error'] = 'Acción no disponible';
                 }elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';

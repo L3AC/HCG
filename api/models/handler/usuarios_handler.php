@@ -137,10 +137,16 @@ class UsuarioHandler
     public function verifUs()
     {
         $sql = 'SELECT *
-        from tb_usuarios
+        from  tb_usuarios
         WHERE alias_usuario = ?';
         $params = array($this->usuario);
-        return Database::getRow($sql, $params);
+        /*$data*/  return Database::getRow($sql, $params);
+        /*if ($data) {
+            $_SESSION['idRec'] = $data['id_usuario'];
+            return true;
+        }else{
+            return false;
+        }*/
     }
 
     public function verifPin()

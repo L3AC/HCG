@@ -32,10 +32,11 @@ SAVE_FORM.addEventListener('submit', async (event) => {
                 email_usuario: DATA.dataset.email_usuario
             };
 
+            console.log(userData);
             // Llamada a la función para enviar el correo con los datos.
             await sendMail(userData);
 
-            window.location.href = `../../views/admin/recuperacioncontaseniacodigo.html?id=${DATA.dataset.id_usuario}`;
+            window.location.href = `../../views/admin/recuperacioncontaseniacodigo.html`;
         } else {
             // Mostrar mensaje de error.
             sweetAlert(2, DATA.error, false);
@@ -52,6 +53,7 @@ const sendMail = async (data) => {
         formData.append('pin', data.pin_usuario);
         formData.append('user', data.alias_usuario);
         formData.append('email', data.email_usuario);
+        console.log(formData.data);
 
         const response = await fetchData(LIBRERIA, 'sendCode', formData);
     } catch (error) {

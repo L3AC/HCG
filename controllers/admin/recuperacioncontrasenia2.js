@@ -10,13 +10,14 @@ const CODIGO1 = document.getElementById('code1'),
     CODIGO5 = document.getElementById('code5'),
     CODIGO6 = document.getElementById('code6');
 
+
 // Constante para obtener los datos del formulario
 const SAVE_FORM = document.getElementById('saveForm');
 
-// Obtener el valor del usuario desde la URL
-const urlParams = new URLSearchParams(window.location.search);
-const id = urlParams.get('id');
-
+document.addEventListener('DOMContentLoaded', async () => {
+    // Llamada a la función para mostrar el encabezado y pie del documento.
+    loadTemplate();
+});
 // Función para obtener el código completo
 const getCodigoCompleto = () => {
     return `${CODIGO1.value}${CODIGO2.value}${CODIGO3.value}${CODIGO4.value}${CODIGO5.value}${CODIGO6.value}`;
@@ -56,7 +57,6 @@ SAVE_FORM.addEventListener('submit', async (event) => {
 
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
-    FORM.append('id', id);
     FORM.append('pinRecu', codigoCompleto);  // Añadir el código completo al formulario
 
     try {
@@ -68,7 +68,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
             // Mostrar mensaje de éxito.
             await sweetAlert(1, 'Código verificado con éxito', true);
             
-            window.location.href = `../../views/admin/recuperacioncontrasenianpass.html?id=${DATA.dataset.id_usuario}`;
+            window.location.href = `../../views/admin/recuperacioncontrasenianpass.html`;
         } else {
             // Mostrar mensaje de error.
             sweetAlert(2, DATA.error, false);

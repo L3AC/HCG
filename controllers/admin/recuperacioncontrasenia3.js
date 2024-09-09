@@ -7,9 +7,10 @@ const CONTRASENIA_NUEVA = document.getElementById('claveNueva');
 const CONTRASENIA_VERIFICACION = document.getElementById('confirmarClave');
 const SAVE_FORM = document.getElementById('saveForm');
 
-// Obtener el valor del usuario desde la URL
-const urlParams = new URLSearchParams(window.location.search);
-const id = urlParams.get('id');
+document.addEventListener('DOMContentLoaded', async () => {
+    // Llamada a la función para mostrar el encabezado y pie del documento.
+    loadTemplate();
+});
 
 // Método del evento para cuando se envía el formulario de guardar.
 SAVE_FORM.addEventListener('submit', async (event) => {
