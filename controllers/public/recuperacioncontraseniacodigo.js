@@ -67,7 +67,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
             // Mostrar mensaje de éxito.
             await sweetAlert(1, 'Código verificado con éxito', true);
             
-            // window.location.href = `../../views/admin/recuperacioncontrasenianpass.html?id=${DATA.dataset.id_usuario}`;
+         window.location.href = `../../views/admin/recuperacioncontrasenianpass.html?id=${DATA.dataset.id_cliente}`;
         } else {
             // Mostrar mensaje de error.
             sweetAlert(2, DATA.error, false);
