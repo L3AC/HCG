@@ -21,6 +21,7 @@ class UsuarioHandler
     protected $alias = null;
     protected $clave = null;
     protected $estado = null;
+    protected $pinRecu = null;
 
     /*
      *  Métodos para gestionar la cuenta del administrador.
@@ -128,6 +129,24 @@ class UsuarioHandler
         $sql = 'UPDATE tb_usuarios SET intentos_usuario = 0, ultimo_intento = NULL, fecha_reactivacion = NULL WHERE id_usuario = ?';
         $params = array($id_usuario);
         return Database::executeRow($sql, $params);
+    }
+
+    //Funcion para verificar si el usuaro existe
+    public function verifUs()
+    {
+        $sql = 'SELECT *
+        from tb_usuarios
+        WHERE alias_usuario = ?';
+        $params = array($this->usuario);
+        return Database::getRow($sql, $params);
+    }
+
+    public function verifPin()
+    {
+        $sql = 'SELECT * from tb_usuarios
+        WHERE pin_usuario = ? AND id_usuario = ?';
+        $params = array($this->pinRecu, $this->id);
+        return Database::getRow($sql, $params);
     }
     
     // Función para incrementar el contador de intentos

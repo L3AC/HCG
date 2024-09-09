@@ -256,7 +256,28 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Debe crear un Usuario para comenzar';
                 }
                 break;
-
+            case 'verifUs':
+                if (!$Usuario->setUsuario($_POST['usuario'])) {
+                    $result['error'] = $Usuario->getDataError();
+                } elseif ($result['dataset'] = $Usuario->verifUs()) {
+                    $result['status'] = 1;
+                    //$_SESSION['clienteRecup'] = $result['dataset']['id_cliente'];
+                } else {
+                    $result['error'] = 'Usuario inexistente';
+                }
+                break;
+            case 'verifPin':
+                if (!$Usuario->setpinRecu($_POST['pinRecu']) or
+                    !$Usuario->setId($_POST['id'])
+                ) {
+                    $result['error'] = $Usuario->getDataError();
+                } elseif ($result['dataset'] = $Usuario->verifPin()) {
+                    $result['status'] = 1;
+                    //$_SESSION['clienteRecup'] = $result['dataset']['id_cliente'];
+                } else {
+                    $result['error'] = 'PIN incorrecto, revisa el corre electronico';
+                }
+                break;
             // Registrar un nuevo usuario.
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);

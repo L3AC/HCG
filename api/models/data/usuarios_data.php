@@ -27,6 +27,17 @@ class UsuarioData extends UsuarioHandler
         }
     }
 
+    public function setpinRecu($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->pinRecu = $value;
+            return true;
+        } else {
+            $this->data_error = 'El pin debe se numeros enteros';
+            return false;
+        }
+    }
+
     // Método para establecer el ID del rol del usuario.
     public function setIdRol($value)
     {
