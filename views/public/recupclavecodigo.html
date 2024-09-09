@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña</title>
+    <!-- Llamada al icono de la página web -->
+    <link type="image/png" rel="icon" href="../../resources/img/icon.png">
+    <!-- Bootstrap CSS -->
+    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../../resources/css/recuperar_contrasenia.css" rel="stylesheet">
+</head>
+
+<body class="backgroundRecup">
+    <div class="image-side2"></div>
+
+    <div class="form-side">
+        <div class="form-container">
+            <h2>Recuperar contraseña</h2>
+            <p>Ingresa el código enviado a tu correo electrónico.</p>
+            <form id="saveForm">
+                <div class="mb-3 d-flex justify-content-center">
+                    <!-- Input para el código de recuperación -->
+                    <div class="row">
+                        <div class="col-12">
+                            <input class="col-1 inputs-custom" type="text" id="code1" name="code1" maxlength="1"
+                                required>
+                            <input class="col-1 inputs-custom" type="text" id="code2" name="code2" maxlength="1"
+                                required>
+                            <input class="col-1 inputs-custom" type="text" id="code3" name="code3" maxlength="1"
+                                required>
+                            <input class="col-1 inputs-custom" type="text" id="code4" name="code4" maxlength="1"
+                                required>
+                            <input class="col-1 inputs-custom" type="text" id="code5" name="code5" maxlength="1"
+                                required>
+                            <input class="col-1 inputs-custom" type="text" id="code6" name="code6" maxlength="1"
+                                required>
+                        </div>
+                    </div>
+
+                </div>
+                <button type="submit" class="ButtonRecup2  w-10" id="boton" name="boton">
+                    <span>Verificar código</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- Bootstrap JS Bundle -->
+    <script src="../../resources/js/bootstrap.bundle.min.js"></script>
+
+    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- Llamada al framework y librería de mensajes -->
+    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <!-- Llamada al controlador general de la aplicación -->
+    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <!-- Llamada al controlador del sitio público -->
+    <script type="text/javascript" src="../../controllers/utils/public.js"></script>
+    <script src="../../controllers/public/recuperacioncontraseniacodigo.js"></script>
+</body>
+
+</html>

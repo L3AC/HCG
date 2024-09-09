@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const USUARIO_API = 'services/admin/usuarios.php';
+const CLIENTE_API = 'services/public/clientes.php';
 
 // Constantes para llamar los elementos de la página
 const BOTON = document.getElementById('boton');
@@ -45,7 +45,6 @@ inputs.forEach((input, index) => {
     });
 });
 
-
 // Método del evento para cuando se envía el formulario de guardar.
 SAVE_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
@@ -57,18 +56,18 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
     FORM.append('id', id);
-    FORM.append('pinRecu', codigoCompleto);  // Añadir el código completo al formulario
+    FORM.append('pinCliente', codigoCompleto);  // Añadir el código completo al formulario
 
     try {
         // Petición para verificar el usuario.
-        const DATA = await fetchData(USUARIO_API, 'verifPin', FORM);
+        const DATA = await fetchData(CLIENTE_API, 'verifPin', FORM);
         
         // Se comprueba si la respuesta es satisfactoria
         if (DATA.status) {
             // Mostrar mensaje de éxito.
             await sweetAlert(1, 'Código verificado con éxito', true);
             
-            window.location.href = `../../views/admin/recuperacioncontrasenianpass.html?id=${DATA.dataset.id_usuario}`;
+            // window.location.href = `../../views/admin/recuperacioncontrasenianpass.html?id=${DATA.dataset.id_usuario}`;
         } else {
             // Mostrar mensaje de error.
             sweetAlert(2, DATA.error, false);
