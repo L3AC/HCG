@@ -25,12 +25,26 @@ const getCodigoCompleto = () => {
 // Función para permitir solo números en los inputs
 const inputs = [CODIGO1, CODIGO2, CODIGO3, CODIGO4, CODIGO5, CODIGO6];
 
-inputs.forEach(input => {
+// Función para moverse al siguiente input automáticamente
+inputs.forEach((input, index) => {
     input.addEventListener('input', () => {
         // Eliminar cualquier caracter que no sea un dígito (0-9)
         input.value = input.value.replace(/\D/g, '');
+
+        // Mover al siguiente input si se ingresó un número
+        if (input.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+        }
+    });
+
+    // Agregar funcionalidad para retroceder al campo anterior si se presiona la tecla de retroceso (backspace)
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Backspace' && input.value.length === 0 && index > 0) {
+            inputs[index - 1].focus();
+        }
     });
 });
+
 
 // Método del evento para cuando se envía el formulario de guardar.
 SAVE_FORM.addEventListener('submit', async (event) => {
