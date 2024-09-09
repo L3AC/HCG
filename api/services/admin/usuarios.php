@@ -364,6 +364,21 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'PIN incorrecto, revisa el corre electronico';
                 }
                 break;
+                // Cambiar contraseña de usuario.
+            case 'changePasswordRecup':
+                if (!$Usuario->setId($_POST['id'])) {
+                    $result['error'] = 'Acción no disponible';
+                }elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                    $result['error'] = 'Contraseñas diferentes';
+                } elseif (!$Usuario->setClave($_POST['claveNueva'])) {
+                    $result['error'] = $Usuario->getDataError();
+                } elseif ($Usuario->changePasswordRecup()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Contraseña modificada correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
+                }
+                break;
             // Registrar un nuevo usuario.
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);

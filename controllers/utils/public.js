@@ -181,7 +181,7 @@ const loadTemplate = async () => {
             <!-- Instagram -->
             <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://instagram.com/" role="button"
             data-mdb-ripple-color="dark"><i class="bi bi-instagram" style="color: white;"></i></a>
-            <p style="color: white;">© 2024 Copyright YNWA</p>
+            <p style="color: white;">© 2024 Copyright HCG</p>
 
             </section>
             <!-- Section: Social media -->

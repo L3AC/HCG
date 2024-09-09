@@ -15,6 +15,13 @@ body {
     background: url('../img/gifRecup.gif') no-repeat center center;
     background-size: cover;
 }
+
+
+.image-side3 {
+    flex: 0.7;
+    background: url('../img/gifLogin.gif') no-repeat center center;
+    background-size: cover;
+}
 .form-side {
     flex: 1;
     display: flex;
@@ -53,6 +60,11 @@ body {
 .backgroundRecup {
     background: rgb(253,195,102);
     background: linear-gradient(90deg, rgba(253,195,102,1) 39%, rgba(255,195,95,1) 66%, rgba(212,212,212,0.969625350140056) 92%);
+}
+
+.backgroundRecupPublic{
+    background: rgb(247,226,176);
+background: linear-gradient(90deg, rgba(247,226,176,1) 48%, rgba(250,237,208,1) 72%, rgba(212,212,212,0.969625350140056) 92%);
 }
 
 /* Boton de la pantalla de recuperacion de contraseña, parte donde el usuario cambia la contraseña */

@@ -186,6 +186,16 @@ class UsuarioHandler
     }
 
     // Método para cambiar la contraseña del usuario.
+    public function changePasswordRecup()
+    {
+        $sql = 'UPDATE tb_usuarios
+                SET clave_usuario = ?, ultimo_cambio_clave = now(), pin_usuario = ?
+                WHERE id_usuario = ?';
+        $params = array($this->clave, $this->generarPin(), $this->id);
+        return Database::executeRow($sql, $params);
+    }
+
+    // Método para cambiar la contraseña del usuario.
     public function changePassword()
     {
         $sql = 'UPDATE tb_usuarios
