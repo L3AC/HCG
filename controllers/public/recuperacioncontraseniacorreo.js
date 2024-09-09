@@ -27,9 +27,9 @@ SAVE_FORM.addEventListener('submit', async (event) => {
 
             // Si los datos de usuario son correctos, procedemos a enviar el correo.
             const userData = {
-                pin_usuario: DATA.dataset.pin_usuario,
-                alias_usuario: DATA.dataset.alias_usuario,
-                email_usuario: DATA.dataset.email_usuario
+                pin_cliente: DATA.dataset.pin_cliente,
+                usuario_cliente: DATA.dataset.usuario_cliente,
+                correo_cliente: DATA.dataset.correo_cliente
             };
 
             // Llamada a la función para enviar el correo con los datos.
@@ -49,9 +49,9 @@ SAVE_FORM.addEventListener('submit', async (event) => {
 const sendMail = async (data) => {
     try {
         const formData = new FormData();
-        formData.append('pin', data.pin_usuario);
-        formData.append('user', data.alias_usuario);
-        formData.append('email', data.email_usuario);
+        formData.append('pin', data.pin_cliente);
+        formData.append('user', data.usuario_cliente);
+        formData.append('email', data.correo_cliente);
 
         const response = await fetchData(LIBRERIA, 'sendCode', formData);
     } catch (error) {
