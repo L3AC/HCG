@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const CLIENTE_API = 'services/public/clientes.php';
+// const CLIENTE_API = 'services/public/clientes.php';
 
 // Constantes para llamar los elementos de la página
 const BOTON = document.getElementById('boton');
@@ -13,9 +13,10 @@ const CODIGO1 = document.getElementById('code1'),
 // Constante para obtener los datos del formulario
 const SAVE_FORM = document.getElementById('saveForm');
 
-// Obtener el valor del usuario desde la URL
-const urlParams = new URLSearchParams(window.location.search);
-const id = urlParams.get('id');
+document.addEventListener('DOMContentLoaded', async () => {
+    // Llamada a la función para mostrar el encabezado y pie del documento.
+    loadTemplate();
+});
 
 // Función para obtener el código completo
 const getCodigoCompleto = () => {
@@ -55,7 +56,6 @@ SAVE_FORM.addEventListener('submit', async (event) => {
 
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
-    FORM.append('id', id);
     FORM.append('pinCliente', codigoCompleto);  // Añadir el código completo al formulario
 
     try {
@@ -67,7 +67,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
             // Mostrar mensaje de éxito.
             await sweetAlert(1, 'Código verificado con éxito', true);
             
-         window.location.href = `../../views/admin/recuperacioncontrasenianpass.html?id=${DATA.dataset.id_cliente}`;
+         window.location.href = `../../views/public/recupclave3.html`;
         } else {
             // Mostrar mensaje de error.
             sweetAlert(2, DATA.error, false);

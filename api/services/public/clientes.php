@@ -65,23 +65,23 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
                 break;
-                case 'changePassword':
-                    $_POST = Validator::validateForm($_POST);
-                    if (!$cliente->setId($_SESSION['idCliente'])) {
-                        $result['error'] = 'Acción no disponible';
-                    }elseif (!$cliente->checkPassword($_POST['claveActual'])) {
-                        $result['error'] = 'Contraseña actual incorrecta';
-                    } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
-                        $result['error'] = 'Confirmación de contraseña diferente';
-                    } elseif (!$cliente->setClave($_POST['claveNueva'])) {
-                        $result['error'] = $cliente->getDataError();
-                    } elseif ($cliente->changePassword()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Contraseña cambiada correctamente';
-                    } else {
-                        $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
-                    }
-                    break;
+            case 'changePassword':
+                $_POST = Validator::validateForm($_POST);
+                if (!$cliente->setId($_SESSION['idCliente'])) {
+                    $result['error'] = 'Acción no disponible';
+                } elseif (!$cliente->checkPassword($_POST['claveActual'])) {
+                    $result['error'] = 'Contraseña actual incorrecta';
+                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                    $result['error'] = 'Confirmación de contraseña diferente';
+                } elseif (!$cliente->setClave($_POST['claveNueva'])) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->changePassword()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Contraseña cambiada correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
+                }
+                break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
@@ -91,7 +91,7 @@ if (isset($_GET['action'])) {
             case 'changePassword':
                 if (!$cliente->setId($_SESSION['clienteRecup'])) {
                     $result['error'] = 'Acción no disponible';
-                }elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif (!$cliente->setClave($_POST['claveNueva'])) {
                     $result['error'] = $cliente->getDataError();
@@ -117,10 +117,9 @@ if (isset($_GET['action'])) {
                     $result['error'] = $cliente->getDataError();
                 } elseif (!$result['dataset'] = $cliente->verifPin()) {
                     $result['error'] = 'Codigo incorrecto';
-                }elseif ($cliente->updatePin()) {
+                } elseif ($cliente->updatePin()) {
                     $result['status'] = 1;
                 } else {
-                    
                 }
                 break;
             case 'signUp':
@@ -136,7 +135,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $cliente->getDataError();
                 } elseif ($cliente->readExistMail($_POST['correoCliente'])) {
                     $result['error'] = 'El correo electrónico ya está en uso';
-                }  elseif ($cliente->readExist($_POST['usuarioCliente'])) {
+                } elseif ($cliente->readExist($_POST['usuarioCliente'])) {
                     $result['error'] = 'El nombre de usuario ya está en uso';
                 } elseif ($_POST['claveCliente'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
@@ -161,6 +160,19 @@ if (isset($_GET['action'])) {
                     }
                 } else {
                     $result['error'] = 'Credenciales vacías';
+                }
+                break;
+            case 'getChange':
+                if (isset($_SESSION['idChange'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Accion no habilitada';
+                }
+            case 'getRecup':
+                if (isset($_SESSION['clienteRecup'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Accion no habilitada';
                 }
                 break;
             default:

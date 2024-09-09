@@ -81,6 +81,7 @@ class ClienteHandler
                 $this->usuario = $data['usuario_cliente'];
                 $this->estado = $data['estado_cliente'];
                 $this->email = $data['correo_cliente'];
+
     
                 return ['status' => true, 'message' => "Inicio de sesión exitoso"];
             } else {
