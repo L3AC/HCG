@@ -23,7 +23,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         // Se comprueba si la respuesta es satisfactoria
         if (DATA.status) {
             // Mostrar mensaje de éxito.
-            sweetAlert(1, 'Usuario encontrado, revise su correo electrónico', true);
+            await sweetAlert(1, 'Usuario encontrado, revise su correo electrónico', true);
 
             // Si los datos de usuario son correctos, procedemos a enviar el correo.
             const userData = {
