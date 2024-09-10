@@ -21,9 +21,6 @@ const confirmAction = (message) => {
         allowEscapeKey: false
     });
 }
-
-
-
 /*
 *   Función asíncrona para manejar los mensajes de notificación al usuario. Requiere la librería sweetalert para funcionar.
 *   Parámetros: type (tipo de mensaje), text (texto a mostrar), timer (uso de temporizador) y url (valor opcional con la ubicación de destino).
@@ -788,8 +785,9 @@ const horBarGraph = (canvas, legends, values, title) => {
 const logOut = async () => {
     // Se muestra un mensaje de confirmación y se captura la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Está seguro de cerrar la sesión?');
-    // Se verifica la respuesta del mensaje.
-    if (RESPONSE) {
+    
+    // Se verifica si el usuario confirmó la acción.
+    if (RESPONSE.isConfirmed) {
         // Petición para eliminar la sesión.
         const DATA = await fetchData(USER_API, 'logOut');
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -798,6 +796,9 @@ const logOut = async () => {
         } else {
             sweetAlert(2, DATA.exception, false);
         }
+    } else {
+        // El usuario seleccionó "No", no se realiza ninguna acción.
+        console.log('Sesión no cerrada');
     }
 }
 
