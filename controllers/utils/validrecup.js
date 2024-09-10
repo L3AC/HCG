@@ -24,7 +24,7 @@ const loadTemplate = async () => {
             // Se agrega el encabezado de la página web antes del contenido principal.
 
         } else {
-            location.href = 'recuperacioncontasenia.html';
+            location.href = 'verifUs.html';
         }
     }
 }
