@@ -2,6 +2,9 @@ DROP DATABASE IF EXISTS db_hcg;
 CREATE DATABASE IF NOT EXISTS db_hcg;
 USE db_hcg;
 
+#select * from tb_usuarios
+#update tb_usuarios set  ultimo_cambio_clave='2024-09-01 01:00:00' where id_usuario=9
+ 
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED,
   descripcion_rol VARCHAR(100) NOT NULL,
@@ -121,7 +124,7 @@ CREATE TABLE tb_detalle_pedidos (
   id_pedido INT UNSIGNED NOT NULL,
   id_producto INT UNSIGNED NOT NULL,
   cantidad_pedido INT UNSIGNED NOT NULL,                                                   
-  nota_pedido LONGTEXT,
+  nota_pedido LONGTEXT DEFAULT "Nota vacía",
   PRIMARY KEY (id_detalle_pedido),
   FOREIGN KEY (id_pedido) REFERENCES tb_pedidos(id_pedido) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE

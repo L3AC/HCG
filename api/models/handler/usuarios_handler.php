@@ -136,18 +136,34 @@ class UsuarioHandler
     //Funcion para verificar si el usuaro existe
     public function verifUs()
     {
-        $sql = 'SELECT *
-        from  tb_usuarios
-        WHERE alias_usuario = ?';
-        $params = array($this->usuario);
-        /*$data*/  return Database::getRow($sql, $params);
-        /*if ($data) {
-            $_SESSION['idRec'] = $data['id_usuario'];
-            return true;
-        }else{
-            return false;
-        }*/
+        // Verificamos si existe el usuario
+        $sql = 'SELECT * FROM tb_usuarios WHERE alias_usuario = ?';
+        $params = array($this->usuario);     
+        $data = Database::getRow($sql, $params);
+    
+        // Si se encuentra el usuario
+        if ($data) {
+            // Generamos un nuevo PIN y lo actualizamos
+            $pin = $this->generarPin();
+            $sql = 'UPDATE tb_usuarios SET pin_usuario = ? WHERE alias_usuario = ?';
+            $params = array($pin, $this->usuario);
+            $updateSuccess = Database::executeRow($sql, $params);
+    
+            // Si la actualización fue exitosa
+            if ($updateSuccess) {
+                // Agregamos el nuevo PIN a los datos del usuario y lo retornamos
+                $data['pin_usuario'] = $pin;
+                return $data;
+            } else {
+                // Si no se pudo actualizar el PIN
+                return null;
+            }
+        } else {
+            // Si no se encontró el usuario
+            return null;
+        }
     }
+    
 
     public function verifPin()
     {

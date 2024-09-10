@@ -36,7 +36,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
             // Llamada a la función para enviar el correo con los datos.
             await sendMail(userData);
 
-            window.location.href = `../../views/admin/recuperacioncontaseniacodigo.html`;
+            window.location.href = `../../views/admin/verifCodigo.html`;
         } else {
             // Mostrar mensaje de error.
             sweetAlert(2, DATA.error, false);

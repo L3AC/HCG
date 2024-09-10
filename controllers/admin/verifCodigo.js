@@ -68,7 +68,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
             // Mostrar mensaje de éxito.
             await sweetAlert(1, 'Código verificado con éxito', true);
             
-            window.location.href = `../../views/admin/recuperacioncontrasenianpass.html`;
+            window.location.href = `../../views/admin/verifCambio.html`;
         } else {
             // Mostrar mensaje de error.
             sweetAlert(2, DATA.error, false);
