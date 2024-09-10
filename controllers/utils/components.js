@@ -10,26 +10,18 @@ const SERVER_URL = 'http://localhost/HCG/api/';
 *   Retorno: resultado de la promesa.
 */
 const confirmAction = (message) => {
-    return swal({
+    return Swal.fire({
         title: 'Advertencia',
         text: message,
         icon: 'warning',
-        closeOnClickOutside: false,
-        closeOnEsc: false,
-        buttons: {
-            cancel: {
-                text: 'No',
-                value: false,
-                visible: true
-            },
-            confirm: {
-                text: 'Sí',
-                value: true,
-                visible: true
-            }
-        }
+        showCancelButton: true,
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'No',
+        allowOutsideClick: false,
+        allowEscapeKey: false
     });
 }
+
 
 
 /*
@@ -38,7 +30,9 @@ const confirmAction = (message) => {
 *   Retorno: ninguno.
 */
 const sweetAlert = async (type, text, timer, url = null) => {
-    // Se compara el tipo de mensaje a mostrar.
+    let title, icon;
+    
+    // Set the title and icon based on the message type
     switch (type) {
         case 1:
             title = 'Éxito';
@@ -55,25 +49,36 @@ const sweetAlert = async (type, text, timer, url = null) => {
         case 4:
             title = 'Aviso';
             icon = 'info';
+            break;
+        default:
+            title = '';
+            icon = '';
     }
-    // Se define un objeto con las opciones principales para el mensaje.
+
+    // Define options for SweetAlert2
     let options = {
         title: title,
         text: text,
         icon: icon,
-        closeOnClickOutside: false,
-        closeOnEsc: false,
-        button: { // Aquí envolvemos la función reload () en una función anónima
-            text: 'Aceptar'
-        }
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        confirmButtonText: 'Aceptar'
     };
-    // Se verifica el uso del temporizador.
-    (timer) ? options.timer = 3000 : options.timer = null;
-    // Se muestra el mensaje.
-    await swal(options);
-    // Se direcciona a una página web si se indica.
-    (url) ? location.href = url : undefined;
-}
+
+    // If timer is true, add a 3-second timer
+    if (timer) {
+        options.timer = 3000;
+    }
+
+    // Show the alert
+    await Swal.fire(options);
+
+    // Redirect to a URL if provided
+    if (url) {
+        location.href = url;
+    }
+};
+
 
 /*
 *   Función asíncrona para cargar las opciones en un select de formulario.

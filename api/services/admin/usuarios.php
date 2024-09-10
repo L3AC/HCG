@@ -257,7 +257,7 @@ if (isset($_GET['action'])) {
                     $ultima_clave = new DateTime($_SESSION['ultimo_cambio']);
                     $fecha_actual = new DateTime();
                     $interval = $fecha_actual->diff($ultima_clave);
-                    if ($interval->days > 1) {
+                    if ($interval->days >90) {
                         // Si han pasado más de 90 días, solicitar cambio de clave
                         unset($_SESSION['idUsuario']);
                         $result['dataset'] = 4;
