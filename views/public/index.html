@@ -25,34 +25,52 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap" rel="stylesheet">
 </head>
 
 <body class="bodyp">
+    <div class="containImg">
+        <div class="row rowlo">
+            <div class="col-4 col4 cuadroImg">
+                <img src="../../resources/img/platito.png" alt="Comida" style="height: auto; width: 505px;">
+            </div>
+            <div class="col-2 col2"></div>
+            <div class="col-6 col6">
+                <div class="text-container">
+                    <p class="TituloC">HCG</p>
+                    <button class="buttonCartl" data-text="Awesome" onclick="scrollToSection('Platillos')">
+                        <span class="actual-text">&nbsp;Reservar&nbsp;</span>
+                        <span aria-hidden="true" class="hover-text">&nbsp;Reservar&nbsp;</span>
+                    </button>
+                    <button class="buttonCartl" data-text="Awesome" onclick="redirectToPage('menudia.html')">
+                        <span class="actual-text">&nbsp;Menu&nbsp;</span>
+                        <span aria-hidden="true" class="hover-text">&nbsp;Menu&nbsp;</span>
+                    </button>              
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
+    <!--<img src="../../resources/img/plato5.jpg" alt="Comida" style="height: 550px; width: 100%;">-->
     <!-- Contenido principal del documento -->
     <main>
-        <!-- Componente Carousel con reproducción automática e indicadores 
-        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-            <div class="carousel-indicators" id="btnSlide"></div>
-            <div class="carousel-inner" id="cardSlide"></div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>-->
         <!-- Título del contenido principal -->
-        <h4 id="mainTitle" class="m-5" style="color: white; font-size: 35px;"></h4>
+        <h4 id="mainTitle" class="m-5" style="position: absolute    ; color: white; font-size: 35px; visibility: hidden;"></h4>
         <!-- Contenedor para mostrar las categorías disponibles -->
-        <h4 id="submainTitle1" class="m-5"></h4>
+
+        <div class="conteTem" id="Platillos">
+            <h4 id="submainTitle1" class="m-5 tema">Platillos</h4>
+        </div>
         <div class="row" id="conjuntos"></div>
-        <h4 id="submainTitle2" class="m-5"></h4>
+
+        <div class="conteTem">
+            <h4 id="submainTitle2" class="m-5 tema"></h4>
+        </div>
         <div class="row" id="complementos"></div>
+
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->
@@ -62,6 +80,7 @@
     <script type="text/javascript" src="../../controllers/utils/components.js"></script>
     <!-- Llamada al controlador del sitio público -->
     <script type="text/javascript" src="../../controllers/utils/public.js"></script>
+    <script type="text/javascript" src="../../controllers/utils/SmoothScroll.js"></script>
     <!-- Llamada al controlador de la página web -->
     <script type="text/javascript" src="../../controllers/public/index.js"></script>
 </body>

@@ -41,3 +41,180 @@
     background-color: #5C2C0C;
 }
 
+.containImg {
+  background: linear-gradient(to bottom, #000000, #353535);
+  width: 100%;
+  height: 700px;
+  display: flex;
+  border-bottom: #5C2C0C solid 5px;
+  align-items: center; /* Alinea verticalmente los hijos del contenedor */
+}
+
+.rowlo {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.cuadroImg {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centra la imagen dentro de la columna */
+}
+
+.cuadroImg img {
+  margin-top: 120px; /* Ajusta este valor según sea necesario */
+  width: 505px; /* Ancho predeterminado de la imagen */
+  height: auto; /* Mantiene la proporción de la imagen */
+}
+
+/* Media query para pantallas menores a 1000px */
+@media (max-width: 1000px) {
+  .cuadroImg img {
+    display: none; /* Oculta la imagen en pantallas menores a 1000px */
+  }
+  
+  .rowlo {
+    display: flex;
+    flex-direction: column; /* Cambia la dirección de la fila a columna */
+    align-items: center; /* Centra horizontalmente el contenido en la columna */
+    justify-content: center; /* Centra verticalmente el contenido en la columna */
+  }
+
+  .col4, .col2, .col6 {
+    width: 100%; /* Asegura que las columnas ocupen todo el ancho disponible */
+    justify-content: center; /* Centra el contenido de las columnas horizontalmente */
+  }
+
+  .text-container {
+    display: flex;
+    flex-direction: column; /* Alinea los elementos en una columna */
+    align-items: center; /* Centra horizontalmente */
+    text-align: center; /* Centra el texto dentro del contenedor */
+    margin-top: 20px; /* Añade margen superior si es necesario */
+  }
+
+  .TituloC {
+    font-size: 150px; /* Ajusta el tamaño del texto para pantallas pequeñas */
+  }
+
+  .buttonCartl {
+    font-size: 24px; /* Ajusta el tamaño del texto del botón para pantallas pequeñas */
+  }
+}
+
+@media (max-width: 450px) {
+  .TituloC{
+    font-size: 20px;
+  }
+}
+
+.col4, .col2, .col6 {
+  display: flex;
+  align-items: center;
+}
+
+.col6 {
+  justify-content: center;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column; /* Alinea los elementos en una columna */
+  align-items: center; /* Centra horizontalmente */
+}
+
+.TituloC {
+  color: #DDA35D;
+  font-size: 200px;
+  animation: moveUpDown 4s ease-in-out infinite;
+  font-family: "Nerko One", cursive;
+  font-weight: bold;
+  font-style: normal;
+  padding: 0px;
+  margin: 0px;
+}
+
+.conteTem {
+  background-color: #5C2C0C;
+  height: 100px;
+  width: 80%;
+  margin: 0 auto 20px; /* Centra horizontalmente y agrega margen inferior */
+  border-radius: 20px;
+}
+
+.tema {
+  color: #ffffff;
+  font-size: 50px;
+  font-family: "Nerko One", cursive;
+  font-weight: bold;
+  font-style: normal;
+  text-align: center;
+  padding-top: 20px;
+}
+
+#conjuntos, #complementos {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  width: 100%; /* Asegura que el row ocupe todo el ancho del contenedor */
+}
+
+/* Definimos la animación */
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* === removing default button style ===*/
+.buttonCartl {
+  margin: 0;
+  height: auto;
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  font-family: "Arial";
+  text-transform: uppercase;
+}
+
+/* button styling */
+.buttonCartl {
+  --border-right: 6px;
+  --text-stroke-color: rgba(255,255,255,0.6);
+  --animation-color: #ddaa5d;
+  --fs-size: 30px;
+  letter-spacing: 3px;
+  text-decoration: none;
+  margin-top: 5px;
+  font-size: var(--fs-size);
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-stroke-color);
+  position: relative;
+}
+
+/* this is the text, when you hover on button */
+.hover-text {
+  position: absolute;
+  box-sizing: border-box;
+  content: attr(data-text);
+  color: var(--animation-color);
+  width: 0%;
+  inset: 0;
+  border-right: var(--border-right) solid var(--animation-color);
+  overflow: hidden;
+  transition: 0.5s;
+  -webkit-text-stroke: 1px var(--animation-color);
+}
+
+/* hover */
+.buttonCartl:hover .hover-text {
+  width: 100%;
+  filter: drop-shadow(0 0 23px var(--animation-color));
+}
