@@ -276,11 +276,32 @@ class ClienteHandler
 
     public function verifUs()
     {
-        $sql = 'SELECT *
-        from tb_clientes
-        WHERE usuario_cliente = ?';
-        $params = array($this->usuario);
-        return Database::getRow($sql, $params);
+        // Verificamos si existe el usuario
+        $sql = 'SELECT * FROM tb_clientes WHERE usuario_cliente = ?';
+        $params = array($this->usuario);     
+        $data = Database::getRow($sql, $params);
+    
+        // Si se encuentra el usuario
+        if ($data) {
+            // Generamos un nuevo PIN y lo actualizamos
+            $pin = $this->generarPin();
+            $sql = 'UPDATE tb_clientes SET pin_cliente = ? WHERE usuario_cliente = ?';
+            $params = array($pin, $this->usuario);
+            $updateSuccess = Database::executeRow($sql, $params);
+    
+            // Si la actualización fue exitosa
+            if ($updateSuccess) {
+                // Agregamos el nuevo PIN a los datos del usuario y lo retornamos
+                $data['pin_cliente'] = $pin;
+                return $data;
+            } else {
+                // Si no se pudo actualizar el PIN
+                return null;
+            }
+        } else {
+            // Si no se encontró el usuario
+            return null;
+        }
     }
     public function verifPin()
     {
