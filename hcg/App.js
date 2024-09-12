@@ -7,6 +7,8 @@ import StackMain from './src/navigation/StackMain';
 import StackAuth from './src/navigation/StackAuth';
 import SplashScreen from './src/screens/SplashScreen';
 import { SERVER } from './src/contexts/Network';
+import { enableScreens } from 'react-native-screens';
+enableScreens();
 
 const Stack = createStackNavigator();
 

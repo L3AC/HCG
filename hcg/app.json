@@ -18,13 +18,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/img/iconoApp.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.s3th_3.hcg"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "074c6c8c-867c-458c-90fb-ff395cd4b968"
+      }
+    }
   }
 }
