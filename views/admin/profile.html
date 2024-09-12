@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="../../resources/css/card_2.css">
     <link rel="stylesheet" href="../../resources/css/univer.css">
     <link rel="stylesheet" href="../../resources/css/input_b.css">
+    <link rel="stylesheet" href="../../resources/css/toggle.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
@@ -32,7 +33,7 @@
 <body class="bodyp">
     <!-- Contenido principal del documento -->
     <main>
-        
+
         <div id="mainTitle"></div>
         <div id="mensaje"></div>
 
@@ -67,18 +68,31 @@
                         <span>Usuario :</span>
                     </div>
                 </div>
-                <div class="text-center">
-                    <button type="submit" class="btnAgregar" style="background-color: #CCC8AA;"><i
-                            class="bi bi-save"></i>
-                        Guardar</button>
+                <div class="col-12 text-center ">
+                    <span>Segundo factor de auntenticacion</span>
+                    <div class="toggle-wrapper pb-4">
+                        <input class="toggle-checkbox form-control" type="checkbox" id="twoFA" name="twoFA">
+                        <div class="toggle-container">  
+                          <div class="toggle-button">
+                          </div>
+                        </div>
+                      </div>
                 </div>
-            </form>
-            <!-- Contenedor con enlace para abrir la caja de diálogo del formulario de cambiar constraseña -->
-            <div class="text-center p-3">
-                <button type="button" class="btnAgregar" onclick="openPassword()">
-                    <i class="bi bi-shield-lock"></i> Cambiar contraseña
-                </button>
-            </div>
+        </div>
+      
+
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btnAgregar" style="background-color: #CCC8AA;"><i class="bi bi-save"></i>
+                Guardar</button>
+        </div>
+        </form>
+        <!-- Contenedor con enlace para abrir la caja de diálogo del formulario de cambiar constraseña -->
+        <div class="text-center p-3">
+            <button type="button" class="btnAgregar" onclick="openPassword()">
+                <i class="bi bi-shield-lock"></i> Cambiar contraseña
+            </button>
+        </div>
         </div>
         <!-- Componente Modal para mostrar el formulario de cambio de contraseña -->
         <div class="modal fade" id="passwordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -133,7 +147,7 @@
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Llamada al controlador general de la aplicación -->
     <script type="text/javascript" src="../../controllers/utils/components.js"></script>
     <!-- Llamada al controlador del sitio privado -->
@@ -141,7 +155,7 @@
     <!-- Llamada al controlador de la página web -->
     <script type="text/javascript" src="../../controllers/admin/profile.js"></script>
     <script type="text/javascript" src="../../controllers/utils/inactividad.js"></script>
-    
+
 </body>
 
 </html>

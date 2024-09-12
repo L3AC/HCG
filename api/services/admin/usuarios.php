@@ -238,6 +238,16 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+                case 'twoFAMetod':
+                    if (!$Usuario->setEstado(isset($_POST['twoFA']) ? 1 : 0)) {
+                        $result['error'] = $Usuario->getDataError();
+                    } elseif ($Usuario->twoFA()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Cambio de autenticación';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al actualizar';
+                    }
+                    break;
 
                 // Acción no disponible dentro de la sesión.
             default:

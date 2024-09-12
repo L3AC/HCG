@@ -228,11 +228,19 @@ class UsuarioHandler
         $params = array($this->clave, $this->id);
         return Database::executeRow($sql, $params);
     }
+    public function twoFA()
+    {
+        $sql = 'UPDATE tb_usuarios set factor_autenticacion =? 
+                WHERE id_usuario = ?';
+        echo $this->estado;
+        $params = array($this->estado,$_SESSION['idUsuario']);
+        return Database::executeRow($sql, $params);
+    }
 
     // Método para leer el perfil del usuario actual.
     public function readProfile()
     {
-        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, alias_usuario
+        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, alias_usuario,factor_autenticacion
                 FROM tb_usuarios
                 WHERE id_usuario = ?';
         $params = array($_SESSION['idUsuario']);

@@ -1,5 +1,6 @@
 // Constantes para establecer los elementos del formulario de editar perfil.
 const PROFILE_FORM = document.getElementById('profileForm'),
+    TWOFA = document.getElementById('twoFA'),
     NOMBRE_ADMINISTRADOR = document.getElementById('nombreAdministrador'),
     APELLIDO_ADMINISTRADOR = document.getElementById('apellidoAdministrador'),
     CORREO_ADMINISTRADOR = document.getElementById('correoAdministrador'),
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
         CORREO_ADMINISTRADOR.value = ROW.email_usuario;
         ALIAS_ADMINISTRADOR.value = ROW.alias_usuario;
+        TWOFA.checked = ROW.factor_autenticacion;
     } else {
         sweetAlert(2, DATA.error, null);
     }
@@ -77,3 +79,41 @@ const openPassword = () => {
     // Se restauran los elementos del formulario.
     PASSWORD_FORM.reset();
 }
+TWOFA.addEventListener('click', async function(event) {
+    const TWOFA = document.getElementById('twoFA');
+    let message;
+  
+    // Prevenir que el checkbox cambie inmediatamente
+    event.preventDefault();
+  
+    // Definir el mensaje basado en el estado actual del checkbox
+    if (TWOFA.checked) {
+      message = '¿Desea activar la autenticación por dos pasos?';
+    } else {
+      message = '¿Desea desactivar la autenticación por dos pasos?';
+    }
+  
+    // Preguntar al usuario con el mensaje adecuado
+    const RESPONSE = await confirmAction(message);
+  
+    // Si el usuario confirma, continuamos
+    if (RESPONSE) {
+      // Cambiar el estado del checkbox según la acción confirmada
+      TWOFA.checked = !TWOFA.checked;
+  
+      // Se define una constante tipo objeto con los datos del registro seleccionado.
+      const FORM = new FormData();
+      FORM.append('twoFA', TWOFA.value); // Valor basado en el estado del checkbox
+  
+      // Petición para activar/desactivar la autenticación de dos factores
+      const DATA = await fetchData(USER_API, 'twoFAMetod', FORM);
+  
+      // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+      if (DATA.status) {
+        // Se muestra un mensaje de éxito.
+        sweetAlert(1, DATA.message, true);
+      } else {
+        sweetAlert(2, DATA.error, false);
+      }
+    }
+  });

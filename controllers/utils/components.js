@@ -9,18 +9,20 @@ const SERVER_URL = 'http://localhost/HCG/api/';
 *   Parámetros: message (mensaje de confirmación).
 *   Retorno: resultado de la promesa.
 */
-const confirmAction = (message) => {
-    return Swal.fire({
-        title: 'Advertencia',
-        text: message,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sí',
-        cancelButtonText: 'No',
-        allowOutsideClick: false,
-        allowEscapeKey: false
+const confirmAction = async (message) => {
+    const result = await Swal.fire({
+      title: 'Advertencia',
+      text: message,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No',
+      allowOutsideClick: false,
+      allowEscapeKey: false
     });
-}
+  
+    return result.isConfirmed; // Devuelve true si el usuario confirma
+  };
 /*
 *   Función asíncrona para manejar los mensajes de notificación al usuario. Requiere la librería sweetalert para funcionar.
 *   Parámetros: type (tipo de mensaje), text (texto a mostrar), timer (uso de temporizador) y url (valor opcional con la ubicación de destino).
