@@ -291,8 +291,8 @@ class Validator
         }
 
         // Verificar al menos 3 caracteres especiales.
-        if (preg_match_all('/[!@#$%^&*(),.?":{}|<>]/', $value) < 3) {
-            self::$password_error = 'La contraseña debe contener al menos 3 caracteres especiales';
+        if (preg_match_all('/[!@#$%^&*(),.?":{}|<>]/', $value) < 1) {
+            self::$password_error = 'La contraseña debe contener al menos 1 caracter especial';
             return false;
         }
 

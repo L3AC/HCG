@@ -42,6 +42,7 @@ class UsuarioHandler
     // Método para verificar las credenciales del usuario al iniciar sesión.
     public function checkUser($username, $password)
     {
+        
         $sql = 'SELECT id_usuario, id_rol, alias_usuario, clave_usuario, email_usuario, 
                 estado_rol, productos_opc, pedidos_opc, tipo_items_opc, items_opc, 
                 clientes_opc, usuarios_opc, roles_opc, intentos_usuario, fecha_reactivacion, ultimo_intento,ultimo_cambio_clave

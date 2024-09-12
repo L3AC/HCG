@@ -16,7 +16,7 @@ if (isset($_GET['action'])) {
         $result['session'] = 1;
         // Se compara la acción a realizar cuando un Usuario ha iniciado sesión.
         switch ($_GET['action']) {
-            // Buscar filas que coincidan con un valor de búsqueda.
+                // Buscar filas que coincidan con un valor de búsqueda.
             case 'searchRows':
                 if (!$Usuario->setSearch($_POST['valor'])) {
                     $result['error'] = $Usuario->getDataError();
@@ -28,7 +28,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Llenar tabla de usuarios según el rol del usuario en sesión.
+                // Llenar tabla de usuarios según el rol del usuario en sesión.
             case 'fillTab':
                 if ($result['dataset'] = $Usuario->fillTab($_SESSION['idRol'])) {
                     $result['status'] = 1;
@@ -38,7 +38,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Crear un nuevo usuario.
+                // Crear un nuevo usuario.
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
@@ -65,7 +65,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Leer todos los usuarios.
+                // Leer todos los usuarios.
             case 'readAll':
                 if ($result['dataset'] = $Usuario->readAll()) {
                     $result['status'] = 1;
@@ -76,7 +76,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Verificar la existencia de un usuario por su nombre de usuario.
+                // Verificar la existencia de un usuario por su nombre de usuario.
             case 'readExist':
                 if ($Usuario->readExist($_POST['usuario'])) {
                     $result['status'] = 1;
@@ -85,7 +85,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Leer un usuario específico.
+                // Leer un usuario específico.
             case 'readOne':
                 if (!$Usuario->setId($_POST['idUsuario'])) {
                     $result['error'] = 'Usuario incorrecto';
@@ -96,7 +96,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Actualizar un usuario.
+                // Actualizar un usuario.
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
@@ -119,7 +119,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Eliminar un usuario.
+                // Eliminar un usuario.
             case 'deleteRow':
                 if ($_POST['idUsuario'] == $_SESSION['idUsuario']) {
                     $result['error'] = 'No se puede eliminar a sí mismo';
@@ -133,10 +133,10 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Obtener información del usuario en sesión.
+                // Obtener información del usuario en sesión.
             case 'getUser':
                 unset($_SESSION['pasw']);
-                if (isset($_SESSION['usuarion'])) {  
+                if (isset($_SESSION['usuarion'])) {
                     $result['status'] = 1;
                     $result['username'] = $_SESSION['usuarion'];
                     $result['ultimo_cambio'] = $_SESSION['ultimo_cambio'];
@@ -148,13 +148,12 @@ if (isset($_GET['action'])) {
                     $result['clientes_opc'] = $_SESSION['clientes_opc'];
                     $result['usuarios_opc'] = $_SESSION['usuarios_opc'];
                     $result['roles_opc'] = $_SESSION['roles_opc'];
-                }
-                else {
+                } else {
                     //$result['dataset'] = 2;
                     $result['error'] = 'Alias de Usuario indefinido';
                 }
                 break;
-            // Cerrar sesión.
+                // Cerrar sesión.
             case 'logOut':
                 if (session_destroy()) {
                     $result['status'] = 1;
@@ -164,7 +163,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Leer perfil de usuario.
+                // Leer perfil de usuario.
             case 'readProfile':
                 if ($result['dataset'] = $Usuario->readProfile()) {
                     $result['status'] = 1;
@@ -173,7 +172,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Editar perfil de usuario.
+                // Editar perfil de usuario.
             case 'editProfile':
                 $_POST = Validator::validateForm($_POST);
 
@@ -197,12 +196,12 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Cambiar contraseña de usuario.
+                // Cambiar contraseña de usuario.
             case 'changePassword':
                 $_POST = Validator::validateForm($_POST);
                 if (!$Usuario->setId($_SESSION['idUsuario'])) {
                     $result['error'] = 'Acción no disponible';
-                }elseif (!$Usuario->checkPassword($_POST['claveActual'])) {
+                } elseif (!$Usuario->checkPassword($_POST['claveActual'])) {
                     $result['error'] = 'Contraseña actual incorrecta';
                 } elseif ($_POST['claveActual'] == $_POST['claveNueva']) {
                     $result['error'] = 'La clave nueva no puede ser igual a la actual';
@@ -240,69 +239,67 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-            // Acción no disponible dentro de la sesión.
+                // Acción no disponible dentro de la sesión.
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
     } else {
         // Se compara la acción a realizar cuando el Usuario no ha iniciado sesión.
         switch ($_GET['action']) {
-            // Iniciar sesión de usuario.
-            case 'logIn':
-                $_POST = Validator::validateForm($_POST);
-                // Llama a la función checkUser y captura la respuesta detallada
-                $loginResult = $Usuario->checkUser($_POST['usuariol'], $_POST['clavel']);
-                if ($loginResult['status']) {
-                    // Verificar la última vez que se cambió la clave
-                    $ultima_clave = new DateTime($_SESSION['ultimo_cambio']);
-                    $fecha_actual = new DateTime();
-                    $interval = $fecha_actual->diff($ultima_clave);
-                    if ($interval->days >90) {
-                        // Si han pasado más de 90 días, solicitar cambio de clave
-                        unset($_SESSION['idUsuario']);
-                        $result['dataset'] = 4;
-                        $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
-                    } else {
-                        // Inicio de sesión exitoso
-                        $result['status'] = 1;
-                        $result['dataset'] = 1;
-                        $result['message'] = $loginResult['message'];
-                    }
-                } else {
-                    // Verificar si hay un error de bloqueo de cuenta o intentos fallidos
-                    if (isset($loginResult['intentos'])) {
-                        if ($loginResult['intentos'] >= 3) {
-                            $result['dataset'] = 3;
-                            $result['message'] = 'Cuenta suspendida por 24 horas debido a múltiples intentos fallidos.';
+                // Iniciar sesión de usuario.
+                case 'logIn':
+                    $_POST = Validator::validateForm($_POST);
+                    // Llama a la función checkUser y captura la respuesta detallada
+                    $loginResult = $Usuario->checkUser($_POST['usuariol'], $_POST['clavel']);
+                    if ($loginResult['status']) {
+                        // Verificar la última vez que se cambió la clave
+                        $ultima_clave = new DateTime($_SESSION['ultimo_cambio']);
+                        $fecha_actual = new DateTime();
+                        $interval = $fecha_actual->diff($ultima_clave);
+                        if ($interval->days >90) {
+                            // Si han pasado más de 90 días, solicitar cambio de clave
+                            unset($_SESSION['idUsuario']);
+                            $result['dataset'] = 4;
+                            $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
                         } else {
-                            $result['dataset'] = 2;
-                            $result['message'] = 'Credenciales incorrectas. Intento ' . $loginResult['intentos'] . ' de 3.';
+                            // Inicio de sesión exitoso
+                            $result['status'] = 1;
+                            $result['dataset'] = 1;
+                            $result['message'] = $loginResult['message'];
                         }
                     } else {
-                        $result['dataset'] = 2;
-                        $result['message'] = 'Credenciales incorrectas';
+                        // Verificar si hay un error de bloqueo de cuenta o intentos fallidos
+                        if (isset($loginResult['intentos'])) {
+                            if ($loginResult['intentos'] >= 3) {
+                                $result['dataset'] = 3;
+                                $result['message'] = 'Cuenta suspendida por 24 horas debido a múltiples intentos fallidos.';
+                            } else {
+                                $result['dataset'] = 2;
+                                $result['message'] = 'Credenciales incorrectas. Intento ' . $loginResult['intentos'] . ' de 3.';
+                            }
+                        } else {
+                            $result['dataset'] = 2;
+                            $result['message'] = 'Credenciales incorrectas';
+                        }
                     }
-                }
-                break;
+                    break;
             case 'getChange':
-                if (isset($_SESSION['idChange'])) {  
+                if (isset($_SESSION['idChange'])) {
                     $result['status'] = 1;
-                }
-                else {
+                } else {
                     $result['error'] = 'Accion no habilitada';
                 }
-                case 'getRecup':
-                    if (isset($_SESSION['usuarioRecup'])) {  
-                        $result['status'] = 1;
-                    }
-                    else {
-                        $result['error'] = 'Accion no habilitada';
-                    }
+            case 'getRecup':
+                if (isset($_SESSION['usuarioRecup'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Accion no habilitada';
+                }
                 break;
             case 'newPassword':
                 if (!$Usuario->setId($_SESSION['idChange'])) {
                     $result['error'] = 'Acción no disponible';
-                }elseif ($_SESSION['pasw'] == $_POST['claveNueva']) {
+                } elseif ($_SESSION['pasw'] == $_POST['claveNueva']) {
                     $result['error'] = 'La clave nueva no puede ser igual a la actual';
                 } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
@@ -315,7 +312,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
                 }
                 break;
-            // Leer todos los usuarios.
+                // Leer todos los usuarios.
             case 'readUsers':
                 if ($Usuario->readAll()) {
                     $result['status'] = 1;
@@ -335,7 +332,8 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'verifPin':
-                if (!$Usuario->setpinRecu($_POST['pinRecu']) or
+                if (
+                    !$Usuario->setpinRecu($_POST['pinRecu']) or
                     !$Usuario->setId($_SESSION['usuarioRecup'])
                 ) {
                     $result['error'] = $Usuario->getDataError();
@@ -350,7 +348,7 @@ if (isset($_GET['action'])) {
             case 'changePasswordRecup':
                 if (!$Usuario->setId($_SESSION['usuarioRecup'])) {
                     $result['error'] = 'Acción no disponible';
-                }elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif (!$Usuario->setClave($_POST['claveNueva'])) {
                     $result['error'] = $Usuario->getDataError();
@@ -361,7 +359,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
                 }
                 break;
-            // Registrar un nuevo usuario.
+                // Registrar un nuevo usuario.
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);
                 if (
@@ -383,7 +381,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al registrar el Usuario';
                 }
                 break;
-            // Acción no disponible fuera de la sesión.
+                // Acción no disponible fuera de la sesión.
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';
         }
@@ -393,7 +391,7 @@ if (isset($_GET['action'])) {
     // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
     header('Content-type: application/json; charset=utf-8');
     // Se imprime el resultado en formato JSON y se retorna al controlador.
-    print (json_encode($result));
+    print(json_encode($result));
 } else {
-    print (json_encode('Recurso no disponible'));
+    print(json_encode('Recurso no disponible'));
 }
