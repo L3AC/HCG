@@ -238,7 +238,7 @@ class UsuarioHandler
     {
         $sql = 'UPDATE tb_usuarios set factor_autenticacion =? 
                 WHERE id_usuario = ?';
-        //echo $this->estado;
+        echo 'ejemplo '.$this->estado;
         $params = array($this->estado,$_SESSION['idUsuario']);
         return Database::executeRow($sql, $params);
     }

@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (DATA.status) {
         // Se inicializan los campos del formulario con los datos del usuario que ha iniciado sesión.
         const ROW = DATA.dataset;
-        console.log (ROW.nombre_usuario);
+        console.log(ROW.nombre_usuario);
         NOMBRE_ADMINISTRADOR.value = ROW.nombre_usuario;
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
         CORREO_ADMINISTRADOR.value = ROW.email_usuario;
@@ -79,41 +79,43 @@ const openPassword = () => {
     // Se restauran los elementos del formulario.
     PASSWORD_FORM.reset();
 }
-TWOFA.addEventListener('click', async function(event) {
-    const TWOFA = document.getElementById('twoFA');
+TWOFA.addEventListener('click', async function (event) {
+    const TWOFA = document.getElementById('twoFA'); // Definido una sola vez al inicio
     let message;
-  
+
     // Prevenir que el checkbox cambie inmediatamente
     event.preventDefault();
-  
+
     // Definir el mensaje basado en el estado actual del checkbox
     if (TWOFA.checked) {
-      message = '¿Desea activar la autenticación por dos pasos?';
+        message = '¿Desea activar la autenticación por dos pasos?';
     } else {
-      message = '¿Desea desactivar la autenticación por dos pasos?';
+        message = '¿Desea desactivar la autenticación por dos pasos?';
     }
-  
+
     // Preguntar al usuario con el mensaje adecuado
     const RESPONSE = await confirmAction(message);
-  
+
     // Si el usuario confirma, continuamos
     if (RESPONSE) {
-      // Cambiar el estado del checkbox según la acción confirmada
-      TWOFA.checked = !TWOFA.checked;
-  
-      // Se define una constante tipo objeto con los datos del registro seleccionado.
-      const FORM = new FormData();
-      FORM.append('twoFA', TWOFA.value); // Valor basado en el estado del checkbox
-  
-      // Petición para activar/desactivar la autenticación de dos factores
-      const DATA = await fetchData(USER_API, 'twoFAMetod', FORM);
-  
-      // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-      if (DATA.status) {
-        // Se muestra un mensaje de éxito.
-        sweetAlert(1, DATA.message, true);
-      } else {
-        sweetAlert(2, DATA.error, false);
-      }
+        // Cambiar el estado del checkbox según la acción confirmada
+        TWOFA.checked = !TWOFA.checked;
+
+        // Se define una constante tipo objeto con los datos del registro seleccionado.
+        const FORM = new FormData();
+        console.log('TWOFA.checked:', TWOFA.checked); // Verificar el valor antes de enviarlo
+        FORM.append('twoFA', TWOFA.checked ? 1 : 0); // Envía 1 si está marcado, 0 si no lo está
+
+        // Petición para activar/desactivar la autenticación de dos factores
+        const DATA = await fetchData(USER_API, 'twoFAMetod', FORM);
+
+
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA.status) {
+            // Se muestra un mensaje de éxito.
+            sweetAlert(1, DATA.message, true);
+        } else {
+            sweetAlert(2, DATA.error, false);
+        }
     }
-  });
+});
