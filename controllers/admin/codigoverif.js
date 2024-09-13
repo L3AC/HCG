@@ -63,7 +63,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         // Se comprueba si la respuesta es satisfactoria
         if (DATA.status) {
             // Mostrar mensaje de éxito.
-            await sweetAlert(1, 'Código verificado con éxito', true);
+            await sweetAlert(1, DATA.message, true,'dashboard.html');
         } else {
             // Mostrar mensaje de error.
             sweetAlert(2, DATA.error, false);

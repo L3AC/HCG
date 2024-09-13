@@ -72,20 +72,16 @@ LOGIN_FORM.addEventListener('submit', async (event) => {
         sweetAlert(4, DATA.message, true, 'cambio_clave.html');
     } else if (DATA.dataset == 5) {
         sweetAlert(4, DATA.message, true);
-
         const FORM = new FormData();
         FORM.append('usuario', USUARIO_ADMIN.value);
-
         try {
             const DATA = await fetchData(USER_API, 'verif2FA', FORM);
-
             if (DATA.status) {
                 const userData = {
                     pin_usuario: DATA.dataset.pin_usuario,
                     alias_usuario: DATA.dataset.alias_usuario,
                     email_usuario: DATA.dataset.email_usuario
                 };
-
                 console.log(userData);
                 // Llamada a la función para enviar el correo con los datos.
                 await sendMail(userData);

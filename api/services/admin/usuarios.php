@@ -272,7 +272,7 @@ if (isset($_GET['action'])) {
                         $result['dataset'] = 4;
                         $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
                     } else {
-                        if ($_SESSION['2fa']) {
+                        if (isset($_SESSION['2fa'])) {
                             unset($_SESSION['idUsuario']);
                             $result['dataset'] = 5; // Por ejemplo, para indicar que se requiere 2FA
                             $result['message'] = 'Codigo enviado a su correo';
@@ -364,19 +364,20 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Usuario inexistente';
                 }
                 break;
-                case 'verifPin2FA':
-                    if (
-                        !$Usuario->setpinRecu($_POST['pinRecu']) or
-                        !$Usuario->setId($_SESSION['usuario2FA'])
-                    ) {
-                        $result['error'] = $Usuario->getDataError();
-                    } elseif ($result['dataset'] = $Usuario->verifPin()) {
-                        $result['status'] = 1;
-                        //$_SESSION['clienteRecup'] = $result['dataset']['id_cliente'];
-                    } else {
-                        $result['error'] = 'PIN incorrecto, revisa el corre electronico';
-                    }
-                    break;
+            case 'verifPin2FA':
+                if (
+                    !$Usuario->setpinRecu($_POST['pinRecu']) or
+                    !$Usuario->setId($_SESSION['usuario2FA'])
+                ) {
+                    $result['error'] = $Usuario->getDataError();
+                } elseif ($result['dataset'] = $Usuario->verifPin()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Inicio exitoso';
+                    $_SESSION['idUsuario'] = $result['dataset']['id_usuario'];
+                } else {
+                    $result['error'] = 'PIN incorrecto, revisa el corre electronico';
+                }
+                break;
             case 'verifPin':
                 if (
                     !$Usuario->setpinRecu($_POST['pinRecu']) or

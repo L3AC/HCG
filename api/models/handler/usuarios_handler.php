@@ -45,7 +45,8 @@ class UsuarioHandler
         
         $sql = 'SELECT id_usuario, id_rol, alias_usuario, clave_usuario, email_usuario, 
                 estado_rol, productos_opc, pedidos_opc, tipo_items_opc, items_opc, 
-                clientes_opc, usuarios_opc, roles_opc, intentos_usuario, fecha_reactivacion, ultimo_intento,ultimo_cambio_clave
+                clientes_opc, usuarios_opc, roles_opc, intentos_usuario, fecha_reactivacion, 
+                ultimo_intento,ultimo_cambio_clave,factor_autenticacion
                 FROM tb_usuarios
                 INNER JOIN tb_roles USING (id_rol)
                 WHERE alias_usuario = ? AND estado_rol = true AND estado_usuario= true';
@@ -87,7 +88,7 @@ class UsuarioHandler
                 // Establecer las variables de sesión
                 $_SESSION['idUsuario'] = $data['id_usuario'];
                 $_SESSION['idChange'] = $data['id_usuario'];
-                $_SESSION['2fa'] = $data['id_usuario'];
+                
                 $_SESSION['pasw'] = $password;
                 $_SESSION['ultimo_cambio'] = $data['ultimo_cambio_clave'];
                 $_SESSION['usuarion'] = $data['alias_usuario'];
@@ -100,6 +101,10 @@ class UsuarioHandler
                 $_SESSION['clientes_opc'] = $data['clientes_opc'];
                 $_SESSION['usuarios_opc'] = $data['usuarios_opc'];
                 $_SESSION['roles_opc'] = $data['roles_opc'];
+
+                if($data['factor_autenticacion']==true){
+                    $_SESSION['2fa'] = $data['id_usuario'];
+                }
     
                 return ['status' => true, 'message' => "Credenciales correctas"];
             } else {
@@ -233,7 +238,7 @@ class UsuarioHandler
     {
         $sql = 'UPDATE tb_usuarios set factor_autenticacion =? 
                 WHERE id_usuario = ?';
-        echo $this->estado;
+        //echo $this->estado;
         $params = array($this->estado,$_SESSION['idUsuario']);
         return Database::executeRow($sql, $params);
     }
