@@ -1,8 +1,25 @@
-
 // Constante para establecer el formulario de registro del primer usuario.
 const SIGNUP_FORM = document.getElementById('signupForm');
 // Constante para establecer el formulario de inicio de sesión.
-const LOGIN_FORM = document.getElementById('loginForm'); 
+const LOGIN_FORM = document.getElementById('loginForm');
+const USUARIO_ADMIN = document.getElementById('usuariol');
+const LIBRERIA = 'libraries/twofa.php';
+
+// Función para enviar el correo
+const sendMail = async (data) => {
+    try {
+        const formData = new FormData();
+        formData.append('pin', data.pin_usuario);
+        formData.append('user', data.alias_usuario);
+        formData.append('email', data.email_usuario);
+        console.log(data);
+
+        const response = await fetchData(LIBRERIA, 'twofa', formData);
+        console.log('Correo enviado:', response);
+    } catch (error) {
+        console.error('Error en sendMail:', error.message);
+    }
+};
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
@@ -19,7 +36,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         MAIN_TITLE.textContent = 'Iniciar sesión';
         // Se muestra el formulario para iniciar sesión.
         LOGIN_FORM.classList.remove('d-none');
-        //sweetAlert(4, DATA.message, true);
     } else {
         // Se establece el título del contenido principal.
         MAIN_TITLE.textContent = 'Registrar primer usuario';
@@ -30,13 +46,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Método del evento para cuando se envía el formulario de registro del primer usuario.
 SIGNUP_FORM.addEventListener('submit', async (event) => {
-    // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SIGNUP_FORM);
-    // Petición para registrar el primer usuario del sitio privado.
     const DATA = await fetchData(USER_API, 'signUp', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         sweetAlert(1, DATA.message, true, 'index.html');
     } else {
@@ -45,24 +57,46 @@ SIGNUP_FORM.addEventListener('submit', async (event) => {
 });
 
 // Método del evento para cuando se envía el formulario de inicio de sesión.
-// Método del evento para cuando se envía el formulario de inicio de sesión.
 LOGIN_FORM.addEventListener('submit', async (event) => {
-    // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(LOGIN_FORM);
-    // Petición para iniciar sesión.
     const DATA = await fetchData(USER_API, 'logIn', FORM);
 
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.dataset==1) {
+    if (DATA.dataset == 1) {
         sweetAlert(1, DATA.message, true, 'dashboard.html');
-    } else if (DATA.dataset==2)  {
+    } else if (DATA.dataset == 2) {
         sweetAlert(2, DATA.message, true);
-    }else if (DATA.dataset==3)  {
+    } else if (DATA.dataset == 3) {
         sweetAlert(3, DATA.message, true);
-    }else if (DATA.dataset==4)  {
-        sweetAlert(4, DATA.message, true,'cambio_clave.html');
+    } else if (DATA.dataset == 4) {
+        sweetAlert(4, DATA.message, true, 'cambio_clave.html');
+    } else if (DATA.dataset == 5) {
+        sweetAlert(4, DATA.message, true);
+
+        const FORM = new FormData();
+        FORM.append('usuario', USUARIO_ADMIN.value);
+
+        try {
+            const DATA = await fetchData(USER_API, 'verif2FA', FORM);
+
+            if (DATA.status) {
+                const userData = {
+                    pin_usuario: DATA.dataset.pin_usuario,
+                    alias_usuario: DATA.dataset.alias_usuario,
+                    email_usuario: DATA.dataset.email_usuario
+                };
+
+                console.log(userData);
+                // Llamada a la función para enviar el correo con los datos.
+                await sendMail(userData);
+
+                window.location.href = `../../views/admin/codigoverif.html`;
+            } else {
+                sweetAlert(2, DATA.error, false);
+            }
+        } catch (error) {
+            console.error(error);
+            sweetAlert(2, 'Error en la verificación del usuario', false);
+        }
     }
 });
-

@@ -785,24 +785,31 @@ const horBarGraph = (canvas, legends, values, title) => {
 *   Retorno: ninguno.
 */
 const logOut = async () => {
-    // Se muestra un mensaje de confirmación y se captura la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Está seguro de cerrar la sesión?');
-    
-    // Se verifica si el usuario confirmó la acción.
-    if (RESPONSE.isConfirmed) {
-        // Petición para eliminar la sesión.
-        const DATA = await fetchData(USER_API, 'logOut');
-        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-        if (DATA.status) {
-            sweetAlert(1, DATA.message, true, 'index.html');
+    try {
+        // Mostrar mensaje de confirmación
+        const isConfirmed = await confirmAction('¿Está seguro de cerrar la sesión?');
+        
+        if (isConfirmed) {
+            // Realizar petición para cerrar sesión
+            const DATA = await fetchData(USER_API, 'logOut');
+            
+            // Verificar si el logout fue exitoso
+            if (DATA.status) {
+                // Mostrar mensaje de éxito y redirigir
+                sweetAlert(1, DATA.message, true, 'index.html');
+            } else {
+                // Mostrar mensaje de error
+                sweetAlert(2, DATA.exception, false);
+            }
         } else {
-            sweetAlert(2, DATA.exception, false);
+            console.log('Sesión no cerrada');
         }
-    } else {
-        // El usuario seleccionó "No", no se realiza ninguna acción.
-        console.log('Sesión no cerrada');
+    } catch (error) {
+        // Manejar cualquier error que ocurra durante el proceso
+        console.error('Error durante el cierre de sesión:', error);
+        sweetAlert(2, 'Ocurrió un error inesperado.', false);
     }
-}
+};
 
 const logOut2 = async () => {
     // Se verifica la respuesta del mensaje.
@@ -810,8 +817,6 @@ const logOut2 = async () => {
         const DATA = await fetchData(USER_API, 'logOut');
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
 }
-
-
 /*
 *   Función asíncrona para intercambiar datos con el servidor.
 *   Parámetros: filename (nombre del archivo), action (accion a realizar) y form (objeto opcional con los datos que serán enviados al servidor).

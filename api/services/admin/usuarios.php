@@ -238,16 +238,16 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
-                case 'twoFAMetod':
-                    if (!$Usuario->setEstado(isset($_POST['twoFA']) ? 1 : 0)) {
-                        $result['error'] = $Usuario->getDataError();
-                    } elseif ($Usuario->twoFA()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Cambio de autenticación';
-                    } else {
-                        $result['error'] = 'Ocurrió un problema al actualizar';
-                    }
-                    break;
+            case 'twoFAMetod':
+                if (!$Usuario->setEstado(isset($_POST['twoFA']) ? 1 : 0)) {
+                    $result['error'] = $Usuario->getDataError();
+                } elseif ($Usuario->twoFA()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Cambio de autenticación';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al actualizar';
+                }
+                break;
 
                 // Acción no disponible dentro de la sesión.
             default:
@@ -257,42 +257,55 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando el Usuario no ha iniciado sesión.
         switch ($_GET['action']) {
                 // Iniciar sesión de usuario.
-                case 'logIn':
-                    $_POST = Validator::validateForm($_POST);
-                    // Llama a la función checkUser y captura la respuesta detallada
-                    $loginResult = $Usuario->checkUser($_POST['usuariol'], $_POST['clavel']);
-                    if ($loginResult['status']) {
-                        // Verificar la última vez que se cambió la clave
-                        $ultima_clave = new DateTime($_SESSION['ultimo_cambio']);
-                        $fecha_actual = new DateTime();
-                        $interval = $fecha_actual->diff($ultima_clave);
-                        if ($interval->days >90) {
-                            // Si han pasado más de 90 días, solicitar cambio de clave
+            case 'logIn':
+                $_POST = Validator::validateForm($_POST);
+                // Llama a la función checkUser y captura la respuesta detallada
+                $loginResult = $Usuario->checkUser($_POST['usuariol'], $_POST['clavel']);
+                if ($loginResult['status']) {
+                    // Verificar la última vez que se cambió la clave
+                    $ultima_clave = new DateTime($_SESSION['ultimo_cambio']);
+                    $fecha_actual = new DateTime();
+                    $interval = $fecha_actual->diff($ultima_clave);
+                    if ($interval->days > 90) {
+                        // Si han pasado más de 90 días, solicitar cambio de clave
+                        unset($_SESSION['idUsuario']);
+                        $result['dataset'] = 4;
+                        $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
+                    } else {
+                        if ($_SESSION['2fa']) {
                             unset($_SESSION['idUsuario']);
-                            $result['dataset'] = 4;
-                            $result['message'] = 'Debe cambiar su contraseña cada 90 días.';
+                            $result['dataset'] = 5; // Por ejemplo, para indicar que se requiere 2FA
+                            $result['message'] = 'Codigo enviado a su correo';
                         } else {
-                            // Inicio de sesión exitoso
+                            // Inicio de sesión exitoso sin 2FA
                             $result['status'] = 1;
                             $result['dataset'] = 1;
                             $result['message'] = $loginResult['message'];
                         }
-                    } else {
-                        // Verificar si hay un error de bloqueo de cuenta o intentos fallidos
-                        if (isset($loginResult['intentos'])) {
-                            if ($loginResult['intentos'] >= 3) {
-                                $result['dataset'] = 3;
-                                $result['message'] = 'Cuenta suspendida por 24 horas debido a múltiples intentos fallidos.';
-                            } else {
-                                $result['dataset'] = 2;
-                                $result['message'] = 'Credenciales incorrectas. Intento ' . $loginResult['intentos'] . ' de 3.';
-                            }
+                    }
+                } else {
+                    // Verificar si hay un error de bloqueo de cuenta o intentos fallidos
+                    if (isset($loginResult['intentos'])) {
+                        if ($loginResult['intentos'] >= 3) {
+                            $result['dataset'] = 3;
+                            $result['message'] = 'Cuenta suspendida por 24 horas debido a múltiples intentos fallidos.';
                         } else {
                             $result['dataset'] = 2;
-                            $result['message'] = 'Credenciales incorrectas';
+                            $result['message'] = 'Credenciales incorrectas. Intento ' . $loginResult['intentos'] . ' de 3.';
                         }
+                    } else {
+                        $result['dataset'] = 2;
+                        $result['message'] = 'Credenciales incorrectas';
                     }
-                    break;
+                }
+                break;
+            case 'get2FA':
+                if (isset($_SESSION['2fa'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Accion no habilitada';
+                }
+                break;
             case 'getChange':
                 if (isset($_SESSION['idChange'])) {
                     $result['status'] = 1;
@@ -341,6 +354,29 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Usuario inexistente';
                 }
                 break;
+            case 'verif2FA':
+                if (!$Usuario->setUsuario($_POST['usuario'])) {
+                    $result['error'] = $Usuario->getDataError();
+                } elseif ($result['dataset'] = $Usuario->verifUs()) {
+                    $result['status'] = 1;
+                    $_SESSION['usuario2FA'] = $result['dataset']['id_usuario'];
+                } else {
+                    $result['error'] = 'Usuario inexistente';
+                }
+                break;
+                case 'verifPin2FA':
+                    if (
+                        !$Usuario->setpinRecu($_POST['pinRecu']) or
+                        !$Usuario->setId($_SESSION['usuario2FA'])
+                    ) {
+                        $result['error'] = $Usuario->getDataError();
+                    } elseif ($result['dataset'] = $Usuario->verifPin()) {
+                        $result['status'] = 1;
+                        //$_SESSION['clienteRecup'] = $result['dataset']['id_cliente'];
+                    } else {
+                        $result['error'] = 'PIN incorrecto, revisa el corre electronico';
+                    }
+                    break;
             case 'verifPin':
                 if (
                     !$Usuario->setpinRecu($_POST['pinRecu']) or
