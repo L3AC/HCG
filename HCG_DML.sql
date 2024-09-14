@@ -91,17 +91,17 @@ VALUES
 ((SELECT get_next_id("tb_clientes")),"Lucia","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Lucia","Gutierrez","71926709","jerelea777@gmail.com", '2024-03-14 07:25:00'),
 ((SELECT get_next_id("tb_clientes")),"Fernando","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Fernando","Ramos","71926710","hello@duolingo.com", '2024-04-23 12:15:00'),
 ((SELECT get_next_id("tb_clientes")),"Elena","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Elena","Lopez","71000711","store@email.epicgames.com", '2024-05-31 17:05:00');
-/*
-INSERT INTO tb_usuarios(id_usuario, id_rol, alias_usuario, clave_usuario, nombre_usuario, apellido_usuario, email_usuario, pin_usuario, fecha_usuario)
+
+/*INSERT INTO tb_usuarios(id_usuario, id_rol, alias_usuario, clave_usuario, nombre_usuario, apellido_usuario, email_usuario, pin_usuario, fecha_usuario)
 VALUES
-((SELECT get_next_id("tb_usuarios")), 1, "jhernandez", "$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je", "Juan", "Hernandez", "leac.2xy@gmail.com", "123456", '2024-01-15 10:00:00'),
-((SELECT get_next_id("tb_usuarios")), 2, "mrodriguez", "$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je", "Maria", "Rodriguez", "mariarod@gmail.com", "654321", '2024-02-15 10:00:00'),
-((SELECT get_next_id("tb_usuarios")), 2, "cperez", "$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je", "Carlos", "Perez", "carlosperez@gmail.com", "abcdef", '2024-03-15 10:00:00'),
-((SELECT get_next_id("tb_usuarios")), 2, "adiaz", "$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je", "Ana", "Diaz", "anadiaz@gmail.com", "fedcba", '2024-04-15 10:00:00'),
-((SELECT get_next_id("tb_usuarios")), 2, "lsanchez", "$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je", "Luis", "Sanchez", "luissanc@gmail.com", "112233", '2024-05-15 10:00:00'),
-((SELECT get_next_id("tb_usuarios")), 2, "lramirez", "$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je", "Laura", "Ramirez", "lauraram@gmail.com", "332211", '2024-06-15 10:00:00'),
-((SELECT get_next_id("tb_usuarios")), 2, "jgarcia", "$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je", "Javier", "Garcia", "javiergar@gmail.com", "a1b2c3", '2024-07-15 10:00:00'),
-((SELECT get_next_id("tb_usuarios")), 2, "smartinez", "$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je", "Sofia", "Martinez", "sofiamtz@gmail.com", "c3b2a1", '2024-08-15 10:00:00');
+((SELECT get_next_id("tb_usuarios")), 1, "juancho123", "$2y$10$ZiaSk4LEmVv3IAWq/sr3/OF7CgsvZTjyeUNcoGh6A9oAurLCQCdGS", "Juan", "Hernandez", "leac.2xy@gmail.com", "123456", '2024-01-15 10:00:00'),
+((SELECT get_next_id("tb_usuarios")), 2, "mrodriguez", "$2y$10$ZiaSk4LEmVv3IAWq/sr3/OF7CgsvZTjyeUNcoGh6A9oAurLCQCdGS", "Maria", "Rodriguez", "mariarod@gmail.com", "654321", '2024-02-15 10:00:00'),
+((SELECT get_next_id("tb_usuarios")), 2, "cperez", "$2y$10$ZiaSk4LEmVv3IAWq/sr3/OF7CgsvZTjyeUNcoGh6A9oAurLCQCdGS", "Carlos", "Perez", "carlosperez@gmail.com", "abcdef", '2024-03-15 10:00:00'),
+((SELECT get_next_id("tb_usuarios")), 2, "adiaz", "$2y$10$ZiaSk4LEmVv3IAWq/sr3/OF7CgsvZTjyeUNcoGh6A9oAurLCQCdGS", "Ana", "Diaz", "anadiaz@gmail.com", "fedcba", '2024-04-15 10:00:00'),
+((SELECT get_next_id("tb_usuarios")), 2, "lsanchez", "$2y$10$ZiaSk4LEmVv3IAWq/sr3/OF7CgsvZTjyeUNcoGh6A9oAurLCQCdGS", "Luis", "Sanchez", "luissanc@gmail.com", "112233", '2024-05-15 10:00:00'),
+((SELECT get_next_id("tb_usuarios")), 2, "lramirez", "$2y$10$ZiaSk4LEmVv3IAWq/sr3/OF7CgsvZTjyeUNcoGh6A9oAurLCQCdGS", "Laura", "Ramirez", "lauraram@gmail.com", "332211", '2024-06-15 10:00:00'),
+((SELECT get_next_id("tb_usuarios")), 2, "jgarcia", "$2y$10$ZiaSk4LEmVv3IAWq/sr3/OF7CgsvZTjyeUNcoGh6A9oAurLCQCdGS", "Javier", "Garcia", "javiergar@gmail.com", "a1b2c3", '2024-07-15 10:00:00'),
+((SELECT get_next_id("tb_usuarios")), 2, "smartinez", "$2y$10$ZiaSk4LEmVv3IAWq/sr3/OF7CgsvZTjyeUNcoGh6A9oAurLCQCdGS", "Sofia", "Martinez", "sofiamtz@gmail.com", "c3b2a1", '2024-08-15 10:00:00');
 */
 
 -- Insertar pedidos
