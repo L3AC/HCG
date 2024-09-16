@@ -8,6 +8,7 @@ const SplashScreen = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigation.replace('Login'); // Redirige a la pantalla de Login
+      /*/*"projectId": "074c6c8c-867c-458c-90fb-ff395cd4b968"*/
     }, 2000); // Duración del SplashScreen en milisegundos
 
     return () => clearTimeout(timer);
