@@ -7,11 +7,13 @@ import SignUp from '../screens/NotLogged/SignUp';
 import NuevaClave from '../screens/NotLogged/Recup/NuevaClave';
 import VerifCode from '../screens/NotLogged/Recup/VerifCode';
 import VerifUs from '../screens/NotLogged/Recup/VerifUs';
+import prueba from '../screens/NotLogged/prueba';
 
 const Stack = createStackNavigator();
 
 const StackAuth = () => (
     <Stack.Navigator>
+      <Stack.Screen name="prueba" component={prueba} options={{ headerShown: false }} />
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
       <Stack.Screen name="NuevaClave" component={NuevaClave} options={{ headerShown: false }} />
