@@ -36,102 +36,22 @@ class ClienteHandler
 
         return $pin;
     }
-    public function checkUser($username, $password)
+    public function checkUser($usuario, $password)
     {
-        $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente,correo_cliente,
-                intentos_cliente, fecha_reactivacion, ultimo_intento
+        $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente,correo_cliente
                 FROM tb_clientes
-                WHERE usuario_cliente = ? and estado_cliente = true';
-        
-        $params = array($username);
+                WHERE usuario_cliente = ?';
+        $params = array($usuario);
         $data = Database::getRow($sql, $params);
-    
-        if ($data) {
-            $intentos = $data['intentos_cliente'];
-            $ultimo_intento = $data['ultimo_intento'];
-            $fecha_reactivacion = $data['fecha_reactivacion'];
-    
-            // Comprobar si el usuario está bloqueado
-            if ($intentos >= 3 && $fecha_reactivacion && strtotime($fecha_reactivacion) > time()) {
-                return [
-                    'status' => false,
-                    'message' => "Cuenta bloqueada por 24 horas debido a múltiples intentos fallidos.",
-                    'intentos' => $intentos
-                ];
-            }
-    
-            // Verificar si han pasado más de 10 minutos desde el último intento fallido
-            if ($ultimo_intento) {
-                $now = new DateTime();
-                $lastAttempt = new DateTime($ultimo_intento);
-                $interval = $now->diff($lastAttempt);
-    
-                if ($interval->i >= 1) {
-                    // Reiniciar contador de intentos si han pasado más de 10 minutos
-                    $intentos = 0;
-                    $this->reiniciarIntentos($data['id_cliente']);
-                }
-            }
-    
-            if (password_verify($password, $data['clave_cliente'])) {
-                // Restablecer el contador de intentos en caso de inicio de sesión exitoso
-                $this->reiniciarIntentos($data['id_cliente']);
-                // Establecer las variables de sesión
-                $this->id = $data['id_cliente'];
-                $this->usuario = $data['usuario_cliente'];
-                $this->estado = $data['estado_cliente'];
-                $this->email = $data['correo_cliente'];
-
-    
-                return ['status' => true, 'message' => "Inicio de sesión exitoso"];
-            } else {
-                // Incrementar el contador de intentos fallidos
-                $this->incrementarIntentos($data['id_cliente']);
-                
-                // Verificar si ahora el usuario tiene 3 intentos fallidos para bloquear la cuenta
-                if ($intentos + 1 >= 3) {
-                    $this->blockUser($data['id_cliente']);
-                    return [
-                        'status' => false,
-                        'message' => "Cuenta bloqueada por 24 horas debido a múltiples intentos fallidos.",
-                        'intentos' => $intentos + 1
-                    ];
-                } else {
-                    return [
-                        'status' => false,
-                        'message' => "Credenciales incorrectas sa. Intento " . ($intentos + 1) ." de 3. Se reinician cada 10 minutos ",
-                        'intentos' => $intentos + 1,
-                    ];
-                }
-            }
+        if ($data && password_verify($password, $data['clave_cliente'])) {
+            $this->id = $data['id_cliente'];
+            $this->usuario = $data['usuario_cliente'];
+            $this->estado = $data['estado_cliente'];
+            $this->email = $data['correo_cliente'];
+            return true;
         } else {
-            return ['status' => false, 'message' => "Usuario no encontrado", 'intentos' => 0];
+            return false;
         }
-    }
-    
-    // Función para reiniciar el contador de intentos
-    private function reiniciarIntentos($id_usuario)
-    {
-        $sql = 'UPDATE tb_cientes SET intentos_cliente = 0, ultimo_intento = NULL, fecha_reactivacion = NULL WHERE id_cliente = ?';
-        $params = array($id_usuario);
-        return Database::executeRow($sql, $params);
-    }
-    
-    // Función para incrementar el contador de intentos
-    private function incrementarIntentos($id_usuario)
-    {
-        $sql = 'UPDATE tb_clientes SET intentos_usuario = intentos_usuario + 1, ultimo_intento = CURRENT_TIMESTAMP WHERE id_cliente = ?';
-        $params = array($id_usuario);
-        return Database::executeRow($sql, $params);
-    }
-    
-    // Función para bloquear al usuario
-    private function blockUser($id_usuario)
-    {
-        // Bloquear la cuenta por 24 horas
-        $sql = 'UPDATE tb_clientes SET fecha_reactivacion = DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 DAY), WHERE id_cliente = ?';
-        $params = array($id_usuario);
-        return Database::executeRow($sql, $params);
     }
 
     // Método para verificar el estado del cliente.
