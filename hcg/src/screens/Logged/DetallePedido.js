@@ -48,10 +48,11 @@ const DetallePedido = () => {
   // Renderizado del componente
   return (
     <ScrollView
-      contentContainerStyle={styles.container}
+      contentContainerStyle={styles.scrollViewContent} style={{ flex: 1 }} 
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchOrderDetails} />}
     >
       <Header onPress={() => navigation.goBack()} titulo={'Detalles'} />
+      <View style={styles.container}>
       {/* Mapeo de los items del pedido */}
       {orderItems.map((item) => (
         <View key={item.id_detalle_pedido} style={styles.card}>
@@ -64,6 +65,7 @@ const DetallePedido = () => {
           </View>
         </View>
       ))}
+      </View>
     </ScrollView>
   );
 };
@@ -72,15 +74,20 @@ const DetallePedido = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 16,
-    backgroundColor: '#d2a563', // Color de fondo del screen
+    paddingTop: 30,
+    padding: 30,
+    paddingBottom: 400,
+    backgroundColor: '#d2a563', // Color de fondo
+  },
+  scrollViewContent: {
+    paddingBottom: 60, // Asegura espacio al final para el scroll
   },
   card: {
     flexDirection: 'row', // Coloca los elementos en una fila
     backgroundColor: '#F4F0E4', // Color de fondo de las tarjetas
     padding: 16,
     borderRadius: 10, // Bordes redondeados
-    marginBottom: 16,
+    marginBottom: 100,
     shadowColor: '#000', // Color de la sombra
     shadowOffset: { width: 0, height: 2 }, // Offset de la sombra
     shadowOpacity: 0.3, // Opacidad de la sombra

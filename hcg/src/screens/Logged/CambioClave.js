@@ -56,6 +56,7 @@ const CambioClave = () => {
   return (
     <ScrollView
       contentContainerStyle={styles.scrollViewContent}
+      style={{ flex: 1 }}  // Esto ayudará a ocupar todo el espacio disponible
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
       <Header onPress={() => navigation.goBack()} titulo={'Clave'} />
@@ -64,35 +65,35 @@ const CambioClave = () => {
         {/* Imagen alusiva a la pantalla nueva contraseña */}
         <Ionicons style={styles.icono} name="key" size={120} color="black" />
         <View style={styles.inputContainer}>
-            <InputLogin 
-              placeHolder='Clave actual' 
-              value={currentPassword} 
-              onChangeText={setCurrentPassword} 
-              clave={showCurrentPassword} 
-              isContra={true} 
-              setIsContra={setShowCurrentPassword} 
-            />
+          <InputLogin
+            placeHolder='Clave actual'
+            value={currentPassword}
+            onChangeText={setCurrentPassword}
+            clave={showCurrentPassword}
+            isContra={true}
+            setIsContra={setShowCurrentPassword}
+          />
         </View>
 
         <View style={styles.inputContainer}>
-            <InputLogin 
-              placeHolder='Nueva clave' 
-              value={newPassword} 
-              onChangeText={setNewPassword} 
-              clave={showNewPassword} 
-              isContra={true} 
-              setIsContra={setShowNewPassword} 
-            />
+          <InputLogin
+            placeHolder='Nueva clave'
+            value={newPassword}
+            onChangeText={setNewPassword}
+            clave={showNewPassword}
+            isContra={true}
+            setIsContra={setShowNewPassword}
+          />
         </View>
         <View style={styles.inputContainer}>
-            <InputLogin 
-              placeHolder='Confirmar clave' 
-              value={confirmPassword} 
-              onChangeText={setConfirmPassword} 
-              clave={showConfirmPassword} 
-              isContra={true} 
-              setIsContra={setShowConfirmPassword} 
-            />
+          <InputLogin
+            placeHolder='Confirmar clave'
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            clave={showConfirmPassword}
+            isContra={true}
+            setIsContra={setShowConfirmPassword}
+          />
         </View>
 
         {/* Contenedor para alinear solo el botón al centro de la pantalla */}
@@ -112,16 +113,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingTop: 30,
     padding: 30,
-    paddingBottom: 30,
+    paddingBottom: 110,
     backgroundColor: '#d2a563', // Color de fondo
   },
   scrollViewContent: {
     paddingBottom: 60, // Asegura espacio al final para el scroll
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
   },
   backButton: {
     marginRight: 10,
@@ -136,7 +132,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
   },
-  icono: { 
+  icono: {
     textAlign: 'center',
     marginTop: 0,
   },
@@ -167,10 +163,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   containerButton: {
-    marginTop: 20,
+    marginTop: 10,  // Reducir el espacio superior
     justifyContent: 'center',
     alignItems: 'center',
   },
+  
 });
 
 export default CambioClave;

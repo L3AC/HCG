@@ -113,7 +113,6 @@ const Home = () => {
           value={search}
           onChangeText={handleSearchChange}
         />
-        <Icon name="microphone" type="font-awesome" size={24} style={styles.searchIcon} />
       </View>
       {/* Título del menú del día */}
       <Text style={styles.title}>Menú del Día</Text>
