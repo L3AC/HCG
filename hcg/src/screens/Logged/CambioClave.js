@@ -109,6 +109,7 @@ const CambioClave = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
     paddingTop: 30,
     padding: 30,
     paddingBottom: 30,
