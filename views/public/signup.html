@@ -31,51 +31,47 @@
     <!-- Contenido principal del documento -->
     <main>
         <!-- Título del contenido principal -->
-        <h4 id="mainTitle" class="mt-4"></h4>
-        <!-- Formulario para crear cuenta -->
-        <form class="row g-3" id="signupForm">
-            <!-- Campo oculto para asignar el token del reCAPTCHA -->
-            <input type="hidden" id="gRecaptchaResponse" name="gRecaptchaResponse">
-            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                <label for="nombreCliente" class="form-label">Nombre</label>
-                <input type="text" id="nombreCliente" name="nombreCliente" class="form-control" required>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <label for="apellidoCliente" class="form-label">Apellido</label>
-                <input type="text" id="apellidoCliente" name="apellidoCliente" class="form-control" required>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                <label for="telefonoCliente" class="form-label">Teléfono</label>
-                <input type="text" id="telefonoCliente" name="telefonoCliente" placeholder="0000-0000" class="form-control" required>
-            </div>
-            
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <label for="usuarioCliente" class="form-label">Usuario</label>
-                <input type="text" id="usuarioCliente" name="usuarioCliente" class="form-control" required>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                <label for="claveCliente" class="form-label">Contraseña</label>
-                <input type="password" id="claveCliente" name="claveCliente" class="form-control" required>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <label for="confirmarClave" class="form-label">Confirmar contraseña</label>
-                <input type="password" id="confirmarClave" name="confirmarClave" class="form-control" required>
-            </div>
-            <div class="col-sm-12 col-lg-8 offset-lg-2">
-                <label for="correoCliente" class="form-label">Correo electrónico</label>
-                <input type="email" id="correoCliente" name="correoCliente" maxlength="100" class="form-control"
-                    required>
-            </div>
-            <div class="form-check d-flex justify-content-center">
-                <input type="checkbox" class="form-check-input" id="condicion" name="condicion" required>
-                <label class="form-check-label" for="condicion">Acepto términos y condiciones</label>
-            </div>
+        <div class="contLog" style="margin-top: 50px;">
+            <!-- Formulario para crear cuenta -->
+            <form class="row g-3" id="signupForm">
+                <h4 id="mainTitle" class="mt-4"></h4>
+                <!-- Campo oculto para asignar el token del reCAPTCHA -->
+                <input type="hidden" id="gRecaptchaResponse" name="gRecaptchaResponse">
+                <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                    <input type="text" id="nombreCliente" placeholder="Nombre" name="nombreCliente" class="inputtt" required>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <input type="text" id="apellidoCliente" placeholder="Apellido" name="apellidoCliente" class="inputtt" required>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                    <input type="text" id="telefonoCliente" placeholder="Telefono" name="telefonoCliente" placeholder="0000-0000"
+                        class="inputtt" required>
+                </div>
 
-            <div class="text-center">
-                <button type="reset" class="btn btn-secondary"><i class="bi bi-x-square-fill"></i> Cancelar</button>
-                <button type="submit" class="btn btn-primary"><i class="bi bi-person-fill"></i> Registrar</button>
-            </div>
-        </form>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <input type="text" id="usuarioCliente" placeholder="Usuario" name="usuarioCliente" class="inputtt" required>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                    <input type="password" placeholder="Contraseña" id="claveCliente" name="claveCliente" class="inputtt" required>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <input type="password" placeholder="Confirmar contraseña" id="confirmarClave" name="confirmarClave" class="inputtt" required>
+                </div>
+                <div class="col-sm-12 col-lg-8 offset-lg-2">
+                    <input type="email" placeholder="Correo" id="correoCliente" name="correoCliente" maxlength="100" class="inputtt"
+                        required>
+                </div>
+                <div class="form-check d-flex justify-content-center">
+                    <input type="checkbox" class="form-check-input" id="condicion" name="condicion" required>
+                    <label class="form-check-label" for="condicion">Acepto términos y condiciones</label>
+                </div>
+
+                <div class="text-center" style="margin-bottom: 20px;">
+                    <button type="reset" class="ButtonRecup2"><i class="bi bi-x-square-fill"></i><span>Cancelar</span></button>
+                    <button type="submit" class="ButtonRecup2"><i class="bi bi-person-fill"></i><span>Registrar</span></button>
+                </div>
+            </form>
+        </div>
         <!-- Inclusión de la librería de mascaras. Para más información https://github.com/text-mask/text-mask -->
         <script type="text/javascript" src="../../resources/js/vanillaTextMask.js"></script>
         <!-- Inclusión de la librería del reCAPTCHA. Para más información https://developers.google.com/recaptcha/docs/v3 -->
@@ -85,7 +81,7 @@
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Llamada al controlador general de la aplicación -->
     <script type="text/javascript" src="../../controllers/utils/components.js"></script>
     <!-- Llamada al controlador del sitio público -->
