@@ -79,33 +79,15 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-
-                // Acción para actualizar la cantidad de un producto en el carrito de compras.
-                /*case 'updateDetail':
-                $_POST = Validator::validateForm($_POST);
-                if (
-                    !$pedido->setIdDetalle($_POST['idDetalle']) or
-                    !$pedido->setCantidad($_POST['cantidadProducto'])
-                ) {
-                    $result['error'] = $pedido->getDataError();
-                } elseif ($pedido->updateDetail()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Cantidad modificada correctamente';
-                } else {
-                    $result['error'] = 'Ocurrió un problema al modificar la cantidad';
-                }
-                break;
-                // Acción para remover un producto del carrito de compras.
-            case 'deleteDetail':
-                if (!$pedido->setIdDetalle($_POST['idDetalle'])) {
-                    $result['error'] = $pedido->getDataError();
-                } elseif ($pedido->deleteDetail()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Producto removido correctamente';
-                } else {
-                    $result['error'] = 'Ocurrió un problema al remover el producto';
-                }
-                break;*/
+                case 'readOne':
+                    if (!$pedido->setId($_POST['idPedido'])) {
+                        $result['error'] = $pedido->getDataError();
+                    } elseif ($result['dataset'] = $pedido->readOne()) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['error'] = 'Pedido inexistente';
+                    }
+                    break;
                 // Acción para finalizar el carrito de compras.
             case 'finishOrder':
                 if ($pedido->finishOrder()) {

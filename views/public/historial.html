@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../../resources/css/btn_e.css">
     <link rel="stylesheet" href="../../resources/css/busca.css">
     <link rel="stylesheet" href="../../resources/css/univer.css">
+    <link rel="stylesheet" href="../../resources/css/input_b.css">
     <link href="../../resources/css/stars.css" rel="stylesheet">
 
     <!-- Llamada a las hojas de estilos del framework e iconos -->
@@ -33,78 +34,187 @@
     <!-- Contenido principal del documento -->
     <main>
         <div id="contenido">
-            <!-- Título del contenido principal -->
-            <h4 id="mainTitle" style="font-size: 40px;" class="mt-4"></h4>
+            <h3 id="mainTitle" class="mt-5 text-white"></h3>
+            <div id="mensaje"> </div>
+            <!-- Fila que contiene el formulario de búsqueda y botones -->
+            <div class="row">
+                <!-- Formulario de búsqueda -->
+                <form class="col-sm-12 col-md-12" id="searchForm">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-5 col-sm-6 mx-auto">
+                            <!-- Campo de búsqueda -->
+                            <div class="group">
+                                <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                                    <g>
+                                        <path
+                                            d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
+                                        </path>
+                                    </g>
+                                </svg>
+                                <input id="inputsearch" placeholder="Buscar..." type="search" class="inputSearch"
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row d-flex justify-content-center mt-4">
+                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 d-flex justify-content-center mb-3">
+                    <button onclick="fillTable('Pendiente')" id="btnPendiente" type="button" class="btnAgregar"
+                        style="float: right;">
+                        Pendiente
+                    </button>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 d-flex justify-content-center mb-3">
+                    <button onclick="fillTable('Finalizado')" id="btnFinalizado" type="button" class="btnAgregar">
+                        Finalizado
+                    </button>
+                </div>
+            </div>
 
-            <!-- Formulario de búsqueda -->
-            <div class="col-lg-6 col-md-5 col-sm-6 mx-auto mb-5 mt-4">
-                <!-- Campo de búsqueda -->
-                <div class="input-group d-flex justify-content-center">
-                    <div class="group">
-                        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-                            <g>
-                                <path
-                                    d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
-                                </path>
-                            </g>
-                        </svg>
-                        <input id="inputsearch" placeholder="Buscar..." type="search" class="inputSearch" required>
+            <!-- Tabla con registros -->
+            <div colspan="6" id="rowsFound" class="text-white d-flex justify-content-center m-4"></div>
+            <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+            <div class="apa">
+                <div class="row row-md-12">
+                    <div class="col-4 d-flex justify-content-center">
+                        <p class="elemtoCampoTabla">CÓDIGO</p>
+                    </div>
+                    <div class="col-3 d-flex justify-content-center">
+                        <p class="elemtoCampoTabla">FECHA</p>
+                    </div>
+                    <div class="col-2  d-flex justify-content-center">
+                        <p class="elemtoCampoTabla">ESTADO</p>
+                    </div>
+                    <div class="col-2 d-flex justify-content-center">
                     </div>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="table-responsive scrollbar" style="max-height: 380px; overflow-y: auto;">
                 <div id="tableBody"></div>
             </div>
 
-            <!-- Componente Modal  -->
+            <!-- Componente Modal para guardar un registro -->
             <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="modalTitle" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content ">
-                        <div class="modal-header">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #5C2C0C;">
                             <!-- Título del modal -->
-                            <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                            <h1 class="modal-title fs-5 text-white" id="modalTitle"></h1>
                             <!-- Botón de cierre del modal -->
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <!-- Formulario para crear o actualizar un registro -->
-                        <form id="saveForm">
-                            <div class="modal-body row gx-5">
+                        <form id="saveForm" style="background-color: #DDA35D;">
+                            <div class="modal-body row g-4">
                                 <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                                <input type="hidden" id="idDetalle" name="idDetalle">
+                                <input type="hidden" id="idPedido" name="idPedido">
+                                <!-- Campos del formulario -->
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="input_box">
+                                        <input required="" autocomplete="off" style="color: white; font-weight: bold;"
+                                            id="codigoPedido" type="text" name="codigoPedido">
+                                        <span>Código :</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="input_box">
+                                        <input required="" autocomplete="off" style="color: white; font-weight: bold;"
+                                            id="clientePedido" type="text" name="clientePedido">
+                                        <span>Cliente :</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="input_box">
+                                        <input required="" autocomplete="off" style="color: white; font-weight: bold;"
+                                            id="fechaPedido" type="text" name="fechaPedido">
+                                        <span>Fecha :</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="input_box">
+                                        <input required="" autocomplete="off" style="color: white; font-weight: bold;"
+                                            id="estadoPedido" type="text" name="estadoPedido">
+                                        <span>Estado :</span>
+                                    </div>
+                                </div>
 
-                                <div class="col-sm-12 col-md-12">
-                                    <label for="contenidoComentario" class="form-label">Mensaje</label>
-                                    <textarea id="contenidoComentario" name="contenidoComentario" class="form-control"
-                                        rows="6"></textarea>
-                                </div>
-                                <div class="col-12 mt-4 mb-2 text-center">
-                                    <label for="puntuacionComentario" class="form-label">Puntuación</label>
-                                </div>
-                                <div class="col-12 mt-1 mb-3 d-flex justify-content-center" id="divstars">
+                                <!-- Subtabla para mostrar los detalles del pedido -->
+                                <div id="subtable">
+                                    <!-- TABLA DE MODELO TALLAS -->
+                                    <div class="modal-header border-0 row text-white"
+                                        style="background-color: #5C2C0C;">
+                                        <div class="col-md-6 col-sm-12">
+                                            <h1 class="modal-title fs-5" id="submodalTitle"></h1>
+                                        </div>
+                                        
+                                    </div>
+                                    <br>
+                                    <div style="color: white;" colspan="6" id="subrowsFound"></div>
 
+                                    <!-- Subtabla para mostrar los detalles del pedido -->
+                                    <div class="table-responsive border-0" style="max-height: 200px; overflow-y: auto;">
+                                        <table id="subheaderT" class="carditem table-hover border-0">
+                                            <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">IMAGEN</th>
+                                                    <th>PRODUCTO</th>
+                                                    <th class="text-center">CANTIDAD</th>
+                                                    <th>PRECIO</th>
+                                                    <th>TOTAL</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+                                            <tbody id="subtableBody"></tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                                <div class="col-sm-12 col-md-6" id="fechaDiv">
-                                    <label for="fechaComentario" class="form-label">Fecha</label>
-                                    <input id="fechaComentario" type="text" name="fechaComentario" class="form-control">
-                                </div>
-
                             </div>
-                            <!-- Pie del modal con el botón de guardar -->
+
+                            <!-- Pie del modal sin botones de acción -->
                             <div class="modal-footer border-0">
-                                <button type="submit" id="idGuardar" class="btn"
-                                    style="background-color: #CCC8AA;">Guardar</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
 
+            <!-- Componente Modal para mostrar una caja de diálogo -->
+            <div class="modal fade" id="detalleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="modalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <!-- Contenido del componente Modal -->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #5C2C0C;">
+                            <h1 class="modal-title fs-5 text-white" id="modalTitle">Nota</h1>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close" onclick="subClose()"></button>
+
+                        </div>
+                        <!-- Formulario para actualizar cantidad -->
+                        <form id="detalleForm" style="background-color: #DDA35D;">
+                            <div class="modal-body row">
+                                <h1 class="fs-5" id="stock"></h1>
+                                <div class="col-sm-12">
+                                    <label for="notaPedido" class="form-label">Descripción</label>
+                                    <textarea autocomplete="off" id="notaPedido" type="text" name="notaPedido"
+                                        class="form-control" rows="4" disabled="true"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Llamada al controlador general de la aplicación -->
     <script type="text/javascript" src="../../controllers/utils/components.js"></script>
     <!-- Llamada al controlador del sitio público -->
