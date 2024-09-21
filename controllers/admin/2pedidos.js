@@ -27,6 +27,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     CLIENTE_PEDIDO = document.getElementById('clientePedido'),
     NOTA_PEDIDO = document.getElementById('notaPedido'),
     FECHA_PEDIDO = document.getElementById('fechaPedido'),
+    CODIGO_PEDIDO = document.getElementById('codigoPedido'),
     ESTADO_PEDIDO = document.getElementById('estadoPedido');
 let ESTADO_BUSQUEDA = "Pendiente";
 //Variable para poner un tiempo de espera
@@ -193,6 +194,7 @@ const openUpdate = async (id) => {
         CLIENTE_PEDIDO.value = ROW.cliente;
         FECHA_PEDIDO.value = ROW.fecha;
         ESTADO_PEDIDO.value = ROW.estado_pedido;
+        CODIGO_PEDIDO.value = ROW.codigo_pedido;
 
         fillSubTable(SEARCHSUB_FORM);
     } else {
