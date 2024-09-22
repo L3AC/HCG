@@ -7,6 +7,7 @@
 	<title>HGC Administración</title>
 	<link href="../../resources/css/login.css" rel="stylesheet">
 	<link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
 	<!--FONTS-->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,9 +28,12 @@
 						<input id="usuariol" type="text" name="usuariol" class="form-control" required autocomplete="off">
 						<label>Usuario</label>
 					</div>
-					<div class="clavel">
+					<div class="clavel" style="position: relative;">
 						<input id="clavel" type="password" name="clavel" class="form-control" required autocomplete="off">
 						<label>Contraseña</label>
+						<span id="togglePassword" class="password-toggle" >
+							<i class="bi bi-eye-fill" id="eyeIcon"></i>
+						</span>
 					</div>
 					<div class="submit">
 						<button class="dark">Confirmar</button>
