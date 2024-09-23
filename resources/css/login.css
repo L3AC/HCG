@@ -18,7 +18,40 @@
     font-style: normal;
 }
 
+.clavel {
+    position: relative;
+}
 
+#clavel {
+    width: 100%;
+    padding-right: 40px; /* Para que el botón no se superponga al texto */
+}
+
+/* Específicamente para el botón dentro del campo de contraseña */
+.password-toggle {
+    background: none; /* Elimina cualquier fondo que se esté aplicando */
+    border: none;     /* Sin borde */
+    cursor: pointer;  /* Cursor de mano al pasar */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;       /* Elimina padding si se hereda de otro lado */
+}
+
+.password-toggle i {
+    font-size: 18px;  /* Tamaño del ícono */
+    color: #5C2C0C;   /* Color del ícono, ajusta según tu diseño */
+}
+
+/* Opcional: Cambia el color del ícono al pasar el ratón */
+.password-toggle:hover i {
+    color: #ffb041;
+}
+
+input::-ms-reveal, input::-ms-clear {
+    display: none;
+}
 
 .veen {
     width: 40%;
@@ -255,3 +288,5 @@ textarea:-webkit-autofill,
 select:-webkit-autofill {
     box-shadow: inset 0 0 0 50px #fff
 }
+
+

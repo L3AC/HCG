@@ -1,270 +1,257 @@
-// Constante para completar la ruta de la API.
 const PEDIDO_API = 'services/public/pedidos.php',
-    DETALLEPEDIDOS_API = 'services/public/detallepedidos.php',
-    MODELOTALLAS_API = 'services/public/modelotallas.php',
-    COMENTARIO_API = 'services/public/comentario.php';
-// Constante para establecer el cuerpo de la tabla.
-const TABLE_BODY = document.getElementById('tableBody');
-
-const ID_DETALLE = document.getElementById('idDetalle'),
-    IDGUARDAR = document.getElementById('idGuardar');
-
-const SAVE_MODAL2 = new bootstrap.Modal('#saveModal'),
-    SAVE_FORM2 = document.getElementById('saveForm'),
+    DETALLEPEDIDO_API = 'services/public/detallepedidos.php',
+    PHPMAILER_API = 'libraries/PHPMailer.php',
+    SENDCODE_API = 'libraries/sendCode.php';;
+// Constante para establecer el formulario de buscar.
+const SEARCH_FORM = document.getElementById('searchForm'),
+    SEARCHSUB_FORM = document.getElementById('searchsubForm');
+// Constantes para establecer el contenido de la tabla.
+const SUBTABLE_HEAD = document.getElementById('subheaderT'),
+    SUBTABLE = document.getElementById('subtable'),
+    SUBTABLE_BODY = document.getElementById('subtableBody'),
+    TABLE_BODY = document.getElementById('tableBody'),
+    ROWS_FOUND = document.getElementById('rowsFound'),
+    SUBROWS_FOUND = document.getElementById('subrowsFound');
+// Constantes para establecer los elementos del componente Modal.
+const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
+    DETALLE_MODAL = new bootstrap.Modal('#detalleModal'),
+    MODAL_TITLE = document.getElementById('modalTitle'),
+    SUBMODAL_TITLE = document.getElementById('submodalTitle');
+// Constantes para establecer los elementos del formulario de guardar.
+const SAVE_FORM = document.getElementById('saveForm'),
+    DETALLE_FORM = document.getElementById('detalleForm'),
     INPUTSEARCH = document.getElementById('inputsearch'),
-    MODAL_TITLE2 = document.getElementById('modalTitle'),
-    COMENTARIO = document.getElementById('contenidoComentario'),
-    FECHA_COMENTARIO = document.getElementById('fechaComentario'),
-    DIVSTARS = document.getElementById('divstars');
-    let timeout_id;
+    //SUBINPUTSEARCH = document.getElementById('subinputsearch'),
+    ID_PEDIDO = document.getElementById('idPedido'),
+    CLIENTE_PEDIDO = document.getElementById('clientePedido'),
+    NOTA_PEDIDO = document.getElementById('notaPedido'),
+    CODIGO_PEDIDO = document.getElementById('codigoPedido'),
+    FECHA_PEDIDO = document.getElementById('fechaPedido'),
+    ESTADO_PEDIDO = document.getElementById('estadoPedido');
+let ESTADO_BUSQUEDA = "Pendiente";
+//Variable para poner un tiempo de espera
+let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Historial de compras';
-    // Llamada a la función para mostrar los productos del carrito de compras.
-    readDetail();
+    MAIN_TITLE.textContent = 'Pedidos';
+    // Llamada a la función para llenar la tabla con los registros existentes.
+    fillTable(ESTADO_BUSQUEDA);
 });
 
-// Método del evento para cuando se envía el formulario de agregar un producto al carrito.
-SAVE_FORM2.addEventListener('submit', async (event) => {
+// Método del evento para cuando se envía el formulario de buscar.
+SEARCH_FORM.addEventListener('submit', (event) => {
+    // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-
-    // Obtener el valor de las estrellas seleccionadas
-    const selectedStars = document.querySelector('input[name="star-radio"]:checked');
-    const starValue = selectedStars ? selectedStars.value : null;
-
-    const FORM = new FormData(SAVE_FORM2);
-    // Agregar el valor de las estrellas al FormData
-    FORM.append('starValue', 6-starValue);
-
-    const DATA = await fetchData(COMENTARIO_API, 'createRow', FORM);
-    
-
-    if (DATA.status) {
-        SAVE_MODAL2.hide();
-        sweetAlert(1, DATA.message, false);
-        readDetail();
-        
-    } else if (DATA.session) {
-        console.log(2);
-        sweetAlert(2, DATA.error, false);
-    } else {
-        console.log(3);
-        sweetAlert(3, DATA.error, true);
-    }
+    // Constante tipo objeto con los datos del formulario.
+    const FORM = new FormData(SEARCH_FORM);
+    // Llamada a la función para llenar la tabla con los resultados de la búsqueda.
+    fillTable(ESTADO_BUSQUEDA);
 });
 
-INPUTSEARCH.addEventListener('input', function () {
-    clearTimeout(timeout_id);
-    timeout_id = setTimeout(async function () {
-        readDetail();
-    }, 50); // Delay de 50ms
-});
-/*
-*   Función para obtener el detalle del carrito de compras.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
-async function readDetail() {
-    // Petición para obtener los datos del pedido en proceso.
-    const FORM = new FormData();
-    FORM.append('valor', INPUTSEARCH.value);
-
-    const DATA = await fetchData(DETALLEPEDIDOS_API, 'searchHistorial', FORM);
+// Método del evento para cuando se envía el formulario de guardar.
+SAVE_FORM.addEventListener('submit', async (event) => {
+    // Se evita recargar la página web después de enviar el formulario.
+    event.preventDefault();
+    // Se verifica la acción a realizar.
+    (ID_PEDIDO.value) ? action = 'updateRow' : action = 'createRow';
+    // Constante tipo objeto con los datos del formulario.
+    const FORM = new FormData(SAVE_FORM);
+    // Petición para guardar los datos del formulario.
+    const DATA = await fetchData(PEDIDO_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
-        // Se inicializa el cuerpo de la tabla.
-        TABLE_BODY.innerHTML = '';
-        
-        // Se recorre el conjunto de registros fila por fila a través del objeto row.
-        DATA.dataset.forEach(async ROW => {
-            let subtotal=parseFloat(ROW.subtotal);
+        // Se cierra la caja de diálogo.
+        SAVE_MODAL.hide();
+        // Se muestra un mensaje de éxito.
+        sweetAlert(1, DATA.message, true);
+        ID_PEDIDO.value = null;
+        // Se carga nuevamente la tabla para visualizar los cambios.
+        fillTable(ESTADO_BUSQUEDA);
+    } else {
+        sweetAlert(2, DATA.error, false);
+    }
+});
+/*BUSQUEDA EN TIEMPO REAL*/
+INPUTSEARCH.addEventListener('input', async function () {
+    fillTable(ESTADO_BUSQUEDA);
+});
+
+//Función asíncrona para llenar la tabla con los registros disponibles.
+const fillTable = async (estado=null) => {
+    // Se inicializa el contenido de la tabla.
+    ROWS_FOUND.textContent = '0 coincidencias';
+    TABLE_BODY.innerHTML = '';
+    ESTADO_BUSQUEDA=estado;
+    // Se verifica la acción a realizar.
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
+    FORM.append('estado',estado);
+    // Petición para obtener los registros disponibles.
+    const DATA = await fetchData(PEDIDO_API, 'searchByCliente', FORM);
+    /*(form) ? action = 'searchRows' : action = 'readAll';
+    // Petición para obtener los registros disponibles.
+    const DATA = await fetchData(PEDIDO_API, action, form);*/
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
-            TABLE_BODY.innerHTML += `
-                <div class="cardlard mb-3" id="detalle" style="background-color: #F1EFEF;">
-                    <div class="row g-0 cardlard" style="background-color: #E3DECA;">
-                        <div class="col-lg-4 col-md-12 col-sm-12">
-                            <img height="80px" width="100%" src="${ROW.imagen_producto}"
-                                class="img-fluid" style="border-radius:20px;" alt="${ROW.descripcion_producto}">
-                        </div>
-                        <div class="col-lg-5 col-md-12 col-sm-12">
-                            <div class="card-body ">
-                                <input type="hidden" id="idModelo" name="idModelo" value="${ROW.id_producto}">
-                                <h5 class="card-title" style="font-size: 40px;">${ROW.descripcion_producto}</h5>
-                                <p class="card-text" style="font-size: 20px;">
-                                    <strong>Precio:</strong> $${ROW.precio_producto}<br>
-                                    <strong>Cantidad:</strong> ${ROW.cantidad_pedido}<br>
-                                    <strong>Subtotal:</strong> $ ${subtotal.toFixed(2)}<br> 
-                                    <strong>Fecha:</strong> ${ROW.fecha_pedido}<br>
-                                </p>
-                            </div>
-                        </div>
-                        
+            if (row.estado_pedido == 'Pendiente') {
+                const rowHTML = `
+                <div class="cardlard row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
+                    <div class="col-lg-4 col-md-12 col-sm-12 justify-content-center" style="font-size: 17px;"><div class="texto-antes">Código: </div>${row.codigo_pedido}</div>
+                    <div class="col-lg-3 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
+                    <div class="col-lg-2 col-md-12 col-sm-12" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Estado: </div>${row.estado_pedido}</div>
+                    <div class="col-lg-3 col-md-12 col-sm-12 d-flex justify-content-end">
+                        <button type="button" title="Detalle pedido" class="btnAgregar"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_pedido})">
+                            <i class="bi bi-info-circle" ></i>
+                        </button>
+                    </div>
+                </tr>
+            `;
+            TABLE_BODY.innerHTML += rowHTML;
+            } else {
+                const rowHTML = `
+                <div class="cardlard row" style="margin-bottom: 10px; margin-left: auto; margin-right: auto;">
+                    <div class="col-lg-4 col-md-12 col-sm-12 d-flex justify-content-center align-items-center" style=" font-size: 17px;"><div class="texto-antes">Código: </div>${row.codigo_pedido}</div>
+                    <div class="col-lg-3 col-md-12 col-sm-12 justify-content-center" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Fecha: </div>${row.fecha}</div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 justify-content-center" style="display: flex; align-items: center; font-size: 17px;"><div class="texto-antes">Estado: </div>${row.estado_pedido}</div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 d-flex justify-content-end">
+                        <button type="button" title="Detalle pedido" class="btnAgregar"  style="width: 55%; margin-top: 5px; margin-bottom: 5px;" onclick="openUpdate(${row.id_pedido})">
+                            <i class="bi bi-info-circle" ></i>
+                        </button>
                     </div>
                 </div>
-            `;
+                `;
+                TABLE_BODY.innerHTML += rowHTML;
+            }
         });
+        // Se muestra un mensaje de acuerdo con el resultado.
+        ROWS_FOUND.textContent = DATA.message;
     } else {
-        sweetAlert(4, DATA.error, false, 'index.html');
+        //sweetAlert(4, 'No se encontraron resultados', false);
     }
 }
 
-/*
-*   Función para abrir la caja de diálogo con el formulario de cambiar cantidad de producto.
-*   Parámetros: id (identificador del producto) y quantity (cantidad actual del producto).
-*   Retorno: ninguno.
-*/
-const openRead = async (id) => {
 
+
+
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
+const openUpdate = async (id) => {
+    // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    FORM.append('idComentario', id);
-
+    FORM.append('idPedido', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(COMENTARIO_API, 'readByIdComentario', FORM);
+    const DATA = await fetchData(PEDIDO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
+        SAVE_MODAL.show();
+        SUBTABLE.hidden = false;
+        MODAL_TITLE.textContent = 'Información del pedido';
+        SUBMODAL_TITLE.textContent = 'Detalle del pedido';
         // Se prepara el formulario.
-        SAVE_MODAL2.show();
-        SAVE_FORM2.reset();
-        MODAL_TITLE2.textContent = 'Comentario enviado';
-        IDGUARDAR.hidden = true;
-        COMENTARIO.disabled = true;
-        FECHA_COMENTARIO.hidden = false;
-        document.getElementById('fechaDiv').hidden = false;
-        FECHA_COMENTARIO.disabled = true;
+        SAVE_FORM.reset();
+        CLIENTE_PEDIDO.disabled = true;
+        FECHA_PEDIDO.disabled = true;
+        ESTADO_PEDIDO.disabled = true;
+        // Se inicializan los campos con los datos.
+        const ROW = DATA.dataset;
+        ID_PEDIDO.value = ROW.id_pedido;
+        CLIENTE_PEDIDO.value = ROW.cliente;
+        FECHA_PEDIDO.value = ROW.fecha;
+        ESTADO_PEDIDO.value = ROW.estado_pedido;
+        CODIGO_PEDIDO.value = ROW.codigo_pedido;
 
-        const ROW = DATA.dataset[0];
-        COMENTARIO.value = ROW.contenido_comentario;
-        FECHA_COMENTARIO.value = ROW.fecha_comentario;
-        DIVSTARS.innerHTML =
-            `<div class="rating rating-${ROW.id_comentario}">
-                <input type="radio" id="star-1-${ROW.id_comentario}" name="star-radio-${ROW.id_comentario}" value="1" data-rating="1">
-                <label for="star-1-${ROW.id_comentario}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-                </label>
-                <input type="radio" id="star-2-${ROW.id_comentario}" name="star-radio-${ROW.id_comentario}" value="2" data-rating="2">
-                <label for="star-2-${ROW.id_comentario}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-                </label>
-                <input type="radio" id="star-3-${ROW.id_comentario}" name="star-radio-${ROW.id_comentario}" value="3" data-rating="3">
-                <label for="star-3-${ROW.id_comentario}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-                </label>
-                <input type="radio" id="star-4-${ROW.id_comentario}" name="star-radio-${ROW.id_comentario}" value="4" data-rating="4">
-                <label for="star-4-${ROW.id_comentario}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-                </label>
-                <input type="radio" id="star-5-${ROW.id_comentario}" name="star-radio-${ROW.id_comentario}" value="5" data-rating="5">
-                <label for="star-5-${ROW.id_comentario}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-                </label>
-            </div>`;
-        let ratingValue = parseInt(ROW.puntuacion_comentario);
-        let stars = document.querySelectorAll(`.rating-${ROW.id_comentario} input[type="radio"]`);
-
-        console.log(ratingValue);
-        stars.forEach((star, index) => {
-            if (index < 6 - ratingValue) {
-                star.checked = true;
-            } else {
-                star.checked = false;
-            }
-        });
-        document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {
-            element.disabled = true;
-        });
+        fillSubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);
     }
-
 }
-const openCreate = async (id) => {
-    // Se muestra la caja de diálogo con su título.
-    SAVE_MODAL2.show();
-    // Se prepara el formulario.
-    SAVE_FORM2.reset();
-    MODAL_TITLE2.textContent = 'Enviar Comentario';
-    ID_DETALLE.value = id;
-    IDGUARDAR.hidden = false;
-    COMENTARIO.disabled = false;
-    FECHA_COMENTARIO.hidden = true;
-    document.getElementById('fechaDiv').hidden = true;
-    DIVSTARS.innerHTML =
-        `<div class="rating">
-            <input type="radio" id="star-1" name="star-radio" value="1">
-            <label for="star-1">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-            </label>
-            <input type="radio" id="star-2" name="star-radio" value="2">
-            <label for="star-2">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-            </label>
-            <input type="radio" id="star-3" name="star-radio" value="3">
-            <label for="star-3">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-            </label>
-            <input type="radio" id="star-4" name="star-radio" value="4">
-            <label for="star-4">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-            </label>
-            <input type="radio" id="star-5" name="star-radio" value="5">
-            <label for="star-5">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-            </label>
-        </div>`;
-    document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {
-        element.disabled = false;
-    });
-}
+/*SUBINPUTSEARCH.addEventListener('input', async function () {
+    fillSubTable();
+});*/
+//Función asíncrona para eliminar un registro.
 
-/*
-*   Función asíncrona para mostrar un mensaje de confirmación al momento de finalizar el pedido.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
-async function finishOrder() {
-    // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Está seguro de finalizar el pedido?');
-    // Se verifica la respuesta del mensaje.
-    if (RESPONSE) {
-        // Petición para finalizar el pedido en proceso.
-        const DATA = await fetchData(PEDIDO_API, 'finishOrder');
-        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-        if (DATA.status) {
-            sweetAlert(1, DATA.message, true, 'index.html');
-        } else {
-            sweetAlert(2, DATA.error, false);
-        }
+//Función asíncrona para llenar la tabla con los registros disponibles.
+const fillSubTable = async () => {
+    SUBROWS_FOUND.textContent = '';
+    SUBTABLE_BODY.innerHTML = '';
+    const FORM = new FormData();
+    //FORM.append('valor', SUBINPUTSEARCH.value ?? null);
+    FORM.append('idPedido', ID_PEDIDO.value ?? null);
+    // Petición para obtener los registros disponibles.
+    const DATA = await fetchData(DETALLEPEDIDO_API, 'searchByPedido', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se verifica si la nota_pedido no es "Vacío" antes de agregar la fila a la tabla.
+            if (row.nota_pedido !== 'Nota vacía') {
+                // Se crea y concatena la fila de la tabla con los datos de cada registro, incluyendo el botón.
+                const rowHTML = `
+                    <tr ">
+                    <td class="text-center"><img src="${row.imagen_producto}" height="70" width="100"></td>
+                    <td >${row.descripcion_producto}</td>
+                    <td class="text-center">${row.cantidad_pedido}</td>
+                    <td>$ ${row.precio_producto}</td>
+                    <td>$ ${row.subtotal}</td>
+                    <td>
+                        <button type="button" title="Existe una nota" class="btn btn-danger"  style="width: 75%;
+                        margin-top: 5px; margin-bottom: 5px;" onclick="opensubUpdate(${row.id_detalle_pedido})">
+                            <i class="bi bi-app-indicator"></i>
+                        </button>
+                    </td>
+                    </tr>
+                `;
+                SUBTABLE_BODY.innerHTML += rowHTML;
+            } else {
+                // Si la nota_pedido es "Vacío", se crea y concatena la fila de la tabla sin el botón.
+                const rowHTML = `
+                    <tr">
+                    <td class="text-center"><img src="${row.imagen_producto}" height="70" width="100"></td>
+                    <td>${row.descripcion_producto}</td>
+                    <td class="text-center">${row.cantidad_pedido}</td>
+                    <td>$ ${row.precio_producto}</td>
+                    <td>$ ${row.subtotal}</td>
+                    <td></td>
+                    </tr>
+                `;
+                SUBTABLE_BODY.innerHTML += rowHTML;
+            }
+        });
+        // Se muestra un mensaje de acuerdo con el resultado.
+        SUBROWS_FOUND.textContent = DATA.message;
+    } else {
+        // sweetAlert(4, DATA.error, true);
     }
 }
 
-/*
-*   Función asíncrona para mostrar un mensaje de confirmación al momento de eliminar un producto del carrito.
-*   Parámetros: id (identificador del producto).
-*   Retorno: ninguno.
-*/
-async function openDelete(id) {
-    // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Está seguro de remover el producto?');
-    // Se verifica la respuesta del mensaje.
-    if (RESPONSE) {
-        // Se define un objeto con los datos del producto seleccionado.
-        const FORM = new FormData();
-        FORM.append('idDetalle', id);
-        // Petición para eliminar un producto del carrito de compras.
-        const DATA = await fetchData(PEDIDO_API, 'deleteDetail', FORM);
-        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-        if (DATA.status) {
-            await sweetAlert(1, DATA.message, true);
-            // Se carga nuevamente la tabla para visualizar los cambios.
-            readDetail();
-        } else {
-            sweetAlert(2, DATA.error, false);
-        }
+const subClose = () => {
+    SAVE_MODAL.show();
+}
+const opensubUpdate = async (id) => {
+    // Se define un objeto con los datos del registro seleccionado.
+    SAVE_MODAL.hide();
+    const FORM = new FormData();
+    FORM.append('idDetallePedido', id);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(DETALLEPEDIDO_API, 'readOne', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se muestra la caja de diálogo con su título.
+        DETALLE_MODAL.show();
+        // Se prepara el formulario.
+        DETALLE_FORM.reset();
+        // Se inicializan los campos con los datos.
+        const ROW = DATA.dataset;
+        NOTA_PEDIDO.value = ROW.nota_pedido;
+
+    } else {
+        sweetAlert(2, DATA.error, false);
     }
 }
-

@@ -274,11 +274,9 @@ class UsuarioHandler
         email_usuario, alias_usuario,estado_usuario
         FROM tb_usuarios
         WHERE id_usuario !=  (SELECT MIN(id_usuario) FROM tb_usuarios) 
-        AND nombre_usuario like ? OR apellido_usuario like ? OR email_usuario like ? 
-        OR alias_usuario like ? 
-        AND id_rol!=?
+        AND (nombre_usuario like ? OR apellido_usuario like ? OR email_usuario like ? 
+        OR alias_usuario like ?) AND id_rol!=? AND id_rol!=1
         ORDER BY apellido_usuario';
-
         $params = array($this->search,$this->search,$this->search,$this->search,$_SESSION['idRol']);
         return Database::getRows($sql, $params);
     }

@@ -4,6 +4,9 @@ const SIGNUP_FORM = document.getElementById('signupForm');
 const LOGIN_FORM = document.getElementById('loginForm');
 const USUARIO_ADMIN = document.getElementById('usuariol');
 const LIBRERIA = 'libraries/twofa.php';
+const togglePassword = document.querySelector("#togglePassword");
+const passwordField = document.querySelector("#clavel");
+const eyeIcon = document.querySelector("#eyeIcon");
 
 // Función para enviar el correo
 const sendMail = async (data) => {
@@ -20,6 +23,25 @@ const sendMail = async (data) => {
         console.error('Error en sendMail:', error.message);
     }
 };
+
+// Evento para alternar la visibilidad de la contraseña
+togglePassword.addEventListener("click", function () {
+    const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+    passwordField.setAttribute("type", type);
+
+    // Cambia el ícono según el estado actual
+    eyeIcon.classList.toggle("bi bi-eye-fill");
+    eyeIcon.classList.toggle("bi bi-eye-slash-fill");
+});
+
+// Evento para ocultar la contraseña cuando el usuario escribe algo nuevo
+passwordField.addEventListener("input", function () {
+    if (passwordField.getAttribute("type") === "text") {
+        passwordField.setAttribute("type", "password"); // Cambia a "password" cuando escribe
+        eyeIcon.classList.add("bi bi-eye-fill");
+        eyeIcon.classList.remove("bi bi-eye-slash-fill");
+    }
+});
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {

@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         IMAGEN_MODELO.src = ROW.imagen_producto;
         ID_MODELO.value = ROW.id_producto;
         TIPO_PRODUCTO.textContent = "Tipo: " + ROW.tipo_producto;
-        PRECIO_PRODUCTO.textContent = "Precio: " + ROW.precio_producto;
+        PRECIO_PRODUCTO.textContent = "Precio: $" + ROW.precio_producto;
 
         /*const agregarAlPedidoBtn = document.querySelector('#idGuardar button');
         agregarAlPedidoBtn.addEventListener('click', () => {

@@ -112,7 +112,7 @@ class PedidoHandler
     public function readOne()
     {
         $sql = 'SELECT id_pedido,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
-        DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha,estado_pedido
+        DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha,estado_pedido,codigo_pedido
         FROM tb_pedidos
         INNER JOIN tb_clientes USING(id_cliente)
         WHERE id_pedido=?';

@@ -7,6 +7,7 @@
 	<title>HGC Administración</title>
 	<link href="../../resources/css/login.css" rel="stylesheet">
 	<link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
 	<!--FONTS-->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +20,7 @@
 			<!-- Formulario de inicio de sesión -->
 			<div class="wrapper">
 				<div class="logo-container">
-					<img src="../../resources/img/logoHCG.png" class="imglogo" alt="">
+					<img src="../../resources/img/icon.png" class="imglogo" alt="">
 				</div>
 				<form id="loginForm" tabindex="500" class="d-none" autocomplete="off">
 					<h3 id="mainTitle">Inicio de Sesión</h3>
@@ -27,13 +28,16 @@
 						<input id="usuariol" type="text" name="usuariol" class="form-control" required autocomplete="off">
 						<label>Usuario</label>
 					</div>
-					<div class="clavel">
+					<div class="clavel" style="position: relative;">
 						<input id="clavel" type="password" name="clavel" class="form-control" required autocomplete="off">
 						<label>Contraseña</label>
+						<span id="togglePassword" class="password-toggle" >
+							<i class="bi bi-eye-fill" id="eyeIcon"></i>
+						</span>
 					</div>
 					<div class="submit">
 						<button class="dark">Confirmar</button>
-						<a href="verifUs.html"><h6 class="pt-4">Olvide mi contraseña</h6></a>
+						<a href="verifUs.html" style="text-decoration: none;"><h6 class="pt-4">Olvide mi contraseña</h6></a>
 					</div>
 				</form>
 

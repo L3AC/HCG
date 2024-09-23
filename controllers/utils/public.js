@@ -160,7 +160,7 @@ const loadTemplate = async () => {
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `
 
-    <footer class="text-center text-white " 
+    <footer class="text-center text-white fixed-bottom" 
     id="foot" style="min-height: auto; ">
         <!-- Grid container -->
         <div class="container pt-1">
