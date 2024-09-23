@@ -11,7 +11,7 @@ define('PASSWORD', 'hcguser');*/
 define('SERVER', 'localhost');
 define('DATABASE', 'db_hcg'); 
 define('USERNAME', 'root');
-define('PASSWORD', ''); 
+define('PASSWORD', 'pasf2'); 
 //define('USERNAME', 'root');
 //define('PASSWORD', '');
 
