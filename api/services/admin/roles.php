@@ -108,12 +108,18 @@ if (isset($_GET['action'])) {
             case 'deleteRow':
                 if (!$producto->setId($_POST['idRol'])) {
                     $result['error'] = $producto->getDataError();
-                } elseif ($producto->deleteRow()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Producto eliminado correctamente';
-                    $result['fileStatus'] = Validator::deleteFile($producto::RUTA_IMAGEN, $producto->getFilename());
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el producto';
+                    // Llamamos a la función deleteRow(), que ahora devuelve la descripción
+                    $rolData = $producto->deleteRow();
+            
+                    if ($rolData) {
+                        // Si el rol fue eliminado correctamente, mostramos la descripción en el mensaje
+                        $result['status'] = 1;
+                        $result['message'] = 'Rol "' . $rolData['descripcion_rol'] . '" eliminado correctamente';
+                        $result['fileStatus'] = Validator::deleteFile($producto::RUTA_IMAGEN, $producto->getFilename());
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al eliminar el rol';
+                    }
                 }
                 break;
 

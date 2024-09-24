@@ -126,11 +126,25 @@ class ItemHandler
     // Método para eliminar una fila de la base de datos.
     public function deleteRow()
     {
-        $sql = 'DELETE FROM tb_items
-                WHERE id_item = ?';
+        // Primero obtenemos el registro con la descripción del item
+        $sql = 'SELECT descripcion_item FROM tb_items WHERE id_item = ?';
         $params = array($this->id);
-        return Database::executeRow($sql, $params);
+        $itemData = Database::getRow($sql, $params);
+    
+        if ($itemData) {
+            // Si existe el item, procedemos a eliminarlo
+            $sql = 'DELETE FROM tb_items WHERE id_item = ?';
+            if (Database::executeRow($sql, $params)) {
+                // Devolver los datos del item que fue eliminado
+                return $itemData;
+            } else {
+                return false; // Si hubo un error al eliminar
+            }
+        } else {
+            return false; // Si no se encuentra el item
+        }
     }
+    
 
     // Método para leer productos basados en una categoría específica.
     public function readProductosCategoria()

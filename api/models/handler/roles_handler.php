@@ -117,11 +117,25 @@ class RolHandler
     // Método para eliminar un rol de la tabla.
     public function deleteRow()
     {
-        $sql = 'DELETE FROM tb_roles
-                WHERE id_rol = ?';
+        // Primero obtenemos la descripción del rol
+        $sql = 'SELECT descripcion_rol FROM tb_roles WHERE id_rol = ?';
         $params = array($this->id);
-        return Database::executeRow($sql, $params);
+        $rolData = Database::getRow($sql, $params);
+    
+        if ($rolData) {
+            // Si el registro existe, procedemos a eliminarlo
+            $sql = 'DELETE FROM tb_roles WHERE id_rol = ?';
+            if (Database::executeRow($sql, $params)) {
+                // Devolver los datos del rol eliminado
+                return $rolData;
+            } else {
+                return false; // Error al eliminar el registro
+            }
+        } else {
+            return false; // No se encontró el registro
+        }
     }
+    
 
     public function readProductosCategoria()
     {

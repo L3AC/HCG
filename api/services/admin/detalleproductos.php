@@ -116,7 +116,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto eliminado correctamente';
+                    $result['message'] = 'Detalle eliminado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar el producto';
                 }

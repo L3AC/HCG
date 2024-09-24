@@ -241,7 +241,7 @@ const openCreate = () => {
 //Función asíncrona para eliminar un registro.
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Desea inactivar el producto de forma permanente?');
+    const RESPONSE = await confirmAction('¿Desea eliminar el producto de forma permanente?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
@@ -589,7 +589,7 @@ const opensubUpdate = async (idDetalle, idProducto) => {
 //Función asíncrona para eliminar un registro.
 const opensubDelete = async (idDetalle, idProducto) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Desea inactivar el item?');
+    const RESPONSE = await confirmAction('¿Desea eliminar el item?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.

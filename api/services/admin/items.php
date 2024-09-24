@@ -19,8 +19,7 @@ if (isset($_GET['action'])) {
                     !$item->setSearch($_POST['valor'])
                 ) {
                     $result['error'] = $item->getDataError();
-                } 
-                elseif ($result['dataset'] = $item->searchRows()) {
+                } elseif ($result['dataset'] = $item->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -32,7 +31,7 @@ if (isset($_GET['action'])) {
                 if (
                     !$item->setNombre($_POST['nombreItem']) or
                     !$item->setIdTipoItem($_POST['tipoItem']) or
-                    !$item->setEstado(isset($_POST['estadoItem']) ? 1 : 0) 
+                    !$item->setEstado(isset($_POST['estadoItem']) ? 1 : 0)
                 ) {
                     $result['error'] = $item->getDataError();
                 } elseif ($item->createRow()) {
@@ -52,23 +51,23 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAllActive':
-                    if ($result['dataset'] = $item->readAllActive()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-                    } else {
-                        $result['error'] = ' No se encontraron registros';
-                    }
+                if ($result['dataset'] = $item->readAllActive()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = ' No se encontraron registros';
+                }
                 break;
             case 'readAllNot':
-                    //echo $_POST['idTalla'];
-                    if (!$item->setIdProducto($_POST['idProducto'])) {
-                        $result['error'] = $item->getDataError();
-                    } elseif ($result['dataset'] = $item->readAllNot($_POST['busqueda'])) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['error'] = 'Registros inexistentes';
-                    }
-                    break;
+                //echo $_POST['idTalla'];
+                if (!$item->setIdProducto($_POST['idProducto'])) {
+                    $result['error'] = $item->getDataError();
+                } elseif ($result['dataset'] = $item->readAllNot($_POST['busqueda'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Registros inexistentes';
+                }
+                break;
             case 'readOne':
                 //echo $_POST['idTalla'];
                 if (!$item->setId($_POST['idItem'])) {
@@ -85,7 +84,7 @@ if (isset($_GET['action'])) {
                     !$item->setId($_POST['idItem']) or
                     !$item->setNombre($_POST['nombreItem']) or
                     !$item->setIdTipoItem($_POST['tipoItem']) or
-                    !$item->setEstado(isset($_POST['estadoItem']) ? 1 : 0) 
+                    !$item->setEstado(isset($_POST['estadoItem']) ? 1 : 0)
                 ) {
                     $result['error'] = $item->getDataError();
                 } elseif ($item->updateRow()) {
@@ -97,17 +96,22 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'deleteRow':
-                if (
-                    !$item->setId($_POST['idItem']) 
-                ) {
+                if (!$item->setId($_POST['idItem'])) {
                     $result['error'] = $item->getDataError();
-                } elseif ($item->deleteRow()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Registro eliminado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el producto';
+                    // Llamamos a deleteRow(), que ahora también devuelve los datos del item
+                    $itemData = $item->deleteRow();
+
+                    if ($itemData) {
+                        // Si el item fue eliminado correctamente, muestra la descripción en el mensaje
+                        $result['status'] = 1;
+                        $result['message'] = 'Item "' . $itemData['descripcion_item'] . '" eliminado correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al eliminar el item';
+                    }
                 }
                 break;
+
             case 'cantidadProductosCategoria':
                 if ($result['dataset'] = $item->cantidadProductosCategoria()) {
                     $result['status'] = 1;

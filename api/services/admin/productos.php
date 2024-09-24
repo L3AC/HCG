@@ -117,11 +117,17 @@ if (isset($_GET['action'])) {
             case 'deleteRow':
                 if (!$producto->setId($_POST['idProducto'])) {
                     $result['error'] = $producto->getDataError();
-                } elseif ($producto->deleteRow()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Producto eliminado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el producto';
+                    // Aquí llamas a la función que ya tienes para obtener y eliminar el producto
+                    $productoData = $producto->deleteRow(); // Supongamos que esta función devuelve el registro antes de eliminarlo
+
+                    if ($productoData) {
+                        // Si el producto fue eliminado correctamente, usa su descripción para el mensaje
+                        $result['status'] = 1;
+                        $result['message'] = 'Producto "' . $productoData['descripcion_producto'] . '" eliminado correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al eliminar el producto';
+                    }
                 }
                 break;
 

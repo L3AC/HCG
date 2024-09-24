@@ -115,7 +115,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $cliente->getDataError();
                 } elseif ($cliente->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Registro eliminado correctamente';
+                    $result['message'] = 'Cliente eliminado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar el cliente';
                 }

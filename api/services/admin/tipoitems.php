@@ -95,13 +95,20 @@ if (isset($_GET['action'])) {
             case 'deleteRow':
                 if (!$categoria->setId($_POST['idTipoItem'])) {
                     $result['error'] = $categoria->getDataError();
-                } elseif ($categoria->deleteRow()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Categoría eliminada correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar la categoría';
+                    // Llamamos a la función deleteRow(), que ahora devuelve la descripción
+                    $tipoItemData = $categoria->deleteRow();
+            
+                    if ($tipoItemData) {
+                        // Si el tipo de item fue eliminado, mostramos la descripción en el mensaje
+                        $result['status'] = 1;
+                        $result['message'] = 'Tipo de item "' . $tipoItemData['descripcion_tipo_item'] . '" eliminado correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al eliminar el tipo de item';
+                    }
                 }
                 break;
+            
 
             // Acción no disponible dentro de la sesión.
             default:

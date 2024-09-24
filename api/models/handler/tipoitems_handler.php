@@ -118,11 +118,25 @@ class TipoItemHandler
     // Método para eliminar un registro de tipo_item de la tabla.
     public function deleteRow()
     {
-        $sql = 'DELETE FROM tb_tipo_items 
-                WHERE id_tipo_item = ?';
+        // Primero obtenemos la descripción del tipo de item
+        $sql = 'SELECT descripcion_tipo_item FROM tb_tipo_items WHERE id_tipo_item = ?';
         $params = array($this->id);
-        return Database::executeRow($sql, $params);
+        $tipoItemData = Database::getRow($sql, $params);
+    
+        if ($tipoItemData) {
+            // Si el registro existe, procedemos a eliminarlo
+            $sql = 'DELETE FROM tb_tipo_items WHERE id_tipo_item = ?';
+            if (Database::executeRow($sql, $params)) {
+                // Devolver los datos del tipo de item eliminado
+                return $tipoItemData;
+            } else {
+                return false; // Error al eliminar el registro
+            }
+        } else {
+            return false; // No se encontró el registro
+        }
     }
+    
 
     // Método para leer productos relacionados con una categoría específica de tipo_item.
     public function readProductosCategoria()

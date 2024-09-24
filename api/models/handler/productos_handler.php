@@ -379,10 +379,18 @@ class ProductoHandler
     // Método para eliminar un producto de la base de datos según su ID.
     public function deleteRow()
     {
-        $sql = 'DELETE FROM tb_productos
-                WHERE id_producto = ?';
+        $sql = 'SELECT * FROM tb_productos WHERE id_producto = ?';
         $params = array($this->id);
-        return Database::executeRow($sql, $params);
+        $producto = Database::getRow($sql, $params);
+        if ($producto) {
+            // Si se encontró el producto, proceder a eliminarlo
+            $sql = 'DELETE FROM tb_productos WHERE id_producto = ?';
+            $params = array($this->id);
+            Database::executeRow($sql, $params);
+            return $producto; // Devolver el producto eliminado
+        } else {
+            return null; // No se encontró el producto
+        }
     }
 
     // Método para leer todos los productos de una categoría específica ordenados por nombre.

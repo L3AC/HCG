@@ -99,7 +99,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $detalle->getDataError();
                 } elseif ($detalle->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto eliminado correctamente';
+                    $result['message'] = 'Detalle eliminado correctamente';
                     // Se asigna el estado del archivo después de eliminar.
                     $result['fileStatus'] = Validator::deleteFile($detalle::RUTA_IMAGEN, $detalle->getFilename());
                 } else {
