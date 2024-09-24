@@ -4,6 +4,12 @@ const SIGNUP_FORM = document.getElementById('signupForm');
 const LOGIN_FORM = document.getElementById('loginForm');
 const USUARIO_ADMIN = document.getElementById('usuariol');
 const LIBRERIA = 'libraries/twofa.php';
+const togglePassword = document.querySelector("#togglePassword");
+const togglePassword1 = document.querySelector("#togglePassword1");
+const togglePassword2 = document.querySelector("#togglePassword2");
+const passwordField = document.querySelector("#clavel");
+const passwordField1 = document.querySelector("#clave");
+const passwordField2 = document.querySelector("#confirmarClave");
 
 // Función para enviar el correo
 const sendMail = async (data) => {
@@ -20,6 +26,43 @@ const sendMail = async (data) => {
         console.error('Error en sendMail:', error.message);
     }
 };
+
+function setupPasswordToggle(passwordFields, toggleButtons, icons) {
+    passwordFields.forEach((field, index) => {
+        toggleButtons[index].addEventListener("click", function () {
+            // Alternar tipo de contraseña
+            const type = field.getAttribute("type") === "password" ? "text" : "password";
+            field.setAttribute("type", type);
+            
+            // Cambiar el ícono según el estado actual
+            icons[index].classList.toggle("bi-eye-fill");
+            icons[index].classList.toggle("bi-eye-slash-fill");
+        });
+
+        // Ocultar contraseña al escribir
+        field.addEventListener("input", function () {
+            if (field.getAttribute("type") === "text") {
+                field.setAttribute("type", "password");
+                // Cambiar el ícono a "eye" (oculto)
+                icons[index].classList.remove("bi-eye-fill");
+                icons[index].classList.add("bi-eye-slash-fill");
+            } else {
+                // Si es "password", asegurarse de que el ícono sea "eye"
+                icons[index].classList.remove("bi-eye-slash-fill");
+                icons[index].classList.add("bi-eye-fill");
+            }
+        });
+    });
+}
+
+// Suponiendo que tienes los campos, botones de toggle e íconos
+const passwordFields = [passwordField, passwordField1, passwordField2];
+const toggleButtons = [togglePassword, togglePassword1, togglePassword2];
+const icons = [eyeIcon, eyeIcon1, eyeIcon2]; // Asegúrate de tener los íconos correspondientes
+
+setupPasswordToggle(passwordFields, toggleButtons, icons);
+
+
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {

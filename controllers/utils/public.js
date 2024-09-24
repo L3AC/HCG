@@ -169,7 +169,7 @@ const loadTemplate = async () => {
             <a href="Book.pdf" target="_blank">Abrir PDF</a>
             <!-- Acerca de nosotros -->
             <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="aboutUs.html" role="button"
-            data-mdb-ripple-color="dark"><i class="bi bi-question-circle-fill" style="color: white;"></i></a>
+            data-mdb-ripple-color="dark"><i class="bi bi-info-circle-fill" style="color: white;"></i></a>
 
             <!-- Facebook -->
             <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://facebook.com/" role="button"
