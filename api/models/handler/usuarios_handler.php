@@ -72,7 +72,7 @@ class UsuarioHandler
             $now = new DateTime();
             $lastAttempt = new DateTime($ultimo_intento);
             $interval = $now->diff($lastAttempt);
-            echo $interval;
+            
             // Si han pasado más de 10 minutos, reiniciar el contador de intentos
             if ($interval->i >= 10 || $interval->h >= 1) {
                 $intentos = 0;  // Reiniciar intentos
