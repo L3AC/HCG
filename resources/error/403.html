@@ -8,16 +8,84 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Llamada de archivos -->
-    <link type="image/png" rel="icon" href="/hgc/resources/img/icon.png">
+    <link type="image/png" rel="icon" href="../../resources/img/icon.png">
     <link type="text/css" rel="stylesheet" href="/hgc/resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/hgc/resources/css/bootstrap-icons.min.css">
 </head>
+<style>
+    body {
+        background-image: linear-gradient(to right top, #9f9f9f, #b0b0b0, #c1c1c1, #d3d3d3, #e5e5e5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        text-align: center;
+    }
 
-<body>
-    <div class="text-center py-5">
-        <h4><i class="bi bi-eye-slash-fill"></i> Error 403: Acceso prohibido</h4>
-        <a href="/hgc/views/public/" class="fs-1"><i class="bi bi-arrow-clockwise"></i></a>
+    .error-container {
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        display: flex;
+        align-items: center;
+    }
+
+    .error-image {
+        flex: 1;
+        padding-right: 20px;
+    }
+
+    .error-image img {
+        max-width: 450px;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .error-text {
+        flex: 1;
+        text-align: left;
+    }
+
+    .error-code {
+        font-size: 70px;
+        font-weight: bold;
+        color: #8a4e2c;
+        margin-bottom: 10px;
+    }
+
+    .error-btn {
+        padding: 10px 20px;
+        border: none;
+        background-color: #55301a;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+    .error-btn:hover {
+        background-color: #4d260f;
+    }
+</style>
+
+</body>
+    <div class="error-container">
+        <!-- Columna de la Imagen -->
+        <div class="error-image">
+            <img src="http://localhost/HCG/resources/img/error404.png" alt="error">
+        </div>
+        <!-- Columna del Texto -->
+        <div class="error-text text-center">
+            <p class="error-code">403<br>Acceso prohibido</p>
+        </div>
     </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
