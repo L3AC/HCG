@@ -1,12 +1,6 @@
 DROP DATABASE IF EXISTS db_hcg;
 CREATE DATABASE IF NOT EXISTS db_hcg;
 USE db_hcg;
-
-#select * from tb_usuarios
-#select * from tb_clientes
-#update tb_usuarios set factor_autenticacion=false where id_usuario=1
-#update tb_usuarios set email_usuario='20220298@ricaldone.edu.sv' where id_usuario=1
-#update tb_usuarios set  ultimo_cambio_clave='2024-09-01 01:00:00' where id_usuario=9
  
 CREATE TABLE tb_roles(
   id_rol INT UNSIGNED,

@@ -238,19 +238,19 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
-                case 'twoFAMetod':
-                    $twoFAValue = isset($_POST['twoFA']) ? $_POST['twoFA'] : 0;
-                    
-                    if (!$Usuario->setEstado($twoFAValue == 1 ? 1 : 0)) {
-                        $result['error'] = $Usuario->getDataError();
-                    } elseif ($Usuario->twoFA()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Cambio de autenticación';
-                    } else {
-                        $result['error'] = 'Ocurrió un problema al actualizar';
-                    }
-                    break;
-                
+            case 'twoFAMetod':
+                $twoFAValue = isset($_POST['twoFA']) ? $_POST['twoFA'] : 0;
+
+                if (!$Usuario->setEstado($twoFAValue == 1 ? 1 : 0)) {
+                    $result['error'] = $Usuario->getDataError();
+                } elseif ($Usuario->twoFA()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Cambio de autenticación';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al actualizar';
+                }
+                break;
+
                 // Acción no disponible dentro de la sesión.
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
@@ -288,6 +288,11 @@ if (isset($_GET['action'])) {
                 } else {
                     // Verificar si hay un error de bloqueo de cuenta o intentos fallidos
                     if (isset($loginResult['intentos'])) {
+                        echo "Intentos: " . $intentos . "<br>";
+                        echo "Último intento: " . $ultimo_intento . "<br>";
+                        echo "Fecha reactivación: " . $fecha_reactivacion . "<br>";
+                        echo "Fecha actual: " . (new DateTime())->format('Y-m-d H:i:s') . "<br>";
+
                         if ($loginResult['intentos'] >= 3) {
                             $result['dataset'] = 3;
                             $result['message'] = 'Cuenta suspendida por 24 horas debido a múltiples intentos fallidos.';
