@@ -69,7 +69,8 @@ class UsuarioHandler
             }
     
             // Verificar si han pasado más de 10 minutos desde el último intento fallido
-            if ($ultimo_intento) {
+            /*if ($ultimo_intento) {
+                
                 $now = new DateTime();
                 $lastAttempt = new DateTime($ultimo_intento);
                 $interval = $now->diff($lastAttempt);
@@ -80,7 +81,7 @@ class UsuarioHandler
                     $intentos = 0;
                     $this->reiniciarIntentos($data['id_usuario']);
                 }
-            }
+            }*/
     
             if (password_verify($password, $data['clave_usuario'])) {
                 // Restablecer el contador de intentos en caso de inicio de sesión exitoso
