@@ -73,6 +73,7 @@ class UsuarioHandler
                 $now = new DateTime();
                 $lastAttempt = new DateTime($ultimo_intento);
                 $interval = $now->diff($lastAttempt);
+                
     
                 if ($interval->i >= 10) {
                     // Reiniciar contador de intentos si han pasado más de 10 minutos
@@ -110,7 +111,7 @@ class UsuarioHandler
             } else {
                 // Incrementar el contador de intentos fallidos
                 $this->incrementarIntentos($data['id_usuario']);
-                
+                echo 'intenst '+$intentos;
                 // Verificar si ahora el usuario tiene 3 intentos fallidos para bloquear la cuenta
                 if ($intentos + 1 >= 3) {
                     $this->blockUser($data['id_usuario']);
@@ -136,6 +137,23 @@ class UsuarioHandler
     private function reiniciarIntentos($id_usuario)
     {
         $sql = 'UPDATE tb_usuarios SET intentos_usuario = 0, ultimo_intento = NULL, fecha_reactivacion = NULL WHERE id_usuario = ?';
+        $params = array($id_usuario);
+        return Database::executeRow($sql, $params);
+    }
+        
+    // Función para incrementar el contador de intentos
+    private function incrementarIntentos($id_usuario)
+    {
+        $sql = 'UPDATE tb_usuarios SET intentos_usuario = intentos_usuario + 1, ultimo_intento = CURRENT_TIMESTAMP WHERE id_usuario = ?';
+        $params = array($id_usuario);
+        return Database::executeRow($sql, $params);
+    }
+    
+    // Función para bloquear al usuario
+    private function blockUser($id_usuario)
+    {
+        // Bloquear la cuenta por 24 horas
+        $sql = 'UPDATE tb_usuarios SET fecha_reactivacion = DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 DAY), WHERE id_usuario = ?';
         $params = array($id_usuario);
         return Database::executeRow($sql, $params);
     }
@@ -178,23 +196,6 @@ class UsuarioHandler
         WHERE pin_usuario = ? AND id_usuario = ?';
         $params = array($this->pinRecu, $this->id);
         return Database::getRow($sql, $params);
-    }
-    
-    // Función para incrementar el contador de intentos
-    private function incrementarIntentos($id_usuario)
-    {
-        $sql = 'UPDATE tb_usuarios SET intentos_usuario = intentos_usuario + 1, ultimo_intento = CURRENT_TIMESTAMP WHERE id_usuario = ?';
-        $params = array($id_usuario);
-        return Database::executeRow($sql, $params);
-    }
-    
-    // Función para bloquear al usuario
-    private function blockUser($id_usuario)
-    {
-        // Bloquear la cuenta por 24 horas
-        $sql = 'UPDATE tb_usuarios SET fecha_reactivacion = DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 DAY), WHERE id_usuario = ?';
-        $params = array($id_usuario);
-        return Database::executeRow($sql, $params);
     }
     
 

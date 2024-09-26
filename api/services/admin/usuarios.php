@@ -288,11 +288,6 @@ if (isset($_GET['action'])) {
                 } else {
                     // Verificar si hay un error de bloqueo de cuenta o intentos fallidos
                     if (isset($loginResult['intentos'])) {
-                        echo "Intentos: " . $intentos . "<br>";
-                        echo "Último intento: " . $ultimo_intento . "<br>";
-                        echo "Fecha reactivación: " . $fecha_reactivacion . "<br>";
-                        echo "Fecha actual: " . (new DateTime())->format('Y-m-d H:i:s') . "<br>";
-
                         if ($loginResult['intentos'] >= 3) {
                             $result['dataset'] = 3;
                             $result['message'] = 'Cuenta suspendida por 24 horas debido a múltiples intentos fallidos.';
