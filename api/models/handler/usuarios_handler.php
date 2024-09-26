@@ -42,6 +42,7 @@ class UsuarioHandler
     // Método para verificar las credenciales del usuario al iniciar sesión.
     public function checkUser($username, $password) 
 {
+    // Seleccionar información del usuario y verificar si está activo
     $sql = 'SELECT id_usuario, id_rol, alias_usuario, clave_usuario, email_usuario, 
             estado_rol, productos_opc, pedidos_opc, tipo_items_opc, items_opc, 
             clientes_opc, usuarios_opc, roles_opc, intentos_usuario, fecha_reactivacion, 
@@ -55,11 +56,10 @@ class UsuarioHandler
 
     if ($data) {
         $intentos = $data['intentos_usuario'];
-        $ultimo_intento = $data['ultimo_intento'];
-        $fecha_reactivacion = $data['fecha_reactivacion'];
+        $idUsuario = $data['id_usuario'];
 
-        // Comprobar si el usuario está bloqueado
-        if ($intentos >= 3 && $fecha_reactivacion && strtotime($fecha_reactivacion) > time()) {
+        // 1. Verificar si la cuenta está bloqueada (usando MySQL)
+        if ($data['fecha_reactivacion'] && strtotime($data['fecha_reactivacion']) > time()) {
             return [
                 'status' => false,
                 'message' => "Cuenta bloqueada por 24 horas debido a múltiples intentos fallidos.",
@@ -67,22 +67,23 @@ class UsuarioHandler
             ];
         }
 
-        // Verificar si han pasado más de 10 minutos desde el último intento fallido
-        if ($ultimo_intento) {
-            $now = new DateTime();
-            $lastAttempt = new DateTime($ultimo_intento);
-            $interval = $now->diff($lastAttempt);
+        // 2. Verificar si han pasado más de 10 minutos desde el último intento fallido
+        if ($data['ultimo_intento']) {
+            $sqlReiniciarIntentos = 'UPDATE tb_usuarios
+                                     SET intentos_usuario = 0
+                                     WHERE id_usuario = ? 
+                                     AND TIMESTAMPDIFF(MINUTE, ultimo_intento, NOW()) >= 1';
+            Database::executeRow($sqlReiniciarIntentos, array($idUsuario));
             
-            // Si han pasado más de 10 minutos, reiniciar el contador de intentos
-            if ($interval->i >= 10 || $interval->h >= 1) {
-                $intentos = 0;  // Reiniciar intentos
-                $this->reiniciarIntentos($data['id_usuario']);
-            }
+            // Recargar datos después de reiniciar intentos
+            $data = Database::getRow($sql, $params);
+            $intentos = $data['intentos_usuario'];
         }
 
+        // 3. Verificar contraseña
         if (password_verify($password, $data['clave_usuario'])) {
             // Restablecer el contador de intentos en caso de inicio de sesión exitoso
-            $this->reiniciarIntentos($data['id_usuario']);
+            $this->reiniciarIntentos($idUsuario);
 
             // Establecer las variables de sesión
             $_SESSION['idUsuario'] = $data['id_usuario'];
@@ -100,22 +101,19 @@ class UsuarioHandler
             $_SESSION['usuarios_opc'] = $data['usuarios_opc'];
             $_SESSION['roles_opc'] = $data['roles_opc'];
 
-            if($data['factor_autenticacion'] == true) {
+            if ($data['factor_autenticacion']) {
                 $_SESSION['2fa'] = $data['id_usuario'];
             }
 
             return ['status' => true, 'message' => "Credenciales correctas"];
         } else {
-            // Verificar si deben reiniciarse los intentos antes de incrementarlos
-            if ($intentos < 3) {
-                // Incrementar el contador de intentos fallidos
-                $this->incrementarIntentos($data['id_usuario']);
-                $intentos++;  // Sumar intento fallido
-            }
+            // Incrementar intentos fallidos
+            $this->incrementarIntentos($idUsuario);
+            $intentos++;  // Incrementar en la lógica
 
-            // Verificar si el usuario tiene 3 intentos fallidos para bloquear la cuenta
+            // Verificar si el usuario alcanzó 3 intentos fallidos para bloquear la cuenta
             if ($intentos >= 3) {
-                $this->blockUser($data['id_usuario']);
+                $this->blockUser($idUsuario);
                 return [
                     'status' => false,
                     'message' => "Cuenta bloqueada por 24 horas debido a múltiples intentos fallidos.",
@@ -125,7 +123,7 @@ class UsuarioHandler
                 return [
                     'status' => false,
                     'message' => "Credenciales incorrectas. Intento " . $intentos . " de 3. Se reinician cada 10 minutos.",
-                    'intentos' => $intentos,
+                    'intentos' => $intentos
                 ];
             }
         }
@@ -133,6 +131,7 @@ class UsuarioHandler
         return ['status' => false, 'message' => "Usuario no encontrado", 'intentos' => 0];
     }
 }
+
 
     
     // Función para reiniciar el contador de intentos
