@@ -39,6 +39,9 @@ const loadTemplate = async () => {
                             data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
                     </a>
                     <div class="d-flex position-absolute top-0 end-0 me-3 mt-2" >
+                        <a href="../../views/admin/manual.html" style="margin-right: 10px; margin-top: 10px;">
+                            <img src="../../resources/img/user.png" width="40" height="40">
+                        </a>
                         <a href="../../views/admin/profile.html" style="margin-right: 10px; margin-top: 10px;">
                             <img src="../../resources/img/user.png" width="40" height="40">
                         </a>
