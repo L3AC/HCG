@@ -35,7 +35,7 @@ const loadTemplate = async () => {
             <div class="col-md-2 d-flex justify-content-center justify-content-md-start mb-md-0">
                 <!-- Logo -->
                 <a class="navbar-brand" href="index.html"><img src="../../resources/img/home.png" height="50"
-                        alt="YNWA"></a>
+                        alt="HCg"></a>
             </div>
             <!-- Left elements -->
 
@@ -64,6 +64,9 @@ const loadTemplate = async () => {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="manualp.html" title="Documentación"><img src="../../resources/img/manu.png" height="40" alt=""></a>
+                    </div>
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link" href="cart.html" title="Carrito"><img src="../../resources/img/carrito.png" height="40" alt=""></a>
                     </div>
@@ -107,7 +110,7 @@ const loadTemplate = async () => {
                 <div class="col-md-2 d-flex justify-content-center justify-content-md-start mb-md-0">
                     <!-- Logo -->
                     <a class="navbar-brand" href="index.html"><img src="../../resources/img/home.png" height="60"
-                            alt="YNWA"></a>
+                            alt="HCG"></a>
                 </div>
                 <!-- Left elements -->
 
@@ -137,7 +140,14 @@ const loadTemplate = async () => {
                 </button>
                 <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
                     <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="login.html" title="Inicio de sesion"><img src="../../resources/img/ingresar.png" height="60" alt=""></a>
+                        <a class="nav-link" href="manualp.html" title="Documentación">
+                            <img src="../../resources/img/manu.png" height="60" alt="">
+                        </a>
+                    </div>
+                    <div class="navbar-nav ms-auto">
+                        <a class="nav-link" href="login.html" title="Inicio de sesion">
+                            <img src="../../resources/img/ingresar.png" height="60" alt="">
+                        </a>
                     </div>
                 </div>
                 <!-- Right elements -->
