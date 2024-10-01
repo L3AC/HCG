@@ -41,23 +41,29 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
-    
+
             <!-- Columna 2: Manual de usuario -->
             <div class="col-12 d-flex flex-column align-items-center mb-5">
                 <div class="mb-4 fw-bold display-5 text-white">Manual de usuario</div>
-                <iframe src="https://docs.google.com/viewer?url=https://leac.website/HCG/views/admin/admin.pdf&embedded=true"
-                    height="500" width="900" style="border: none;"></iframe>
+                <!-- PDF incrustado -->
+                <embed src="https://leac.website/HCG/views/admin/admin.pdf" type="application/pdf" width="900"
+                    height="500" />
+                <!-- Opción para abrir en una nueva pestaña -->
+                <a href="https://leac.website/HCG/views/admin/admin.pdf" target="_blank"
+                    class="btn btn-primary mt-3">Abrir Manual de Usuario en nueva pestaña</a>
             </div>
-    
+
             <!-- Columna 3: Manual técnico -->
             <div class="col-12 d-flex flex-column align-items-center mb-5">
                 <div class="mb-4 fw-bold display-5 text-white">Manual técnico</div>
-                <iframe src="https://docs.google.com/viewer?url=https://leac.website/HCG/views/admin/tecnico.pdf&embedded=true"
-                    height="500" width="900" style="border: none;"></iframe>
+                <!-- PDF incrustado -->
+                <embed src="https://leac.website/HCG/views/admin/tecnico.pdf" type="application/pdf" width="900"
+                    height="500" />
+                <!-- Opción para abrir en una nueva pestaña -->
+                <a href="https://leac.website/HCG/views/admin/tecnico.pdf" target="_blank"
+                    class="btn btn-primary mt-3">Abrir Manual Técnico en nueva pestaña</a>
             </div>
         </div>
-
-
 
     </main>
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
