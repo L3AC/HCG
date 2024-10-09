@@ -69,8 +69,8 @@ const DetallePedido = () => {
             </View>
             {/* Ícono de la nota, solo se muestra si la nota no es "Nota vacía" */}
             {item.nota !== "Nota vacía" && (
-              <Pressable onPress={() => showNoteModal(item.nota)}>
-                <FontAwesome name="sticky-note" size={30} color="#007BFF" style={styles.noteIcon} />
+              <Pressable onPress={() => showNoteModal(item.nota_pedido)}>
+                <FontAwesome name="sticky-note" size={30} color="#FF0000" style={styles.noteIcon} />
               </Pressable>
             )}
           </View>
