@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'; 
-import { View, Text, Image, ScrollView, StyleSheet, RefreshControl, Alert, Modal, Pressable } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, RefreshControl, Alert, Modal, Pressable, TouchableWithoutFeedback } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
 import Header from '../../components/containers/Header';
@@ -84,15 +84,17 @@ const DetallePedido = () => {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>Nota del Pedido</Text>
-            <Text style={styles.modalText}>{selectedNote}</Text>
-            <Pressable style={styles.closeButton} onPress={() => setModalVisible(false)}>
-              <Text style={styles.textStyle}>Cerrar</Text>
-            </Pressable>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.modalContainer}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalView}>
+                <Text style={styles.modalTitle}>Nota del Pedido</Text>
+                <Text style={styles.modalText}>{selectedNote}</Text>
+                
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </ScrollView>
   );
@@ -156,15 +158,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    justifyContent: 'center',
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    textAlign: 'center', // Centrar el título
   },
   modalText: {
     fontSize: 16,
     marginBottom: 20,
+    textAlign: 'center', // Centrar el texto
   },
   closeButton: {
     backgroundColor: '#007BFF',

@@ -4,7 +4,7 @@
 */
 
 // Constante para completar la ruta de la API.
-const CLIENTE_API = 'services/public/clientes.php';
+const USER_API = 'services/public/clientes.php';
 // Constante para establecer el elemento del contenido principal.
 const MAIN = document.querySelector('main');
 MAIN.classList.add('container');
@@ -20,7 +20,7 @@ MAIN_TITLE.classList.add('text-center', 'py-3');
 */
 const loadTemplate = async () => {
     // Petición para obtener en nombre del usuario que ha iniciado sesión.
-    const DATA = await fetchData(CLIENTE_API, 'getUser');
+    const DATA = await fetchData(USER_API, 'getUser');
     // Se comprueba si el usuario está autenticado para establecer el encabezado respectivo.
     if (DATA.session) {
         // Se verifica si la página web no es el inicio de sesión, de lo contrario se direcciona a la página web principal.
