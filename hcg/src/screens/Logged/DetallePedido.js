@@ -1,51 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, RefreshControl, Alert } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native'; // Hooks de react-navigation
-import { SERVER } from '../../contexts/Network'; // URL del servidor
+import React, { useEffect, useState } from 'react'; 
+import { View, Text, Image, ScrollView, StyleSheet, RefreshControl, Alert, Modal, Pressable } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { SERVER } from '../../contexts/Network';
 import Header from '../../components/containers/Header';
 
-// Componente funcional OrderDetailScreen
 const DetallePedido = () => {
-  const route = useRoute(); // Obtiene la ruta actual
-  const navigation = useNavigation(); // Hook de navegación para cambiar entre pantallas
-  const { orderId } = route.params; // Obtiene el orderId de los parámetros de la ruta
-  const [refreshing, setRefreshing] = useState(false); // Estado para el control de la actualización
-  const [orderItems, setOrderItems] = useState([]); // Estado para almacenar los items del pedido
+  const route = useRoute();
+  const navigation = useNavigation();
+  const { orderId } = route.params;
+  const [refreshing, setRefreshing] = useState(false);
+  const [orderItems, setOrderItems] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
+  const [selectedNote, setSelectedNote] = useState(''); // Estado para la nota seleccionada
 
-  // Función para obtener los detalles del pedido desde el servidor
   const fetchOrderDetails = async () => {
     try {
-      setRefreshing(true); // Activa el estado de actualización
+      setRefreshing(true);
       const formData = new FormData();
-      formData.append('idPedido', orderId); // Añade el idPedido al FormData
+      formData.append('idPedido', orderId);
 
       const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=searchByPedido`, {
         method: 'POST',
         body: formData,
       });
 
-      const data = await response.json(); // Convierte la respuesta a JSON
+      const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        setOrderItems(data.dataset); // Actualiza los items del pedido
+        setOrderItems(data.dataset);
       } else {
         console.error('Error fetching data:', data.message);
-        Alert.alert('Error', data.message); // Muestra una alerta en caso de error
+        Alert.alert('Error', data.message);
       }
     } catch (error) {
       console.error('Error:', error);
-      Alert.alert('Error', 'Failed to fetch order details'); // Muestra una alerta en caso de error
+      Alert.alert('Error', 'Failed to fetch order details');
     } finally {
-      setRefreshing(false); // Desactiva el estado de actualización
+      setRefreshing(false);
     }
   };
 
-  // useEffect para obtener los detalles del pedido al montar el componente
   useEffect(() => {
     fetchOrderDetails();
   }, []);
 
-  // Renderizado del componente
+  // Función para mostrar el modal con la nota
+  const showNoteModal = (nota) => {
+    setSelectedNote(nota); // Establece la nota seleccionada
+    setModalVisible(true); // Muestra el modal
+  };
+
   return (
     <ScrollView
       contentContainerStyle={styles.scrollViewContent} style={{ flex: 1 }} 
@@ -53,61 +57,123 @@ const DetallePedido = () => {
     >
       <Header onPress={() => navigation.goBack()} titulo={'Detalles'} />
       <View style={styles.container}>
-      {/* Mapeo de los items del pedido */}
-      {orderItems.map((item) => (
-        <View key={item.id_detalle_pedido} style={styles.card}>
-          <Image source={{ uri: item.imagen_producto }} style={styles.image} />
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>{item.descripcion_producto}</Text>
-            <Text>Precio: ${item.precio_producto}</Text>
-            <Text>Cantidad: {item.cantidad_pedido}</Text>
-            <Text>Subtotal: ${item.subtotal}</Text>
+        {orderItems.map((item) => (
+          <View key={item.id_detalle_pedido} style={styles.card}>
+            <Image source={{ uri: item.imagen_producto }} style={styles.image} />
+            <View style={styles.textContainer}>
+              <Text style={styles.title}>{item.descripcion_producto}</Text>
+              <Text>Precio: ${item.precio_producto}</Text>
+              <Text>Cantidad: {item.cantidad_pedido}</Text>
+              <Text>Subtotal: ${item.subtotal}</Text>
+              {/* Botón para ver la nota */}
+              <Pressable onPress={() => showNoteModal(item.nota)}>
+                <Text style={styles.viewNoteButton}>Ver Nota</Text>
+              </Pressable>
+            </View>
+          </View>
+        ))}
+      </View>
+
+      {/* Modal para mostrar la nota */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>Nota del Pedido</Text>
+            <Text style={styles.modalText}>{selectedNote}</Text>
+            <Pressable style={styles.closeButton} onPress={() => setModalVisible(false)}>
+              <Text style={styles.textStyle}>Cerrar</Text>
+            </Pressable>
           </View>
         </View>
-      ))}
-      </View>
+      </Modal>
     </ScrollView>
   );
 };
 
-// Estilos del componente
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     paddingTop: 30,
     padding: 30,
     paddingBottom: 400,
-    backgroundColor: '#d2a563', // Color de fondo
+    backgroundColor: '#d2a563',
   },
   scrollViewContent: {
-    paddingBottom: 60, // Asegura espacio al final para el scroll
+    paddingBottom: 60,
   },
   card: {
-    flexDirection: 'row', // Coloca los elementos en una fila
-    backgroundColor: '#F4F0E4', // Color de fondo de las tarjetas
+    flexDirection: 'row',
+    backgroundColor: '#F4F0E4',
     padding: 16,
-    borderRadius: 10, // Bordes redondeados
+    borderRadius: 10,
     marginBottom: 100,
-    shadowColor: '#000', // Color de la sombra
-    shadowOffset: { width: 0, height: 2 }, // Offset de la sombra
-    shadowOpacity: 0.3, // Opacidad de la sombra
-    shadowRadius: 5, // Radio de la sombra
-    elevation: 5, // Elevación de la sombra
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
   },
   image: {
     width: 80,
     height: 80,
-    borderRadius: 10, // Bordes redondeados de la imagen
+    borderRadius: 10,
     marginRight: 16,
   },
   textContainer: {
-    flex: 1, // Ocupa todo el espacio disponible
-    justifyContent: 'center', // Alinea los elementos verticalmente al centro
+    flex: 1,
+    justifyContent: 'center',
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+  },
+  viewNoteButton: {
+    color: '#007BFF',
+    marginTop: 10,
+    textDecorationLine: 'underline',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView: {
+    width: 300,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalText: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  closeButton: {
+    backgroundColor: '#007BFF',
+    borderRadius: 10,
+    padding: 10,
+    alignItems: 'center',
+  },
+  textStyle: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
