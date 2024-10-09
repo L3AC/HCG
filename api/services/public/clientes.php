@@ -4,12 +4,7 @@ require_once('../../models/data/clientes_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
-    /**if(isset($_GET['app'])){
-
-    }
-    else{*/
     session_start();
-    //}
     // Se instancia la clase correspondiente.
     $cliente = new ClienteData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
@@ -88,6 +83,22 @@ if (isset($_GET['action'])) {
     } else {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
         switch ($_GET['action']) {
+            case 'logIn':
+                $_POST = Validator::validateForm($_POST);
+                if (!empty($_POST['usu']) && !empty($_POST['clave'])) {
+                    if (!$cliente->checkUser($_POST['usu'], $_POST['clave'])) {
+                        $result['error'] = 'Datos incorrectos';
+                    } elseif ($cliente->checkStatus()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Autenticación correcta';
+                        $result['dataset'] = $_SESSION['idCliente'];
+                    } else {
+                        $result['error'] = 'La cuenta ha sido desactivada';
+                    }
+                } else {
+                    $result['error'] = 'Credenciales vacías';
+                }
+                break;
             case 'changePassword':
                 if (!$cliente->setId($_SESSION['clienteRecup'])) {
                     $result['error'] = 'Acción no disponible';
@@ -159,22 +170,6 @@ if (isset($_GET['action'])) {
                     $result['message'] = 'Cuenta registrada correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al registrar la cuenta';
-                }
-                break;
-            case 'logIn':
-                $_POST = Validator::validateForm($_POST);
-                if (!empty($_POST['usu']) && !empty($_POST['clave'])) {
-                    if (!$cliente->checkUser($_POST['usu'], $_POST['clave'])) {
-                        $result['error'] = 'Datos incorrectos';
-                    } elseif ($cliente->checkStatus()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Autenticación correcta';
-                        $result['dataset'] = $_SESSION['idCliente'];
-                    } else {
-                        $result['error'] = 'La cuenta ha sido desactivada';
-                    }
-                } else {
-                    $result['error'] = 'Credenciales vacías';
                 }
                 break;
             case 'getChange':

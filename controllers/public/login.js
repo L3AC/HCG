@@ -16,10 +16,10 @@ SESSION_FORM.addEventListener('submit', async (event) => {
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SESSION_FORM);
     // Petición para determinar si el cliente se encuentra registrado.
-    const DATA = await fetchData(USER_API, 'logIn', FORM);
+    const DATA = await fetchData(CLIENTE_API, 'logIn', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
-        sweetAlert(1, DATA.message, true, 'index.html');
+        sweetAlert(1, DATA.message, false, 'index.html');
     } else {
         sweetAlert(2, DATA.error, false);
     }
