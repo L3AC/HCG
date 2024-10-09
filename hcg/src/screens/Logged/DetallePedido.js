@@ -3,6 +3,7 @@ import { View, Text, Image, ScrollView, StyleSheet, RefreshControl, Alert, Modal
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
 import Header from '../../components/containers/Header';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'; // Importar FontAwesome
 
 const DetallePedido = () => {
   const route = useRoute();
@@ -65,11 +66,13 @@ const DetallePedido = () => {
               <Text>Precio: ${item.precio_producto}</Text>
               <Text>Cantidad: {item.cantidad_pedido}</Text>
               <Text>Subtotal: ${item.subtotal}</Text>
-              {/* Botón para ver la nota */}
-              <Pressable onPress={() => showNoteModal(item.nota)}>
-                <Text style={styles.viewNoteButton}>Ver Nota</Text>
-              </Pressable>
             </View>
+            {/* Ícono de la nota, solo se muestra si la nota no es "Nota vacía" */}
+            {item.nota !== "Nota vacía" && (
+              <Pressable onPress={() => showNoteModal(item.nota)}>
+                <FontAwesome name="sticky-note" size={30} color="#007BFF" style={styles.noteIcon} />
+              </Pressable>
+            )}
           </View>
         ))}
       </View>
@@ -117,6 +120,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
+    alignItems: 'center', // Alinear verticalmente al centro
   },
   image: {
     width: 80,
@@ -133,10 +137,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
-  viewNoteButton: {
-    color: '#007BFF',
-    marginTop: 10,
-    textDecorationLine: 'underline',
+  noteIcon: {
+    marginLeft: 10, // Espacio entre el ícono y el texto
   },
   modalContainer: {
     flex: 1,

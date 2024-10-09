@@ -72,7 +72,7 @@ class DetallePedidoHandler
     {
         //$this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
-        $sql = 'SELECT id_cliente,id_detalle_pedido,id_producto,id_pedido,cantidad_pedido, 
+        $sql = 'SELECT id_cliente,id_detalle_pedido,id_producto,id_pedido,cantidad_pedido, nota_pedido,
         DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha_pedido,
 		descripcion_producto,precio_producto,cantidad_pedido,imagen_producto,
 		(precio_producto*cantidad_pedido) as subtotal

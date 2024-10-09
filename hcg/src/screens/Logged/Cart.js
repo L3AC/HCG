@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 16,
     backgroundColor: '#d2a563',
-    marginBottom:20,
+    paddingBottom: 95,
   },
   header: {
     fontSize: 24,

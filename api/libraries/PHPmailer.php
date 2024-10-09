@@ -56,29 +56,77 @@ try {
 
 	$mail->isHTML(true); //permite que el contenido del correo sea HTML
 	$mail->CharSet = 'utf-8'; //para que acepte caracteres en español
-	$html = "<html>
-					<head>
-					  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-					  <title>HCG</title>
-					</head>
-					<body>
-					<div style='font-family: Arial, Helvetica, sans-serif; font-size: 12px;'>
-						<center>
-							<h1>Pedido Listo</h1>
+	$html = "
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #d29967;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+        }
+        .container {
+            background-color: #d29967;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            border: 1px solid #e1cbb8;
+        }
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .image-container {
+            background-color: #f6e9df;
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+        }
+        .footer {
+            margin-top: 30px;
+        }
+        .footer img {
+            width: 100px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>Pedido</div>
+        <div class='message'>Ya está listo su pedido</div>
+        <div class='image-container'>
+            <img src='https://yourimageurl.com/pedido.png' alt='Pedido'>
+        </div>
+        <div class='footer'>
+            <img src='https://i.ibb.co/4p96gTW/hcg.jpg' alt='HCG'>
+        </div>
+    </div>
+</body>
+</html>
+";
 
-							<img width='220px' height='220px'
-								src='https://assets-v2.lottiefiles.com/a/781495f8-117f-11ee-839c-2b2a0d480406/lajeWDVTpy.gif'>
-							<br>
-							<h2> Hola ".$user." </h2>
-							<h2>Su código de pedido es</h2>
-							<h1>".$pin."</h1>
-							<br><br>
-							<h3>Powered By</h3>
-							<img width='120px' height='120px' src='https://i.ibb.co/4p96gTW/hcg.jpg'>
-							</center>
-					</div>
-					</body>
-			</html>";
 	$mail->msgHTML($html);
 	//echo $html;
 
