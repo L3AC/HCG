@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
         CORREO_ADMINISTRADOR.value = ROW.email_usuario;
         ALIAS_ADMINISTRADOR.value = ROW.alias_usuario;
-        TWOFA.checked = ROW.factor_autenticacion;
+        TWOFA.checked = ROW.factor_autenticacion == 1;
     } else {
         sweetAlert(2, DATA.error, null);
     }
