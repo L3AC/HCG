@@ -318,6 +318,7 @@ if (isset($_GET['action'])) {
             case 'getRecup':
                 if (isset($_SESSION['usuarioRecup'])) {
                     $result['status'] = 1;
+                    $result['dataset']=$_SESSION['emailRecup'];
                 } else {
                     $result['error'] = 'Accion no habilitada';
                 }
@@ -357,7 +358,7 @@ if (isset($_GET['action'])) {
                     list($name, $domain) = explode('@', $email);
                     $maskedName = str_repeat('*', strlen($name) - 2) . substr($name, -2);
                     $maskedEmail = $maskedName . '@' . $domain;
-                    $result['dataset'] =$maskedEmail;
+                    $_SESSION['emailRecup'] =$maskedEmail;
                 } else {
                     $result['error'] = 'Usuario inexistente';
                 }
