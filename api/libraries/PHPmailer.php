@@ -117,7 +117,7 @@ try {
         <div class='header'>Pedido</div>
         <div class='message'>Ya está listo su pedido</div>
         <div class='image-container'>
-            <img src='https://yourimageurl.com/pedido.png' alt='Pedido'>
+            <img src='https://media.tenor.com/ddQyyssPlO4AAAAi/dinkdonk-peepo.gif' alt='Pedido'>
         </div>
         <div class='footer'>
             <img src='https://i.ibb.co/4p96gTW/hcg.jpg' alt='HCG'>

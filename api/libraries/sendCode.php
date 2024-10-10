@@ -59,70 +59,73 @@ try {
     $mail->CharSet = 'utf-8'; //para que acepte caracteres en español
     $html = "
 <html>
-    <head>
-        <style>
-            body {
-                font-family: 'Arial', sans-serif;
-                background-color: #d29967;
-                color: #333;
-                text-align: center;
-                padding: 50px;
-                margin: 0;
-            }
-            .container {
-                background-color: #d29967;
-                padding: 30px;
-                border-radius: 15px;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-                max-width: 300px;
-                margin: auto;
-                border: 1px solid #e1cbb8;
-            }
-            .header {
-                font-size: 24px;
-                font-weight: bold;
-                color: #ffffff;
-                margin-bottom: 20px;
-            }
-            .message {
-                font-size: 16px;
-                color: #ffffff;
-                margin-bottom: 15px;
-            }
-            .pin {
-                font-size: 36px;
-                letter-spacing: 5px;
-                padding: 15px;
-                background-color: #9b5934;
-                color: #ffffff;
-                border-radius: 8px;
-                border-width: 2px;
-                border-color: #ffffff;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-                display: inline-block;
-                font-weight: bold;
-                margin-bottom: 20px;
-            }
-            .footer {
-                margin-top: 30px;
-            }
-            .footer img {
-                width: 100px;
-                border-radius: 8px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class='container'>
-            <div class='header'>Recuperación de contraseña</div>
-            <div class='message'>Este es tu pin de seguridad</div>
-            <div class='pin'>$pin</div>
-            <div class='footer'>
-                <img src='https://leac.website/HCG/resources/img/icon.png' alt='Logo'> <!-- Asegúrate de cambiar esta URL a la ruta de tu imagen -->
-            </div>
+<head>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #d29967;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #d29967;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            width: 100%; /* Asegura que el contenedor se ajuste a la pantalla si es necesario */
+            border: 1px solid #e1cbb8;
+            text-align: center; /* Centra el texto dentro del contenedor */
+        }
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 16px;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+        .pin {
+            font-size: 36px;
+            letter-spacing: 5px;
+            padding: 15px;
+            background-color: #9b5934;
+            color: #ffffff;
+            border-radius: 8px;
+            border-width: 2px;
+            border-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .footer {
+            margin-top: 30px;
+        }
+        .footer img {
+            width: 100px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>Recuperación de contraseña</div>
+        <div class='message'>Este es tu pin de seguridad</div>
+        <div class='pin'>$pin</div>
+        <div class='footer'>
+            <img src='https://leac.website/HCG/resources/img/icon.png' alt='Logo'>
         </div>
-    </body>
-    </html>
+    </div>
+</body>
+</html>
 ";
     $mail->msgHTML($html);
     //echo $html;

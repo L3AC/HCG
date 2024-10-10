@@ -169,6 +169,7 @@ const Cart = () => {
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
+        setModalVisible(false);
         Alert.alert(data.message);
         navigation.navigate('Home'); // Navega a la pantalla de inicio
       } else {
