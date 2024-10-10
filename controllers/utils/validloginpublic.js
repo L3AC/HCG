@@ -5,6 +5,7 @@
 
 // Constante para completar la ruta de la API.
 const CLIENTE_API = 'services/public/clientes.php';
+const CORREO= document.getElementById('correo');
 
 /* Función asíncrona para cargar el encabezado y pie del documento.
 * Parámetros: ninguno.
@@ -16,6 +17,7 @@ const loadTemplate = async () => {
     const DATA = await fetchData(CLIENTE_API, 'getRecup');
     // Se verifica si el usuario está autenticado, de lo contrario se envía a iniciar sesión.
     if (DATA.status) {
+        CORREO.textContent='Ingresa el código enviado a su correo electrónico con la terminación '+DATA.dataset;
     } 
     else {
         console.log('de vuelta');
