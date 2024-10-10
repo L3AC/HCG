@@ -314,6 +314,7 @@ if (isset($_GET['action'])) {
                 } else {
                     $result['error'] = 'Accion no habilitada';
                 }
+                break;
             case 'getRecup':
                 if (isset($_SESSION['usuarioRecup'])) {
                     $result['status'] = 1;
@@ -352,6 +353,11 @@ if (isset($_GET['action'])) {
                 } elseif ($result['dataset'] = $Usuario->verifUs()) {
                     $result['status'] = 1;
                     $_SESSION['usuarioRecup'] = $result['dataset']['id_usuario'];
+                    $email = $result['dataset']['email_usuario'];
+                    list($name, $domain) = explode('@', $email);
+                    $maskedName = str_repeat('*', strlen($name) - 2) . substr($name, -2);
+                    $maskedEmail = $maskedName . '@' . $domain;
+                    $result['dataset'] =$maskedEmail;
                 } else {
                     $result['error'] = 'Usuario inexistente';
                 }
