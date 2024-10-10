@@ -17,7 +17,7 @@ const loadTemplate = async () => {
     const DATA = await fetchData(USER_API, 'getRecup');
     // Se verifica si el usuario está autenticado, de lo contrario se envía a iniciar sesión.
     if (DATA.status) {
-        CORREO.value='Ingresa el código enviado a su correo electrónico con la terminación '+DATA.dataset;
+        CORREO.textContent='Ingresa el código enviado a su correo electrónico con la terminación '+DATA.dataset;
     } 
     else {
         console.log('de vuelta');
