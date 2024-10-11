@@ -29,17 +29,18 @@ const Historial = () => {
       const formData = new FormData();
       formData.append('valor', query);
       formData.append('estado', estado);
-
+  
       const response = await fetch(`${SERVER}services/public/pedidos.php?action=searchByCliente`, {
         method: 'POST',
         body: formData,
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok && data.status === 1) {
-        setOrders(data.dataset);  // Asegúrate de que `data.dataset` contiene la lista de pedidos
+        setOrders(data.dataset);  // Si hay resultados, actualiza la lista de pedidos
       } else {
+        setOrders([]);  // Si no hay resultados, limpia la lista de pedidos
         handleShowSimpleAlert('No hay ningún pedido registrado', 'warning');
       }
     } catch (error) {
@@ -47,7 +48,7 @@ const Historial = () => {
     } finally {
       setRefreshing(false);
     }
-  };
+  };  
 
   useEffect(() => {
     fetchData(search, estado);

@@ -85,6 +85,7 @@ const Producto = () => {
       const data = await response.json(); // Parsear la respuesta a JSON
       if (response.ok && data.status === 1) {
         // Si la respuesta es exitosa y el estado es 1, mostrar una alerta y navegar al carrito
+        setModalVisible(false);
         handleShowSimpleAlert('Se ha añadido el producto al carrito.', 'success');
         setTimeout(() => {
           navigation.navigate('Cart'); // Navega a la pantalla principal (home) después de 1.5 segundos
