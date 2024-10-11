@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -22,6 +22,7 @@ const VerifCode = () => {
   const input4Ref = useRef(null);
   const input5Ref = useRef(null);
   const input6Ref = useRef(null);
+  const [mail, setMail] = useState('Ingrese el pin enviado a su correo');
 
   const onChangeText = (text, setNumber, nextInputRef) => {
     if (/^\d$/.test(text)) {
@@ -44,6 +45,25 @@ const VerifCode = () => {
       }
     } else if (nextInputRef && /^\d$/.test(e.nativeEvent.key)) {
       nextInputRef.current.focus();
+    }
+  };
+  const getMail = async () => {
+
+    try {
+      const response = await fetch(`${SERVER}services/public/clientes.php?action=getRecup`, {
+        method: 'POST',
+      });
+
+      const data = await response.json();
+      console.log(data);
+      if (data.status) {
+        setMail('Ingrese el pin enviado al correo con la terminación '+data.dataset);
+      } else {
+        Alert.alert('Error', data.error);
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
     }
   };
 
@@ -71,13 +91,15 @@ const VerifCode = () => {
       }
     }
   };
-
+  useEffect(() => {
+    getMail();
+  }, []);
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Header onPress={() => navigation.goBack()} titulo={'Recuperación'} />
       <View style={styles.container}>
         <Ionicons style={styles.icono} name="shield-checkmark-sharp" size={140} color="black" />
-        <Text style={styles.text}>Ingrese el pin enviado a su correo</Text>
+        <Text style={styles.text}>{mail}</Text>
 
         <View style={styles.inputsContainer}>
           <TextInput
@@ -147,7 +169,7 @@ const VerifCode = () => {
             maxLength={1}
           />
         </View>
-        <Confirm onPress={handlePin} tittle={'Confirmar'}/>
+        <Confirm onPress={handlePin} tittle={'Confirmar'} />
       </View>
     </ScrollView>
   );
