@@ -1,6 +1,6 @@
 const PEDIDO_API = 'services/public/pedidos.php',
     DETALLEPEDIDO_API = 'services/public/detallepedidos.php',
-    PHPMAILER_API = 'libraries/PHPMailer.php',
+    PHPMAILER_API = 'libraries/PHPmailer.php',
     SENDCODE_API = 'libraries/sendCode.php';;
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm'),

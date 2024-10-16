@@ -80,16 +80,16 @@ VALUES((SELECT get_next_id("tb_detalle_productos")),1,1,1),
 INSERT INTO tb_clientes(id_cliente,usuario_cliente,clave_cliente,nombre_cliente,apellido_cliente,telefono_cliente,correo_cliente, fecha_cliente)
 VALUES
 ((SELECT get_next_id("tb_clientes")),"Juan","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Juan","Hernandez","71926778","leac.2xy@gmail.com", '2024-01-15 10:30:00'),
-((SELECT get_next_id("tb_clientes")),"Maria","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Maria","Rodriguez","71000701","20220298@ricaldone.edu.sv", '2024-02-20 14:45:00'),
+((SELECT get_next_id("tb_clientes")),"Maria","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Maria","Rodriguez","71000701","ejemplo123O@ricaldone.edu.sv", '2024-02-20 14:45:00'),
 ((SELECT get_next_id("tb_clientes")),"Carlos","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Carlos","Perez","71926602","franmatrix2@gmail.com", '2024-03-05 09:10:00'),
 ((SELECT get_next_id("tb_clientes")),"Ana","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Ana","Diaz","71926703","j1886192@gmail.com", '2024-04-12 11:20:00'),
-((SELECT get_next_id("tb_clientes")),"Luis","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Luis","Sanchez","71000704","20220326@ricaldone.edu.sv", '2024-05-22 16:55:00'),
-((SELECT get_next_id("tb_clientes")),"Laura","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Laura","Ramirez","71926605","20220495@ricaldone.edu.sv", '2024-06-08 08:35:00'),
-((SELECT get_next_id("tb_clientes")),"Javier","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Javier","Garcia","71926706","20220332@ricaldone.edu.sv", '2024-07-17 13:40:00'),
-((SELECT get_next_id("tb_clientes")),"Sofia","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Sofia","Martinez","71000707","20220638@ricaldone.edu.sv", '2024-08-25 19:15:00'),
-((SELECT get_next_id("tb_clientes")),"Diego","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Diego","Flores","71926608","egrande2005@outlook.com", '2024-02-03 14:50:00'),
+((SELECT get_next_id("tb_clientes")),"Luis","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Luis","Sanchez","71000704","ejempddd@ricaldone.edu.sv", '2024-05-22 16:55:00'),
+((SELECT get_next_id("tb_clientes")),"Laura","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Laura","Ramirez","71926605","ejemploK@ricaldone.edu.sv", '2024-06-08 08:35:00'),
+((SELECT get_next_id("tb_clientes")),"Javier","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Javier","Garcia","71926706","ejemplo123@ricaldone.edu.sv", '2024-07-17 13:40:00'),
+((SELECT get_next_id("tb_clientes")),"Sofia","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Sofia","Martinez","71000707","ejemplo3453@ricaldone.edu.sv", '2024-08-25 19:15:00'),
+((SELECT get_next_id("tb_clientes")),"Diego","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Diego","Flores","71926608","ejemplo2321@outlook.com", '2024-02-03 14:50:00'),
 ((SELECT get_next_id("tb_clientes")),"Lucia","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Lucia","Gutierrez","71926709","jerelea777@gmail.com", '2024-03-14 07:25:00'),
-((SELECT get_next_id("tb_clientes")),"Fernando","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Fernando","Ramos","71926710","hello@duolingo.com", '2024-04-23 12:15:00'),
+((SELECT get_next_id("tb_clientes")),"Fernando","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Fernando","Ramos","71926710","departamento@duolingo.com", '2024-04-23 12:15:00'),
 ((SELECT get_next_id("tb_clientes")),"Elena","$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je","Elena","Lopez","71000711","store@email.epicgames.com", '2024-05-31 17:05:00');
 
 /*INSERT INTO tb_usuarios(id_usuario, id_rol, alias_usuario, clave_usuario, nombre_usuario, apellido_usuario, email_usuario, pin_usuario, fecha_usuario)
