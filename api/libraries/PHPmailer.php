@@ -64,9 +64,12 @@ try {
             font-family: 'Arial', sans-serif;
             background-color: #d29967;
             color: #333;
-            text-align: center;
-            padding: 50px;
             margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Aseguramos que el body ocupe toda la ventana */
         }
         .container {
             background-color: #d29967;
@@ -74,8 +77,8 @@ try {
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             max-width: 300px;
-            margin: auto;
             border: 1px solid #e1cbb8;
+            text-align: center; /* Para centrar el texto y las imágenes dentro del contenedor */
         }
         .header {
             font-size: 24px;
@@ -89,7 +92,7 @@ try {
             margin-bottom: 15px;
         }
         .image-container {
-            background-color: transparent;
+            background-color: #f6e9df;
             width: 120px;
             height: 120px;
             border-radius: 15px;
@@ -125,6 +128,7 @@ try {
     </div>
 </body>
 </html>
+
 ";
 
 	$mail->msgHTML($html);
