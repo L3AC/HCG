@@ -92,7 +92,7 @@ try {
             margin-bottom: 15px;
         }
         .image-container {
-            background-color: #f6e9df;
+            background-color: transparent;
             width: 120px;
             height: 120px;
             border-radius: 15px;
