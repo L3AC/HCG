@@ -1,7 +1,7 @@
 // Constantes para completar las rutas de la API.
 const PEDIDO_API = 'services/admin/pedidos.php',
     DETALLEPEDIDO_API = 'services/admin/detallepedidos.php',
-    PHPMAILER_API = 'libraries/PHPMailer.php',
+    PHPMAILER_API = 'libraries/PHPMailer.php', 
     SENDCODE_API = 'libraries/sendCode.php';;
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm'),
