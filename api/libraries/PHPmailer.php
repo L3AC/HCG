@@ -52,7 +52,7 @@ try {
 	$mail->addAddress($email/*"email de los destinatarios", "nombre para que se refleje en el correo"*/); //destinatario
 	//$mail->SMTPDebug = SMTP::DEBUG_SERVER; //sirve para que envie la traza de las acciones que realiza el API
 
-	$mail->Subject = 'Recuperacion de contraseña';
+	$mail->Subject = 'Pedido listo';
 
 	$mail->isHTML(true); //permite que el contenido del correo sea HTML
 	$mail->CharSet = 'utf-8'; //para que acepte caracteres en español
@@ -89,7 +89,7 @@ try {
             margin-bottom: 15px;
         }
         .image-container {
-            background-color: #f6e9df;
+            background-color: transparent;
             width: 120px;
             height: 120px;
             border-radius: 15px;
