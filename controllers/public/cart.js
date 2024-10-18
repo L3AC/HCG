@@ -8,7 +8,7 @@ const TABLE_BODY = document.getElementById('tableBody');
 const ITEM_MODAL = new bootstrap.Modal('#itemModal');
 // Constante para establecer el formulario de cambiar producto.
 const ITEM_FORM = document.getElementById('itemForm');
-const ID_PRODUCTO = document.getElementById('idProducto'),
+const ID_PRODUCTO = document.getElementById('idDetallePedido'),
     CANTIDAD = document.getElementById('cantidadProducto'),
     NOTA_PRODUCTO = document.getElementById('notaProducto'),
     ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
@@ -77,13 +77,13 @@ async function readDetail() {
                         <div class="row">
                             <div class="col-lg-5 col-md-6 col-sm-12">
                                 <button class="btnAgregare "
-                                    onclick="openUpdate(${ROW.id_producto},${ROW.cantidad_pedido});"
+                                    onclick="openUpdate(${ROW.id_detalle_pedido});"
                                     style=" margin-right: 10px;">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                             </div>
                             <div class="col-lg-5 col-md-6 col-sm-12">
-                                <button class="btnAgregare " onclick="openDelete(${ROW.id_producto})" 
+                                <button class="btnAgregare " onclick="openDelete(${ROW.id_detalle_pedido})" 
                                 style="text-align: center;">
                                 <i class="bi bi-trash3"></i>
                                 </button>
@@ -138,14 +138,23 @@ async function finishOrder() {
 const openUpdate = async (idProducto) => {
     ITEM_MODAL.show();
     ITEM_FORM.reset();
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const index = carrito.findIndex(item => item.idProducto === idProducto);
-    if (index >= 0) {
-        ID_PRODUCTO.value = idProducto;
-        CANTIDAD.value = carrito[index].cantidad;
-        NOTA_PRODUCTO.value = carrito[index].nota;
-        // Almacenar el índice en una propiedad del formulario
-        ITEM_FORM.dataset.index = index;
+    const FORM = new FormData();
+    FORM.append('idDetallePedido', idProducto);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(DETALLEPEDIDO_API, 'readOne', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se muestra la caja de diálogo con su título.
+        ITEM_MODAL.show();
+        // Se prepara el formulario.
+        ITEM_FORM.reset();
+        // Se inicializan los campos con los datos.
+        const ROW = DATA.dataset;
+        ID_PRODUCTO.value = ROW.id_detalle_pedido;
+        CANTIDAD.value = ROW.id_detalle_pedido;
+        NOTA_PRODUCTO.value = ROW.cantidad_pedido;
+    } else {
+        sweetAlert(2, DATA.error, false);
     }
 }
 
@@ -171,16 +180,17 @@ ITEM_FORM.addEventListener('submit', async (event) => {
 });
 
 async function openDelete(idProducto) {
-    const RESPONSE = await confirmAction('¿Está seguro de finalizar el pedido?');
+    const RESPONSE = await confirmAction('¿Está seguro de eliminar el detalle?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
-        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-        // Filtrar el carrito para eliminar el producto con el id indicado
-        carrito = carrito.filter(item => item.idProducto.toString() !== idProducto.toString());
-        // Actualizar el carrito en el localStorage
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-        // Volver a cargar los detalles del carrito
-        readDetail();
+        const FORM = new FormData();
+        FORM.append('idDetallePedido', idProducto);
+        const DATA = await fetchData(DETALLEPEDIDO_API, 'deleteRow', FORM);
+        if (DATA.status) {
+            readDetail();
+        } else {
+            sweetAlert(2, DATA.error, false);
+        }
     }
 }
 
