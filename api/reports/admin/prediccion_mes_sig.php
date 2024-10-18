@@ -88,12 +88,19 @@ if ($dataP) {
     $pdf->setFont('Arial', '', 11);
 
     // Verificar si las claves existen antes de usarlas
-    $nombre_siguiente_mes = isset($rowP['nombre_siguiente_mes']) ? $rowP['nombre_siguiente_mes'] : 'Desconocido';
-    $prediccion_siguiente_mes = isset($rowP['prediccion_siguiente_mes']) ? $rowP['prediccion_siguiente_mes'] : 0;
-
-    // Imprimir la fila con dos columnas que ocupan todo el ancho de la página
+    $nombre_siguiente_mes = 'Desconocido';
+    $prediccion_siguiente_mes = 0;
+    
+    while ($rowP = mysqli_fetch_assoc($result)) {
+        // Sobrescribir las variables en cada iteración para obtener la última fila
+        $nombre_siguiente_mes = isset($rowP['nombre_siguiente_mes']) ? $rowP['nombre_siguiente_mes'] : 'Desconocido';
+        $prediccion_siguiente_mes = isset($rowP['prediccion_siguiente_mes']) ? $rowP['prediccion_siguiente_mes'] : 0;
+    }
+    
+    // Ahora fuera del bucle, puedes imprimir los valores de la última fila
     $pdf->cell(95, 10, $pdf->encodeString($nombre_siguiente_mes), 'TB', 0, 'C');
     $pdf->cell(95, 10, '$' . number_format($prediccion_siguiente_mes, 2), 'TB', 1, 'C');
+    
 } else {
     $pdf->cell(0, 10, $pdf->encodeString('No hay datos de ganancias para mostrar'), 1, 1);
 }
