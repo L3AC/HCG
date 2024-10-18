@@ -334,6 +334,7 @@ class DetallePedidoHandler
         return Database::getRows($sql, $params);
     }
     public function prediccionGanancia(){
+       
         $sql="
         WITH ventas AS ( 
     SELECT DATE_FORMAT(ped.fecha_pedido, '%Y-%m') AS mes, 
@@ -359,7 +360,7 @@ class DetallePedidoHandler
     WHERE ped.estado_pedido = 'Finalizado'
     GROUP BY mes, nombre_mes
     ORDER BY mes DESC
-    LIMIT ".$this->id."
+    LIMIT  ".$this->id."
 ),
 coeficientes AS (
     SELECT COUNT(*) AS n, SUM(mes_indice) AS sum_x, SUM(ventas_mensuales) AS sum_y, 
