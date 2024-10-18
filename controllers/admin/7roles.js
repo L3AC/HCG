@@ -148,14 +148,16 @@ const openUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_ROL.value = ROW.id_rol;
+        ID_ROL.value = ROW.id_rol;
         NOMBRE_OPC.value = ROW.descripcion_rol;
-        ESTADO_ROL.checked = ROW.estado_rol;
-        PRODUCTO_OPC.checked = ROW.productos_opc;
-        PEDIDO_OPC.checked = ROW.pedidos_opc;
-        TIPOITEM_OPC.checked = ROW.tipo_items_opc;
-        ITEM_OPC.checked = ROW.items_opc;
-        CLIENTE_OPC.checked = ROW.clientes_opc;
-        USUARIO_OPC.checked = ROW.usuarios_opc;
+        ESTADO_ROL.checked = ROW.estado_rol === "1";
+        PRODUCTO_OPC.checked = ROW.productos_opc === "1";
+        PEDIDO_OPC.checked = ROW.pedidos_opc === "1";
+        TIPOITEM_OPC.checked = ROW.tipo_items_opc === "1";
+        ITEM_OPC.checked = ROW.items_opc === "1";
+        CLIENTE_OPC.checked = ROW.clientes_opc === "1";
+        USUARIO_OPC.checked = ROW.usuarios_opc === "1";
+        
 
 
     } else {
