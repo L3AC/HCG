@@ -151,7 +151,7 @@ const openUpdate = async (idProducto) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_PRODUCTO.value = ROW.id_detalle_pedido;
-        CANTIDAD.value = parseInt(ROW.cantidad_pedido);
+        CANTIDAD.value =ROW.cantidad_pedido;
         NOTA_PRODUCTO.value = ROW.nota_pedido;
     } else {
         sweetAlert(2, DATA.error, false);
@@ -164,6 +164,7 @@ ITEM_FORM.addEventListener('submit', async (event) => {
     event.preventDefault();
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(ITEM_FORM);
+    FORM.append('cantidadPedido',parseInt(CANTIDAD.value))
     // Petición para actualizar la cantidad de producto.
     const DATA = await fetchData(DETALLEPEDIDO_API, 'updateRow', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
