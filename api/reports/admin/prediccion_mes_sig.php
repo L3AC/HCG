@@ -86,14 +86,19 @@ if ($dataP) {
 
     // Se establece la fuente para los datos.
     $pdf->setFont('Arial', '', 11);
+ // Verificar si las claves existen antes de usarlas
+// Asumiendo que ya tienes el resultado de la consulta en $result (un array de registros)
+// Obtener el último registro del array de resultados
+$ultimoRegistro = end($result);
 
-    // Verificar si las claves existen antes de usarlas
-    $nombre_siguiente_mes = isset($rowP['nombre_siguiente_mes'][6]) ? $rowP['nombre_siguiente_mes'] : 'Desconocido';
-    $prediccion_siguiente_mes = isset($rowP['prediccion_siguiente_mes'][6]) ? $rowP['prediccion_siguiente_mes'] : 0;
+// Asignar el valor del último registro a las variables
+$nombre_siguiente_mes = isset($ultimoRegistro['nombre_siguiente_mes']) ? $ultimoRegistro['nombre_siguiente_mes'] : 'Desconocido';
+$prediccion_siguiente_mes = isset($ultimoRegistro['prediccion_siguiente_mes']) ? $ultimoRegistro['prediccion_siguiente_mes'] : 0;
 
-    // Imprimir la fila con dos columnas que ocupan todo el ancho de la página
-    $pdf->cell(95, 10, $pdf->encodeString($nombre_siguiente_mes), 'TB', 0, 'C');
-    $pdf->cell(95, 10, '$' . number_format($prediccion_siguiente_mes, 2), 'TB', 1, 'C');
+// Imprimir la fila del último registro en el reporte PDF
+$pdf->cell(95, 10, $pdf->encodeString($nombre_siguiente_mes), 'TB', 0, 'C');
+$pdf->cell(95, 10, '$' . number_format($prediccion_siguiente_mes, 2), 'TB', 1, 'C');
+
 } else {
     $pdf->cell(0, 10, $pdf->encodeString('No hay datos de ganancias para mostrar'), 1, 1);
 }
