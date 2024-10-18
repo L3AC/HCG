@@ -28,25 +28,25 @@ const loadTemplate = async () => {
     
         // Prevent access based on page and corresponding permission
         if (pathname.endsWith('1productos.html') && DATA.productos_opc != 1) {
-            alert('No tienes acceso a la página de productos.');
+            
             location.href = 'index.html'; // Redirect to index or another allowed page
         } else if (pathname.endsWith('2pedidos.html') && DATA.pedidos_opc != 1) {
-            alert('No tienes acceso a la página de pedidos.');
+            
             location.href = 'index.html';
         } else if (pathname.endsWith('3tipoitems.html') && DATA.tipo_items_opc != 1) {
-            alert('No tienes acceso a la página de tipo items.');
+            
             location.href = 'index.html';
         } else if (pathname.endsWith('4items.html') && DATA.items_opc != 1) {
-            alert('No tienes acceso a la página de items.');
+            
             location.href = 'index.html';
         } else if (pathname.endsWith('5clientes.html') && DATA.clientes_opc != 1) {
-            alert('No tienes acceso a la página de clientes.');
+            
             location.href = 'index.html';
         } else if (pathname.endsWith('6usuarios.html') && DATA.usuarios_opc != 1) {
-            alert('No tienes acceso a la página de usuarios.');
+            
             location.href = 'index.html';
         } else if (pathname.endsWith('7roles.html') && DATA.roles_opc != 1) {
-            alert('No tienes acceso a la página de roles.');
+            
             location.href = 'index.html';
         }
     };
