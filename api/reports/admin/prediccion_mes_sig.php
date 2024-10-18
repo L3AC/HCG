@@ -67,7 +67,7 @@ $pdf->ln(9);
 // Verificar si existen registros para mostrar
 if ($dataP) {
     // Se toma solo el primer registro
-    $rowP = $dataP[6];
+    $rowP = $dataP[5];
 
     // Se establece un color de relleno para los encabezados.
     $pdf->setFillColor(155, 119, 74);
