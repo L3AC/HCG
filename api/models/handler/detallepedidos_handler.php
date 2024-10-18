@@ -334,63 +334,63 @@ class DetallePedidoHandler
         return Database::getRows($sql, $params);
     }
     public function prediccionGanancia(){
-        $sql="WITH ventas AS (
-        SELECT DATE_FORMAT(ped.fecha_pedido, '%Y-%m') AS mes, ROUND(SUM(dp.cantidad_pedido * prod.precio_producto), 2) AS ventas_mensuales,
-            CASE
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '01' THEN 'Enero'
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '02' THEN 'Febrero'
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '03' THEN 'Marzo'
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '04' THEN 'Abril'
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '05' THEN 'Mayo'
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '06' THEN 'Junio'
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '07' THEN 'Julio'
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '08' THEN 'Agosto'
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '09' THEN 'Septiembre'
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '10' THEN 'Octubre'
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '11' THEN 'Noviembre'
-                WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '12' THEN 'Diciembre'
-        END AS nombre_mes,
-        ROW_NUMBER() OVER (ORDER BY DATE_FORMAT(ped.fecha_pedido, '%Y-%m')) AS mes_indice
-        FROM tb_pedidos ped
-        JOIN tb_detalle_pedidos dp ON ped.id_pedido = dp.id_pedido
-        JOIN tb_productos prod ON dp.id_producto = prod.id_producto
-        WHERE ped.estado_pedido = 'Finalizado'
-        GROUP BY DATE_FORMAT(ped.fecha_pedido, '%Y-%m')
-        ORDER BY DATE_FORMAT(ped.fecha_pedido, '%Y-%m') DESC
-        LIMIT ".$this->id."
-        ),
-        coeficientes AS (
-            SELECT COUNT(*) AS n, SUM(mes_indice) AS sum_x, SUM(ventas_mensuales) AS sum_y, SUM(mes_indice * ventas_mensuales) AS sum_xy, SUM(mes_indice * mes_indice) AS sum_xx 
-            FROM ventas
-        ),
-        calculos AS (SELECT (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x) AS slope,(sum_y - ((n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x)) * sum_x) / n AS intercept
-            FROM coeficientes
-        ),
-        prediccion AS (
-            SELECT 
-                ROUND(c.slope * (MAX(v.mes_indice) + 1) + c.intercept, 2) AS prediccion_siguiente_mes,
-                CASE
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '01' THEN 'Enero'
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '02' THEN 'Febrero'
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '03' THEN 'Marzo'
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '04' THEN 'Abril'
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '05' THEN 'Mayo'
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '06' THEN 'Junio'
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '07' THEN 'Julio'
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '08' THEN 'Agosto'
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '09' THEN 'Septiembre'
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '10' THEN 'Octubre'
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '11' THEN 'Noviembre'
-                    WHEN DATE_FORMAT(ADDDATE(MAX(ped.fecha_pedido), INTERVAL 1 MONTH), '%m') = '12' THEN 'Diciembre'
-                END AS nombre_siguiente_mes
-            FROM ventas v
-            JOIN tb_pedidos ped ON DATE_FORMAT(ped.fecha_pedido, '%Y-%m') = v.mes
-            CROSS JOIN calculos c
-        )
-        SELECT v.mes, v.ventas_mensuales,v.nombre_mes,p.prediccion_siguiente_mes,p.nombre_siguiente_mes
-        FROM ventas v
-        CROSS JOIN prediccion p
-        ORDER BY mes ASC;";
+        $sql="
+        WITH ventas AS ( 
+    SELECT DATE_FORMAT(ped.fecha_pedido, '%Y-%m') AS mes, 
+           ROUND(SUM(dp.cantidad_pedido * prod.precio_producto), 2) AS ventas_mensuales,
+           CASE
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '01' THEN 'Enero'
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '02' THEN 'Febrero'
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '03' THEN 'Marzo'
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '04' THEN 'Abril'
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '05' THEN 'Mayo'
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '06' THEN 'Junio'
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '07' THEN 'Julio'
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '08' THEN 'Agosto'
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '09' THEN 'Septiembre'
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '10' THEN 'Octubre'
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '11' THEN 'Noviembre'
+               WHEN DATE_FORMAT(ped.fecha_pedido, '%m') = '12' THEN 'Diciembre'
+           END AS nombre_mes,
+           ROW_NUMBER() OVER (ORDER BY DATE_FORMAT(ped.fecha_pedido, '%Y-%m')) AS mes_indice
+    FROM tb_pedidos ped
+    JOIN tb_detalle_pedidos dp ON ped.id_pedido = dp.id_pedido
+    JOIN tb_productos prod ON dp.id_producto = prod.id_producto
+    WHERE ped.estado_pedido = 'Finalizado'
+    GROUP BY mes, nombre_mes
+    ORDER BY mes DESC
+    LIMIT ".$this->id."
+),
+coeficientes AS (
+    SELECT COUNT(*) AS n, SUM(mes_indice) AS sum_x, SUM(ventas_mensuales) AS sum_y, 
+           SUM(mes_indice * ventas_mensuales) AS sum_xy, SUM(mes_indice * mes_indice) AS sum_xx 
+    FROM ventas
+),
+calculos AS (
+    SELECT 
+        (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x) AS slope,
+        (sum_y - ((n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x)) * sum_x) / n AS intercept
+    FROM coeficientes
+)
+SELECT v.mes, v.ventas_mensuales, v.nombre_mes, 
+       ROUND(c.slope * (v.mes_indice + 1) + c.intercept, 2) AS prediccion_siguiente_mes,
+       CASE
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '01' THEN 'Enero'
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '02' THEN 'Febrero'
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '03' THEN 'Marzo'
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '04' THEN 'Abril'
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '05' THEN 'Mayo'
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '06' THEN 'Junio'
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '07' THEN 'Julio'
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '08' THEN 'Agosto'
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '09' THEN 'Septiembre'
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '10' THEN 'Octubre'
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '11' THEN 'Noviembre'
+           WHEN DATE_FORMAT(ADDDATE(DATE(CONCAT(v.mes, '-01')), INTERVAL 1 MONTH), '%m') = '12' THEN 'Diciembre'
+       END AS nombre_siguiente_mes
+FROM ventas v
+JOIN calculos c
+ORDER BY v.mes ASC;";
         $params = array();
         return Database::getRows($sql, $params);
     }
