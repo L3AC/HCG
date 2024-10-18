@@ -1,8 +1,5 @@
-/*
-*   Controlador es de uso general en las páginas web del sitio público.
-*   Sirve para manejar las plantillas del encabezado y pie del documento.
+/* Controlador es de uso general en las páginas web del sitio público. Sirve para manejar las plantillas del encabezado y pie del documento.
 */
-
 // Constante para completar la ruta de la API.
 const USER_API = 'services/public/clientes.php';
 // Constante para establecer el elemento del contenido principal.

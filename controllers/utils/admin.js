@@ -23,8 +23,38 @@ MAIN_TITLE.classList.add('text-center', 'py-3');
 const loadTemplate = async () => {
     // Petición para obtener en nombre del usuario que ha iniciado sesión.
     const DATA = await fetchData(USER_API, 'getUser');
+    const pageAccessCheck = () => {
+        const pathname = location.pathname; // Get the current page path
+    
+        // Prevent access based on page and corresponding permission
+        if (pathname.endsWith('1productos.html') && DATA.productos_opc != 1) {
+            alert('No tienes acceso a la página de productos.');
+            location.href = 'index.html'; // Redirect to index or another allowed page
+        } else if (pathname.endsWith('2pedidos.html') && DATA.pedidos_opc != 1) {
+            alert('No tienes acceso a la página de pedidos.');
+            location.href = 'index.html';
+        } else if (pathname.endsWith('3tipoitems.html') && DATA.tipo_items_opc != 1) {
+            alert('No tienes acceso a la página de tipo items.');
+            location.href = 'index.html';
+        } else if (pathname.endsWith('4items.html') && DATA.items_opc != 1) {
+            alert('No tienes acceso a la página de items.');
+            location.href = 'index.html';
+        } else if (pathname.endsWith('5clientes.html') && DATA.clientes_opc != 1) {
+            alert('No tienes acceso a la página de clientes.');
+            location.href = 'index.html';
+        } else if (pathname.endsWith('6usuarios.html') && DATA.usuarios_opc != 1) {
+            alert('No tienes acceso a la página de usuarios.');
+            location.href = 'index.html';
+        } else if (pathname.endsWith('7roles.html') && DATA.roles_opc != 1) {
+            alert('No tienes acceso a la página de roles.');
+            location.href = 'index.html';
+        }
+    };
+
+    
     // Se verifica si el usuario está autenticado, de lo contrario se envía a iniciar sesión.
     if (DATA.session) {
+        pageAccessCheck(); 
         // Se comprueba si existe un alias definido para el usuario, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se agrega el encabezado de la página web antes del contenido principal.
