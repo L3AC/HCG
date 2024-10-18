@@ -153,7 +153,6 @@ const openUpdate = async (idProducto) => {
 ITEM_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    console.log(ID_DETALLE.value);
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(ITEM_FORM);
     // Petición para actualizar la cantidad de producto.
