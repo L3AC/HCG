@@ -151,8 +151,8 @@ const openUpdate = async (idProducto) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_PRODUCTO.value = ROW.id_detalle_pedido;
-        CANTIDAD.value = ROW.id_detalle_pedido;
-        NOTA_PRODUCTO.value = ROW.cantidad_pedido;
+        CANTIDAD.value = ROW.cantidad_pedido;
+        NOTA_PRODUCTO.value = ROW.nota_pedido;
     } else {
         sweetAlert(2, DATA.error, false);
     }
