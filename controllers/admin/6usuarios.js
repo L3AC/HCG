@@ -180,7 +180,7 @@ const openUpdate = async (id) => {
 //Función asíncrona para eliminar un registro.
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Desea eliminar el Usuario de forma permanente?');
+    const RESPONSE = await confirmAction('¿Desea eliminar el usuario de forma permanente?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
