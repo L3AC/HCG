@@ -165,7 +165,7 @@ ITEM_FORM.addEventListener('submit', async (event) => {
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(ITEM_FORM);
     // Petición para actualizar la cantidad de producto.
-    const DATA = await fetchData(PEDIDO_API, 'updateDetail', FORM);
+    const DATA = await fetchData(DETALLEPEDIDO_API, 'updateRow', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se actualiza la tabla para visualizar los cambios.
