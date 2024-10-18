@@ -88,8 +88,8 @@ if ($dataP) {
     $pdf->setFont('Arial', '', 11);
 
     // Verificar si las claves existen antes de usarlas
-    $nombre_siguiente_mes = isset($rowP['nombre_siguiente_mes']) ? $rowP['nombre_siguiente_mes'] : 'Desconocido';
-    $prediccion_siguiente_mes = isset($rowP['prediccion_siguiente_mes']) ? $rowP['prediccion_siguiente_mes'] : 0;
+    $nombre_siguiente_mes = isset($rowP['nombre_siguiente_mes'][6]) ? $rowP['nombre_siguiente_mes'] : 'Desconocido';
+    $prediccion_siguiente_mes = isset($rowP['prediccion_siguiente_mes'][6]) ? $rowP['prediccion_siguiente_mes'] : 0;
 
     // Imprimir la fila con dos columnas que ocupan todo el ancho de la página
     $pdf->cell(95, 10, $pdf->encodeString($nombre_siguiente_mes), 'TB', 0, 'C');
