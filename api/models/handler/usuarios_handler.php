@@ -371,7 +371,7 @@ class UsuarioHandler
     // Método para eliminar un usuario de la tabla de usuarios.
     public function deleteRow()
     {
-        $sql = 'DELETE tb_usuarios
+        $sql = 'DELETE FROM tb_usuarios
                 WHERE id_usuario = ?';
         /*$sql = 'DELETE FROM sec_usuarios
                 WHERE id_usuario = ?';*/
