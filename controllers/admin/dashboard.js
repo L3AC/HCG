@@ -158,14 +158,16 @@ const graficaGanancias = async () => {
         // Se declaran los arreglos para guardar los datos a graficar.
         let labels = [];
         let values = [];
+	let limit = parseInt(LIST_5.value)-1;
+	
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
             labels.push(row.nombre_mes);
             values.push(row.ventas_mensuales);
         });
-        labels.push(DATA.dataset[0].nombre_siguiente_mes);
-        values.push(DATA.dataset[0].prediccion_siguiente_mes);
+        labels.push(DATA.dataset[limit].nombre_siguiente_mes);
+        values.push(DATA.dataset[limit].prediccion_siguiente_mes);
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
         areaGraph('chart5', labels, values, 'Ganancias $', 'Mes');
     } else {

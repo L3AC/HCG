@@ -67,7 +67,7 @@ $pdf->ln(9);
 // Verificar si existen registros para mostrar
 if ($dataP) {
     // Se toma solo el primer registro
-    $rowP = $dataP[0];
+    $rowP = $dataP[5];
 
     // Se establece un color de relleno para los encabezados.
     $pdf->setFillColor(155, 119, 74);
@@ -98,5 +98,13 @@ if ($dataP) {
     $pdf->cell(0, 10, $pdf->encodeString('No hay datos de ganancias para mostrar'), 1, 1);
 }
 
+
 // Se llama implícitamente al método footer() y se envía el documento al navegador web.
 $pdf->output('I', 'reporte_ganancias.pdf');
+
+
+
+
+
+
+
